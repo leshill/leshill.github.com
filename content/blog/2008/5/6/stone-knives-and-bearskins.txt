@@ -1,0 +1,25 @@
+--- 
+title:      Stone knives and bearskins
+author: Les Hill
+created_at: 2008-05-06 00:26:53.384732 -05:00
+layout: blog_post
+blog_post:  true
+tag: 'blog.leshill.org,2008-05-06:7'
+filter:
+  - textile
+  - gist
+--- 
+Recently while discussing "jQuery":http://jquery.com/, we got onto the topic of "AJAX":http://en.wikipedia.org/wiki/Ajax_%28programming%29.  This prompted me to declare:
+
+_Before AJAX, we used stone knives and bearskins to make our web apps_
+
+Actually, we were using JavaScript and XML to drive our web apps, we just did not call it AJAX, and it was a very challenging task.  In spite of the difficulty of building it, we stuck with it and we were pretty darn happy with our *pre-web 2.0 web2.0* app; so much so that we actually had people coming by just to see our UI in action.
+
+I went back and looked for some of our old code, hoping to find the CVS repository[1], but only finding a tarball of version 1.4.  The following code is from @client/script/services.js@ and dated *August 24, 2001* -- although some version of this code would have existed in the spring of *2000*:
+
+gist38524.
+
+Just looking at this snippet from our internal library makes me all the happier that we made the thing work at all.  Kudos to "Mark Judd":http://markjudd.com and "Brian Levine":http://brianlevine.blogspot.com, two of our very talented small team, who were responsible for our UI.
+
+fn1. You already know this, but just in case, CVS was a source code repository that pretty much everyone used before Subversion (unless you bought one from a vendor).
+

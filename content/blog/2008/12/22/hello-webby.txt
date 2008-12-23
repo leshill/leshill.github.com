@@ -1,0 +1,27 @@
+--- 
+title:      Hello Webby!
+author: Les Hill
+created_at: 2008-12-22 20:34:53.269663 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - gist
+--- 
+As of this post, I am using publishing *Wonderland* with "Webby":http://webby.rubyforge.org .
+
+Some of the things I like about *Webby*:
+
+* desktop based -- updates are made on my laptop, giving me a wider choice of tools for writing this blog [1][2]
+* static pages -- the blog site is served from *Apache* as pure html files, there is no requirement to run a blogging server [3]
+* extensible -- *Webby* can be extended both with rake tasks and Ruby code[4]
+
+fn1. Yes, this explains why I have not written a post recently.
+
+fn2. This post was edited with MacVim.
+
+fn3. I know, old school, some "folks":http://www.nedbatchelder.com have been publishing this way for a long time.
+
+fn4. Easy! A one-liner "gist":http://gist.github.com filter.
+
+bc.  Webby::Filters.register :gist { |input| input.gsub(/gist(\d+)\./) { |s| "<script src='http://gist.github.com/#{$1}.js'></script>" } }

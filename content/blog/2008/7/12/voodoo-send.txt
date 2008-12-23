@@ -1,0 +1,25 @@
+--- 
+title:      Voodoo send
+author: Les Hill
+created_at: 2008-07-11 23:33:10.109724 -05:00
+layout: blog_post
+blog_post:  true
+tag: 'blog.leshill.org,2008-07-13:18'
+filter:
+  - textile
+  - gist
+--- 
+Recently when looking through some plugin's code, we found the following line:
+
+gist38693.
+
+This _seems_ to be an acceptable variant of the commonly used
+
+gist38695.
+
+As you may have surmised, it is not an acceptable variant.  This is a "Voodoo programming":http://en.wikipedia.org/wiki/Voodoo_programming smell, as it indicates a misunderstanding of exactly what the semantics of @send@ are.  There is also a clearer, more intention revealing, and identical[1] alternative @include Foo@ or with the omitted parenthesis @include(Foo)@ .
+
+This of course, leads us to why @ActiveRecord::Base.send(:include, Foo)@ is acceptable.  The @include@ method is private, so the most elegant way to invoke it on _another_ object is by using @send@; this is possible because @send@ ignores access control allowing us to invoke @include@ directly.
+
+fn1. _Almost_, the difference is that @send@ is in the call stack.
+

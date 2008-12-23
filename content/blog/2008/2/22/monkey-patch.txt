@@ -1,0 +1,43 @@
+--- 
+author:    Les Hill
+title: Monkey Patch!
+created_at: 2008-02-22 11:09:02.153040 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - gist
+--- 
+So after missing the wisdom[1] of this:
+
+"http://xkcd.com/386":http://xkcd.com/386
+
+And responding to this:
+
+"http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript":http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript
+
+I went to bed.
+
+This morning I wrote my first **Rails** (really **Haml**) __Monkey Patch__[2].  This adds some of what Steve wanted: undisturbed inline javascript with variable interpolation.  I am not sure what else he wanted as I did not read his blog carefully :)
+
+Throw this into @lib/inline_javascript.rb@
+
+gist33531.
+
+Throw this at the bottom of your @environment.rb@, taken from here "http://groups.google.com/group/haml/msg/2d890cf1ede761ea":http://groups.google.com/group/haml/msg/2d890cf1ede761ea
+
+gist33532.
+
+And then do this in your **Haml** file:
+
+gist33533.
+
+h2. Update
+
+I decided to make a patch and submit it to the **Haml** folks directly.  This gave me the 'opportunity' to get **git** going.
+
+Nathan Weizenbaum took the time to put in a more comprehensive fix to expose the interpolation functionality to all filters -- look for it in an upcoming release.
+
+fn1. It's turtles all the way down.
+
+fn2. You do not want to know what my subconscious originally thought up as the way to do this -- that was twisted.

@@ -1,0 +1,14 @@
+---
+filter: haml
+---
+.title
+  %h2.entry-title
+    %a{ :href => post.url }
+      = post.title
+.post-date
+  %abbr.published{ :title => post.created_at.to_s }
+    Posted
+    = post.created_at.strftime('%B %d, %Y')
+.entry-content
+  :preserve
+    #{render post}

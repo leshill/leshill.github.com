@@ -1,0 +1,37 @@
+--- 
+author: Les Hill
+title: 'Git: Setting Your Upstream Default'
+created_at: 2008-08-24 19:28:02.153040 -05:00
+layout: blog_post
+blog_post:  true
+tag: 'blog.leshill.org,2008-08-24:25'
+filter:
+  - textile
+  - gist
+--- 
+I  recently set up a new repository on "github":http://www.github.com/.  Creating the repository on github yields a page of instructions covering the two common scenarios: new and existing repositories.  After following the new repository instructions,  I had a repository on github, a local repository, and the following in response to my @git pull@ command:
+
+bc.. You asked me to pull without telling me which branch you want to merge with, and 'branch.master.merge' in your configuration file does not tell me either.  Please name which branch you want to merge on the command line and try again (e.g. 'git pull <repository> <refspec>'). See git-pull(1) for details on the refspec.
+  
+If you often merge with the same branch, you may want to configure the following variables in your configuration file:
+  
+  branch.master.remote = <nickname>
+  branch.master.merge = <remote-ref>
+  remote.<nickname>.url = <url>
+  remote.<nickname>.fetch = <refspec>
+  
+See git-config(1) for details.
+
+p. Not exactly what I wanted, and certainly not what I expected.  What I _expected_ was a local repository with the upstream for *master* to be set to point at *master* on the github repository.
+
+Setting this up can be done easily in two similar ways:
+
+* You can edit the configuration file as directed by the error message
+* You can use @git config@
+
+I opted for @git config@ as it was easier and required no thinking -- the commands are always the same[1]; here they are:
+
+bc. % git config branch.master.remote origin
+% git config branch.master.merge refs/heads/master
+
+fn1.  For the scenario of a local empty repository pushed up to a remote, where the remote will be the upstream master.

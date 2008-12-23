@@ -1,0 +1,57 @@
+---
+extension: html
+filter:
+  - haml
+---
+!!!
+%head
+  %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "content-type" }/
+  %meta{ :name => "author", :content => "#{@page.author}" }/
+  %title
+    == Wonderland &mdash; #{@page.title}
+   
+  %link{ :href => "/css/blueprint/screen.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css" }/
+  %link{ :href => "/css/blueprint/print.css", :rel => "stylesheet", :media => "print", :type => "text/css" }/
+  / [if IE] <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" />
+  %link{ :href => "/css/site.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css" }/
+   
+  %link{ :href => "http://blog.leshill.org/atom.xml", :title => "RSS feed", :rel => "alternate", :type => "application/atom+xml" }/
+
+%body
+  .container
+    .span-24#header
+      .prepend-1.span-11.append-8
+        %a{:href => '/'}
+          %img{:src => '/images/title.png'}
+    .span-24#main
+      .prepend-1.span-15.append-1#content
+        .span-15.height-1
+        .span-15#content
+          = @content
+      .span-6.append-1.last#sidebar
+        .span-6.height-1
+        .prepend-1.span-5
+          %h3 About
+          %ul
+            %li
+              Les Hill is a software adventurer who works with
+              %a{:href => 'http://www.ruby-lang.org'} Ruby
+              at
+              %a{:href => 'http://hashrocket.com'} Hashrocket
+              \.
+        .prepend-1.span-5.prepend-top
+          %h3 Subscribe
+          %ul
+            %li
+              %a.feed{:href => "/atom.xml"} RSS
+        .prepend-1.span-5.prepend-top
+          - months = @pages.find(:all, :in_directory => 'blog', :recursive => true, :sort_by => "created_at", :reverse => true) {|p| p.archive == 'month'}
+          = render :partial => '/archives', :locals => {:months => months}
+    .span-24#footer
+      %p
+        Wonderland is styled using
+        %a{ :href => 'http://www.blueprintcss.org/'}blueprint css
+        and powered by
+        %a{ :href => 'http://webby.rubyforge.org/'}Webby
+      %p
+        Les Hill &copy; 2008

@@ -1,0 +1,15 @@
+---
+author:    Les Hill
+title:  Home
+layout: index
+dirty:  true
+filter:
+  - haml
+---
+- posts =  @pages.find(:all, :in_directory => 'blog', :recursive => true, :sort_by => "created_at", :reverse => true, :blog_post => true)
+- paginate(posts, 4) do |p|
+  = render(:partial => '/post', :locals => {:post => p})
+.prepend-1.span-15
+  = link_to('&larr; Prev', @pager.prev) if @pager.prev?
+  = '&nbsp;' if @pager.prev?
+  = link_to('Next &rarr;', @pager.next) if @pager.next?

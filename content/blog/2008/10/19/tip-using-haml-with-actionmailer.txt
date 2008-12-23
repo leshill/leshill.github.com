@@ -1,0 +1,19 @@
+--- 
+author:    Les Hill
+title:      'Tip: Using Haml With ActionMailer'
+created_at: 2008-10-19 20:54:10.605159 -05:00
+author: Les Hill
+layout: blog_post
+blog_post:  true
+tag: 'blog.leshill.org,2008-10-20:33'
+filter:
+  - textile
+  - gist
+--- 
+You can use Haml to write your mailer views and still use the implicit multipart template feature by letting @ActionMailer@ know about Haml:
+
+gist38723.
+
+h2. Update
+
+This is no longer necessary with *Rails 2.2* and *Haml 2.0.5* .

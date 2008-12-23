@@ -1,0 +1,41 @@
+--- 
+author: Les Hill
+title:      Focusing Autotest
+created_at: 2008-08-24 09:53:57.928155 -05:00
+layout: blog_post
+blog_post:  true
+tag: 'blog.leshill.org,2008-08-24:24'
+filter:
+  - textile
+  - gist
+--- 
+The usual "autotest":http://www.zenspider.com/ZSS/Products/ZenTest workflow goes something like this:
+
+* Edit and save
+* Autotest runs associated specs
+* Are there failures?  Fix and start over
+* Autotest runs the entire suite
+
+Sometimes though, you want autotest to just ignore most of your specs and focus on a few specs.
+
+Last week, while Kevin, Rick, and Yossef  ("OG":http://bl.ogtastic.com) were here, they  shared an autotest tweak that does exactly that.
+
+The tweak allows you to specify a regular expression to limit the files which autotest watches; for example, to autotest only files matching @*user*.rb@ you would start autotest like so (_atest_ is an alias):
+
+bc. % atest user
+
+Here is the (lightly modified) code to do this; in your @.autotest@ file add:
+
+gist38700.
+
+And in your @.bash_profile@ add:
+
+gist38702.
+
+Now use the alias to invoke autotest.  For standard autotest behavior:
+
+bc. % atest
+
+To limit what autotest is watching, pass a regular expression (which can be a simple string):
+
+bc. % atest user.*html

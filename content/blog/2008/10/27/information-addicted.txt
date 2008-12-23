@@ -1,0 +1,26 @@
+--- 
+author:    Les Hill
+title:      Information Addicted
+created_at: 2008-10-27 09:01:58.015689 -05:00
+layout: blog_post
+blog_post:  true
+tag: 'blog.leshill.org,2008-10-27:34'
+filter:
+  - textile
+  - gist
+--- 
+Sunday, the "New York Times":http://www.nytimes.com/ had an "article":http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&scp=1&sq=boot%20time&st=cse&oref=slogin about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.
+
+First, I rarely reboot my MacBook Pro; I just put the machine to sleep and wake it (and this is easily accomplished by closing and opening the lid).
+
+Second, I rarely reboot my phone; it also seems to sleep[1].
+
+Third, the context driving this _War on Boot Times_ is our increasing dependence on external information sources.  Think back to 1988[2] and you may recall a time when finding out what movies to see while you were away from a newspaper was a non-trivial task.  Now with a smart phone or a WiFi connected laptop, all the information to answer your question is readily available at a moment's notice.  Think back to when you were out and would say: 'I wish I could Google that'; now you just do it no matter where you are.
+
+The PC makers are fighting the last war.  This whole concept of reducing boot times is irrelevant.  The device should already be on and waiting on us.  No wait, make that _The Cloud_ *is* already waiting on us.
+
+The trend is for *more information, delivered faster, and requested instantaneously*.  Someone should tell the PC makers.
+
+fn1. I am unsure exactly what the phone is doing when it is _asleep_.
+
+fn2. Moviefone was created in 1989.
