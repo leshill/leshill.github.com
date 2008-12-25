@@ -1,0 +1,25 @@
+--- 
+title:      'Tip: Rsync Options for Webby'
+author: Les Hill
+created_at: 2008-12-24 18:49:36.357942 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - gist
+--- 
+If you are making substantial changes to your "Webby":http://github.com/TwP/based site, you will have no doubt noticed that deleted files are not automatically removed from the @output@ directory or the deploy server.
+
+Use the following @Sitefile@ to:
+
+* clear the output directory
+* build the site
+* deploy the site with *rsync* with the checksum and delete options[1][2]
+
+gist39827.
+
+fn1. *Rsync* will only update changed files, and will detect deleted files.
+
+fn2. Using the @--delete@ option will remove files from your deploy server; if you have mixed your *Webby* content with server-only files[3], you should not use this.
+
+fn3. You may want to reconsider doing that.

@@ -1,9 +1,11 @@
 SITE.host = 'leshill'
+SITE.rsync_args = ['-r', '-c', '--delete', '--rsh=ssh']
 SITE.remote_dir = '/usr/local/www/leshill.blog/public'
+
 
 task :default => :build
 
 desc 'deploy the site to the webserver'
-task :deploy => [:build, 'deploy:rsync']
+task :deploy => [:clobber, :build, 'deploy:rsync']
 
 # EOF
