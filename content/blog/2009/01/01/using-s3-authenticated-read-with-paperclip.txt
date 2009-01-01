@@ -1,0 +1,28 @@
+--- 
+title:      'Using S3 Authenticated-Read With Paperclip'
+author: Les Hill
+created_at: 2009-01-01 09:46:16.567780 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - gist
+--- 
+
+"Paperclip"::http://www.thoughtbot.com/projects/paperclip supports *AWS S3* with a default of _public-read_ access policy.  This allows anyone who knows the URL of the resource to access it.
+
+For some applications, you might want a more restricted access policy.  The _authenticated-read_ access policy requires that the URL of the resource be presented by an authenticated user.
+
+To use _authenticated-read_ with *Paperclip*:
+
+* set the @:s3_permissions@ option on your attachment:
+
+bc. :s3_permssions => 'authenticated-read'
+
+* use @RightAws::S3Interface#get_link@ to generate an _authenticated-read_ URL for the attachment:
+
+bc. def s3_url(style = nil, time_limit = 15.minutes)
+  attachment.s3.interface.get_link(attachment.s3_bucket.to_s, attachment.path(style), time_limit)
+end 
+
+If you do not normally need to time limit the access, use @nil@ as the default value for @time_limit@
