@@ -1,0 +1,16 @@
+--- 
+title:      'Using Hoptoad With Script Runner'
+author: Les Hill
+created_at: 2009-01-12 10:01:49.548207 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - gist
+--- 
+I have been using "Hoptoad":http://hoptoadapp.com/ to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple @include HoptoadNotifier::Catcher@ in your @application.rb@, easy!
+
+However, I also wanted *Hoptoad* to track any exception which occurred in a cron job that was running with @script/runner@.  Again, a snap with *Hoptoad*, take a look:
+
+gist46014.
+
