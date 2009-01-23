@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+  <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+  <meta content='Les Hill' name='author' />
+  <title>
+    Wonderland &mdash; Archive for January 2009
+  </title>
+  <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
+  <!--[if IE]> <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" /> <![endif]-->
+  <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='http://blog.leshill.org/feed/atom.xml' rel='alternate' title='RSS feed' type='application/atom+xml' />
+</head>
+<body>
+  <div class='container'>
+    <div class='span-24' id='header'>
+      <div class='prepend-1 span-11 append-8'>
+        <a href='/'>
+          <img src='/images/title.png' />
+        </a>
+      </div>
+    </div>
+    <div class='span-24' id='main'>
+      <div class='prepend-1 span-15 append-1' id='content'>
+        <div class='span-15 height-1'></div>
+        <div class='span-15' id='content'>
+          <div class='archives'>
+            <h2>Archive for January 2009</h2>
+            <div class='title'>
+              <h2 class='entry-title'>
+                <a href='/blog/2009/01/12/using-hoptoad-with-script-runner.html'>
+                  Using Hoptoad With Script Runner
+                </a>
+              </h2>
+            </div>
+            <div class='post-date'>
+              <abbr class='published' title='Mon Jan 12 10:01:49 -0500 2009'>
+                Posted
+                January 12, 2009
+              </abbr>
+            </div>
+            <div class='entry-content'>
+              <p>I have been using <a href="http://hoptoadapp.com/">Hoptoad</a> to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple <code>include HoptoadNotifier::Catcher</code> in your <code>application.rb</code>, easy!</p>&#x000A;<p>However, I also wanted <strong>Hoptoad</strong> to track any exception which occurred in a cron job that was running with <code>script/runner</code>.  Again, a snap with <strong>Hoptoad</strong>, take a look:</p>&#x000A;<p><script src='http://gist.github.com/46014.js'></script></p>
+            </div>
+            <div class='title'>
+              <h2 class='entry-title'>
+                <a href='/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html'>
+                  Using S3 Authenticated-Read With Paperclip
+                </a>
+              </h2>
+            </div>
+            <div class='post-date'>
+              <abbr class='published' title='Thu Jan 01 09:46:16 -0500 2009'>
+                Posted
+                January 01, 2009
+              </abbr>
+            </div>
+            <div class='entry-content'>
+              <p><a href=":http://www.thoughtbot.com/projects/paperclip">Paperclip</a> supports <strong>AWS S3</strong> with a default of <em>public-read</em> access policy.  This allows anyone who knows the URL of the resource to access it.</p>&#x000A;<p>For some applications, you might want a more restricted access policy.  The <em>authenticated-read</em> access policy requires that the URL of the resource be presented by an authenticated user.</p>&#x000A;<p>To use <em>authenticated-read</em> with <strong>Paperclip</strong>:</p>&#x000A;<ul>&#x000A;	<li>set the <code>:s3_permissions</code> option on your attachment:</li>&#x000A;</ul>&#x000A;<pre><code>:s3_permssions =&gt; 'authenticated-read'</code></pre>&#x000A;<ul>&#x000A;	<li>use <code>RightAws::S3Interface#get_link</code> to generate an <em>authenticated-read</em> URL for the attachment:</li>&#x000A;</ul>&#x000A;<pre><code>def s3_url(style = nil, time_limit = 15.minutes)&#x000A;  attachment.s3.interface.get_link(attachment.s3_bucket.to_s, attachment.path(style), time_limit)&#x000A;end </code></pre>&#x000A;<p>If you do not normally need to time limit the access, use <code>nil</code> as the default value for <code>time_limit</code></p>
+            </div>
+            <div class='prepend-1 span-15'>
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='span-6 append-1 last' id='sidebar'>
+        <div class='span-6 height-1'></div>
+        <div class='prepend-1 span-5'>
+          <h3>About</h3>
+          <ul>
+            <li>
+              Les Hill is a software adventurer who works with
+              <a href='http://www.ruby-lang.org'>Ruby</a>
+              at
+              <a href='http://hashrocket.com'>Hashrocket</a>
+              .
+            </li>
+          </ul>
+        </div>
+        <div class='prepend-1 span-5 prepend-top'>
+          <h3>Subscribe</h3>
+          <ul>
+            <li>
+              <a class='feed' href='/feed/atom.xml'>RSS</a>
+            </li>
+          </ul>
+        </div>
+        <div class='prepend-1 span-5 prepend-top'>
+          <div class='archives'>
+            <h3>Archives</h3>
+            <ul>
+              <li class='year'>
+                <a href='/blog/2009'>2009</a>
+                <ul>
+                  <li class='month'>
+                    <a href='/blog/2009/01'>January</a>
+                  </li>
+                </ul>
+              </li>
+              <li class='year'>
+                <a href='/blog/2008'>2008</a>
+                <ul>
+                  <li class='month'>
+                    <a href='/blog/2008/2'>February</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/5'>May</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/7'>July</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/8'>August</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/10'>October</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/12'>December</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='span-24' id='footer'>
+      <p>
+        Wonderland is styled using
+        <a href='http://www.blueprintcss.org/'>blueprint css</a>
+        and powered by
+        <a href='http://webby.rubyforge.org/'>Webby</a>
+      </p>
+      <p>
+        Les Hill &copy; 2008
+      </p>
+    </div>
+  </div>
+</body>

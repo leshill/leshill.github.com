@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+  <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+  <meta content='Les Hill' name='author' />
+  <title>
+    Wonderland &mdash; Home
+  </title>
+  <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
+  <!--[if IE]> <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" /> <![endif]-->
+  <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='http://blog.leshill.org/feed/atom.xml' rel='alternate' title='RSS feed' type='application/atom+xml' />
+</head>
+<body>
+  <div class='container'>
+    <div class='span-24' id='header'>
+      <div class='prepend-1 span-11 append-8'>
+        <a href='/'>
+          <img src='/images/title.png' />
+        </a>
+      </div>
+    </div>
+    <div class='span-24' id='main'>
+      <div class='prepend-1 span-15 append-1' id='content'>
+        <div class='span-15 height-1'></div>
+        <div class='span-15' id='content'>
+          <div class='title'>
+            <h2 class='entry-title'>
+              <a href='/blog/2008/8/15/obvious-money.txt'>
+                Obvious Money
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Fri Aug 15 09:00:42 -0400 2008'>
+              Posted
+              August 15, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p><a href="http://www.loudthinking.com">David Heinemeier Hansson</a> recently gave an awesome talk  titled <a href="http://www.omnisio.com/startupschool08/david-heinemeier-hansson-at-startup-school-08">The secret to making money online</a> at the <a href="http://ycombinator.com">Y Combinator</a> Startup School.  Aside from being entertaining, David keeps hammering at the VC-fueled dreams of today&#8217;s web entrepreneurs.  David has been at this for a long time, and what he is saying is <em>obvious</em> and <em>common-sense</em> (and David will tell you so).</p>&#x000A;<p>And yet, we always hear people talking about the <strong>Money Maker</strong>, or how they are going to target 1% of a <strong>$10 billion industry</strong>, or other self-defeating filters.  If you find yourself uttering those kind of phrases in response to your own ideas or the ideas of others, <strong>stop</strong>.</p>&#x000A;<p>Refocus on what the idea is, and evaluate it on its merits.  Thinking about how to build a <a href="http://www.37signals.com/svn/archives2/google_yahoo_microsoft_gym.php">GYM</a> acquisition or targeting a market that will attract $10 million in VC funding is a waste of your time.</p>&#x000A;<p>Should you ignore pricing and profits?  Maybe; if you do look at them, examine them in a reasonable context &#8212; what do I need to just run the service on a minimal server?  With no paid staff?  With minimal time commitments?  How would it look like if I had 100 customers?  1000 customers?</p>&#x000A;<p>Yes, this means you are no longer playing in the VC startup space<sup class="footnote"><a href="#fn1">1</a></sup>.  Cool.  If you really want to play there, you will be <strong>much</strong> better off playing there after you already have those 100 customers.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am unsure about investors like Y Combinator, as they <em>seem</em> to be advocates for this way of thinking.</p>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
+              <a href='/blog/2008/8/14/obvious-intangibles.txt'>
+                Obvious Intangibles
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Thu Aug 14 12:06:07 -0400 2008'>
+              Posted
+              August 14, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p><a href="http://sethgodin.typepad.com/seths_blog">Seth Godin</a> has just put up a fantastic post on <a href="http://sethgodin.typepad.com/seths_blog/2008/08/the-intangibles.html">The intangibles</a> &#8212; ways to set your product or service apart.</p>&#x000A;<p>Many of them read as <em>common-sense</em> or <em>obvious</em>, but like most <em>common-sense</em> and <em>obvious</em> advice, it is rarely actually practiced; often the advice is even actively dismissed with an annoyed &#8216;Of course we do that!&#8217; &#8212; only you do not do that, and you are fooling yourself by saying so.</p>&#x000A;<p>Take stock of what you are doing, and ask yourself if you are really doing the <em>common-sense</em> and <em>obvious</em> things.</p>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
+              <a href='/blog/2008/7/12/voodoo-send.html'>
+                Voodoo send
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Sat Jul 12 00:33:10 -0400 2008'>
+              Posted
+              July 12, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>Recently when looking through some plugin&#8217;s code, we found the following line:</p>&#x000A;<p><script src='http://gist.github.com/38693.js'></script></p>&#x000A;<p>This <em>seems</em> to be an acceptable variant of the commonly used</p>&#x000A;<p><script src='http://gist.github.com/38695.js'></script></p>&#x000A;<p>As you may have surmised, it is not an acceptable variant.  This is a <a href="http://en.wikipedia.org/wiki/Voodoo_programming">Voodoo programming</a> smell, as it indicates a misunderstanding of exactly what the semantics of <code>send</code> are.  There is also a clearer, more intention revealing, and identical<sup class="footnote"><a href="#fn1">1</a></sup> alternative <code>include Foo</code> or with the omitted parenthesis <code>include(Foo)</code> .</p>&#x000A;<p>This of course, leads us to why <code>ActiveRecord::Base.send(:include, Foo)</code> is acceptable.  The <code>include</code> method is private, so the most elegant way to invoke it on <em>another</em> object is by using <code>send</code>; this is possible because <code>send</code> ignores access control allowing us to invoke <code>include</code> directly.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> <em>Almost</em>, the difference is that <code>send</code> is in the call stack.</p>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
+              <a href='/blog/2008/7/1/rspec-1-dot-1-dot-4-and-helpers.html'>
+                RSpec 1.1.4 and Helpers
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Wed Jul 02 00:50:46 -0400 2008'>
+              Posted
+              July 02, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>Last week, <b>RSpec 1.1.4</b> was released; and given my optimistic disposition I immediately upgraded.  Happily, the upgrade was almost seamless.  Two interdependent issues kept this from being a flawless upgrade:</p>&#x000A;<ol>&#x000A;	<li>A new deprecation warning on our helper specs (<em>no one really likes to see deprecation warnings</em>)</li>&#x000A;	<li>A bug in the new way to write helper specs (<em>a show stopper</em>)</li>&#x000A;</ol>&#x000A;<p>Lets see what happens when we run our spec<sup class="footnote"><a href="#fn1">1</a></sup>.</p>&#x000A;<pre><code>Wonderland$ spec spec/helpers/dog_helper_spec.rb &#x000A;Modules will no longer be automatically included in RSpec version 1.1.4.  Called from ./spec/helpers/dog_helper_spec.rb:8&#x000A;.Modules will no longer be automatically included in RSpec version 1.1.4.  Called from ./spec/helpers/dog_helper_spec.rb:16&#x000A;.&#x000A;Finished in 0.393129 seconds&#x000A;2 examples, 0 failures</code></pre>&#x000A;<p>Lets examine the helper spec that generated these warnings:</p>&#x000A;<p><script src='http://gist.github.com/38679.js'></script></p>&#x000A;<p>So, what does this deprecation warning tell us?  We are being warned that calls to <strong>name_or_description</strong> and <strong>owner_link</strong>, which are called on the implicit <strong>self</strong> of the RSpec <em>it</em> blocks, are going to fail in the future when the helper module (<strong>DogHelper</strong> in this example) is no longer automatically included by RSpec.</p>&#x000A;<p>Or put another way, calling helper methods like <strong>name_or_description</strong> directly, <em>exactly as one might in a view</em>, will no longer work.</p>&#x000A;<p>The new way to call helper methods is through the <strong>helper</strong> attribute of RSpec, giving access to an <code>ActionView::Base</code> instance with the helper module included.  Lets go ahead and make this change to our two helper calls:</p>&#x000A;<p><script src='http://gist.github.com/38681.js'></script></p>&#x000A;<p>Lets try this out!</p>&#x000A;<pre><code>Wonderland$ spec spec/helpers/dog_helper_spec.rb &#x000A;.F&#x000A;1) NoMethodError in 'DogHelper owner_link() should return a link to the owner'&#x000A;You have a nil object when you didn't expect it!&#x000A;The error occurred while evaluating nil.url_for&#x000A;(eval):17:in `user_path'&#x000A;/Users/leshill/src/rails/rspec114/app/helpers/dog_helper.rb:9:in `owner_link'&#x000A;./spec/helpers/dog_helper_spec.rb:16:&#x000A;Finished in 0.398686 seconds&#x000A;2 examples, 1 failure</code></pre>&#x000A;<p>Hmmm, we have gotten rid of the deprecation warnings, but we now have a new (and truly unexpected!) failure.</p>&#x000A;<p>This is a bona-fide bug in 1.1.4, and might lead to our having to rollback to 1.1.3 if there was no easy workaround.  Thankfully, there is a fix already available for 1.1.5 , and that fix can be easily adapted within our own specs.</p>&#x000A;<p>Lets add this <strong>before</strong> block to our spec:</p>&#x000A;<p><script src='http://gist.github.com/38683.js'></script></p>&#x000A;<p>And then try it out:</p>&#x000A;<pre><code>Wonderland$ spec spec/helpers/dog_helper_spec.rb &#x000A;..&#x000A;Finished in 0.40663 seconds&#x000A;2 examples, 0 failures</code></pre>&#x000A;<p>Much better!</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am using a mock spec to demonstrate the issue, the minimal Rails app which fits around this spec is left as an exercise for the reader.</p>
+          </div>
+          <div class='prepend-1 span-15'>
+            <a href="/index2.html">&larr; Prev</a>
+            &nbsp;
+            <a href="/index4.html">Next &rarr;</a>
+          </div>
+        </div>
+      </div>
+      <div class='span-6 append-1 last' id='sidebar'>
+        <div class='span-6 height-1'></div>
+        <div class='prepend-1 span-5'>
+          <h3>About</h3>
+          <ul>
+            <li>
+              Les Hill is a software adventurer who works with
+              <a href='http://www.ruby-lang.org'>Ruby</a>
+              at
+              <a href='http://hashrocket.com'>Hashrocket</a>
+              .
+            </li>
+          </ul>
+        </div>
+        <div class='prepend-1 span-5 prepend-top'>
+          <h3>Subscribe</h3>
+          <ul>
+            <li>
+              <a class='feed' href='/feed/atom.xml'>RSS</a>
+            </li>
+          </ul>
+        </div>
+        <div class='prepend-1 span-5 prepend-top'>
+          <div class='archives'>
+            <h3>Archives</h3>
+            <ul>
+              <li class='year'>
+                <a href='/blog/2009'>2009</a>
+                <ul>
+                  <li class='month'>
+                    <a href='/blog/2009/01'>January</a>
+                  </li>
+                </ul>
+              </li>
+              <li class='year'>
+                <a href='/blog/2008'>2008</a>
+                <ul>
+                  <li class='month'>
+                    <a href='/blog/2008/2'>February</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/5'>May</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/7'>July</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/8'>August</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/10'>October</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/12'>December</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='span-24' id='footer'>
+      <p>
+        Wonderland is styled using
+        <a href='http://www.blueprintcss.org/'>blueprint css</a>
+        and powered by
+        <a href='http://webby.rubyforge.org/'>Webby</a>
+      </p>
+      <p>
+        Les Hill &copy; 2008
+      </p>
+    </div>
+  </div>
+</body>
