@@ -25,7 +25,7 @@ filter:    erb
   <% @pages.find(:limit => 10,
                  :in_directory => '',
                  :recursive => true,
-                 :sort_by => 'mtime',
+                 :sort_by => 'created_at',
                  :reverse => true,
 		 :blog_post => true).each do |article|
   %>
