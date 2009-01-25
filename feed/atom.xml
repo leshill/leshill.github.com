@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-01-24T09:53:01-05:00</updated>
+  <updated>2009-01-24T22:42:37-05:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -13,38 +13,88 @@
   <id>http://blog.leshill.org/</id>
   
   <entry>
-    <title>Using Hoptoad With Script Runner</title>
-    <link href="/blog/2009/01/12/using-hoptoad-with-script-runner.html" />
+    <title>Webby, Meet GitHub Pages</title>
+    <link href="/blog/2009/01/24/webby-meet-github-pages.html" />
     
-    <id>tag:blog.leshill.org,2009-01-12:1231772509</id>
+    <id>tag:blog.leshill.org,2009-01-24:1232819655</id>
     
-    <updated>2009-01-12T10:01:49-05:00</updated>
-    <content type="html">&lt;p&gt;I have been using &lt;a href=&quot;http://hoptoadapp.com/&quot;&gt;Hoptoad&lt;/a&gt; to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple &lt;code&gt;include HoptoadNotifier::Catcher&lt;/code&gt; in your &lt;code&gt;application.rb&lt;/code&gt;, easy!&lt;/p&gt;
-&lt;p&gt;However, I also wanted &lt;strong&gt;Hoptoad&lt;/strong&gt; to track any exception which occurred in a cron job that was running with &lt;code&gt;script/runner&lt;/code&gt;.  Again, a snap with &lt;strong&gt;Hoptoad&lt;/strong&gt;, take a look:&lt;/p&gt;
-&lt;p&gt;&lt;script src='http://gist.github.com/46014.js'&gt;&lt;/script&gt;&lt;/p&gt;</content>
+    <updated>2009-01-24T12:54:15-05:00</updated>
+    <content type="html">&lt;p&gt;As of this post, this blog is now hosted by GitHub&amp;#8217;s recently announced &lt;a href=&quot;http://github.com/blog/272-github-pagesi&quot;&gt;GitHub Pages&lt;/a&gt;, still &lt;a href=&quot;http://webby.rubyforge.org&quot;&gt;Webby&lt;/a&gt; powered, now with extra &lt;em&gt;git&lt;/em&gt; goodness.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;GitHub Pages&lt;/strong&gt; generates a static site from a GitHub hosted repo, using &lt;a href=&quot;http://github.com/mojombo/jekyll&quot;&gt;Jekyll&lt;/a&gt; to generate the files.  &lt;strong&gt;Jekyll&lt;/strong&gt; understands two special directories &lt;code&gt;_posts&lt;/code&gt; and &lt;code&gt;_layouts&lt;/code&gt;, copying any other files and directories in the root of the repo that do not begin with an &lt;code&gt;_&lt;/code&gt; directly to the static site.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Webby&lt;/strong&gt; generates a static site from set of source files (&lt;code&gt;content&lt;/code&gt;, &lt;code&gt;layouts&lt;/code&gt;, etc), placing the results in the &lt;code&gt;output_dir&lt;/code&gt; (defaults to &lt;code&gt;output&lt;/code&gt; but can be changed.)&lt;/p&gt;
+&lt;p&gt;To make &lt;strong&gt;Webby&lt;/strong&gt; and &lt;strong&gt;GitHub Pages&lt;/strong&gt; co-exist, I restructured my repo:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;The root of the repo is the &lt;code&gt;output_dir&lt;/code&gt; for &lt;strong&gt;Webby&lt;/strong&gt;&lt;/li&gt;
+	&lt;li&gt;The &lt;strong&gt;Webby&lt;/strong&gt; site (source files) are in a subdirectory name &lt;code&gt;_webby&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;The &lt;code&gt;webby&lt;/code&gt; command line tool should be run from within the &lt;code&gt;_webby&lt;/code&gt; directory, not the root of the repo&lt;/li&gt;
+	&lt;li&gt;The &lt;strong&gt;Webby&lt;/strong&gt; &lt;code&gt;clobber&lt;/code&gt; target is overridden to ignore the &lt;code&gt;_webby&lt;/code&gt; directory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I had to make the following changes to my existing &lt;strong&gt;Webby&lt;/strong&gt; site:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;A new &lt;code&gt;Sitefile&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/51667.js'&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;Found some code &lt;a href=&quot;http://www.taknado.com/2007/7/30/overriding-rake-tasks&quot;&gt;here&lt;/a&gt; to allow overriding &lt;strong&gt;Rake&lt;/strong&gt; tasks, this is &lt;code&gt;lib/override.rb&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/51669.js'&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;Redefined &lt;code&gt;clobber&lt;/code&gt; and created &lt;code&gt;clean_build&lt;/code&gt; task to allow for file deletions, this is &lt;code&gt;tasks/github_pages.rake&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/51670.js'&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;The new workflow for adding a post to the new site is:&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;Change directory to &lt;code&gt;_webby&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;Generate a new blog post&lt;/li&gt;
+	&lt;li&gt;Run &lt;code&gt;webby autobuild&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;Edit until completed&lt;/li&gt;
+	&lt;li&gt;Commit all changes locally (&lt;code&gt;git add .&lt;/code&gt; from the root)&lt;/li&gt;
+	&lt;li&gt;Push the changes&lt;/li&gt;
+&lt;/ol&gt;</content>
   </entry>
   
   <entry>
-    <title>Using S3 Authenticated-Read With Paperclip</title>
-    <link href="/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html" />
+    <title>Information Addicted</title>
+    <link href="/blog/2008/10/27/information-addicted.html" />
     
-    <id>tag:blog.leshill.org,2009-01-01:1230821176</id>
+    <id>tag:blog.leshill.org,2008-10-27:34</id>
     
-    <updated>2009-01-01T09:46:16-05:00</updated>
-    <content type="html">&lt;p&gt;&lt;a href=&quot;:http://www.thoughtbot.com/projects/paperclip&quot;&gt;Paperclip&lt;/a&gt; supports &lt;strong&gt;AWS S3&lt;/strong&gt; with a default of &lt;em&gt;public-read&lt;/em&gt; access policy.  This allows anyone who knows the URL of the resource to access it.&lt;/p&gt;
-&lt;p&gt;For some applications, you might want a more restricted access policy.  The &lt;em&gt;authenticated-read&lt;/em&gt; access policy requires that the URL of the resource be presented by an authenticated user.&lt;/p&gt;
-&lt;p&gt;To use &lt;em&gt;authenticated-read&lt;/em&gt; with &lt;strong&gt;Paperclip&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;set the &lt;code&gt;:s3_permissions&lt;/code&gt; option on your attachment:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;:s3_permssions =&amp;gt; 'authenticated-read'&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-	&lt;li&gt;use &lt;code&gt;RightAws::S3Interface#get_link&lt;/code&gt; to generate an &lt;em&gt;authenticated-read&lt;/em&gt; URL for the attachment:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;def s3_url(style = nil, time_limit = 15.minutes)
-  attachment.s3.interface.get_link(attachment.s3_bucket.to_s, attachment.path(style), time_limit)
-end &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you do not normally need to time limit the access, use &lt;code&gt;nil&lt;/code&gt; as the default value for &lt;code&gt;time_limit&lt;/code&gt;&lt;/p&gt;</content>
+    <updated>2008-10-27T10:01:58-04:00</updated>
+    <content type="html">&lt;p&gt;Sunday, the &lt;a href=&quot;http://www.nytimes.com/&quot;&gt;New York Times&lt;/a&gt; had an &lt;a href=&quot;http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&amp;amp;scp=1&amp;amp;sq=boot%20time&amp;amp;st=cse&amp;amp;oref=slogin&quot;&gt;article&lt;/a&gt; about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.&lt;/p&gt;
+&lt;p&gt;First, I rarely reboot my MacBook Pro; I just put the machine to sleep and wake it (and this is easily accomplished by closing and opening the lid).&lt;/p&gt;
+&lt;p&gt;Second, I rarely reboot my phone; it also seems to sleep&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;Third, the context driving this &lt;em&gt;War on Boot Times&lt;/em&gt; is our increasing dependence on external information sources.  Think back to 1988&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and you may recall a time when finding out what movies to see while you were away from a newspaper was a non-trivial task.  Now with a smart phone or a WiFi connected laptop, all the information to answer your question is readily available at a moment&amp;#8217;s notice.  Think back to when you were out and would say: &amp;#8216;I wish I could Google that&amp;#8217;; now you just do it no matter where you are.&lt;/p&gt;
+&lt;p&gt;The PC makers are fighting the last war.  This whole concept of reducing boot times is irrelevant.  The device should already be on and waiting on us.  No wait, make that &lt;em&gt;The Cloud&lt;/em&gt; &lt;strong&gt;is&lt;/strong&gt; already waiting on us.&lt;/p&gt;
+&lt;p&gt;The trend is for &lt;strong&gt;more information, delivered faster, and requested instantaneously&lt;/strong&gt;.  Someone should tell the PC makers.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; I am unsure exactly what the phone is doing when it is &lt;em&gt;asleep&lt;/em&gt;.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Moviefone was created in 1989.&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Obvious Intangibles</title>
+    <link href="/blog/2008/8/14/obvious-intangibles.txt" />
+    
+    <id>tag:blog.leshill.org,2008-08-14:21</id>
+    
+    <updated>2008-08-14T12:06:07-04:00</updated>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://sethgodin.typepad.com/seths_blog&quot;&gt;Seth Godin&lt;/a&gt; has just put up a fantastic post on &lt;a href=&quot;http://sethgodin.typepad.com/seths_blog/2008/08/the-intangibles.html&quot;&gt;The intangibles&lt;/a&gt; &amp;#8212; ways to set your product or service apart.&lt;/p&gt;
+&lt;p&gt;Many of them read as &lt;em&gt;common-sense&lt;/em&gt; or &lt;em&gt;obvious&lt;/em&gt;, but like most &lt;em&gt;common-sense&lt;/em&gt; and &lt;em&gt;obvious&lt;/em&gt; advice, it is rarely actually practiced; often the advice is even actively dismissed with an annoyed &amp;#8216;Of course we do that!&amp;#8217; &amp;#8212; only you do not do that, and you are fooling yourself by saying so.&lt;/p&gt;
+&lt;p&gt;Take stock of what you are doing, and ask yourself if you are really doing the &lt;em&gt;common-sense&lt;/em&gt; and &lt;em&gt;obvious&lt;/em&gt; things.&lt;/p&gt;</content>
+  </entry>
+  
+  <entry>
+    <title>Obvious Money</title>
+    <link href="/blog/2008/8/15/obvious-money.txt" />
+    
+    <id>tag:blog.leshill.org,2008-08-15:22</id>
+    
+    <updated>2008-08-15T09:00:42-04:00</updated>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://www.loudthinking.com&quot;&gt;David Heinemeier Hansson&lt;/a&gt; recently gave an awesome talk  titled &lt;a href=&quot;http://www.omnisio.com/startupschool08/david-heinemeier-hansson-at-startup-school-08&quot;&gt;The secret to making money online&lt;/a&gt; at the &lt;a href=&quot;http://ycombinator.com&quot;&gt;Y Combinator&lt;/a&gt; Startup School.  Aside from being entertaining, David keeps hammering at the VC-fueled dreams of today&amp;#8217;s web entrepreneurs.  David has been at this for a long time, and what he is saying is &lt;em&gt;obvious&lt;/em&gt; and &lt;em&gt;common-sense&lt;/em&gt; (and David will tell you so).&lt;/p&gt;
+&lt;p&gt;And yet, we always hear people talking about the &lt;strong&gt;Money Maker&lt;/strong&gt;, or how they are going to target 1% of a &lt;strong&gt;$10 billion industry&lt;/strong&gt;, or other self-defeating filters.  If you find yourself uttering those kind of phrases in response to your own ideas or the ideas of others, &lt;strong&gt;stop&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Refocus on what the idea is, and evaluate it on its merits.  Thinking about how to build a &lt;a href=&quot;http://www.37signals.com/svn/archives2/google_yahoo_microsoft_gym.php&quot;&gt;GYM&lt;/a&gt; acquisition or targeting a market that will attract $10 million in VC funding is a waste of your time.&lt;/p&gt;
+&lt;p&gt;Should you ignore pricing and profits?  Maybe; if you do look at them, examine them in a reasonable context &amp;#8212; what do I need to just run the service on a minimal server?  With no paid staff?  With minimal time commitments?  How would it look like if I had 100 customers?  1000 customers?&lt;/p&gt;
+&lt;p&gt;Yes, this means you are no longer playing in the VC startup space&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.  Cool.  If you really want to play there, you will be &lt;strong&gt;much&lt;/strong&gt; better off playing there after you already have those 100 customers.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; I am unsure about investors like Y Combinator, as they &lt;em&gt;seem&lt;/em&gt; to be advocates for this way of thinking.&lt;/p&gt;</content>
   </entry>
   
   <entry>
@@ -68,143 +118,139 @@ end &lt;/code&gt;&lt;/pre&gt;
   </entry>
   
   <entry>
-    <title>Hello Webby!</title>
-    <link href="/blog/2008/12/22/hello-webby.html" />
+    <title>A Little Bit of History</title>
+    <link href="/blog/2008/5/8/a-little-bit-of-history.html" />
     
-    <id>tag:blog.leshill.org,2008-12-22:1229996093</id>
+    <id>tag:blog.leshill.org,2008-05-08:8</id>
     
-    <updated>2008-12-22T20:34:53-05:00</updated>
-    <content type="html">&lt;p&gt;As of this post, I am using publishing &lt;strong&gt;Wonderland&lt;/strong&gt; with &lt;a href=&quot;http://webby.rubyforge.org&quot;&gt;Webby&lt;/a&gt; .&lt;/p&gt;
-&lt;p&gt;Some of the things I like about &lt;strong&gt;Webby&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;desktop based &amp;#8212; updates are made on my laptop, giving me a wider choice of tools for writing this blog &lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
-	&lt;li&gt;static pages &amp;#8212; the blog site is served from &lt;strong&gt;Apache&lt;/strong&gt; as pure html files, there is no requirement to run a blogging server &lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn3&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
-	&lt;li&gt;extensible &amp;#8212; &lt;strong&gt;Webby&lt;/strong&gt; can be extended both with rake tasks and Ruby code&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn4&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; Yes, this explains why I have not written a post recently.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; This post was edited with MacVim.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt; I know, old school, some &lt;a href=&quot;http://www.nedbatchelder.com&quot;&gt;folks&lt;/a&gt; have been publishing this way for a long time.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn4&quot;&gt;&lt;sup&gt;4&lt;/sup&gt; Easy! A one-liner &lt;a href=&quot;http://gist.github.com&quot;&gt;gist&lt;/a&gt; filter.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Webby::Filters.register :gist { |input| input.gsub(/gist(\d+)\./) { |s| &quot;&amp;lt;script src='http://gist.github.com/#{$1}.js'&amp;gt;&amp;lt;/script&amp;gt;&quot; } }
-&lt;/code&gt;&lt;/pre&gt;</content>
+    <updated>2008-05-08T20:10:16-04:00</updated>
+    <content type="html">&lt;p&gt;I am a bit late on the history &lt;a href=&quot;http://diveintomark.org/archives/2008/04/15/history-meme&quot;&gt;meme&lt;/a&gt;.  Here I am:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Wonderland$ history | awk '{a[$2]++}END{for(i in a){print a[i] &quot; &quot; i}}' | sort -rn | head
+149 git
+60 spec
+46 ls
+45 gst
+42 cd
+28 rake
+14 ssh
+8 ss
+7 houston
+7 gco&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Things to note&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;3 are git&lt;/li&gt;
+	&lt;li&gt;3 are Rails development related&lt;/li&gt;
+	&lt;li&gt;4 are common unix commands&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; 4 are aliases&lt;/p&gt;</content>
   </entry>
   
   <entry>
-    <title>Information Addicted</title>
-    <link href="/blog/2008/10/27/information-addicted.html" />
+    <title>Monkey Patch!</title>
+    <link href="/blog/2008/2/22/monkey-patch.html" />
     
-    <id>tag:blog.leshill.org,2008-10-27:34</id>
+    <id>tag:blog.leshill.org,2008-02-22:1203696542</id>
     
-    <updated>2008-10-27T10:01:58-04:00</updated>
-    <content type="html">&lt;p&gt;Sunday, the &lt;a href=&quot;http://www.nytimes.com/&quot;&gt;New York Times&lt;/a&gt; had an &lt;a href=&quot;http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&amp;amp;scp=1&amp;amp;sq=boot%20time&amp;amp;st=cse&amp;amp;oref=slogin&quot;&gt;article&lt;/a&gt; about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.&lt;/p&gt;
-&lt;p&gt;First, I rarely reboot my MacBook Pro; I just put the machine to sleep and wake it (and this is easily accomplished by closing and opening the lid).&lt;/p&gt;
-&lt;p&gt;Second, I rarely reboot my phone; it also seems to sleep&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;Third, the context driving this &lt;em&gt;War on Boot Times&lt;/em&gt; is our increasing dependence on external information sources.  Think back to 1988&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and you may recall a time when finding out what movies to see while you were away from a newspaper was a non-trivial task.  Now with a smart phone or a WiFi connected laptop, all the information to answer your question is readily available at a moment&amp;#8217;s notice.  Think back to when you were out and would say: &amp;#8216;I wish I could Google that&amp;#8217;; now you just do it no matter where you are.&lt;/p&gt;
-&lt;p&gt;The PC makers are fighting the last war.  This whole concept of reducing boot times is irrelevant.  The device should already be on and waiting on us.  No wait, make that &lt;em&gt;The Cloud&lt;/em&gt; &lt;strong&gt;is&lt;/strong&gt; already waiting on us.&lt;/p&gt;
-&lt;p&gt;The trend is for &lt;strong&gt;more information, delivered faster, and requested instantaneously&lt;/strong&gt;.  Someone should tell the PC makers.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; I am unsure exactly what the phone is doing when it is &lt;em&gt;asleep&lt;/em&gt;.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Moviefone was created in 1989.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Tip: Using Haml With ActionMailer</title>
-    <link href="/blog/2008/10/19/tip-using-haml-with-actionmailer.html" />
-    
-    <id>tag:blog.leshill.org,2008-10-20:33</id>
-    
-    <updated>2008-10-19T21:54:10-04:00</updated>
-    <content type="html">&lt;p&gt;You can use Haml to write your mailer views and still use the implicit multipart template feature by letting &lt;code&gt;ActionMailer&lt;/code&gt; know about Haml:&lt;/p&gt;
-&lt;p&gt;&lt;script src='http://gist.github.com/38723.js'&gt;&lt;/script&gt;&lt;/p&gt;
+    <updated>2008-02-22T11:09:02-05:00</updated>
+    <content type="html">&lt;p&gt;So after missing the wisdom&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; of this:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://xkcd.com/386&quot;&gt;http://xkcd.com/386&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;And responding to this:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript&quot;&gt;http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I went to bed.&lt;/p&gt;
+&lt;p&gt;This morning I wrote my first &lt;b&gt;Rails&lt;/b&gt; (really &lt;b&gt;Haml&lt;/b&gt;) &lt;i&gt;Monkey Patch&lt;/i&gt;&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.  This adds some of what Steve wanted: undisturbed inline javascript with variable interpolation.  I am not sure what else he wanted as I did not read his blog carefully :)&lt;/p&gt;
+&lt;p&gt;Throw this into &lt;code&gt;lib/inline_javascript.rb&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/33531.js'&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;Throw this at the bottom of your &lt;code&gt;environment.rb&lt;/code&gt;, taken from here &lt;a href=&quot;http://groups.google.com/group/haml/msg/2d890cf1ede761ea&quot;&gt;http://groups.google.com/group/haml/msg/2d890cf1ede761ea&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/33532.js'&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;And then do this in your &lt;b&gt;Haml&lt;/b&gt; file:&lt;/p&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/33533.js'&gt;&lt;/script&gt;&lt;/p&gt;
 &lt;h2&gt;Update&lt;/h2&gt;
-&lt;p&gt;This is no longer necessary with &lt;strong&gt;Rails 2.2&lt;/strong&gt; and &lt;strong&gt;Haml 2.0.5&lt;/strong&gt; .&lt;/p&gt;</content>
+&lt;p&gt;I decided to make a patch and submit it to the &lt;b&gt;Haml&lt;/b&gt; folks directly.  This gave me the &amp;#8216;opportunity&amp;#8217; to get &lt;b&gt;git&lt;/b&gt; going.&lt;/p&gt;
+&lt;p&gt;Nathan Weizenbaum took the time to put in a more comprehensive fix to expose the interpolation functionality to all filters &amp;#8212; look for it in an upcoming release.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; It&amp;#8217;s turtles all the way down.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; You do not want to know what my subconscious originally thought up as the way to do this &amp;#8212; that was twisted.&lt;/p&gt;</content>
   </entry>
   
   <entry>
-    <title>Git: Setting Your Upstream Default</title>
-    <link href="/blog/2008/8/24/git-setting-your-upstream-default.html" />
+    <title>A participation deficit</title>
+    <link href="/blog/2008/5/11/a-participation-deficit.html" />
     
-    <id>tag:blog.leshill.org,2008-08-24:25</id>
+    <id>tag:blog.leshill.org,2008-05-12:11</id>
     
-    <updated>2008-08-24T20:28:02-04:00</updated>
-    <content type="html">&lt;p&gt;I  recently set up a new repository on &lt;a href=&quot;http://www.github.com/&quot;&gt;github&lt;/a&gt;.  Creating the repository on github yields a page of instructions covering the two common scenarios: new and existing repositories.  After following the new repository instructions,  I had a repository on github, a local repository, and the following in response to my &lt;code&gt;git pull&lt;/code&gt; command:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;You asked me to pull without telling me which branch you want to merge with, and 'branch.master.merge' in your configuration file does not tell me either.  Please name which branch you want to merge on the command line and try again (e.g. 'git pull &amp;lt;repository&amp;gt; &amp;lt;refspec&amp;gt;'). See git-pull(1) for details on the refspec.
-  
-If you often merge with the same branch, you may want to configure the following variables in your configuration file:
-  
-  branch.master.remote = &amp;lt;nickname&amp;gt;
-  branch.master.merge = &amp;lt;remote-ref&amp;gt;
-  remote.&amp;lt;nickname&amp;gt;.url = &amp;lt;url&amp;gt;
-  remote.&amp;lt;nickname&amp;gt;.fetch = &amp;lt;refspec&amp;gt;
-  
-See git-config(1) for details.&lt;/code&gt;
-
-&lt;/pre&gt;
-&lt;p&gt;Not exactly what I wanted, and certainly not what I expected.  What I &lt;em&gt;expected&lt;/em&gt; was a local repository with the upstream for &lt;strong&gt;master&lt;/strong&gt; to be set to point at &lt;strong&gt;master&lt;/strong&gt; on the github repository.&lt;/p&gt;
-&lt;p&gt;Setting this up can be done easily in two similar ways:&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;You can edit the configuration file as directed by the error message&lt;/li&gt;
-	&lt;li&gt;You can use &lt;code&gt;git config&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I opted for &lt;code&gt;git config&lt;/code&gt; as it was easier and required no thinking &amp;#8212; the commands are always the same&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;; here they are:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% git config branch.master.remote origin
-% git config branch.master.merge refs/heads/master&lt;/code&gt;&lt;/pre&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; For the scenario of a local empty repository pushed up to a remote, where the remote will be the upstream master.&lt;/p&gt;</content>
+    <updated>2008-05-11T22:02:01-04:00</updated>
+    <content type="html">&lt;p&gt;&lt;a href=&quot;http://www.shirky.com&quot;&gt;Clay Shirky&lt;/a&gt; is brilliant, and I have been reading his essays for a very long time&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.  Recently, he has been discussing his notion of a &lt;a href=&quot;http://www.herecomeseverybody.org/2008/04/looking-for-the-mouse.html&quot;&gt;Cognitive Surplus&lt;/a&gt; .  Good stuff; if you have not read it, go read it now.&lt;/p&gt;
+&lt;p&gt;The headline is that if we just switch 1% of yearly TV consumption hours to &amp;#8216;participation&amp;#8217; we get the equivalent of 100 Wikipedia projects a year (that is development, comments, authors, editors, talk; the whole corpus as it stands today).&lt;/p&gt;
+&lt;p&gt;This the &lt;em&gt;Cognitive Surplus&lt;/em&gt;; previously the surplus was masked by mind-numbing television until we switched from just being able to &lt;em&gt;consume&lt;/em&gt; media to &lt;strong&gt;consuming, producing, and sharing&lt;/strong&gt; media.&lt;/p&gt;
+&lt;p&gt;We are in a new media landscape, transformed irrevocably from mass consumption of media due to the communication advances of the last few decades.&lt;/p&gt;
+&lt;p&gt;Those advances enabled us to erase a &lt;strong&gt;participation deficit&lt;/strong&gt;.  The way the deficit manifested for me was an apparent inability to be alone (so says my wife) in spite of being a person who values solitude.  Before the nascent intertubes, I had no way to participate.  I could (&lt;em&gt;and did&lt;/em&gt;) watch television.  But I also did many other things, including hack on computers.  Only there was no sharing, no participation.  Once the nascent intertubes arrived, I&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and many others did participate.  Our participation accelerated on the wave of Moore&amp;#8217;s and Metcalfe&amp;#8217;s laws to transform society in ways we could not anticipate, but that we were already exploring.  We still cannot anticipate how we are changing society, and we are still exploring.&lt;/p&gt;
+&lt;p&gt;If you have read this, take a moment and write your own blog entry or tweet or upload a photo/video or post a message or whatever-social-sharing-thing-you-might-do and revel in your participation.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; A decade?&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; My first email (lost forever) was in 1982.&lt;/p&gt;</content>
   </entry>
   
   <entry>
-    <title>Focusing Autotest</title>
-    <link href="/blog/2008/8/24/focusing-autotest.html" />
+    <title>Stone knives and bearskins</title>
+    <link href="/blog/2008/5/6/stone-knives-and-bearskins.html" />
     
-    <id>tag:blog.leshill.org,2008-08-24:24</id>
+    <id>tag:blog.leshill.org,2008-05-06:7</id>
     
-    <updated>2008-08-24T10:53:57-04:00</updated>
-    <content type="html">&lt;p&gt;The usual &lt;a href=&quot;http://www.zenspider.com/ZSS/Products/ZenTest&quot;&gt;autotest&lt;/a&gt; workflow goes something like this:&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;Edit and save&lt;/li&gt;
-	&lt;li&gt;Autotest runs associated specs&lt;/li&gt;
-	&lt;li&gt;Are there failures?  Fix and start over&lt;/li&gt;
-	&lt;li&gt;Autotest runs the entire suite&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Sometimes though, you want autotest to just ignore most of your specs and focus on a few specs.&lt;/p&gt;
-&lt;p&gt;Last week, while Kevin, Rick, and Yossef  (&lt;a href=&quot;http://bl.ogtastic.com&quot;&gt;OG&lt;/a&gt;) were here, they  shared an autotest tweak that does exactly that.&lt;/p&gt;
-&lt;p&gt;The tweak allows you to specify a regular expression to limit the files which autotest watches; for example, to autotest only files matching &lt;code&gt;*user*.rb&lt;/code&gt; you would start autotest like so (&lt;em&gt;atest&lt;/em&gt; is an alias):&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% atest user&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here is the (lightly modified) code to do this; in your &lt;code&gt;.autotest&lt;/code&gt; file add:&lt;/p&gt;
-&lt;p&gt;&lt;script src='http://gist.github.com/38700.js'&gt;&lt;/script&gt;&lt;/p&gt;
-&lt;p&gt;And in your &lt;code&gt;.bash_profile&lt;/code&gt; add:&lt;/p&gt;
-&lt;p&gt;&lt;script src='http://gist.github.com/38702.js'&gt;&lt;/script&gt;&lt;/p&gt;
-&lt;p&gt;Now use the alias to invoke autotest.  For standard autotest behavior:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% atest&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To limit what autotest is watching, pass a regular expression (which can be a simple string):&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% atest user.*html
-&lt;/code&gt;&lt;/pre&gt;</content>
+    <updated>2008-05-06T01:26:53-04:00</updated>
+    <content type="html">&lt;p&gt;Recently while discussing &lt;a href=&quot;http://jquery.com/&quot;&gt;jQuery&lt;/a&gt;, we got onto the topic of &lt;a href=&quot;http://en.wikipedia.org/wiki/Ajax_%28programming%29&quot;&gt;AJAX&lt;/a&gt;.  This prompted me to declare:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Before AJAX, we used stone knives and bearskins to make our web apps&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Actually, we were using JavaScript and XML to drive our web apps, we just did not call it AJAX, and it was a very challenging task.  In spite of the difficulty of building it, we stuck with it and we were pretty darn happy with our &lt;strong&gt;pre-web 2.0 web2.0&lt;/strong&gt; app; so much so that we actually had people coming by just to see our UI in action.&lt;/p&gt;
+&lt;p&gt;I went back and looked for some of our old code, hoping to find the CVS repository&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, but only finding a tarball of version 1.4.  The following code is from &lt;code&gt;client/script/services.js&lt;/code&gt; and dated &lt;strong&gt;August 24, 2001&lt;/strong&gt; &amp;#8212; although some version of this code would have existed in the spring of &lt;strong&gt;2000&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/38524.js'&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;Just looking at this snippet from our internal library makes me all the happier that we made the thing work at all.  Kudos to &lt;a href=&quot;http://markjudd.com&quot;&gt;Mark Judd&lt;/a&gt; and &lt;a href=&quot;http://brianlevine.blogspot.com&quot;&gt;Brian Levine&lt;/a&gt;, two of our very talented small team, who were responsible for our UI.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; You already know this, but just in case, CVS was a source code repository that pretty much everyone used before Subversion (unless you bought one from a vendor).&lt;/p&gt;</content>
   </entry>
   
   <entry>
-    <title>Obvious Money</title>
-    <link href="/blog/2008/8/15/obvious-money.txt" />
+    <title>RSpec 1.1.4 and Helpers</title>
+    <link href="/blog/2008/7/1/rspec-1-dot-1-dot-4-and-helpers.html" />
     
-    <id>tag:blog.leshill.org,2008-08-15:22</id>
+    <id>tag:blog.leshill.org,2008-07-02:17</id>
     
-    <updated>2008-08-15T09:00:42-04:00</updated>
-    <content type="html">&lt;p&gt;&lt;a href=&quot;http://www.loudthinking.com&quot;&gt;David Heinemeier Hansson&lt;/a&gt; recently gave an awesome talk  titled &lt;a href=&quot;http://www.omnisio.com/startupschool08/david-heinemeier-hansson-at-startup-school-08&quot;&gt;The secret to making money online&lt;/a&gt; at the &lt;a href=&quot;http://ycombinator.com&quot;&gt;Y Combinator&lt;/a&gt; Startup School.  Aside from being entertaining, David keeps hammering at the VC-fueled dreams of today&amp;#8217;s web entrepreneurs.  David has been at this for a long time, and what he is saying is &lt;em&gt;obvious&lt;/em&gt; and &lt;em&gt;common-sense&lt;/em&gt; (and David will tell you so).&lt;/p&gt;
-&lt;p&gt;And yet, we always hear people talking about the &lt;strong&gt;Money Maker&lt;/strong&gt;, or how they are going to target 1% of a &lt;strong&gt;$10 billion industry&lt;/strong&gt;, or other self-defeating filters.  If you find yourself uttering those kind of phrases in response to your own ideas or the ideas of others, &lt;strong&gt;stop&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Refocus on what the idea is, and evaluate it on its merits.  Thinking about how to build a &lt;a href=&quot;http://www.37signals.com/svn/archives2/google_yahoo_microsoft_gym.php&quot;&gt;GYM&lt;/a&gt; acquisition or targeting a market that will attract $10 million in VC funding is a waste of your time.&lt;/p&gt;
-&lt;p&gt;Should you ignore pricing and profits?  Maybe; if you do look at them, examine them in a reasonable context &amp;#8212; what do I need to just run the service on a minimal server?  With no paid staff?  With minimal time commitments?  How would it look like if I had 100 customers?  1000 customers?&lt;/p&gt;
-&lt;p&gt;Yes, this means you are no longer playing in the VC startup space&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.  Cool.  If you really want to play there, you will be &lt;strong&gt;much&lt;/strong&gt; better off playing there after you already have those 100 customers.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; I am unsure about investors like Y Combinator, as they &lt;em&gt;seem&lt;/em&gt; to be advocates for this way of thinking.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Obvious Intangibles</title>
-    <link href="/blog/2008/8/14/obvious-intangibles.txt" />
-    
-    <id>tag:blog.leshill.org,2008-08-14:21</id>
-    
-    <updated>2008-08-14T12:06:07-04:00</updated>
-    <content type="html">&lt;p&gt;&lt;a href=&quot;http://sethgodin.typepad.com/seths_blog&quot;&gt;Seth Godin&lt;/a&gt; has just put up a fantastic post on &lt;a href=&quot;http://sethgodin.typepad.com/seths_blog/2008/08/the-intangibles.html&quot;&gt;The intangibles&lt;/a&gt; &amp;#8212; ways to set your product or service apart.&lt;/p&gt;
-&lt;p&gt;Many of them read as &lt;em&gt;common-sense&lt;/em&gt; or &lt;em&gt;obvious&lt;/em&gt;, but like most &lt;em&gt;common-sense&lt;/em&gt; and &lt;em&gt;obvious&lt;/em&gt; advice, it is rarely actually practiced; often the advice is even actively dismissed with an annoyed &amp;#8216;Of course we do that!&amp;#8217; &amp;#8212; only you do not do that, and you are fooling yourself by saying so.&lt;/p&gt;
-&lt;p&gt;Take stock of what you are doing, and ask yourself if you are really doing the &lt;em&gt;common-sense&lt;/em&gt; and &lt;em&gt;obvious&lt;/em&gt; things.&lt;/p&gt;</content>
+    <updated>2008-07-02T00:50:46-04:00</updated>
+    <content type="html">&lt;p&gt;Last week, &lt;b&gt;RSpec 1.1.4&lt;/b&gt; was released; and given my optimistic disposition I immediately upgraded.  Happily, the upgrade was almost seamless.  Two interdependent issues kept this from being a flawless upgrade:&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;A new deprecation warning on our helper specs (&lt;em&gt;no one really likes to see deprecation warnings&lt;/em&gt;)&lt;/li&gt;
+	&lt;li&gt;A bug in the new way to write helper specs (&lt;em&gt;a show stopper&lt;/em&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Lets see what happens when we run our spec&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Wonderland$ spec spec/helpers/dog_helper_spec.rb 
+Modules will no longer be automatically included in RSpec version 1.1.4.  Called from ./spec/helpers/dog_helper_spec.rb:8
+.Modules will no longer be automatically included in RSpec version 1.1.4.  Called from ./spec/helpers/dog_helper_spec.rb:16
+.
+Finished in 0.393129 seconds
+2 examples, 0 failures&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Lets examine the helper spec that generated these warnings:&lt;/p&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/38679.js'&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;So, what does this deprecation warning tell us?  We are being warned that calls to &lt;strong&gt;name_or_description&lt;/strong&gt; and &lt;strong&gt;owner_link&lt;/strong&gt;, which are called on the implicit &lt;strong&gt;self&lt;/strong&gt; of the RSpec &lt;em&gt;it&lt;/em&gt; blocks, are going to fail in the future when the helper module (&lt;strong&gt;DogHelper&lt;/strong&gt; in this example) is no longer automatically included by RSpec.&lt;/p&gt;
+&lt;p&gt;Or put another way, calling helper methods like &lt;strong&gt;name_or_description&lt;/strong&gt; directly, &lt;em&gt;exactly as one might in a view&lt;/em&gt;, will no longer work.&lt;/p&gt;
+&lt;p&gt;The new way to call helper methods is through the &lt;strong&gt;helper&lt;/strong&gt; attribute of RSpec, giving access to an &lt;code&gt;ActionView::Base&lt;/code&gt; instance with the helper module included.  Lets go ahead and make this change to our two helper calls:&lt;/p&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/38681.js'&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;Lets try this out!&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Wonderland$ spec spec/helpers/dog_helper_spec.rb 
+.F
+1) NoMethodError in 'DogHelper owner_link() should return a link to the owner'
+You have a nil object when you didn't expect it!
+The error occurred while evaluating nil.url_for
+(eval):17:in `user_path'
+/Users/leshill/src/rails/rspec114/app/helpers/dog_helper.rb:9:in `owner_link'
+./spec/helpers/dog_helper_spec.rb:16:
+Finished in 0.398686 seconds
+2 examples, 1 failure&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Hmmm, we have gotten rid of the deprecation warnings, but we now have a new (and truly unexpected!) failure.&lt;/p&gt;
+&lt;p&gt;This is a bona-fide bug in 1.1.4, and might lead to our having to rollback to 1.1.3 if there was no easy workaround.  Thankfully, there is a fix already available for 1.1.5 , and that fix can be easily adapted within our own specs.&lt;/p&gt;
+&lt;p&gt;Lets add this &lt;strong&gt;before&lt;/strong&gt; block to our spec:&lt;/p&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/38683.js'&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;And then try it out:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Wonderland$ spec spec/helpers/dog_helper_spec.rb 
+..
+Finished in 0.40663 seconds
+2 examples, 0 failures&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Much better!&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; I am using a mock spec to demonstrate the issue, the minimal Rails app which fits around this spec is left as an exercise for the reader.&lt;/p&gt;</content>
   </entry>
   
 </feed>

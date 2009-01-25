@@ -3,7 +3,7 @@
   <meta content='text/html; charset=utf-8' http-equiv='content-type' />
   <meta content='Les Hill' name='author' />
   <title>
-    Wonderland &mdash; Home
+    Wonderland &mdash; Webby, Meet GitHub Pages
   </title>
   <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
@@ -39,59 +39,6 @@
           </div>
           <div class='entry-content'>
             <p>As of this post, this blog is now hosted by GitHub&#8217;s recently announced <a href="http://github.com/blog/272-github-pagesi">GitHub Pages</a>, still <a href="http://webby.rubyforge.org">Webby</a> powered, now with extra <em>git</em> goodness.</p>&#x000A;<p><strong>GitHub Pages</strong> generates a static site from a GitHub hosted repo, using <a href="http://github.com/mojombo/jekyll">Jekyll</a> to generate the files.  <strong>Jekyll</strong> understands two special directories <code>_posts</code> and <code>_layouts</code>, copying any other files and directories in the root of the repo that do not begin with an <code>_</code> directly to the static site.</p>&#x000A;<p><strong>Webby</strong> generates a static site from set of source files (<code>content</code>, <code>layouts</code>, etc), placing the results in the <code>output_dir</code> (defaults to <code>output</code> but can be changed.)</p>&#x000A;<p>To make <strong>Webby</strong> and <strong>GitHub Pages</strong> co-exist, I restructured my repo:</p>&#x000A;<ul>&#x000A;	<li>The root of the repo is the <code>output_dir</code> for <strong>Webby</strong></li>&#x000A;	<li>The <strong>Webby</strong> site (source files) are in a subdirectory name <code>_webby</code></li>&#x000A;	<li>The <code>webby</code> command line tool should be run from within the <code>_webby</code> directory, not the root of the repo</li>&#x000A;	<li>The <strong>Webby</strong> <code>clobber</code> target is overridden to ignore the <code>_webby</code> directory</li>&#x000A;</ul>&#x000A;<p>I had to make the following changes to my existing <strong>Webby</strong> site:</p>&#x000A;<ul>&#x000A;	<li>A new <code>Sitefile</code></li>&#x000A;</ul>&#x000A;<p><script src='http://gist.github.com/51667.js'></script></p>&#x000A;<ul>&#x000A;	<li>Found some code <a href="http://www.taknado.com/2007/7/30/overriding-rake-tasks">here</a> to allow overriding <strong>Rake</strong> tasks, this is <code>lib/override.rb</code></li>&#x000A;</ul>&#x000A;<p><script src='http://gist.github.com/51669.js'></script></p>&#x000A;<ul>&#x000A;	<li>Redefined <code>clobber</code> and created <code>clean_build</code> task to allow for file deletions, this is <code>tasks/github_pages.rake</code></li>&#x000A;</ul>&#x000A;<p><script src='http://gist.github.com/51670.js'></script></p>&#x000A;<p>The new workflow for adding a post to the new site is:</p>&#x000A;<ol>&#x000A;	<li>Change directory to <code>_webby</code></li>&#x000A;	<li>Generate a new blog post</li>&#x000A;	<li>Run <code>webby autobuild</code></li>&#x000A;	<li>Edit until completed</li>&#x000A;	<li>Commit all changes locally (<code>git add .</code> from the root)</li>&#x000A;	<li>Push the changes</li>&#x000A;</ol>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2009/01/12/using-hoptoad-with-script-runner.html'>
-                Using Hoptoad With Script Runner
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Mon Jan 12 10:01:49 -0500 2009'>
-              Posted
-              January 12, 2009
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>I have been using <a href="http://hoptoadapp.com/">Hoptoad</a> to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple <code>include HoptoadNotifier::Catcher</code> in your <code>application.rb</code>, easy!</p>&#x000A;<p>However, I also wanted <strong>Hoptoad</strong> to track any exception which occurred in a cron job that was running with <code>script/runner</code>.  Again, a snap with <strong>Hoptoad</strong>, take a look:</p>&#x000A;<p><script src='http://gist.github.com/46014.js'></script></p>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html'>
-                Using S3 Authenticated-Read With Paperclip
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Thu Jan 01 09:46:16 -0500 2009'>
-              Posted
-              January 01, 2009
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p><a href=":http://www.thoughtbot.com/projects/paperclip">Paperclip</a> supports <strong>AWS S3</strong> with a default of <em>public-read</em> access policy.  This allows anyone who knows the URL of the resource to access it.</p>&#x000A;<p>For some applications, you might want a more restricted access policy.  The <em>authenticated-read</em> access policy requires that the URL of the resource be presented by an authenticated user.</p>&#x000A;<p>To use <em>authenticated-read</em> with <strong>Paperclip</strong>:</p>&#x000A;<ul>&#x000A;	<li>set the <code>:s3_permissions</code> option on your attachment:</li>&#x000A;</ul>&#x000A;<pre><code>:s3_permssions =&gt; 'authenticated-read'</code></pre>&#x000A;<ul>&#x000A;	<li>use <code>RightAws::S3Interface#get_link</code> to generate an <em>authenticated-read</em> URL for the attachment:</li>&#x000A;</ul>&#x000A;<pre><code>def s3_url(style = nil, time_limit = 15.minutes)&#x000A;  attachment.s3.interface.get_link(attachment.s3_bucket.to_s, attachment.path(style), time_limit)&#x000A;end </code></pre>&#x000A;<p>If you do not normally need to time limit the access, use <code>nil</code> as the default value for <code>time_limit</code></p>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/12/24/tip-rsync-options-for-webby.html'>
-                Tip: Rsync Options for Webby
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Wed Dec 24 18:49:36 -0500 2008'>
-              Posted
-              December 24, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>If you are making substantial changes to your <a href="http://github.com/TwP/based">Webby</a> site, you will have no doubt noticed that deleted files are not automatically removed from the <code>output</code> directory or the deploy server.</p>&#x000A;<p>Use the following <code>Sitefile</code> to:</p>&#x000A;<ul>&#x000A;	<li>clear the output directory</li>&#x000A;	<li>build the site</li>&#x000A;	<li>deploy the site with <strong>rsync</strong> with the checksum and delete options<sup class="footnote"><a href="#fn1">1</a></sup><sup class="footnote"><a href="#fn2">2</a></sup></li>&#x000A;</ul>&#x000A;<p><script src='http://gist.github.com/39827.js'></script></p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> <strong>Rsync</strong> will only update changed files, and will detect deleted files.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Using the <code>--delete</code> option will remove files from your deploy server; if you have mixed your <strong>Webby</strong> content with server-only files<sup class="footnote"><a href="#fn3">3</a></sup>, you should not use this.</p>&#x000A;<p class="footnote" id="fn3"><sup>3</sup> You may want to reconsider doing that.</p>
-          </div>
-          <div class='prepend-1 span-15'>
-            
-            
-            <a href="/index2.html">Next &rarr;</a>
           </div>
         </div>
       </div>

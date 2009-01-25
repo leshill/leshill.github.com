@@ -1,0 +1,47 @@
+--- 
+title:      'Webby, Meet GitHub Pages'
+author: Les Hill
+created_at: 2009-01-24 12:54:15.165056 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - gist
+--- 
+
+As of this post, this blog is now hosted by GitHub's recently announced "GitHub Pages":http://github.com/blog/272-github-pagesi, still "Webby":http://webby.rubyforge.org powered, now with extra _git_ goodness.
+
+*GitHub Pages* generates a static site from a GitHub hosted repo, using "Jekyll":http://github.com/mojombo/jekyll to generate the files.  *Jekyll* understands two special directories @_posts@ and @_layouts@, copying any other files and directories in the root of the repo that do not begin with an @_@ directly to the static site.
+
+*Webby* generates a static site from set of source files (@content@, @layouts@, etc), placing the results in the @output_dir@ (defaults to @output@ but can be changed.)
+
+To make *Webby* and *GitHub Pages* co-exist, I restructured my repo:
+
+* The root of the repo is the @output_dir@ for *Webby*
+* The *Webby* site (source files) are in a subdirectory name @_webby@
+* The @webby@ command line tool should be run from within the @_webby@ directory, not the root of the repo
+* The *Webby* @clobber@ target is overridden to ignore the @_webby@ directory
+
+I had to make the following changes to my existing *Webby* site:
+
+* A new @Sitefile@
+
+gist51667.
+
+* Found some code "here":http://www.taknado.com/2007/7/30/overriding-rake-tasks to allow overriding *Rake* tasks, this is @lib/override.rb@
+
+gist51669.
+
+* Redefined @clobber@ and created @clean_build@ task to allow for file deletions, this is @tasks/github_pages.rake@
+
+gist51670.
+
+The new workflow for adding a post to the new site is:
+
+# Change directory to @_webby@
+# Generate a new blog post
+# Run @webby autobuild@
+# Edit until completed
+# Commit all changes locally (@git add .@ from the root)
+# Push the changes
+
