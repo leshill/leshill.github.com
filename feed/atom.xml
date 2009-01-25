@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-01-24T23:08:39-05:00</updated>
+  <updated>2009-01-24T23:10:53-05:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -22,8 +22,7 @@
     <content type="html">&lt;p&gt;As of this post, this blog is now hosted by GitHub&amp;#8217;s recently announced &lt;a href=&quot;http://github.com/blog/272-github-pagesi&quot;&gt;GitHub Pages&lt;/a&gt;, still &lt;a href=&quot;http://webby.rubyforge.org&quot;&gt;Webby&lt;/a&gt; powered, now with extra &lt;em&gt;git&lt;/em&gt; goodness.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;GitHub Pages&lt;/strong&gt; generates a static site from a GitHub hosted repo, using &lt;a href=&quot;http://github.com/mojombo/jekyll&quot;&gt;Jekyll&lt;/a&gt; to generate the files.  &lt;strong&gt;Jekyll&lt;/strong&gt; understands two special directories &lt;code&gt;_posts&lt;/code&gt; and &lt;code&gt;_layouts&lt;/code&gt;, copying any other files and directories in the root of the repo that do not begin with an &lt;code&gt;_&lt;/code&gt; directly to the static site.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Webby&lt;/strong&gt; generates a static site from set of source files (&lt;code&gt;content&lt;/code&gt;, &lt;code&gt;layouts&lt;/code&gt;, etc), placing the results in the &lt;code&gt;output_dir&lt;/code&gt; (defaults to &lt;code&gt;output&lt;/code&gt; but can be changed.)&lt;/p&gt;
-&lt;p&gt;To make &lt;strong&gt;Webby&lt;/strong&gt; and &lt;strong&gt;GitHub Pages&lt;/strong&gt; co-exist, I restructured my repo and made&lt;br /&gt;
-the following changes to my existing &lt;strong&gt;Webby&lt;/strong&gt; site:&lt;/p&gt;
+&lt;p&gt;To make &lt;strong&gt;Webby&lt;/strong&gt; and &lt;strong&gt;GitHub Pages&lt;/strong&gt; co-exist, I restructured my repo and made the following changes to my existing &lt;strong&gt;Webby&lt;/strong&gt; site:&lt;/p&gt;
 &lt;ul&gt;
 	&lt;li&gt;The root of the repo is the &lt;code&gt;output_dir&lt;/code&gt; for &lt;strong&gt;Webby&lt;/strong&gt;&lt;/li&gt;
 	&lt;li&gt;The &lt;strong&gt;Webby&lt;/strong&gt; site (source files) are in a subdirectory name &lt;code&gt;_webby&lt;/code&gt;&lt;/li&gt;

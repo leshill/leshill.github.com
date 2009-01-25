@@ -15,8 +15,7 @@ As of this post, this blog is now hosted by GitHub's recently announced "GitHub 
 
 *Webby* generates a static site from set of source files (@content@, @layouts@, etc), placing the results in the @output_dir@ (defaults to @output@ but can be changed.)
 
-To make *Webby* and *GitHub Pages* co-exist, I restructured my repo and made
-the following changes to my existing *Webby* site:
+To make *Webby* and *GitHub Pages* co-exist, I restructured my repo and made the following changes to my existing *Webby* site:
 
 * The root of the repo is the @output_dir@ for *Webby*
 * The *Webby* site (source files) are in a subdirectory name @_webby@
