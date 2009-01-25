@@ -37,6 +37,7 @@ filter:    erb
     <% else %>
     <id>tag:<%= @page.site %>,<%= article.created_at.strftime('%Y-%m-%d') %>:<%= article.created_at.to_i %></id>
     <% end %>
+    <published><%= article.created_at.xmlschema %></published>
     <updated><%= article.created_at.xmlschema %></updated>
     <content type="html"><%= h(render(article)) %></content>
   </entry>
