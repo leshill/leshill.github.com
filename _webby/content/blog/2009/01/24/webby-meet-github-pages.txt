@@ -15,24 +15,22 @@ As of this post, this blog is now hosted by GitHub's recently announced "GitHub 
 
 *Webby* generates a static site from set of source files (@content@, @layouts@, etc), placing the results in the @output_dir@ (defaults to @output@ but can be changed.)
 
-To make *Webby* and *GitHub Pages* co-exist, I restructured my repo:
+To make *Webby* and *GitHub Pages* co-exist, I restructured my repo and made
+the following changes to my existing *Webby* site:
 
 * The root of the repo is the @output_dir@ for *Webby*
 * The *Webby* site (source files) are in a subdirectory name @_webby@
 * The @webby@ command line tool should be run from within the @_webby@ directory, not the root of the repo
 * The *Webby* @clobber@ target is overridden to ignore the @_webby@ directory
-
-I had to make the following changes to my existing *Webby* site:
-
-* A new @Sitefile@
+* @Sitefile@
 
 gist51667.
 
-* Found some code "here":http://www.taknado.com/2007/7/30/overriding-rake-tasks to allow overriding *Rake* tasks, this is @lib/override.rb@
+* @lib/override.rb@ Rake monkey patch to allow overriding tasks found "here":http://www.taknado.com/2007/7/30/overriding-rake-tasks
 
 gist51669.
 
-* Redefined @clobber@ and created @clean_build@ task to allow for file deletions, this is @tasks/github_pages.rake@
+* @tasks/github_pages.rake@ redefines @clobber@  to ignore the @_webby@ directory and the new (default) @clean_build@ task allows for file deletions[1]
 
 gist51670.
 
@@ -45,3 +43,4 @@ The new workflow for adding a post to the new site is:
 # Commit all changes locally (@git add .@ from the root)
 # Push the changes
 
+fn1. Webby does not know if you have deleted a source file, by forcing the entire site to be rebuilt, the deletion is reflected in the generated static files.
