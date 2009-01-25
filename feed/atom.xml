@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-01-25T07:36:21-05:00</updated>
+  <updated>2009-01-25T07:43:13-05:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -14,7 +14,7 @@
   
   <entry>
     <title>Webby, Meet GitHub Pages</title>
-    <link href="/blog/2009/01/24/webby-meet-github-pages.html" />
+    <link href="http://blog.leshill.org/blog/2009/01/24/webby-meet-github-pages.html" />
     
     <id>tag:blog.leshill.org,2009-01-24:1232819655</id>
     
@@ -54,7 +54,7 @@
   
   <entry>
     <title>Using Hoptoad With Script Runner</title>
-    <link href="/blog/2009/01/12/using-hoptoad-with-script-runner.html" />
+    <link href="http://blog.leshill.org/blog/2009/01/12/using-hoptoad-with-script-runner.html" />
     
     <id>tag:blog.leshill.org,2009-01-12:1231772509</id>
     
@@ -67,7 +67,7 @@
   
   <entry>
     <title>Using S3 Authenticated-Read With Paperclip</title>
-    <link href="/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html" />
+    <link href="http://blog.leshill.org/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html" />
     
     <id>tag:blog.leshill.org,2009-01-01:1230821176</id>
     
@@ -91,7 +91,7 @@ end &lt;/code&gt;&lt;/pre&gt;
   
   <entry>
     <title>Tip: Rsync Options for Webby</title>
-    <link href="/blog/2008/12/24/tip-rsync-options-for-webby.html" />
+    <link href="http://blog.leshill.org/blog/2008/12/24/tip-rsync-options-for-webby.html" />
     
     <id>tag:blog.leshill.org,2008-12-24:1230162576</id>
     
@@ -112,7 +112,7 @@ end &lt;/code&gt;&lt;/pre&gt;
   
   <entry>
     <title>Hello Webby!</title>
-    <link href="/blog/2008/12/22/hello-webby.html" />
+    <link href="http://blog.leshill.org/blog/2008/12/22/hello-webby.html" />
     
     <id>tag:blog.leshill.org,2008-12-22:1229996093</id>
     
@@ -135,7 +135,7 @@ end &lt;/code&gt;&lt;/pre&gt;
   
   <entry>
     <title>Information Addicted</title>
-    <link href="/blog/2008/10/27/information-addicted.html" />
+    <link href="http://blog.leshill.org/blog/2008/10/27/information-addicted.html" />
     
     <id>tag:blog.leshill.org,2008-10-27:34</id>
     
@@ -153,7 +153,7 @@ end &lt;/code&gt;&lt;/pre&gt;
   
   <entry>
     <title>Tip: Using Haml With ActionMailer</title>
-    <link href="/blog/2008/10/19/tip-using-haml-with-actionmailer.html" />
+    <link href="http://blog.leshill.org/blog/2008/10/19/tip-using-haml-with-actionmailer.html" />
     
     <id>tag:blog.leshill.org,2008-10-20:33</id>
     
@@ -167,7 +167,7 @@ end &lt;/code&gt;&lt;/pre&gt;
   
   <entry>
     <title>Git: Setting Your Upstream Default</title>
-    <link href="/blog/2008/8/24/git-setting-your-upstream-default.html" />
+    <link href="http://blog.leshill.org/blog/2008/8/24/git-setting-your-upstream-default.html" />
     
     <id>tag:blog.leshill.org,2008-08-24:25</id>
     
@@ -200,7 +200,7 @@ See git-config(1) for details.&lt;/code&gt;
   
   <entry>
     <title>Focusing Autotest</title>
-    <link href="/blog/2008/8/24/focusing-autotest.html" />
+    <link href="http://blog.leshill.org/blog/2008/8/24/focusing-autotest.html" />
     
     <id>tag:blog.leshill.org,2008-08-24:24</id>
     
@@ -230,7 +230,7 @@ See git-config(1) for details.&lt;/code&gt;
   
   <entry>
     <title>Obvious Money</title>
-    <link href="/blog/2008/8/15/obvious-money.txt" />
+    <link href="http://blog.leshill.org/blog/2008/8/15/obvious-money.txt" />
     
     <id>tag:blog.leshill.org,2008-08-15:22</id>
     
