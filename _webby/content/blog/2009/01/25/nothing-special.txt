@@ -1,0 +1,16 @@
+--- 
+title:      'Nothing Special'
+author: Les Hill
+created_at: 2009-01-25 20:28:30.797303 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - gist
+--- 
+
+For those of us in a certain part of tech community, this quote from "Barry Ritholtz":http://www.ritholtz.com/blog/2009/01/microsoft-zune-down-54/ is old news:
+
+bq. It just goes to show you that Microsoft, without the advantages of the Windows/Office monopoly, is simply just another ordinary company — nothing special, nothing innovative.
+
+

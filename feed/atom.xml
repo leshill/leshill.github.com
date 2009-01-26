@@ -5,12 +5,26 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-01-25T07:43:13-05:00</updated>
+  <updated>2009-01-25T20:32:34-05:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Nothing Special</title>
+    <link href="http://blog.leshill.org/blog/2009/01/25/nothing-special.html" />
+    
+    <id>tag:blog.leshill.org,2009-01-25:1232933310</id>
+    
+    <published>2009-01-25T20:28:30-05:00</published>
+    <updated>2009-01-25T20:28:30-05:00</updated>
+    <content type="html">&lt;p&gt;For those of us in a certain part of tech community, this quote from &lt;a href=&quot;http://www.ritholtz.com/blog/2009/01/microsoft-zune-down-54/&quot;&gt;Barry Ritholtz&lt;/a&gt; is old news:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;It just goes to show you that Microsoft, without the advantages of the Windows/Office monopoly, is simply just another ordinary company — nothing special, nothing innovative.&lt;/p&gt;
+&lt;/blockquote&gt;</content>
+  </entry>
   
   <entry>
     <title>Webby, Meet GitHub Pages</title>
@@ -226,22 +240,6 @@ See git-config(1) for details.&lt;/code&gt;
 &lt;p&gt;To limit what autotest is watching, pass a regular expression (which can be a simple string):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;% atest user.*html
 &lt;/code&gt;&lt;/pre&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Obvious Money</title>
-    <link href="http://blog.leshill.org/blog/2008/8/15/obvious-money.txt" />
-    
-    <id>tag:blog.leshill.org,2008-08-15:22</id>
-    
-    <published>2008-08-15T09:00:42-04:00</published>
-    <updated>2008-08-15T09:00:42-04:00</updated>
-    <content type="html">&lt;p&gt;&lt;a href=&quot;http://www.loudthinking.com&quot;&gt;David Heinemeier Hansson&lt;/a&gt; recently gave an awesome talk  titled &lt;a href=&quot;http://www.omnisio.com/startupschool08/david-heinemeier-hansson-at-startup-school-08&quot;&gt;The secret to making money online&lt;/a&gt; at the &lt;a href=&quot;http://ycombinator.com&quot;&gt;Y Combinator&lt;/a&gt; Startup School.  Aside from being entertaining, David keeps hammering at the VC-fueled dreams of today&amp;#8217;s web entrepreneurs.  David has been at this for a long time, and what he is saying is &lt;em&gt;obvious&lt;/em&gt; and &lt;em&gt;common-sense&lt;/em&gt; (and David will tell you so).&lt;/p&gt;
-&lt;p&gt;And yet, we always hear people talking about the &lt;strong&gt;Money Maker&lt;/strong&gt;, or how they are going to target 1% of a &lt;strong&gt;$10 billion industry&lt;/strong&gt;, or other self-defeating filters.  If you find yourself uttering those kind of phrases in response to your own ideas or the ideas of others, &lt;strong&gt;stop&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Refocus on what the idea is, and evaluate it on its merits.  Thinking about how to build a &lt;a href=&quot;http://www.37signals.com/svn/archives2/google_yahoo_microsoft_gym.php&quot;&gt;GYM&lt;/a&gt; acquisition or targeting a market that will attract $10 million in VC funding is a waste of your time.&lt;/p&gt;
-&lt;p&gt;Should you ignore pricing and profits?  Maybe; if you do look at them, examine them in a reasonable context &amp;#8212; what do I need to just run the service on a minimal server?  With no paid staff?  With minimal time commitments?  How would it look like if I had 100 customers?  1000 customers?&lt;/p&gt;
-&lt;p&gt;Yes, this means you are no longer playing in the VC startup space&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.  Cool.  If you really want to play there, you will be &lt;strong&gt;much&lt;/strong&gt; better off playing there after you already have those 100 customers.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; I am unsure about investors like Y Combinator, as they &lt;em&gt;seem&lt;/em&gt; to be advocates for this way of thinking.&lt;/p&gt;</content>
   </entry>
   
 </feed>

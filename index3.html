@@ -26,6 +26,22 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2008/8/24/git-setting-your-upstream-default.html'>
+                Git: Setting Your Upstream Default
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Sun Aug 24 20:28:02 -0400 2008'>
+              Posted
+              August 24, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>I  recently set up a new repository on <a href="http://www.github.com/">github</a>.  Creating the repository on github yields a page of instructions covering the two common scenarios: new and existing repositories.  After following the new repository instructions,  I had a repository on github, a local repository, and the following in response to my <code>git pull</code> command:</p>&#x000A;<pre><code>You asked me to pull without telling me which branch you want to merge with, and 'branch.master.merge' in your configuration file does not tell me either.  Please name which branch you want to merge on the command line and try again (e.g. 'git pull &lt;repository&gt; &lt;refspec&gt;'). See git-pull(1) for details on the refspec.&#x000A;  &#x000A;If you often merge with the same branch, you may want to configure the following variables in your configuration file:&#x000A;  &#x000A;  branch.master.remote = &lt;nickname&gt;&#x000A;  branch.master.merge = &lt;remote-ref&gt;&#x000A;  remote.&lt;nickname&gt;.url = &lt;url&gt;&#x000A;  remote.&lt;nickname&gt;.fetch = &lt;refspec&gt;&#x000A;  &#x000A;See git-config(1) for details.</code>&#x000A;&#x000A;</pre>&#x000A;<p>Not exactly what I wanted, and certainly not what I expected.  What I <em>expected</em> was a local repository with the upstream for <strong>master</strong> to be set to point at <strong>master</strong> on the github repository.</p>&#x000A;<p>Setting this up can be done easily in two similar ways:</p>&#x000A;<ul>&#x000A;	<li>You can edit the configuration file as directed by the error message</li>&#x000A;	<li>You can use <code>git config</code></li>&#x000A;</ul>&#x000A;<p>I opted for <code>git config</code> as it was easier and required no thinking &#8212; the commands are always the same<sup class="footnote"><a href="#fn1">1</a></sup>; here they are:</p>&#x000A;<pre><code>% git config branch.master.remote origin&#x000A;% git config branch.master.merge refs/heads/master</code></pre>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> For the scenario of a local empty repository pushed up to a remote, where the remote will be the upstream master.</p>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2008/8/24/focusing-autotest.html'>
                 Focusing Autotest
               </a>
@@ -71,22 +87,6 @@
           </div>
           <div class='entry-content'>
             <p><a href="http://sethgodin.typepad.com/seths_blog">Seth Godin</a> has just put up a fantastic post on <a href="http://sethgodin.typepad.com/seths_blog/2008/08/the-intangibles.html">The intangibles</a> &#8212; ways to set your product or service apart.</p>&#x000A;<p>Many of them read as <em>common-sense</em> or <em>obvious</em>, but like most <em>common-sense</em> and <em>obvious</em> advice, it is rarely actually practiced; often the advice is even actively dismissed with an annoyed &#8216;Of course we do that!&#8217; &#8212; only you do not do that, and you are fooling yourself by saying so.</p>&#x000A;<p>Take stock of what you are doing, and ask yourself if you are really doing the <em>common-sense</em> and <em>obvious</em> things.</p>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/7/12/voodoo-send.html'>
-                Voodoo send
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Sat Jul 12 00:33:10 -0400 2008'>
-              Posted
-              July 12, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>Recently when looking through some plugin&#8217;s code, we found the following line:</p>&#x000A;<p><script src='http://gist.github.com/38693.js'></script></p>&#x000A;<p>This <em>seems</em> to be an acceptable variant of the commonly used</p>&#x000A;<p><script src='http://gist.github.com/38695.js'></script></p>&#x000A;<p>As you may have surmised, it is not an acceptable variant.  This is a <a href="http://en.wikipedia.org/wiki/Voodoo_programming">Voodoo programming</a> smell, as it indicates a misunderstanding of exactly what the semantics of <code>send</code> are.  There is also a clearer, more intention revealing, and identical<sup class="footnote"><a href="#fn1">1</a></sup> alternative <code>include Foo</code> or with the omitted parenthesis <code>include(Foo)</code> .</p>&#x000A;<p>This of course, leads us to why <code>ActiveRecord::Base.send(:include, Foo)</code> is acceptable.  The <code>include</code> method is private, so the most elegant way to invoke it on <em>another</em> object is by using <code>send</code>; this is possible because <code>send</code> ignores access control allowing us to invoke <code>include</code> directly.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> <em>Almost</em>, the difference is that <code>send</code> is in the call stack.</p>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/index2.html">&larr; Prev</a>
