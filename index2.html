@@ -26,6 +26,22 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html'>
+                Using S3 Authenticated-Read With Paperclip
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Thu Jan 01 09:46:16 -0500 2009'>
+              Posted
+              January 01, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p><a href=":http://www.thoughtbot.com/projects/paperclip">Paperclip</a> supports <strong>AWS S3</strong> with a default of <em>public-read</em> access policy.  This allows anyone who knows the URL of the resource to access it.</p>&#x000A;<p>For some applications, you might want a more restricted access policy.  The <em>authenticated-read</em> access policy requires that the URL of the resource be presented by an authenticated user.</p>&#x000A;<p>To use <em>authenticated-read</em> with <strong>Paperclip</strong>:</p>&#x000A;<ul>&#x000A;	<li>set the <code>:s3_permissions</code> option on your attachment:</li>&#x000A;</ul>&#x000A;<pre><code>:s3_permssions =&gt; 'authenticated-read'</code></pre>&#x000A;<ul>&#x000A;	<li>use <code>RightAws::S3Interface#get_link</code> to generate an <em>authenticated-read</em> URL for the attachment:</li>&#x000A;</ul>&#x000A;<pre><code>def s3_url(style = nil, time_limit = 15.minutes)&#x000A;  attachment.s3.interface.get_link(attachment.s3_bucket.to_s, attachment.path(style), time_limit)&#x000A;end </code></pre>&#x000A;<p>If you do not normally need to time limit the access, use <code>nil</code> as the default value for <code>time_limit</code></p>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2008/12/24/tip-rsync-options-for-webby.html'>
                 Tip: Rsync Options for Webby
               </a>
@@ -72,22 +88,6 @@
           <div class='entry-content'>
             <p>Sunday, the <a href="http://www.nytimes.com/">New York Times</a> had an <a href="http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&amp;scp=1&amp;sq=boot%20time&amp;st=cse&amp;oref=slogin">article</a> about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.</p>&#x000A;<p>First, I rarely reboot my MacBook Pro; I just put the machine to sleep and wake it (and this is easily accomplished by closing and opening the lid).</p>&#x000A;<p>Second, I rarely reboot my phone; it also seems to sleep<sup class="footnote"><a href="#fn1">1</a></sup>.</p>&#x000A;<p>Third, the context driving this <em>War on Boot Times</em> is our increasing dependence on external information sources.  Think back to 1988<sup class="footnote"><a href="#fn2">2</a></sup> and you may recall a time when finding out what movies to see while you were away from a newspaper was a non-trivial task.  Now with a smart phone or a WiFi connected laptop, all the information to answer your question is readily available at a moment&#8217;s notice.  Think back to when you were out and would say: &#8216;I wish I could Google that&#8217;; now you just do it no matter where you are.</p>&#x000A;<p>The PC makers are fighting the last war.  This whole concept of reducing boot times is irrelevant.  The device should already be on and waiting on us.  No wait, make that <em>The Cloud</em> <strong>is</strong> already waiting on us.</p>&#x000A;<p>The trend is for <strong>more information, delivered faster, and requested instantaneously</strong>.  Someone should tell the PC makers.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am unsure exactly what the phone is doing when it is <em>asleep</em>.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Moviefone was created in 1989.</p>
           </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/10/19/tip-using-haml-with-actionmailer.html'>
-                Tip: Using Haml With ActionMailer
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Sun Oct 19 21:54:10 -0400 2008'>
-              Posted
-              October 19, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>You can use Haml to write your mailer views and still use the implicit multipart template feature by letting <code>ActionMailer</code> know about Haml:</p>&#x000A;<p><script src='http://gist.github.com/38723.js'></script></p>&#x000A;<h2>Update</h2>&#x000A;<p>This is no longer necessary with <strong>Rails 2.2</strong> and <strong>Haml 2.0.5</strong> .</p>
-          </div>
           <div class='prepend-1 span-15'>
             <a href="/">&larr; Prev</a>
             &nbsp;
@@ -126,6 +126,9 @@
                 <ul>
                   <li class='month'>
                     <a href='/blog/2009/01'>January</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/02'>February</a>
                   </li>
                 </ul>
               </li>
