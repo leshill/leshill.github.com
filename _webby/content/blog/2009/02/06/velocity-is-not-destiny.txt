@@ -11,11 +11,11 @@ filter:
 
 One of the most persistent and pernicious stumbling blocks I see when a team is starting out with Agile[1] is equating story points and velocity directly with hours.  
 
-Often this stumbling block is not apparent immediately; it often crops up after a few iterations have passed.  As an example, a stakeholder who was new and unsure about agile, was eager to have a release after about a month of development as an affirmation of the decision to go with an agile approach.   We established the feature set in the release, when he turned to me and said, "Let's see, we have 78 points in the release, so we can deliver the release four weeks from today."
+Often this stumbling block is not apparent immediately; it often crops up after a few iterations have passed.  As an example, a stakeholder who was new and unsure about agile, was eager to have a release a month into development as an affirmation of the decision to go with an agile approach.   After we had prioritized the feature set for the release, he turned to me and said, "Let's see, we have 78 points in the release, so we can deliver the release four weeks from today."
 
 My answer, "Not exactly", surprised him.
 
-If the velocity of the team is the evidence-based number using the teams own story point estimations, how could such a statement be incorrect?  There are two related reasons such a statement needs to be qualified and understood as _Not Exactly_.
+If the velocity of the team is an evidence-based number using the teams own story point estimations, how could such a statement be incorrect?  There are two related reasons such a statement needs to be qualified to be useful, the _Planning Fallacy_ and _Velocity is not Destiny_[2].
 
 h3. The Planning Fallacy
 
@@ -28,9 +28,9 @@ Since giving up on planning is not an option, we can make our estimates better t
 
 bq. a cross-cultural study, found that Japanese students expected to finish their essays 10 days before deadline.  They actually finished 1 day before deadline.  Asked when they had previously completed similar tasks, they responded, "1 day before deadline."
 
-Agile mitigates the planning fallacy by eschewing estimates in hours or days and using story points[2].  Story points are abstract esitmations based on similarity; a 4 point story should be of the same relative size or complexity as any other 4 point story.  Time is not a factor with story points.
+Agile mitigates the planning fallacy by eschewing estimates in hours or days and using story points[3].  Story points are abstract esitmations based on similarity; a 4 point story should be of the same relative size or complexity as any other 4 point story.  Time is not a factor with story points.
 
-h3. Velocity is not Destiny[3]
+h3. Velocity is not Destiny
 
 Given that story points yield better estimates, and velocity is an evidence based aggregate number smoothing out variations in individual stories, why qualify saying we can deliver four weeks from today?  Velocity is a continuous measurement of the past performance of your team and is not a constant.  The velocity of your team is a dynamic variable giving you direct and constant insight into how they are progressing.  A future iteration has no velocity, as it has not been (and cannot yet be) measured.  We can make predictions about future iterations based on velocity, but we cannot make any iron-clad guarantees.
 
@@ -40,7 +40,7 @@ h3. Making the Release
 
 There are many pitfalls in any software project, the one which was making me cautious about our release was a common one for novice stakeholders, *Release Induced Focus*.  *RIF* is the tendancy for novice stakeholders to only really pay attention when the have an immediate release pending, leading to a spike in the number of stories rejected and bugs filed, and a corresponding drop in velocity.  Given an experienced stakeholder who is rigorous about acceptance, the _bug tax on velocity_ is taken out of velocity over time; with *RIF* the entire _bug tax on velocity_ is paid in one or two velocity sapping iterations.  
 
-After explaing this, and using velocity as a predictor, we adjusted our plan for the release.  We reprioritized the backlog to front load all the required features, moved unneeded features out of the release, and had the stakeholders exercise more rigor when doing their acceptance.  The release was made in four weeks, with the team and stakeholders delivering tangible value without the long hours and anxiety provoked by more static approaches to software project management.
+After explaining this, and using velocity as a predictor, we adjusted our plan for the release.  We reprioritized the backlog to front load all the required features, moved unneeded features out of the release, and had the stakeholders exercise more rigor when doing their acceptance.  The release was made in four weeks, with the team and stakeholders delivering tangible value without the long hours and anxiety provoked by more static approaches to software project management.
 
 h3. Velocity is a Dynamic Measure
 
@@ -52,6 +52,6 @@ Understanding that velocity is accurate *and* dynamic is key to using it for ite
 
 fn1. I use the term to encompass the variations of Agile methodologies that use story points and velocity.
 
-fn2. Peter Jackson has written a great summary of why we use story points in "The Case for Story Points":http://blog.peteonrails.com/articles/2009/02/05/the-case-for-story-points/ .
+fn2. I first heard this poetic phrase from Amy Kline, an awesome scrum master and friend.
 
-fn3. I first heard this poetic phrase from Amy Kline, an awesome scrum master and friend.
+fn3. Peter Jackson has written a great summary of why we use story points in "The Case for Story Points":http://blog.peteonrails.com/articles/2009/02/05/the-case-for-story-points/ .

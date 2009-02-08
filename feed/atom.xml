@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-02-07T17:35:26-05:00</updated>
+  <updated>2009-02-07T21:10:26-05:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -21,9 +21,9 @@
     <published>2009-02-06T15:50:20-05:00</published>
     <updated>2009-02-06T15:50:20-05:00</updated>
     <content type="html">&lt;p&gt;One of the most persistent and pernicious stumbling blocks I see when a team is starting out with Agile&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; is equating story points and velocity directly with hours.&lt;/p&gt;
-&lt;p&gt;Often this stumbling block is not apparent immediately; it often crops up after a few iterations have passed.  As an example, a stakeholder who was new and unsure about agile, was eager to have a release after about a month of development as an affirmation of the decision to go with an agile approach.   We established the feature set in the release, when he turned to me and said, &amp;#8220;Let&amp;#8217;s see, we have 78 points in the release, so we can deliver the release four weeks from today.&amp;#8221;&lt;/p&gt;
+&lt;p&gt;Often this stumbling block is not apparent immediately; it often crops up after a few iterations have passed.  As an example, a stakeholder who was new and unsure about agile, was eager to have a release a month into development as an affirmation of the decision to go with an agile approach.   After we had prioritized the feature set for the release, he turned to me and said, &amp;#8220;Let&amp;#8217;s see, we have 78 points in the release, so we can deliver the release four weeks from today.&amp;#8221;&lt;/p&gt;
 &lt;p&gt;My answer, &amp;#8220;Not exactly&amp;#8221;, surprised him.&lt;/p&gt;
-&lt;p&gt;If the velocity of the team is the evidence-based number using the teams own story point estimations, how could such a statement be incorrect?  There are two related reasons such a statement needs to be qualified and understood as &lt;em&gt;Not Exactly&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;If the velocity of the team is an evidence-based number using the teams own story point estimations, how could such a statement be incorrect?  There are two related reasons such a statement needs to be qualified to be useful, the &lt;em&gt;Planning Fallacy&lt;/em&gt; and &lt;em&gt;Velocity is not Destiny&lt;/em&gt;&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
 &lt;h3&gt;The Planning Fallacy&lt;/h3&gt;
 &lt;p&gt;As described in the &lt;a href=&quot;http://www.overcomingbias.com/2007/09/planning-fallac.html&quot;&gt;Overcoming Bias&lt;/a&gt; blog, when students were asked in an experiment to forecast when they would complete an assignment:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -34,13 +34,13 @@
 &lt;blockquote&gt;
 &lt;p&gt;a cross-cultural study, found that Japanese students expected to finish their essays 10 days before deadline.  They actually finished 1 day before deadline.  Asked when they had previously completed similar tasks, they responded, &amp;#8220;1 day before deadline.&amp;#8221;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;Agile mitigates the planning fallacy by eschewing estimates in hours or days and using story points&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.  Story points are abstract esitmations based on similarity; a 4 point story should be of the same relative size or complexity as any other 4 point story.  Time is not a factor with story points.&lt;/p&gt;
-&lt;h3&gt;Velocity is not Destiny&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn3&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/h3&gt;
+&lt;p&gt;Agile mitigates the planning fallacy by eschewing estimates in hours or days and using story points&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn3&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;.  Story points are abstract esitmations based on similarity; a 4 point story should be of the same relative size or complexity as any other 4 point story.  Time is not a factor with story points.&lt;/p&gt;
+&lt;h3&gt;Velocity is not Destiny&lt;/h3&gt;
 &lt;p&gt;Given that story points yield better estimates, and velocity is an evidence based aggregate number smoothing out variations in individual stories, why qualify saying we can deliver four weeks from today?  Velocity is a continuous measurement of the past performance of your team and is not a constant.  The velocity of your team is a dynamic variable giving you direct and constant insight into how they are progressing.  A future iteration has no velocity, as it has not been (and cannot yet be) measured.  We can make predictions about future iterations based on velocity, but we cannot make any iron-clad guarantees.&lt;/p&gt;
 &lt;p&gt;An analogy might help explain how to think of velocity.  You are taking a long automobile trip you have never taken before, where you will leave at 9 a.m.  and travel 250 miles to arrive at your destination.  Your car will accurately report your average velocity on the trip.  125 miles into the trip, your car reports an average velocity of 62.5 miles per hour, and you are currently on the highway going 70 miles per hour.  How long do you have left, and how much money would you bet that you are accurate within one minute?  Intuitively, most people understand that although the very clear math says you are 2 hours away from your destination, there are too many pitfalls such as traffic, accidents, road work, weather conditions, signals, etc to make a prediction that is accurate to the minute. (With your final average velocity, the very clear math will yield an exact and accurate result.)&lt;/p&gt;
 &lt;h3&gt;Making the Release&lt;/h3&gt;
 &lt;p&gt;There are many pitfalls in any software project, the one which was making me cautious about our release was a common one for novice stakeholders, &lt;strong&gt;Release Induced Focus&lt;/strong&gt;.  &lt;strong&gt;RIF&lt;/strong&gt; is the tendancy for novice stakeholders to only really pay attention when the have an immediate release pending, leading to a spike in the number of stories rejected and bugs filed, and a corresponding drop in velocity.  Given an experienced stakeholder who is rigorous about acceptance, the &lt;em&gt;bug tax on velocity&lt;/em&gt; is taken out of velocity over time; with &lt;strong&gt;RIF&lt;/strong&gt; the entire &lt;em&gt;bug tax on velocity&lt;/em&gt; is paid in one or two velocity sapping iterations.&lt;/p&gt;
-&lt;p&gt;After explaing this, and using velocity as a predictor, we adjusted our plan for the release.  We reprioritized the backlog to front load all the required features, moved unneeded features out of the release, and had the stakeholders exercise more rigor when doing their acceptance.  The release was made in four weeks, with the team and stakeholders delivering tangible value without the long hours and anxiety provoked by more static approaches to software project management.&lt;/p&gt;
+&lt;p&gt;After explaining this, and using velocity as a predictor, we adjusted our plan for the release.  We reprioritized the backlog to front load all the required features, moved unneeded features out of the release, and had the stakeholders exercise more rigor when doing their acceptance.  The release was made in four weeks, with the team and stakeholders delivering tangible value without the long hours and anxiety provoked by more static approaches to software project management.&lt;/p&gt;
 &lt;h3&gt;Velocity is a Dynamic Measure&lt;/h3&gt;
 &lt;p&gt;Velocity is a continous measurement of your team&amp;#8217;s past performance over time; all of the previously known and unknown risk variables have been surfaced, made known, become constants, and reduced to one accurate numeric measure.  What velocity does not tell you is what the future holds.  To quote every mutual fund prospectus ever written:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -48,8 +48,8 @@
 &lt;/blockquote&gt;
 &lt;p&gt;Understanding that velocity is accurate &lt;strong&gt;and&lt;/strong&gt; dynamic is key to using it for iteration planning.  Most other software project management methodologies pretend that the project is static in all aspects, that all variables are known and quantified.  Agile acknowledges that a software project is a dynamic system, and provides simple evidence based tools to manage the dynamism inherent in building new software.&lt;/p&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; I use the term to encompass the variations of Agile methodologies that use story points and velocity.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Peter Jackson has written a great summary of why we use story points in &lt;a href=&quot;http://blog.peteonrails.com/articles/2009/02/05/the-case-for-story-points/&quot;&gt;The Case for Story Points&lt;/a&gt; .&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt; I first heard this poetic phrase from Amy Kline, an awesome scrum master and friend.&lt;/p&gt;</content>
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; I first heard this poetic phrase from Amy Kline, an awesome scrum master and friend.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt; Peter Jackson has written a great summary of why we use story points in &lt;a href=&quot;http://blog.peteonrails.com/articles/2009/02/05/the-case-for-story-points/&quot;&gt;The Case for Story Points&lt;/a&gt; .&lt;/p&gt;</content>
   </entry>
   
   <entry>
