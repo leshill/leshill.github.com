@@ -5,12 +5,35 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-02-08T11:05:15-05:00</updated>
+  <updated>2009-02-23T22:37:26-05:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Most Bugs Fall to the Second Pair of Eyes</title>
+    <link href="http://blog.leshill.org/blog/2009/02/20/most-bugs-fall-to-the-second-pair-of-eyes.html" />
+    
+    <id>tag:blog.leshill.org,2009-02-20:1235183038</id>
+    
+    <published>2009-02-20T21:23:58-05:00</published>
+    <updated>2009-02-20T21:23:58-05:00</updated>
+    <content type="html">&lt;p&gt;While recently discussing if a power law applies to bugs at the ongoing seminar I senitmentally call &lt;em&gt;work&lt;/em&gt;, I noted a corollary to &lt;strong&gt;Linus&amp;#8217;s Law&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Linus&amp;#39;s_Law&quot;&gt;Linus&amp;#8217;s Law&lt;/a&gt; states:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Given enough eyeballs, all bugs are shallow&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The corollary is:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Most bugs fall to the second pair of eyes&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;That is, just having one other developer look at a bug will likely resolve it.  Of course, developer&amp;#8217;s who are &lt;a href=&quot;http://en.wikipedia.org/wiki/Pair_programming&quot;&gt;pair programing&lt;/a&gt; already know this and are ahead of the game.&lt;/p&gt;
+&lt;p&gt;On a related note, pretty much every developer has been in the following situation.  You are called over by a collegue to look over a bug, often accompanied by the statement, &amp;#8216;This should work.&amp;#8217;  You give a cursory examination and you resolve the problem with a quick change, often one that is &lt;em&gt;obvious&lt;/em&gt; (after you pointed it out!)&lt;/p&gt;
+&lt;p&gt;If you come away from that experience thinking &amp;#8216;Fresh pair of eyes&amp;#8217; or some such, good for you, you passed the test.&lt;/p&gt;
+&lt;p&gt;If you come away from that experience thinking &amp;#8216;I am so awesome!&amp;#8217; or some such, not so good for you, you are probably not even competent.&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Velocity Is Not Destiny</title>
@@ -217,39 +240,6 @@ end &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;script src='http://gist.github.com/38723.js'&gt;&lt;/script&gt;&lt;/p&gt;
 &lt;h2&gt;Update&lt;/h2&gt;
 &lt;p&gt;This is no longer necessary with &lt;strong&gt;Rails 2.2&lt;/strong&gt; and &lt;strong&gt;Haml 2.0.5&lt;/strong&gt; .&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Git: Setting Your Upstream Default</title>
-    <link href="http://blog.leshill.org/blog/2008/8/24/git-setting-your-upstream-default.html" />
-    
-    <id>tag:blog.leshill.org,2008-08-24:25</id>
-    
-    <published>2008-08-24T20:28:02-04:00</published>
-    <updated>2008-08-24T20:28:02-04:00</updated>
-    <content type="html">&lt;p&gt;I  recently set up a new repository on &lt;a href=&quot;http://www.github.com/&quot;&gt;github&lt;/a&gt;.  Creating the repository on github yields a page of instructions covering the two common scenarios: new and existing repositories.  After following the new repository instructions,  I had a repository on github, a local repository, and the following in response to my &lt;code&gt;git pull&lt;/code&gt; command:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;You asked me to pull without telling me which branch you want to merge with, and 'branch.master.merge' in your configuration file does not tell me either.  Please name which branch you want to merge on the command line and try again (e.g. 'git pull &amp;lt;repository&amp;gt; &amp;lt;refspec&amp;gt;'). See git-pull(1) for details on the refspec.
-  
-If you often merge with the same branch, you may want to configure the following variables in your configuration file:
-  
-  branch.master.remote = &amp;lt;nickname&amp;gt;
-  branch.master.merge = &amp;lt;remote-ref&amp;gt;
-  remote.&amp;lt;nickname&amp;gt;.url = &amp;lt;url&amp;gt;
-  remote.&amp;lt;nickname&amp;gt;.fetch = &amp;lt;refspec&amp;gt;
-  
-See git-config(1) for details.&lt;/code&gt;
-
-&lt;/pre&gt;
-&lt;p&gt;Not exactly what I wanted, and certainly not what I expected.  What I &lt;em&gt;expected&lt;/em&gt; was a local repository with the upstream for &lt;strong&gt;master&lt;/strong&gt; to be set to point at &lt;strong&gt;master&lt;/strong&gt; on the github repository.&lt;/p&gt;
-&lt;p&gt;Setting this up can be done easily in two similar ways:&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;You can edit the configuration file as directed by the error message&lt;/li&gt;
-	&lt;li&gt;You can use &lt;code&gt;git config&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I opted for &lt;code&gt;git config&lt;/code&gt; as it was easier and required no thinking &amp;#8212; the commands are always the same&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;; here they are:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% git config branch.master.remote origin
-% git config branch.master.merge refs/heads/master&lt;/code&gt;&lt;/pre&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; For the scenario of a local empty repository pushed up to a remote, where the remote will be the upstream master.&lt;/p&gt;</content>
   </entry>
   
 </feed>

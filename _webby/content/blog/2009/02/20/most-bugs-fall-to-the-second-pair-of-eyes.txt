@@ -1,0 +1,28 @@
+--- 
+title:      'Most Bugs Fall to the Second Pair of Eyes'
+author: Les Hill
+created_at: 2009-02-20 21:23:58.590457 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - gist
+--- 
+
+While recently discussing if a power law applies to bugs at the ongoing seminar I senitmentally call _work_, I noted a corollary to *Linus's Law*.
+
+"Linus's Law":http://en.wikipedia.org/wiki/Linus's_Law states:
+
+bq. Given enough eyeballs, all bugs are shallow
+
+The corollary is:
+
+bq. Most bugs fall to the second pair of eyes
+
+That is, just having one other developer look at a bug will likely resolve it.  Of course, developer's who are "pair programing":http://en.wikipedia.org/wiki/Pair_programming already know this and are ahead of the game.
+
+On a related note, pretty much every developer has been in the following situation.  You are called over by a collegue to look over a bug, often accompanied by the statement, 'This should work.'  You give a cursory examination and you resolve the problem with a quick change, often one that is _obvious_ (after you pointed it out!)
+
+If you come away from that experience thinking 'Fresh pair of eyes' or some such, good for you, you passed the test.
+
+If you come away from that experience thinking 'I am so awesome!' or some such, not so good for you, you are probably not even competent.

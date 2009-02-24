@@ -26,6 +26,22 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2009/01/12/using-hoptoad-with-script-runner.html'>
+                Using Hoptoad With Script Runner
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Mon Jan 12 10:01:49 -0500 2009'>
+              Posted
+              January 12, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>I have been using <a href="http://hoptoadapp.com/">Hoptoad</a> to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple <code>include HoptoadNotifier::Catcher</code> in your <code>application.rb</code>, easy!</p>&#x000A;<p>However, I also wanted <strong>Hoptoad</strong> to track any exception which occurred in a cron job that was running with <code>script/runner</code>.  Again, a snap with <strong>Hoptoad</strong>, take a look:</p>&#x000A;<p><script src='http://gist.github.com/46014.js'></script></p>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html'>
                 Using S3 Authenticated-Read With Paperclip
               </a>
@@ -71,22 +87,6 @@
           </div>
           <div class='entry-content'>
             <p>As of this post, I am using publishing <strong>Wonderland</strong> with <a href="http://webby.rubyforge.org">Webby</a> .</p>&#x000A;<p>Some of the things I like about <strong>Webby</strong>:</p>&#x000A;<ul>&#x000A;	<li>desktop based &#8212; updates are made on my laptop, giving me a wider choice of tools for writing this blog <sup class="footnote"><a href="#fn1">1</a></sup><sup class="footnote"><a href="#fn2">2</a></sup></li>&#x000A;	<li>static pages &#8212; the blog site is served from <strong>Apache</strong> as pure html files, there is no requirement to run a blogging server <sup class="footnote"><a href="#fn3">3</a></sup></li>&#x000A;	<li>extensible &#8212; <strong>Webby</strong> can be extended both with rake tasks and Ruby code<sup class="footnote"><a href="#fn4">4</a></sup></li>&#x000A;</ul>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Yes, this explains why I have not written a post recently.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> This post was edited with MacVim.</p>&#x000A;<p class="footnote" id="fn3"><sup>3</sup> I know, old school, some <a href="http://www.nedbatchelder.com">folks</a> have been publishing this way for a long time.</p>&#x000A;<p class="footnote" id="fn4"><sup>4</sup> Easy! A one-liner <a href="http://gist.github.com">gist</a> filter.</p>&#x000A;<pre><code>Webby::Filters.register :gist { |input| input.gsub(/gist(\d+)\./) { |s| "&lt;script src='http://gist.github.com/#{$1}.js'&gt;&lt;/script&gt;" } }&#x000A;</code></pre>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/10/27/information-addicted.html'>
-                Information Addicted
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Mon Oct 27 10:01:58 -0400 2008'>
-              Posted
-              October 27, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>Sunday, the <a href="http://www.nytimes.com/">New York Times</a> had an <a href="http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&amp;scp=1&amp;sq=boot%20time&amp;st=cse&amp;oref=slogin">article</a> about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.</p>&#x000A;<p>First, I rarely reboot my MacBook Pro; I just put the machine to sleep and wake it (and this is easily accomplished by closing and opening the lid).</p>&#x000A;<p>Second, I rarely reboot my phone; it also seems to sleep<sup class="footnote"><a href="#fn1">1</a></sup>.</p>&#x000A;<p>Third, the context driving this <em>War on Boot Times</em> is our increasing dependence on external information sources.  Think back to 1988<sup class="footnote"><a href="#fn2">2</a></sup> and you may recall a time when finding out what movies to see while you were away from a newspaper was a non-trivial task.  Now with a smart phone or a WiFi connected laptop, all the information to answer your question is readily available at a moment&#8217;s notice.  Think back to when you were out and would say: &#8216;I wish I could Google that&#8217;; now you just do it no matter where you are.</p>&#x000A;<p>The PC makers are fighting the last war.  This whole concept of reducing boot times is irrelevant.  The device should already be on and waiting on us.  No wait, make that <em>The Cloud</em> <strong>is</strong> already waiting on us.</p>&#x000A;<p>The trend is for <strong>more information, delivered faster, and requested instantaneously</strong>.  Someone should tell the PC makers.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am unsure exactly what the phone is doing when it is <em>asleep</em>.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Moviefone was created in 1989.</p>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/">&larr; Prev</a>
