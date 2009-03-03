@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-03-03T15:27:01-05:00</updated>
+  <updated>2009-03-03T15:30:30-05:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -29,8 +29,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;Most bugs fall to the second pair of eyes&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;That is, just having one other developer look at a bug will likely resolve it.&lt;br /&gt;
-Of course, developer&amp;#8217;s who are &lt;a href=&quot;http://en.wikipedia.org/wiki/Pair_programming&quot;&gt;pair programming&lt;/a&gt; already know this and are ahead of the game.&lt;/p&gt;
+&lt;p&gt;That is, just having one other developer look at a bug will likely resolve it.  Of course, developer&amp;#8217;s who are &lt;a href=&quot;http://en.wikipedia.org/wiki/Pair_programming&quot;&gt;pair programming&lt;/a&gt; already know this and are ahead of the game.&lt;/p&gt;
 &lt;p&gt;On a related note, pretty much every developer has been in the following situation.  You are called over by a collegue to look over a bug, often accompanied by the statement, &amp;#8216;This should work.&amp;#8217;  You give a cursory examination and you resolve the problem with a quick change, often one that is &lt;em&gt;obvious&lt;/em&gt; (after you pointed it out!)&lt;/p&gt;
 &lt;p&gt;If you come away from that experience thinking &amp;#8216;Fresh pair of eyes&amp;#8217; or some such, good for you, you passed the test.&lt;/p&gt;
 &lt;p&gt;If you come away from that experience thinking &amp;#8216;I am so awesome!&amp;#8217; or some such, not so good for you, you are probably not even competent.&lt;/p&gt;</content>

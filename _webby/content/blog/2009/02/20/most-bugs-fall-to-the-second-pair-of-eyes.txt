@@ -19,8 +19,7 @@ The corollary is:
 
 bq. Most bugs fall to the second pair of eyes
 
-That is, just having one other developer look at a bug will likely resolve it.
-Of course, developer's who are "pair programming":http://en.wikipedia.org/wiki/Pair_programming already know this and are ahead of the game.
+That is, just having one other developer look at a bug will likely resolve it.  Of course, developer's who are "pair programming":http://en.wikipedia.org/wiki/Pair_programming already know this and are ahead of the game.
 
 On a related note, pretty much every developer has been in the following situation.  You are called over by a collegue to look over a bug, often accompanied by the statement, 'This should work.'  You give a cursory examination and you resolve the problem with a quick change, often one that is _obvious_ (after you pointed it out!)
 
