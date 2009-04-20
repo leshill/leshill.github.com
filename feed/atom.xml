@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-04-20T18:32:36-04:00</updated>
+  <updated>2009-04-20T19:00:23-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -34,11 +34,11 @@ Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp
 &lt;h2&gt;Getting started&lt;/h2&gt;
 &lt;p&gt;You will need to install the &lt;code&gt;hitch&lt;/code&gt; gem from github&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;% sudo gem install therubymug-hitch&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You will need a group email account with a service that allows email tags&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;, like &lt;em&gt;dev+yourname@example.com&lt;/em&gt;:&lt;/p&gt;
+&lt;p&gt;You will need a group email account with a service such as &lt;a href=&quot;http://mail.google.com&quot;&gt;GMail&lt;/a&gt; that allows email tags&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; (as an example, &lt;code&gt;news&lt;/code&gt; is a tag in this email address &lt;em&gt;yourname+news@example.com&lt;/em&gt; which is considered to be the same email address as &lt;em&gt;yourname@example.com&lt;/em&gt;):&lt;/p&gt;
 &lt;p&gt;You really want a &lt;a href=&quot;http://gravatar.com&quot;&gt;Gravatar&lt;/a&gt; for your group email account so that the commits show the custom gravatar along with your commit messages.  For every pair, register a new gravatar and associate it with a tagged email address of the form:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;dev+github_user_1+github_user_2@example.com&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The github usernames should appear in the local part of the address in alphabetical order after the group address local part, each github username seperated by a &lt;code&gt;+&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Initialize &lt;code&gt;hitch&lt;/code&gt; by giving it your name, github username, and group email address:&lt;/p&gt;
+&lt;p&gt;Initialize &lt;code&gt;hitch&lt;/code&gt; by running &lt;code&gt;hitchrc&lt;/code&gt; and giving it your name, github username, and group email address when prompted:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;% hitchrc&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;Using &lt;code&gt;hitch&lt;/code&gt;&lt;/h2&gt;
 &lt;p&gt;To pair with another developer whose github username is &lt;code&gt;pair&lt;/code&gt;:&lt;/p&gt;

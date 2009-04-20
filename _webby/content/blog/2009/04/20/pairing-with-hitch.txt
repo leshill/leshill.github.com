@@ -33,7 +33,7 @@ You will need to install the @hitch@ gem from github[1]:
 
 bc. % sudo gem install therubymug-hitch
 
-You will need a group email account with a service that allows email tags[2], like _dev+yourname@example.com_:
+You will need a group email account with a service such as "GMail":http://mail.google.com that allows email tags[2] (as an example, @news@ is a tag in this email address _yourname+news@example.com_ which is considered to be the same email address as _yourname@example.com_):
 
 You really want a "Gravatar":http://gravatar.com for your group email account so that the commits show the custom gravatar along with your commit messages.  For every pair, register a new gravatar and associate it with a tagged email address of the form:
 
@@ -41,7 +41,7 @@ bc. dev+github_user_1+github_user_2@example.com
 
 The github usernames should appear in the local part of the address in alphabetical order after the group address local part, each github username seperated by a @+@.
 
-Initialize @hitch@ by giving it your name, github username, and group email address:
+Initialize @hitch@ by running @hitchrc@ and giving it your name, github username, and group email address when prompted:
 
 bc. % hitchrc
 
