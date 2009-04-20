@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-04-20T18:29:25-04:00</updated>
+  <updated>2009-04-20T18:32:36-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -60,7 +60,7 @@ Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp
     
     <published>2009-02-20T21:23:58-05:00</published>
     <updated>2009-02-20T21:23:58-05:00</updated>
-    <content type="html">&lt;p&gt;While recently discussing if a power law applies to bugs at the ongoing seminar I senitmentally call &lt;em&gt;work&lt;/em&gt;, I noted a corollary to &lt;strong&gt;Linus&amp;#8217;s Law&lt;/strong&gt;.&lt;/p&gt;
+    <content type="html">&lt;p&gt;While recently discussing if a power law applies to bugs at the ongoing seminar I sentimentally call &lt;em&gt;work&lt;/em&gt;, I noted a corollary to &lt;strong&gt;Linus&amp;#8217;s Law&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Linus&amp;#39;s_Law&quot;&gt;Linus&amp;#8217;s Law&lt;/a&gt; states:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Given enough eyeballs, all bugs are shallow&lt;/p&gt;

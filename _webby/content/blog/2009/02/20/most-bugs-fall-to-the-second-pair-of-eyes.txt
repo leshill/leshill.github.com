@@ -9,7 +9,7 @@ filter:
   - gist
 --- 
 
-While recently discussing if a power law applies to bugs at the ongoing seminar I senitmentally call _work_, I noted a corollary to *Linus's Law*.
+While recently discussing if a power law applies to bugs at the ongoing seminar I sentimentally call _work_, I noted a corollary to *Linus's Law*.
 
 "Linus's Law":http://en.wikipedia.org/wiki/Linus's_Law states:
 
