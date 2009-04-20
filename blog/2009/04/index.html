@@ -3,7 +3,7 @@
   <meta content='text/html; charset=utf-8' http-equiv='content-type' />
   <meta content='Les Hill' name='author' />
   <title>
-    Wonderland &mdash; Archive for February 2008
+    Wonderland &mdash; Archive for April 2009
   </title>
   <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
@@ -25,22 +25,22 @@
         <div class='span-15 height-1'></div>
         <div class='span-15' id='content'>
           <div class='archives'>
-            <h2>Archive for February 2008</h2>
+            <h2>Archive for April 2009</h2>
             <div class='title'>
               <h2 class='entry-title'>
-                <a href='/blog/2008/2/22/monkey-patch.html'>
-                  Monkey Patch!
+                <a href='/blog/2009/04/20/pairing-with-hitch.html'>
+                  Pairing With Hitch
                 </a>
               </h2>
             </div>
             <div class='post-date'>
-              <abbr class='published' title='Fri Feb 22 11:09:02 -0500 2008'>
+              <abbr class='published' title='Mon Apr 20 16:18:52 -0400 2009'>
                 Posted
-                February 22, 2008
+                April 20, 2009
               </abbr>
             </div>
             <div class='entry-content'>
-              <p>So after missing the wisdom<sup class="footnote"><a href="#fn1">1</a></sup> of this:</p>&#x000A;<p><a href="http://xkcd.com/386">http://xkcd.com/386</a></p>&#x000A;<p>And responding to this:</p>&#x000A;<p><a href="http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript">http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript</a></p>&#x000A;<p>I went to bed.</p>&#x000A;<p>This morning I wrote my first <b>Rails</b> (really <b>Haml</b>) <i>Monkey Patch</i><sup class="footnote"><a href="#fn2">2</a></sup>.  This adds some of what Steve wanted: undisturbed inline javascript with variable interpolation.  I am not sure what else he wanted as I did not read his blog carefully :)</p>&#x000A;<p>Throw this into <code>lib/inline_javascript.rb</code></p>&#x000A;<p><script src='http://gist.github.com/33531.js'></script></p>&#x000A;<p>Throw this at the bottom of your <code>environment.rb</code>, taken from here <a href="http://groups.google.com/group/haml/msg/2d890cf1ede761ea">http://groups.google.com/group/haml/msg/2d890cf1ede761ea</a></p>&#x000A;<p><script src='http://gist.github.com/33532.js'></script></p>&#x000A;<p>And then do this in your <b>Haml</b> file:</p>&#x000A;<p><script src='http://gist.github.com/33533.js'></script></p>&#x000A;<h2>Update</h2>&#x000A;<p>I decided to make a patch and submit it to the <b>Haml</b> folks directly.  This gave me the &#8216;opportunity&#8217; to get <b>git</b> going.</p>&#x000A;<p>Nathan Weizenbaum took the time to put in a more comprehensive fix to expose the interpolation functionality to all filters &#8212; look for it in an upcoming release.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> It&#8217;s turtles all the way down.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> You do not want to know what my subconscious originally thought up as the way to do this &#8212; that was twisted.</p>
+              <p>Pair programming does present some unique problems, one that we encountered at <a href="http://www.hashrocket.com">Hashrocket</a> was commit attribution: a commit message would be identified with one member of the pair only.  This is not exactly tragic, but from the perspective of a passioniate developer, having commit credit (and accountability) is a critical and visible part of the ethos.</p>&#x000A;<p><a href="http://tpope.net">Tim Pope</a> had the brilliant idea of using a group email address with tags (such as <em>group+you@example.com</em>) to identify the commits a pair made to git.  A little <em>bash script fu</em> lead to a nifty command line utility that let us track pairs with our git commits.  With that script as a starting point, <a href="http://blog.therubymug.com">Ro Samour</a> wrote a pure ruby implementation: <code>hitch</code></p>&#x000A;<p><code>hitch</code> will modify your git configuration to reflect who you are pairing with. Here is a <code>hitch</code> commit message using <code>git log --pretty=full</code>:</p>&#x000A;<pre><code>commit e518dd0637e7d1d77d3bd79a645e5d0bc93eae2d&#x000A;Author: Les Hill and Rogelio Samour &lt;bleep+bleep+bleep@hashrocket.com&gt;&#x000A;Commit: Les Hill and Rogelio Samour &lt;bleep+bleep+bleep@hashrocket.com&gt;&#x000A; &#x000A;    Adding show note icon</code></pre>&#x000A;<p>This is a commit message from <code>hitch</code> on github:</p>&#x000A;<p><img src="/images/github_commit.png" title="Github hitch commit message" alt="Github hitch commit message" /></p>&#x000A;<p><code>hitch</code> is open source and is <a href="http://github.com/therubymug/hitch/tree/master">available</a> from github.</p>&#x000A;<h2>Getting started</h2>&#x000A;<p>You will need to install the <code>hitch</code> gem from github<sup class="footnote"><a href="#fn1">1</a></sup>:</p>&#x000A;<pre><code>% sudo gem install therubymug-hitch</code></pre>&#x000A;<p>You will need a group email account with a service that allows email tags<sup class="footnote"><a href="#fn2">2</a></sup>, like <em>dev+yourname@example.com</em>:</p>&#x000A;<p>You really want a <a href="http://gravatar.com">Gravatar</a> for your group email account so that the commits show the custom gravatar along with your commit messages.  For every pair, register a new gravatar and associate it with a tagged email address of the form:</p>&#x000A;<pre><code>dev+github_user_1+github_user_2@example.com</code></pre>&#x000A;<p>The github usernames should appear in the local part of the address in alphabetical order after the group address local part, each github username seperated by a <code>+</code>.</p>&#x000A;<p>Initialize <code>hitch</code> by giving it your name, github username, and group email address:</p>&#x000A;<pre><code>% hitchrc</code></pre>&#x000A;<h2>Using <code>hitch</code></h2>&#x000A;<p>To pair with another developer whose github username is <code>pair</code>:</p>&#x000A;<pre><code>% hitch pair</code></pre>&#x000A;<p><code>hitch</code> will prompt you if it does not recognize github username of your pair and save it for later use.</p>&#x000A;<p>To unpair and code solo:</p>&#x000A;<pre><code>% unhitch</code></pre>&#x000A;<p>To see who you are currently paired with:</p>&#x000A;<pre><code>% hitch</code></pre>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Add <code>github.com</code> to your gem sources with <code>gem sources -a http://gems.github.com/</code></p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Read about email tags on <a href="http://en.wikipedia.org/wiki/E-mail_address#Sub-addressing">Wikipedia</a></p>
             </div>
             <div class='prepend-1 span-15'>
               

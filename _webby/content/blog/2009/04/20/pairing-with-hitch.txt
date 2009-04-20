@@ -1,0 +1,66 @@
+--- 
+title:      'Pairing With Hitch'
+author: Les Hill
+created_at: 2009-04-20 16:18:52.700027 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - gist
+--- 
+
+Pair programming does present some unique problems, one that we encountered at "Hashrocket":http://www.hashrocket.com was commit attribution: a commit message would be identified with one member of the pair only.  This is not exactly tragic, but from the perspective of a passioniate developer, having commit credit (and accountability) is a critical and visible part of the ethos.
+
+"Tim Pope":http://tpope.net had the brilliant idea of using a group email address with tags (such as _group+you@example.com_) to identify the commits a pair made to git.  A little _bash script fu_ lead to a nifty command line utility that let us track pairs with our git commits.  With that script as a starting point, "Ro Samour":http://blog.therubymug.com wrote a pure ruby implementation: @hitch@
+
+@hitch@ will modify your git configuration to reflect who you are pairing with. Here is a @hitch@ commit message using @git log --pretty=full@:
+
+bc. commit e518dd0637e7d1d77d3bd79a645e5d0bc93eae2d
+Author: Les Hill and Rogelio Samour <bleep+bleep+bleep@hashrocket.com>
+Commit: Les Hill and Rogelio Samour <bleep+bleep+bleep@hashrocket.com>
+ 
+    Adding show note icon
+
+This is a commit message from @hitch@ on github:
+
+!/images/github_commit.png(Github hitch commit message)!
+
+@hitch@ is open source and is "available":http://github.com/therubymug/hitch/tree/master from github.
+
+h2. Getting started
+
+You will need to install the @hitch@ gem from github[1]:
+
+bc. % sudo gem install therubymug-hitch
+
+You will need a group email account with a service that allows email tags[2], like _dev+yourname@example.com_:
+
+You really want a "Gravatar":http://gravatar.com for your group email account so that the commits show the custom gravatar along with your commit messages.  For every pair, register a new gravatar and associate it with a tagged email address of the form:
+
+bc. dev+github_user_1+github_user_2@example.com
+
+The github usernames should appear in the local part of the address in alphabetical order after the group address local part, each github username seperated by a @+@.
+
+Initialize @hitch@ by giving it your name, github username, and group email address:
+
+bc. % hitchrc
+
+h2. Using @hitch@
+
+To pair with another developer whose github username is @pair@:
+
+bc. % hitch pair
+
+@hitch@ will prompt you if it does not recognize github username of your pair and save it for later use.
+
+To unpair and code solo:
+
+bc. % unhitch
+
+To see who you are currently paired with:
+
+bc. % hitch
+
+fn1. Add @github.com@ to your gem sources with @gem sources -a http://gems.github.com/@
+
+fn2. Read about email tags on "Wikipedia":http://en.wikipedia.org/wiki/E-mail_address#Sub-addressing

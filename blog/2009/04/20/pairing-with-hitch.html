@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+  <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+  <meta content='Les Hill' name='author' />
+  <title>
+    Wonderland &mdash; Pairing With Hitch
+  </title>
+  <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
+  <!--[if IE]> <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" /> <![endif]-->
+  <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='http://blog.leshill.org/feed/atom.xml' rel='alternate' title='RSS feed' type='application/atom+xml' />
+</head>
+<body>
+  <div class='container'>
+    <div class='span-24' id='header'>
+      <div class='prepend-1 span-11 append-8'>
+        <a href='/'>
+          <img src='/images/title.png' />
+        </a>
+      </div>
+    </div>
+    <div class='span-24' id='main'>
+      <div class='prepend-1 span-15 append-1' id='content'>
+        <div class='span-15 height-1'></div>
+        <div class='span-15' id='content'>
+          <div class='title'>
+            <h2 class='entry-title'>
+              <a href='/blog/2009/04/20/pairing-with-hitch.html'>
+                Pairing With Hitch
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Mon Apr 20 16:18:52 -0400 2009'>
+              Posted
+              April 20, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>Pair programming does present some unique problems, one that we encountered at <a href="http://www.hashrocket.com">Hashrocket</a> was commit attribution: a commit message would be identified with one member of the pair only.  This is not exactly tragic, but from the perspective of a passioniate developer, having commit credit (and accountability) is a critical and visible part of the ethos.</p>&#x000A;<p><a href="http://tpope.net">Tim Pope</a> had the brilliant idea of using a group email address with tags (such as <em>group+you@example.com</em>) to identify the commits a pair made to git.  A little <em>bash script fu</em> lead to a nifty command line utility that let us track pairs with our git commits.  With that script as a starting point, <a href="http://blog.therubymug.com">Ro Samour</a> wrote a pure ruby implementation: <code>hitch</code></p>&#x000A;<p><code>hitch</code> will modify your git configuration to reflect who you are pairing with. Here is a <code>hitch</code> commit message using <code>git log --pretty=full</code>:</p>&#x000A;<pre><code>commit e518dd0637e7d1d77d3bd79a645e5d0bc93eae2d&#x000A;Author: Les Hill and Rogelio Samour &lt;bleep+bleep+bleep@hashrocket.com&gt;&#x000A;Commit: Les Hill and Rogelio Samour &lt;bleep+bleep+bleep@hashrocket.com&gt;&#x000A; &#x000A;    Adding show note icon</code></pre>&#x000A;<p>This is a commit message from <code>hitch</code> on github:</p>&#x000A;<p><img src="/images/github_commit.png" title="Github hitch commit message" alt="Github hitch commit message" /></p>&#x000A;<p><code>hitch</code> is open source and is <a href="http://github.com/therubymug/hitch/tree/master">available</a> from github.</p>&#x000A;<h2>Getting started</h2>&#x000A;<p>You will need to install the <code>hitch</code> gem from github<sup class="footnote"><a href="#fn1">1</a></sup>:</p>&#x000A;<pre><code>% sudo gem install therubymug-hitch</code></pre>&#x000A;<p>You will need a group email account with a service that allows email tags<sup class="footnote"><a href="#fn2">2</a></sup>, like <em>dev+yourname@example.com</em>:</p>&#x000A;<p>You really want a <a href="http://gravatar.com">Gravatar</a> for your group email account so that the commits show the custom gravatar along with your commit messages.  For every pair, register a new gravatar and associate it with a tagged email address of the form:</p>&#x000A;<pre><code>dev+github_user_1+github_user_2@example.com</code></pre>&#x000A;<p>The github usernames should appear in the local part of the address in alphabetical order after the group address local part, each github username seperated by a <code>+</code>.</p>&#x000A;<p>Initialize <code>hitch</code> by giving it your name, github username, and group email address:</p>&#x000A;<pre><code>% hitchrc</code></pre>&#x000A;<h2>Using <code>hitch</code></h2>&#x000A;<p>To pair with another developer whose github username is <code>pair</code>:</p>&#x000A;<pre><code>% hitch pair</code></pre>&#x000A;<p><code>hitch</code> will prompt you if it does not recognize github username of your pair and save it for later use.</p>&#x000A;<p>To unpair and code solo:</p>&#x000A;<pre><code>% unhitch</code></pre>&#x000A;<p>To see who you are currently paired with:</p>&#x000A;<pre><code>% hitch</code></pre>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Add <code>github.com</code> to your gem sources with <code>gem sources -a http://gems.github.com/</code></p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Read about email tags on <a href="http://en.wikipedia.org/wiki/E-mail_address#Sub-addressing">Wikipedia</a></p>
+          </div>
+        </div>
+      </div>
+      <div class='span-6 append-1 last' id='sidebar'>
+        <div class='span-6 height-1'></div>
+        <div class='prepend-1 span-5'>
+          <h3>About</h3>
+          <ul>
+            <li>
+              Les Hill is a software adventurer who works with
+              <a href='http://www.ruby-lang.org'>Ruby</a>
+              at
+              <a href='http://hashrocket.com'>Hashrocket</a>
+              .
+            </li>
+          </ul>
+        </div>
+        <div class='prepend-1 span-5 prepend-top'>
+          <h3>Subscribe</h3>
+          <ul>
+            <li>
+              <a class='feed' href='/feed/atom.xml'>RSS</a>
+            </li>
+          </ul>
+        </div>
+        <div class='prepend-1 span-5 prepend-top'>
+          <div class='archives'>
+            <h3>Archives</h3>
+            <ul>
+              <li class='year'>
+                <a href='/blog/2009'>2009</a>
+                <ul>
+                  <li class='month'>
+                    <a href='/blog/2009/01'>January</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/02'>February</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/04'>April</a>
+                  </li>
+                </ul>
+              </li>
+              <li class='year'>
+                <a href='/blog/2008'>2008</a>
+                <ul>
+                  <li class='month'>
+                    <a href='/blog/2008/2'>February</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/5'>May</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/7'>July</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/8'>August</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/10'>October</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/12'>December</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='span-24' id='footer'>
+      <p>
+        Wonderland is styled using
+        <a href='http://www.blueprintcss.org/'>blueprint css</a>
+        and powered by
+        <a href='http://webby.rubyforge.org/'>Webby</a>
+        and
+        <a href='http://github.com/blog/272-github-pages'>GitHub Pages</a>
+      </p>
+      <p>
+        Les Hill &copy; 2008&ndash;2009
+      </p>
+    </div>
+  </div>
+</body>

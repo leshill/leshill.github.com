@@ -3,7 +3,7 @@
   <meta content='text/html; charset=utf-8' http-equiv='content-type' />
   <meta content='Les Hill' name='author' />
   <title>
-    Wonderland &mdash; Archive for 2008
+    Wonderland &mdash; Home
   </title>
   <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
@@ -24,28 +24,26 @@
       <div class='prepend-1 span-15 append-1' id='content'>
         <div class='span-15 height-1'></div>
         <div class='span-15' id='content'>
-          <div class='archives'>
-            <h2>Archive for 2008</h2>
-            <ul>
-              <li class='month'>
-                <a href='/blog/2008/2'>February</a>
-              </li>
-              <li class='month'>
-                <a href='/blog/2008/5'>May</a>
-              </li>
-              <li class='month'>
-                <a href='/blog/2008/7'>July</a>
-              </li>
-              <li class='month'>
-                <a href='/blog/2008/8'>August</a>
-              </li>
-              <li class='month'>
-                <a href='/blog/2008/10'>October</a>
-              </li>
-              <li class='month'>
-                <a href='/blog/2008/12'>December</a>
-              </li>
-            </ul>
+          <div class='title'>
+            <h2 class='entry-title'>
+              <a href='/blog/2008/2/22/monkey-patch.html'>
+                Monkey Patch!
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Fri Feb 22 11:09:02 -0500 2008'>
+              Posted
+              February 22, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>So after missing the wisdom<sup class="footnote"><a href="#fn1">1</a></sup> of this:</p>&#x000A;<p><a href="http://xkcd.com/386">http://xkcd.com/386</a></p>&#x000A;<p>And responding to this:</p>&#x000A;<p><a href="http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript">http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript</a></p>&#x000A;<p>I went to bed.</p>&#x000A;<p>This morning I wrote my first <b>Rails</b> (really <b>Haml</b>) <i>Monkey Patch</i><sup class="footnote"><a href="#fn2">2</a></sup>.  This adds some of what Steve wanted: undisturbed inline javascript with variable interpolation.  I am not sure what else he wanted as I did not read his blog carefully :)</p>&#x000A;<p>Throw this into <code>lib/inline_javascript.rb</code></p>&#x000A;<p><script src='http://gist.github.com/33531.js'></script></p>&#x000A;<p>Throw this at the bottom of your <code>environment.rb</code>, taken from here <a href="http://groups.google.com/group/haml/msg/2d890cf1ede761ea">http://groups.google.com/group/haml/msg/2d890cf1ede761ea</a></p>&#x000A;<p><script src='http://gist.github.com/33532.js'></script></p>&#x000A;<p>And then do this in your <b>Haml</b> file:</p>&#x000A;<p><script src='http://gist.github.com/33533.js'></script></p>&#x000A;<h2>Update</h2>&#x000A;<p>I decided to make a patch and submit it to the <b>Haml</b> folks directly.  This gave me the &#8216;opportunity&#8217; to get <b>git</b> going.</p>&#x000A;<p>Nathan Weizenbaum took the time to put in a more comprehensive fix to expose the interpolation functionality to all filters &#8212; look for it in an upcoming release.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> It&#8217;s turtles all the way down.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> You do not want to know what my subconscious originally thought up as the way to do this &#8212; that was twisted.</p>
+          </div>
+          <div class='prepend-1 span-15'>
+            <a href="/index5.html">&larr; Prev</a>
+            &nbsp;
+            
           </div>
         </div>
       </div>

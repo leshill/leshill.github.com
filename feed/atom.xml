@@ -5,12 +5,52 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-03-03T15:30:30-05:00</updated>
+  <updated>2009-04-20T18:29:25-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Pairing With Hitch</title>
+    <link href="http://blog.leshill.org/blog/2009/04/20/pairing-with-hitch.html" />
+    
+    <id>tag:blog.leshill.org,2009-04-20:1240258732</id>
+    
+    <published>2009-04-20T16:18:52-04:00</published>
+    <updated>2009-04-20T16:18:52-04:00</updated>
+    <content type="html">&lt;p&gt;Pair programming does present some unique problems, one that we encountered at &lt;a href=&quot;http://www.hashrocket.com&quot;&gt;Hashrocket&lt;/a&gt; was commit attribution: a commit message would be identified with one member of the pair only.  This is not exactly tragic, but from the perspective of a passioniate developer, having commit credit (and accountability) is a critical and visible part of the ethos.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://tpope.net&quot;&gt;Tim Pope&lt;/a&gt; had the brilliant idea of using a group email address with tags (such as &lt;em&gt;group+you@example.com&lt;/em&gt;) to identify the commits a pair made to git.  A little &lt;em&gt;bash script fu&lt;/em&gt; lead to a nifty command line utility that let us track pairs with our git commits.  With that script as a starting point, &lt;a href=&quot;http://blog.therubymug.com&quot;&gt;Ro Samour&lt;/a&gt; wrote a pure ruby implementation: &lt;code&gt;hitch&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;hitch&lt;/code&gt; will modify your git configuration to reflect who you are pairing with. Here is a &lt;code&gt;hitch&lt;/code&gt; commit message using &lt;code&gt;git log --pretty=full&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;commit e518dd0637e7d1d77d3bd79a645e5d0bc93eae2d
+Author: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp;gt;
+Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp;gt;
+ 
+    Adding show note icon&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is a commit message from &lt;code&gt;hitch&lt;/code&gt; on github:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/github_commit.png&quot; title=&quot;Github hitch commit message&quot; alt=&quot;Github hitch commit message&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;hitch&lt;/code&gt; is open source and is &lt;a href=&quot;http://github.com/therubymug/hitch/tree/master&quot;&gt;available&lt;/a&gt; from github.&lt;/p&gt;
+&lt;h2&gt;Getting started&lt;/h2&gt;
+&lt;p&gt;You will need to install the &lt;code&gt;hitch&lt;/code&gt; gem from github&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% sudo gem install therubymug-hitch&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You will need a group email account with a service that allows email tags&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;, like &lt;em&gt;dev+yourname@example.com&lt;/em&gt;:&lt;/p&gt;
+&lt;p&gt;You really want a &lt;a href=&quot;http://gravatar.com&quot;&gt;Gravatar&lt;/a&gt; for your group email account so that the commits show the custom gravatar along with your commit messages.  For every pair, register a new gravatar and associate it with a tagged email address of the form:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dev+github_user_1+github_user_2@example.com&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The github usernames should appear in the local part of the address in alphabetical order after the group address local part, each github username seperated by a &lt;code&gt;+&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Initialize &lt;code&gt;hitch&lt;/code&gt; by giving it your name, github username, and group email address:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% hitchrc&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Using &lt;code&gt;hitch&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;To pair with another developer whose github username is &lt;code&gt;pair&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% hitch pair&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;hitch&lt;/code&gt; will prompt you if it does not recognize github username of your pair and save it for later use.&lt;/p&gt;
+&lt;p&gt;To unpair and code solo:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% unhitch&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To see who you are currently paired with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% hitch&lt;/code&gt;&lt;/pre&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; Add &lt;code&gt;github.com&lt;/code&gt; to your gem sources with &lt;code&gt;gem sources -a http://gems.github.com/&lt;/code&gt;&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Read about email tags on &lt;a href=&quot;http://en.wikipedia.org/wiki/E-mail_address#Sub-addressing&quot;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Most Bugs Fall to the Second Pair of Eyes</title>
@@ -226,20 +266,6 @@ end &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The trend is for &lt;strong&gt;more information, delivered faster, and requested instantaneously&lt;/strong&gt;.  Someone should tell the PC makers.&lt;/p&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; I am unsure exactly what the phone is doing when it is &lt;em&gt;asleep&lt;/em&gt;.&lt;/p&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Moviefone was created in 1989.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Tip: Using Haml With ActionMailer</title>
-    <link href="http://blog.leshill.org/blog/2008/10/19/tip-using-haml-with-actionmailer.html" />
-    
-    <id>tag:blog.leshill.org,2008-10-20:33</id>
-    
-    <published>2008-10-19T21:54:10-04:00</published>
-    <updated>2008-10-19T21:54:10-04:00</updated>
-    <content type="html">&lt;p&gt;You can use Haml to write your mailer views and still use the implicit multipart template feature by letting &lt;code&gt;ActionMailer&lt;/code&gt; know about Haml:&lt;/p&gt;
-&lt;p&gt;&lt;script src='http://gist.github.com/38723.js'&gt;&lt;/script&gt;&lt;/p&gt;
-&lt;h2&gt;Update&lt;/h2&gt;
-&lt;p&gt;This is no longer necessary with &lt;strong&gt;Rails 2.2&lt;/strong&gt; and &lt;strong&gt;Haml 2.0.5&lt;/strong&gt; .&lt;/p&gt;</content>
   </entry>
   
 </feed>
