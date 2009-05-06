@@ -5,12 +5,25 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-04-20T19:00:23-04:00</updated>
+  <updated>2009-05-05T22:40:25-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>RSpec stub_chain for Mocha</title>
+    <link href="http://blog.leshill.org/blog/2009/05/05/rspec-stub-chain-for-mocha.html" />
+    
+    <id>tag:blog.leshill.org,2009-05-05:1241576025</id>
+    
+    <published>2009-05-05T22:13:45-04:00</published>
+    <updated>2009-05-05T22:13:45-04:00</updated>
+    <content type="html">&lt;p&gt;I am not at &lt;a href=&quot;http://en.oreilly.com/rails2009&quot;&gt;RailsConf&lt;/a&gt; but I have been following the tweets of my coworkers, so I heard about &lt;a href=&quot;http://rspec.info&quot;&gt;RSpec&lt;/a&gt;&amp;#8216;s new &lt;code&gt;stub_chain&lt;/code&gt; method.  Since I prefer &lt;a href=&quot;http://mocha.rubyforge.org&quot;&gt;Mocha&lt;/a&gt;&amp;#8217;s syntax to that of the built-in RSpec stubbing framework, I created a monkey patch to add &lt;code&gt;stub_chain&lt;/code&gt; to Mocha:&lt;/p&gt;
+&lt;p&gt;&lt;script src='http://gist.github.com/107331.js'&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;Copy that into &lt;code&gt;spec/stub_chain_mocha.rb&lt;/code&gt; and then require it from &lt;code&gt;spec_helper.rb&lt;/code&gt;.&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Pairing With Hitch</title>
@@ -248,24 +261,6 @@ end &lt;/code&gt;&lt;/pre&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn4&quot;&gt;&lt;sup&gt;4&lt;/sup&gt; Easy! A one-liner &lt;a href=&quot;http://gist.github.com&quot;&gt;gist&lt;/a&gt; filter.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Webby::Filters.register :gist { |input| input.gsub(/gist(\d+)\./) { |s| &quot;&amp;lt;script src='http://gist.github.com/#{$1}.js'&amp;gt;&amp;lt;/script&amp;gt;&quot; } }
 &lt;/code&gt;&lt;/pre&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Information Addicted</title>
-    <link href="http://blog.leshill.org/blog/2008/10/27/information-addicted.html" />
-    
-    <id>tag:blog.leshill.org,2008-10-27:34</id>
-    
-    <published>2008-10-27T10:01:58-04:00</published>
-    <updated>2008-10-27T10:01:58-04:00</updated>
-    <content type="html">&lt;p&gt;Sunday, the &lt;a href=&quot;http://www.nytimes.com/&quot;&gt;New York Times&lt;/a&gt; had an &lt;a href=&quot;http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&amp;amp;scp=1&amp;amp;sq=boot%20time&amp;amp;st=cse&amp;amp;oref=slogin&quot;&gt;article&lt;/a&gt; about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.&lt;/p&gt;
-&lt;p&gt;First, I rarely reboot my MacBook Pro; I just put the machine to sleep and wake it (and this is easily accomplished by closing and opening the lid).&lt;/p&gt;
-&lt;p&gt;Second, I rarely reboot my phone; it also seems to sleep&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;Third, the context driving this &lt;em&gt;War on Boot Times&lt;/em&gt; is our increasing dependence on external information sources.  Think back to 1988&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and you may recall a time when finding out what movies to see while you were away from a newspaper was a non-trivial task.  Now with a smart phone or a WiFi connected laptop, all the information to answer your question is readily available at a moment&amp;#8217;s notice.  Think back to when you were out and would say: &amp;#8216;I wish I could Google that&amp;#8217;; now you just do it no matter where you are.&lt;/p&gt;
-&lt;p&gt;The PC makers are fighting the last war.  This whole concept of reducing boot times is irrelevant.  The device should already be on and waiting on us.  No wait, make that &lt;em&gt;The Cloud&lt;/em&gt; &lt;strong&gt;is&lt;/strong&gt; already waiting on us.&lt;/p&gt;
-&lt;p&gt;The trend is for &lt;strong&gt;more information, delivered faster, and requested instantaneously&lt;/strong&gt;.  Someone should tell the PC makers.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; I am unsure exactly what the phone is doing when it is &lt;em&gt;asleep&lt;/em&gt;.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Moviefone was created in 1989.&lt;/p&gt;</content>
   </entry>
   
 </feed>

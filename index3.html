@@ -26,6 +26,22 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2008/12/24/tip-rsync-options-for-webby.html'>
+                Tip: Rsync Options for Webby
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Wed Dec 24 18:49:36 -0500 2008'>
+              Posted
+              December 24, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>If you are making substantial changes to your <a href="http://github.com/TwP/based">Webby</a> site, you will have no doubt noticed that deleted files are not automatically removed from the <code>output</code> directory or the deploy server.</p>&#x000A;<p>Use the following <code>Sitefile</code> to:</p>&#x000A;<ul>&#x000A;	<li>clear the output directory</li>&#x000A;	<li>build the site</li>&#x000A;	<li>deploy the site with <strong>rsync</strong> with the checksum and delete options<sup class="footnote"><a href="#fn1">1</a></sup><sup class="footnote"><a href="#fn2">2</a></sup></li>&#x000A;</ul>&#x000A;<p><script src='http://gist.github.com/39827.js'></script></p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> <strong>Rsync</strong> will only update changed files, and will detect deleted files.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Using the <code>--delete</code> option will remove files from your deploy server; if you have mixed your <strong>Webby</strong> content with server-only files<sup class="footnote"><a href="#fn3">3</a></sup>, you should not use this.</p>&#x000A;<p class="footnote" id="fn3"><sup>3</sup> You may want to reconsider doing that.</p>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2008/12/22/hello-webby.html'>
                 Hello Webby!
               </a>
@@ -72,22 +88,6 @@
           <div class='entry-content'>
             <p>You can use Haml to write your mailer views and still use the implicit multipart template feature by letting <code>ActionMailer</code> know about Haml:</p>&#x000A;<p><script src='http://gist.github.com/38723.js'></script></p>&#x000A;<h2>Update</h2>&#x000A;<p>This is no longer necessary with <strong>Rails 2.2</strong> and <strong>Haml 2.0.5</strong> .</p>
           </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/8/24/git-setting-your-upstream-default.html'>
-                Git: Setting Your Upstream Default
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Sun Aug 24 20:28:02 -0400 2008'>
-              Posted
-              August 24, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>I  recently set up a new repository on <a href="http://www.github.com/">github</a>.  Creating the repository on github yields a page of instructions covering the two common scenarios: new and existing repositories.  After following the new repository instructions,  I had a repository on github, a local repository, and the following in response to my <code>git pull</code> command:</p>&#x000A;<pre><code>You asked me to pull without telling me which branch you want to merge with, and 'branch.master.merge' in your configuration file does not tell me either.  Please name which branch you want to merge on the command line and try again (e.g. 'git pull &lt;repository&gt; &lt;refspec&gt;'). See git-pull(1) for details on the refspec.&#x000A;  &#x000A;If you often merge with the same branch, you may want to configure the following variables in your configuration file:&#x000A;  &#x000A;  branch.master.remote = &lt;nickname&gt;&#x000A;  branch.master.merge = &lt;remote-ref&gt;&#x000A;  remote.&lt;nickname&gt;.url = &lt;url&gt;&#x000A;  remote.&lt;nickname&gt;.fetch = &lt;refspec&gt;&#x000A;  &#x000A;See git-config(1) for details.</code>&#x000A;&#x000A;</pre>&#x000A;<p>Not exactly what I wanted, and certainly not what I expected.  What I <em>expected</em> was a local repository with the upstream for <strong>master</strong> to be set to point at <strong>master</strong> on the github repository.</p>&#x000A;<p>Setting this up can be done easily in two similar ways:</p>&#x000A;<ul>&#x000A;	<li>You can edit the configuration file as directed by the error message</li>&#x000A;	<li>You can use <code>git config</code></li>&#x000A;</ul>&#x000A;<p>I opted for <code>git config</code> as it was easier and required no thinking &#8212; the commands are always the same<sup class="footnote"><a href="#fn1">1</a></sup>; here they are:</p>&#x000A;<pre><code>% git config branch.master.remote origin&#x000A;% git config branch.master.merge refs/heads/master</code></pre>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> For the scenario of a local empty repository pushed up to a remote, where the remote will be the upstream master.</p>
-          </div>
           <div class='prepend-1 span-15'>
             <a href="/index2.html">&larr; Prev</a>
             &nbsp;
@@ -132,6 +132,9 @@
                   </li>
                   <li class='month'>
                     <a href='/blog/2009/04'>April</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/05'>May</a>
                   </li>
                 </ul>
               </li>

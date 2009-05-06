@@ -1,0 +1,17 @@
+--- 
+title:      'RSpec stub_chain for Mocha'
+author: Les Hill
+created_at: 2009-05-05 22:13:45.074991 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - gist
+--- 
+
+I am not at "RailsConf":http://en.oreilly.com/rails2009 but I have been following the tweets of my coworkers, so I heard about ["RSpec":http://rspec.info]'s new @stub_chain@ method.  Since I prefer ["Mocha":http://mocha.rubyforge.org]'s syntax to that of the built-in RSpec stubbing framework, I created a monkey patch to add @stub_chain@ to Mocha:
+
+gist107331.
+
+Copy that into @spec/stub_chain_mocha.rb@ and then require it from @spec_helper.rb@.
+

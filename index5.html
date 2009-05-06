@@ -26,6 +26,22 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2008/7/12/voodoo-send.html'>
+                Voodoo send
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Sat Jul 12 00:33:10 -0400 2008'>
+              Posted
+              July 12, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>Recently when looking through some plugin&#8217;s code, we found the following line:</p>&#x000A;<p><script src='http://gist.github.com/38693.js'></script></p>&#x000A;<p>This <em>seems</em> to be an acceptable variant of the commonly used</p>&#x000A;<p><script src='http://gist.github.com/38695.js'></script></p>&#x000A;<p>As you may have surmised, it is not an acceptable variant.  This is a <a href="http://en.wikipedia.org/wiki/Voodoo_programming">Voodoo programming</a> smell, as it indicates a misunderstanding of exactly what the semantics of <code>send</code> are.  There is also a clearer, more intention revealing, and identical<sup class="footnote"><a href="#fn1">1</a></sup> alternative <code>include Foo</code> or with the omitted parenthesis <code>include(Foo)</code> .</p>&#x000A;<p>This of course, leads us to why <code>ActiveRecord::Base.send(:include, Foo)</code> is acceptable.  The <code>include</code> method is private, so the most elegant way to invoke it on <em>another</em> object is by using <code>send</code>; this is possible because <code>send</code> ignores access control allowing us to invoke <code>include</code> directly.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> <em>Almost</em>, the difference is that <code>send</code> is in the call stack.</p>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2008/7/1/rspec-1-dot-1-dot-4-and-helpers.html'>
                 RSpec 1.1.4 and Helpers
               </a>
@@ -72,22 +88,6 @@
           <div class='entry-content'>
             <p>I am a bit late on the history <a href="http://diveintomark.org/archives/2008/04/15/history-meme">meme</a>.  Here I am:</p>&#x000A;<pre><code>Wonderland$ history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head&#x000A;149 git&#x000A;60 spec&#x000A;46 ls&#x000A;45 gst&#x000A;42 cd&#x000A;28 rake&#x000A;14 ssh&#x000A;8 ss&#x000A;7 houston&#x000A;7 gco</code></pre>&#x000A;<p>Things to note<sup class="footnote"><a href="#fn1">1</a></sup>:</p>&#x000A;<ol>&#x000A;	<li>3 are git</li>&#x000A;	<li>3 are Rails development related</li>&#x000A;	<li>4 are common unix commands</li>&#x000A;</ol>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> 4 are aliases</p>
           </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/5/6/stone-knives-and-bearskins.html'>
-                Stone knives and bearskins
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Tue May 06 01:26:53 -0400 2008'>
-              Posted
-              May 06, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>Recently while discussing <a href="http://jquery.com/">jQuery</a>, we got onto the topic of <a href="http://en.wikipedia.org/wiki/Ajax_%28programming%29">AJAX</a>.  This prompted me to declare:</p>&#x000A;<p><em>Before AJAX, we used stone knives and bearskins to make our web apps</em></p>&#x000A;<p>Actually, we were using JavaScript and XML to drive our web apps, we just did not call it AJAX, and it was a very challenging task.  In spite of the difficulty of building it, we stuck with it and we were pretty darn happy with our <strong>pre-web 2.0 web2.0</strong> app; so much so that we actually had people coming by just to see our UI in action.</p>&#x000A;<p>I went back and looked for some of our old code, hoping to find the CVS repository<sup class="footnote"><a href="#fn1">1</a></sup>, but only finding a tarball of version 1.4.  The following code is from <code>client/script/services.js</code> and dated <strong>August 24, 2001</strong> &#8212; although some version of this code would have existed in the spring of <strong>2000</strong>:</p>&#x000A;<p><script src='http://gist.github.com/38524.js'></script></p>&#x000A;<p>Just looking at this snippet from our internal library makes me all the happier that we made the thing work at all.  Kudos to <a href="http://markjudd.com">Mark Judd</a> and <a href="http://brianlevine.blogspot.com">Brian Levine</a>, two of our very talented small team, who were responsible for our UI.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> You already know this, but just in case, CVS was a source code repository that pretty much everyone used before Subversion (unless you bought one from a vendor).</p>
-          </div>
           <div class='prepend-1 span-15'>
             <a href="/index4.html">&larr; Prev</a>
             &nbsp;
@@ -132,6 +132,9 @@
                   </li>
                   <li class='month'>
                     <a href='/blog/2009/04'>April</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/05'>May</a>
                   </li>
                 </ul>
               </li>
