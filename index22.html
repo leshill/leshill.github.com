@@ -89,15 +89,15 @@
             <p><a href=":http://www.thoughtbot.com/projects/paperclip">Paperclip</a> supports <strong>AWS S3</strong> with a default of <em>public-read</em> access policy.  This allows anyone who knows the URL of the resource to access it.</p>&#x000A;<p>For some applications, you might want a more restricted access policy.  The <em>authenticated-read</em> access policy requires that the URL of the resource be presented by an authenticated user.</p>&#x000A;<p>To use <em>authenticated-read</em> with <strong>Paperclip</strong>:</p>&#x000A;<ul>&#x000A;	<li>set the <code>:s3_permissions</code> option on your attachment:</li>&#x000A;</ul>&#x000A;<pre><code>:s3_permssions =&gt; 'authenticated-read'</code></pre>&#x000A;<ul>&#x000A;	<li>use <code>RightAws::S3Interface#get_link</code> to generate an <em>authenticated-read</em> URL for the attachment:</li>&#x000A;</ul>&#x000A;<pre><code>def s3_url(style = nil, time_limit = 15.minutes)&#x000A;  attachment.s3.interface.get_link(attachment.s3_bucket.to_s, attachment.path(style), time_limit)&#x000A;end </code></pre>&#x000A;<p>If you do not normally need to time limit the access, use <code>nil</code> as the default value for <code>time_limit</code></p>
           </div>
           <div class='prepend-1 span-15'>
-            <a href="/">&larr; Prev</a>
+            <a href="/index2.html">&larr; Prev</a>
             &nbsp;
-            <a href="/index3.html">Next &rarr;</a>
+            <a href="/index23.html">Next &rarr;</a>
           </div>
         </div>
       </div>
       <div class='span-6 append-1 last' id='sidebar'>
         <div class='span-6 height-1'></div>
-        <div class='prepend-1 span-5' id='about'>
+        <div class='prepend-1 span-5'>
           <h3>About</h3>
           <ul>
             <li>
@@ -106,9 +106,6 @@
               at
               <a href='http://hashrocket.com'>Hashrocket</a>
               .
-            </li>
-            <li class='last'>
-              Follow me on <a href="http://www.twitter.com/leshill">Twitter</a>
             </li>
           </ul>
         </div>
@@ -119,6 +116,9 @@
               <a class='feed' href='/feed/atom.xml'>RSS</a>
             </li>
           </ul>
+        </div>
+        <div class='prepend-1 span-5 prepend-top'>
+          <h3><a href="http://www.twitter.com/leshill">Follow me on Twitter</a></h3>
         </div>
         <div class='prepend-1 span-5 prepend-top'>
           <div class='archives'>

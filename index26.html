@@ -3,7 +3,7 @@
   <meta content='text/html; charset=utf-8' http-equiv='content-type' />
   <meta content='Les Hill' name='author' />
   <title>
-    Wonderland &mdash; Stone knives and bearskins
+    Wonderland &mdash; Home
   </title>
   <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
@@ -40,11 +40,32 @@
           <div class='entry-content'>
             <p>Recently while discussing <a href="http://jquery.com/">jQuery</a>, we got onto the topic of <a href="http://en.wikipedia.org/wiki/Ajax_%28programming%29">AJAX</a>.  This prompted me to declare:</p>&#x000A;<p><em>Before AJAX, we used stone knives and bearskins to make our web apps</em></p>&#x000A;<p>Actually, we were using JavaScript and XML to drive our web apps, we just did not call it AJAX, and it was a very challenging task.  In spite of the difficulty of building it, we stuck with it and we were pretty darn happy with our <strong>pre-web 2.0 web2.0</strong> app; so much so that we actually had people coming by just to see our UI in action.</p>&#x000A;<p>I went back and looked for some of our old code, hoping to find the CVS repository<sup class="footnote"><a href="#fn1">1</a></sup>, but only finding a tarball of version 1.4.  The following code is from <code>client/script/services.js</code> and dated <strong>August 24, 2001</strong> &#8212; although some version of this code would have existed in the spring of <strong>2000</strong>:</p>&#x000A;<p><script src='http://gist.github.com/38524.js'></script></p>&#x000A;<p>Just looking at this snippet from our internal library makes me all the happier that we made the thing work at all.  Kudos to <a href="http://markjudd.com">Mark Judd</a> and <a href="http://brianlevine.blogspot.com">Brian Levine</a>, two of our very talented small team, who were responsible for our UI.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> You already know this, but just in case, CVS was a source code repository that pretty much everyone used before Subversion (unless you bought one from a vendor).</p>
           </div>
+          <div class='title'>
+            <h2 class='entry-title'>
+              <a href='/blog/2008/2/22/monkey-patch.html'>
+                Monkey Patch!
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Fri Feb 22 11:09:02 -0500 2008'>
+              Posted
+              February 22, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>So after missing the wisdom<sup class="footnote"><a href="#fn1">1</a></sup> of this:</p>&#x000A;<p><a href="http://xkcd.com/386">http://xkcd.com/386</a></p>&#x000A;<p>And responding to this:</p>&#x000A;<p><a href="http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript">http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript</a></p>&#x000A;<p>I went to bed.</p>&#x000A;<p>This morning I wrote my first <b>Rails</b> (really <b>Haml</b>) <i>Monkey Patch</i><sup class="footnote"><a href="#fn2">2</a></sup>.  This adds some of what Steve wanted: undisturbed inline javascript with variable interpolation.  I am not sure what else he wanted as I did not read his blog carefully :)</p>&#x000A;<p>Throw this into <code>lib/inline_javascript.rb</code></p>&#x000A;<p><script src='http://gist.github.com/33531.js'></script></p>&#x000A;<p>Throw this at the bottom of your <code>environment.rb</code>, taken from here <a href="http://groups.google.com/group/haml/msg/2d890cf1ede761ea">http://groups.google.com/group/haml/msg/2d890cf1ede761ea</a></p>&#x000A;<p><script src='http://gist.github.com/33532.js'></script></p>&#x000A;<p>And then do this in your <b>Haml</b> file:</p>&#x000A;<p><script src='http://gist.github.com/33533.js'></script></p>&#x000A;<h2>Update</h2>&#x000A;<p>I decided to make a patch and submit it to the <b>Haml</b> folks directly.  This gave me the &#8216;opportunity&#8217; to get <b>git</b> going.</p>&#x000A;<p>Nathan Weizenbaum took the time to put in a more comprehensive fix to expose the interpolation functionality to all filters &#8212; look for it in an upcoming release.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> It&#8217;s turtles all the way down.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> You do not want to know what my subconscious originally thought up as the way to do this &#8212; that was twisted.</p>
+          </div>
+          <div class='prepend-1 span-15'>
+            <a href="/index25.html">&larr; Prev</a>
+            &nbsp;
+            
+          </div>
         </div>
       </div>
       <div class='span-6 append-1 last' id='sidebar'>
         <div class='span-6 height-1'></div>
-        <div class='prepend-1 span-5' id='about'>
+        <div class='prepend-1 span-5'>
           <h3>About</h3>
           <ul>
             <li>
@@ -53,9 +74,6 @@
               at
               <a href='http://hashrocket.com'>Hashrocket</a>
               .
-            </li>
-            <li class='last'>
-              Follow me on <a href="http://www.twitter.com/leshill">Twitter</a>
             </li>
           </ul>
         </div>
@@ -66,6 +84,9 @@
               <a class='feed' href='/feed/atom.xml'>RSS</a>
             </li>
           </ul>
+        </div>
+        <div class='prepend-1 span-5 prepend-top'>
+          <h3><a href="http://www.twitter.com/leshill">Follow me on Twitter</a></h3>
         </div>
         <div class='prepend-1 span-5 prepend-top'>
           <div class='archives'>

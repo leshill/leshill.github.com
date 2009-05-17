@@ -11,6 +11,14 @@
   list-style: none;
 }
 
+#about ul li {
+  margin-bottom: 25px;
+}
+
+#about ul li.last {
+  margin-bottom: 0px;
+}
+
 #main {
   background: transparent url(/images/grey-e6-240-wide.png) repeat-y scroll 710px 0px;
 }
@@ -28,10 +36,6 @@
 }
 
 .post { font-size: 200%; }
-/*body {
-  font-family: Georgia,"Times New Roman",Times,serif;
-}
-*/
 
 pre {
   overflow: auto;
