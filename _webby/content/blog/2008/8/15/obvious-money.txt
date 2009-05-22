@@ -6,7 +6,7 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-08-15:22'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 "David Heinemeier Hansson":http://www.loudthinking.com recently gave an awesome talk  titled "The secret to making money online":http://www.omnisio.com/startupschool08/david-heinemeier-hansson-at-startup-school-08 at the "Y Combinator":http://ycombinator.com Startup School.  Aside from being entertaining, David keeps hammering at the VC-fueled dreams of today's web entrepreneurs.  David has been at this for a long time, and what he is saying is _obvious_ and _common-sense_ (and David will tell you so).
 

@@ -7,7 +7,7 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-07-02:17'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 Last week, **RSpec 1.1.4** was released; and given my optimistic disposition I immediately upgraded.  Happily, the upgrade was almost seamless.  Two interdependent issues kept this from being a flawless upgrade:
 
@@ -25,7 +25,29 @@ Finished in 0.393129 seconds
 
 Lets examine the helper spec that generated these warnings:
 
-gist38679.
+<notextile>
+<coderay:ruby>
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+
+describe DogHelper do
+
+  describe "name_or_description()" do
+    it "should return a description for a dog without a name" do
+      dog = mock_model(Dog, :name => nil, :sex => 'male', :breed => 'Labrador', :color => 'black')
+      name_or_description(dog).should == "(male Labrador, black)"
+    end
+  end
+
+  describe "owner_link()" do
+    it "should return a link to the owner" do
+      owner = mock_model(User, :login => 'sally_smith', :to_param => 'sally_smith')
+      dog = mock_model(Dog, :owner => owner)
+      owner_link(dog).should =~ /users\/sally_smith/
+    end
+  end
+end
+</coderay>
+</notextile>
 
 So, what does this deprecation warning tell us?  We are being warned that calls to *name_or_description* and *owner_link*, which are called on the implicit *self* of the RSpec _it_ blocks, are going to fail in the future when the helper module (*DogHelper* in this example) is no longer automatically included by RSpec.
 
@@ -33,7 +55,29 @@ Or put another way, calling helper methods like *name_or_description* directly, 
 
 The new way to call helper methods is through the *helper* attribute of RSpec, giving access to an @ActionView::Base@ instance with the helper module included.  Lets go ahead and make this change to our two helper calls:
 
-gist38681.
+<notextile>
+<coderay:ruby>
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+
+describe DogHelper do
+
+  describe "name_or_description()" do
+    it "should return a description for a dog without a name" do
+      dog = mock_model(Dog, :name => nil, :sex => 'male', :breed => 'Labrador', :color => 'black')
+      helper.name_or_description(dog).should == "(male Labrador, black)"
+    end
+  end
+
+  describe "owner_link()" do
+    it "should return a link to the owner" do
+      owner = mock_model(User, :login => 'sally_smith', :to_param => 'sally_smith')
+      dog = mock_model(Dog, :owner => owner)
+      helper.owner_link(dog).should =~ /users\/sally_smith/
+    end
+  end
+end
+</coderay>
+</notextile>
 
 Lets try this out!
 
@@ -54,7 +98,15 @@ This is a bona-fide bug in 1.1.4, and might lead to our having to rollback to 1.
 
 Lets add this *before* block to our spec:
 
-gist38683.
+<notextile>
+<coderay:ruby>
+before(:each) do
+  # Patch until 1.1.5
+  helper_controller = @controller
+  helper.instance_eval { @controller = helper_controller }
+end
+</coderay>
+</notextile>
 
 And then try it out:
 

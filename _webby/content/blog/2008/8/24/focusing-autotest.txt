@@ -7,7 +7,7 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-08-24:24'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 The usual "autotest":http://www.zenspider.com/ZSS/Products/ZenTest workflow goes something like this:
 
@@ -26,11 +26,28 @@ bc. % atest user
 
 Here is the (lightly modified) code to do this; in your @.autotest@ file add:
 
-gist38700.
+<notextile>
+<coderay:ruby>
+if ENV['AUTOTEST'] and not ENV['AUTOTEST'].empty?
+  only_these_files_re = Regexp.new(ENV['AUTOTEST'])
+
+  Autotest.send(:alias_method, :real_find_files, :find_files)
+  Autotest.send(:define_method, :find_files) do |*args|
+    real_find_files.reject do |k, v|
+      !only_these_files_re.match(k)
+    end
+  end
+end
+</coderay>
+</notextile>
 
 And in your @.bash_profile@ add:
 
-gist38702.
+bc. # Autotest
+function fn_autotest() {
+  AUTOTEST=$1 autotest
+}
+alias atest='fn_autotest'
 
 Now use the alias to invoke autotest.  For standard autotest behavior:
 

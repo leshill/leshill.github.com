@@ -6,12 +6,27 @@ layout: blog_post
 blog_post:  true
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 
 I am not at "RailsConf":http://en.oreilly.com/rails2009 but I have been following the tweets of my coworkers, so I heard about ["RSpec":http://rspec.info]'s new @stub_chain@ method.  Since I prefer ["Mocha":http://mocha.rubyforge.org]'s syntax to that of the built-in RSpec stubbing framework, I created a monkey patch to add @stub_chain@ to Mocha:
 
-gist107331.
+<notextile>
+<coderay:ruby>
+module StubChainMocha
+  module Object
+    def stub_chain(*methods)
+      while methods.length > 1 do
+        stubs(methods.shift).returns(self)
+      end
+      stubs(methods.shift)
+    end
+  end
+end
+
+Object.send(:include, StubChainMocha::Object)
+</coderay>
+</notextile>
 
 Copy that into @spec/stub_chain_mocha.rb@ and then require it from @spec_helper.rb@.
 

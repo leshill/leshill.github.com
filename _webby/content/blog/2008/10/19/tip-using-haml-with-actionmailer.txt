@@ -8,11 +8,15 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-10-20:33'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 You can use Haml to write your mailer views and still use the implicit multipart template feature by letting @ActionMailer@ know about Haml:
 
-gist38723.
+<notextile>
+<coderay:ruby>
+ActionMailer::Base.register_template_extension('haml')
+</coderay>
+</notextile>
 
 h2. Update
 

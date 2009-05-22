@@ -6,7 +6,7 @@ layout: blog_post
 blog_post:  true
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 As of this post, I am using publishing *Wonderland* with "Webby":http://webby.rubyforge.org .
 
@@ -24,4 +24,8 @@ fn3. I know, old school, some "folks":http://www.nedbatchelder.com have been pub
 
 fn4. Easy! A one-liner "gist":http://gist.github.com filter.
 
-bc.  Webby::Filters.register :gist { |input| input.gsub(/gist(\d+)\./) { |s| "<script src='http://gist.github.com/#{$1}.js'></script>" } }
+<notextile>
+<coderay:ruby>
+Webby::Filters.register :gist { |input| input.gsub(/gist(\d+)\./) { |s| "<script src='http://gist.github.com/#{$1}.js'></script>" } }
+</coderay>
+</notextile>

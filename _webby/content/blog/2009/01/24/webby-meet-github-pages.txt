@@ -6,7 +6,7 @@ layout: blog_post
 blog_post:  true
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 
 As of this post, this blog is now hosted by GitHub's recently announced "GitHub Pages":http://github.com/blog/272-github-pagesi, still "Webby":http://webby.rubyforge.org powered, now with extra _git_ goodness.
@@ -23,15 +23,53 @@ To make *Webby* and *GitHub Pages* co-exist, I restructured my repo and made the
 * The *Webby* @clobber@ target is overridden to ignore the @_webby@ directory
 * @Sitefile@
 
-gist51667.
+<notextile>
+<coderay:ruby>
+SITE.output_dir = '..'
+
+task :default => :clean_build
+</coderay>
+</notextile>
 
 * @lib/override.rb@ Rake monkey patch to allow overriding tasks found "here":http://www.taknado.com/2007/7/30/overriding-rake-tasks
 
-gist51669.
+<notextile>
+<coderay:ruby>
+# From http://www.taknado.com/2007/7/30/overriding-rake-tasks
+Rake::TaskManager.class_eval do
+  def remove_task(task_name)
+    @tasks.delete(task_name.to_s)
+  end
+end
+
+def remove_task(task_name)
+  Rake.application.remove_task(task_name)
+end
+
+def override_task(args, &block)
+  name, deps = Rake.application.resolve_args([args])  
+  remove_task Rake.application[name].name
+  task(args, &block)
+end
+</coderay>
+</notextile>
 
 * @tasks/github_pages.rake@ redefines @clobber@  to ignore the @_webby@ directory and the new (default) @clean_build@ task allows for file deletions[1]
 
-gist51670.
+<notextile>
+<coderay:ruby>
+# We only want to remove the generated files
+desc "Delete the website"
+override_task :clobber do |t|
+  Dir.chdir(Webby.site.output_dir) do
+    Dir['*'].entries.reject {|entry| entry == '_webby'}.each {|entry| rm_rf entry}
+  end
+end
+
+desc "Clobber, then build the website"
+task :clean_build => [:clobber, :build]
+</coderay>
+</notextile>
 
 The new workflow for adding a post to the new site is:
 

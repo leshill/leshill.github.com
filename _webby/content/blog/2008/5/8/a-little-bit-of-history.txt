@@ -7,7 +7,7 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-05-08:8'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 I am a bit late on the history "meme":http://diveintomark.org/archives/2008/04/15/history-meme.  Here I am:
 

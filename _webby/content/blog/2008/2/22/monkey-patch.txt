@@ -6,7 +6,7 @@ layout: blog_post
 blog_post:  true
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 So after missing the wisdom[1] of this:
 
@@ -22,15 +22,80 @@ This morning I wrote my first **Rails** (really **Haml**) __Monkey Patch__[2].  
 
 Throw this into @lib/inline_javascript.rb@
 
-gist33531.
+<notextile>
+<coderay:ruby>
+module Haml
+  module Filters
+    class InlineJavascript
+      HEAD =<<EOH
+<script type="text/javascript">
+//<![CDATA[
+EOH
+
+      FOOT =<<EOF
+//]]>
+</script>
+EOF
+
+      def initialize(text)
+        @text = HEAD + text + FOOT
+      end
+
+      def render
+        @text
+      end
+    end
+  end
+
+  module Precompiler
+    def close_filtered(filter)
+      @flat_spaces = -1
+      filtered = filter.new(@filter_buffer).render
+
+      if filter == Haml::Filters::Preserve
+        push_silent("_hamlout.buffer << #{filtered.dump} << \"\\n\";")
+      elsif filter == Haml::Filters::InlineJavascript
+        # suppress eval option does not apply to us
+        flush_merged_text
+        js = unescape_interpolation(filtered)
+        @precompiled  << "_hamlout.buffer << #{js};"
+      else
+        push_text(filtered.rstrip.gsub("\n", "\n#{'  ' * @output_tabs}"))
+      end
+
+      @filter_buffer = nil
+      @template_tabs -= 1
+    end
+  end
+end
+</coderay>
+</notextile>
 
 Throw this at the bottom of your @environment.rb@, taken from here "http://groups.google.com/group/haml/msg/2d890cf1ede761ea":http://groups.google.com/group/haml/msg/2d890cf1ede761ea
 
-gist33532.
+<notextile>
+<coderay:ruby>
+require 'inline_javascript'
+
+Haml::Template.options = {
+  :filters => {
+    'javascript' => Haml::Filters::InlineJavascript
+  }
+}
+</coderay>
+</notextile>
 
 And then do this in your **Haml** file:
 
-gist33533.
+<notextile>
+<coderay:javascript>
+:javascript
+  function oh_yea() {
+    alert('Hello' + '#{@message}')
+  }
+%a{ :href =>"javascript:oh_yea()" } Oh Yea!
+</coderay>
+</notextile>
 
 h2. Update
 

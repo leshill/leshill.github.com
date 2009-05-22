@@ -9,6 +9,7 @@
   <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
   <!--[if IE]> <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" /> <![endif]-->
   <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='http://blog.leshill.org/feed/atom.xml' rel='alternate' title='RSS feed' type='application/atom+xml' />
 </head>
 <body>
@@ -56,7 +57,7 @@
               </abbr>
             </div>
             <div class='entry-content'>
-              <p>You can use Haml to write your mailer views and still use the implicit multipart template feature by letting <code>ActionMailer</code> know about Haml:</p>&#x000A;<p><script src='http://gist.github.com/38723.js'></script></p>&#x000A;<h2>Update</h2>&#x000A;<p>This is no longer necessary with <strong>Rails 2.2</strong> and <strong>Haml 2.0.5</strong> .</p>
+              <p>You can use Haml to write your mailer views and still use the implicit multipart template feature by letting <code>ActionMailer</code> know about Haml:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">ActionMailer</span>::<span class="co">Base</span>.register_template_extension(<span class="s"><span class="dl">'</span><span class="k">haml</span><span class="dl">'</span></span>)</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>This is no longer necessary with <strong>Rails 2.2</strong> and <strong>Haml 2.0.5</strong> .</p>
             </div>
             <div class='prepend-1 span-15'>
               

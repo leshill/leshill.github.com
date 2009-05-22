@@ -6,7 +6,7 @@ layout: blog_post
 blog_post:  true
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 If you are making substantial changes to your "Webby":http://github.com/TwP/based site, you will have no doubt noticed that deleted files are not automatically removed from the @output@ directory or the deploy server.
 
@@ -16,7 +16,20 @@ Use the following @Sitefile@ to:
 * build the site
 * deploy the site with *rsync* with the checksum and delete options[1][2]
 
-gist39827.
+<notextile>
+<coderay:ruby>
+SITE.host = 'HOST'
+# use delete and checksum through ssh
+SITE.rsync_args = ['-r', '-c', '--delete', '--rsh=ssh']
+SITE.remote_dir = '/SOME/DIR'
+
+
+task :default => :build
+
+desc 'deploy the site to the webserver'
+task :deploy => [:clobber, :build, 'deploy:rsync']
+</coderay>
+</notextile>
 
 fn1. *Rsync* will only update changed files, and will detect deleted files.
 

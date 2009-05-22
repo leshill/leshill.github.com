@@ -40,6 +40,11 @@
 pre {
   overflow: auto;
   border: 1px solid #DEDEDE;
+  background: #EAF2F5;
+}
+.CodeRay pre {
+  border: none;
+  background: none;
 }
 
 .feed {
@@ -50,3 +55,6 @@ pre {
   color: orange;
 }
 
+.CodeRay {
+  margin: 0 0 1.5em;
+}

@@ -6,11 +6,20 @@ layout: blog_post
 blog_post:  true
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 I have been using "Hoptoad":http://hoptoadapp.com/ to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple @include HoptoadNotifier::Catcher@ in your @application.rb@, easy!
 
 However, I also wanted *Hoptoad* to track any exception which occurred in a cron job that was running with @script/runner@.  Again, a snap with *Hoptoad*, take a look:
 
-gist46014.
-
+<notextile>
+<coderay:ruby>
+class CronJob
+  def self.process
+    # do stuff
+  rescue => ex
+    HoptoadNotifier.notify(ex)
+  end
+end
+</coderay>
+</notextile>

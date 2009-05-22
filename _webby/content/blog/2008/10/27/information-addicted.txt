@@ -7,7 +7,7 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-10-27:34'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 Sunday, the "New York Times":http://www.nytimes.com/ had an "article":http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&scp=1&sq=boot%20time&st=cse&oref=slogin about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.
 

@@ -6,7 +6,7 @@ layout: blog_post
 blog_post:  true
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 
 For those of us in a certain part of tech community, this quote from "Barry Ritholtz":http://www.ritholtz.com/blog/2009/01/microsoft-zune-down-54/ is old news:

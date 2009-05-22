@@ -6,7 +6,7 @@ layout: blog_post
 blog_post:  true
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 
 "Paperclip"::http://www.thoughtbot.com/projects/paperclip supports *AWS S3* with a default of _public-read_ access policy.  This allows anyone who knows the URL of the resource to access it.
@@ -17,12 +17,20 @@ To use _authenticated-read_ with *Paperclip*:
 
 * set the @:s3_permissions@ option on your attachment:
 
-bc. :s3_permssions => 'authenticated-read'
+<notextile>
+<coderay:ruby>
+:s3_permssions => 'authenticated-read'
+</coderay>
+</notextile>
 
 * use @RightAws::S3Interface#get_link@ to generate an _authenticated-read_ URL for the attachment:
 
-bc. def s3_url(style = nil, time_limit = 15.minutes)
+<notextile>
+<coderay:ruby>
+def s3_url(style = nil, time_limit = 15.minutes)
   attachment.s3.interface.get_link(attachment.s3_bucket.to_s, attachment.path(style), time_limit)
-end 
+end
+</coderay>
+</notextile>
 
 If you do not normally need to time limit the access, use @nil@ as the default value for @time_limit@

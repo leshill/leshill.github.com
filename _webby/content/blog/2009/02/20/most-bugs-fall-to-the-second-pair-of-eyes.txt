@@ -6,7 +6,7 @@ layout: blog_post
 blog_post:  true
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 
 While recently discussing if a power law applies to bugs at the ongoing seminar I sentimentally call _work_, I noted a corollary to *Linus's Law*.

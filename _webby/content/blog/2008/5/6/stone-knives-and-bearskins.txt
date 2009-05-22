@@ -7,7 +7,7 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-05-06:7'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 Recently while discussing "jQuery":http://jquery.com/, we got onto the topic of "AJAX":http://en.wikipedia.org/wiki/Ajax_%28programming%29.  This prompted me to declare:
 
@@ -17,7 +17,25 @@ Actually, we were using JavaScript and XML to drive our web apps, we just did no
 
 I went back and looked for some of our old code, hoping to find the CVS repository[1], but only finding a tarball of version 1.4.  The following code is from @client/script/services.js@ and dated *August 24, 2001* -- although some version of this code would have existed in the spring of *2000*:
 
-gist38524.
+<notextile>
+<coderay:javascript>
+BrServices.prototype.issueRequest = function (action) {
+// deleted ...
+    var request = brUtils.newXmlDOM(action);
+    var tryCount = 0;
+    var condition = brServices.isOkay;
+    var s = "";
+    while (condition == brServices.isOkay) {
+
+        try {
+            var httpOb = new ActiveXObject("MSXML2.XMLHTTP"); // Was Microsoft.XMLHTTP
+            httpOb.open("POST", brServices.brxmlURL, false);
+            httpOb.setRequestHeader("Content-Type", "text/xml; charset='UTF-8'");
+
+            httpOb.send(request);
+// deleted ...
+</coderay>
+</notextile>
 
 Just looking at this snippet from our internal library makes me all the happier that we made the thing work at all.  Kudos to "Mark Judd":http://markjudd.com and "Brian Levine":http://brianlevine.blogspot.com, two of our very talented small team, who were responsible for our UI.
 

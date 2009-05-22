@@ -6,7 +6,7 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-08-14:21'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 "Seth Godin":http://sethgodin.typepad.com/seths_blog has just put up a fantastic post on "The intangibles":http://sethgodin.typepad.com/seths_blog/2008/08/the-intangibles.html -- ways to set your product or service apart.
 

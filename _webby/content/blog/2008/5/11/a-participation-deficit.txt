@@ -7,7 +7,7 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-05-12:11'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 "Clay Shirky":http://www.shirky.com is brilliant, and I have been reading his essays for a very long time[1].  Recently, he has been discussing his notion of a "Cognitive Surplus":http://www.herecomeseverybody.org/2008/04/looking-for-the-mouse.html .  Good stuff; if you have not read it, go read it now.
 

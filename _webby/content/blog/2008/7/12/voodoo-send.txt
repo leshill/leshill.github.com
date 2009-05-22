@@ -7,15 +7,23 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-07-13:18'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 Recently when looking through some plugin's code, we found the following line:
 
-gist38693.
+<notextile>
+<coderay:ruby>
+self.send(:include, Foo)
+</coderay>
+</notextile>
 
 This _seems_ to be an acceptable variant of the commonly used
 
-gist38695.
+<notextile>
+<coderay:ruby>
+ActiveRecord::Base.send(:include, Foo)
+</coderay>
+</notextile>
 
 As you may have surmised, it is not an acceptable variant.  This is a "Voodoo programming":http://en.wikipedia.org/wiki/Voodoo_programming smell, as it indicates a misunderstanding of exactly what the semantics of @send@ are.  There is also a clearer, more intention revealing, and identical[1] alternative @include Foo@ or with the omitted parenthesis @include(Foo)@ .
 

@@ -7,7 +7,7 @@ blog_post:  true
 tag: 'blog.leshill.org,2008-08-24:25'
 filter:
   - textile
-  - gist
+  - coderay
 --- 
 I  recently set up a new repository on "github":http://www.github.com/.  Creating the repository on github yields a page of instructions covering the two common scenarios: new and existing repositories.  After following the new repository instructions,  I had a repository on github, a local repository, and the following in response to my @git pull@ command:
 
