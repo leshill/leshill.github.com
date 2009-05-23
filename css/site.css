@@ -42,9 +42,14 @@ pre {
   border: 1px solid #DEDEDE;
   background: #EAF2F5;
 }
+
 .CodeRay pre {
   border: none;
   background: none;
+}
+
+.CodeRay {
+  margin: 0 0 1.5em;
 }
 
 .feed {
@@ -55,6 +60,22 @@ pre {
   color: orange;
 }
 
-.CodeRay {
-  margin: 0 0 1.5em;
+div#sidebar div#twitter {
+  border: none;
+  margin-bottom: 0;
+  width: 190px;
 }
+
+div#sidebar ul#twitter_update_list {
+  margin: 0 1.5em 1.5em;
+  padding: 0;
+}
+
+div#sidebar h2 {
+  margin: 0 0 1em;
+  padding: 0.4em 1em;
+  font-size: 1.1em;
+  color: #fff;
+  background-color: #888;
+}
+

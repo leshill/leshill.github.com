@@ -2,7 +2,7 @@
 filter: haml
 ---
 .archives
-  %h3 Archives
+  %h2 Archives
   %ul
     - months.group_by{|a| a.created_at.strftime('%Y')}.each do |year, months|
       %li.year
