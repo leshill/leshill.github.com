@@ -1,0 +1,28 @@
+--- 
+title:      'AWS S3 Bucket Copy'
+author: Les Hill
+created_at: 2009-05-28 15:43:44.085378 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+We use "S3":http://aws.amazon.com/s3/ for a lot of our projects using the "aws-s3":http://amazon.rubyforge.org/ gem.  One thing that has continually plagued me is copying objects from one bucket to another.  Having rolled this twice already, I am placing it here for future reference.  Enjoy.
+
+<notextile>
+<coderay:ruby>
+class S3Object
+  def self.copy_across_buckets(src_bucket, src_key, dest_bucket, dest_key, options = {})
+    original = open(url_for(src_key, src_bucket))
+    default_options = {:content_type => original.content_type}
+    store(dest_key, original, dest_bucket, default_options.merge(options))
+    acl(dest_key, dest_bucket, acl(src_key, src_bucket))
+  end
+
+  def copy_to_bucket(dest_bucket, dest_key = nil, options = {})
+    self.class.copy_across_buckets(bucket.name, key, dest_bucket, dest_key ? dest_key : key, options)
+  end
+end
+</coderay>
+</notextile>

@@ -31,6 +31,22 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2008/10/19/tip-using-haml-with-actionmailer.html'>
+                Tip: Using Haml With ActionMailer
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Sun Oct 19 21:54:10 -0400 2008'>
+              Posted
+              October 19, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>You can use Haml to write your mailer views and still use the implicit multipart template feature by letting <code>ActionMailer</code> know about Haml:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">ActionMailer</span>::<span class="co">Base</span>.register_template_extension(<span class="s"><span class="dl">'</span><span class="k">haml</span><span class="dl">'</span></span>)</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>This is no longer necessary with <strong>Rails 2.2</strong> and <strong>Haml 2.0.5</strong> .</p>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2008/8/24/git-setting-your-upstream-default.html'>
                 Git: Setting Your Upstream Default
               </a>
@@ -76,22 +92,6 @@
           </div>
           <div class='entry-content'>
             <p><a href="http://www.loudthinking.com">David Heinemeier Hansson</a> recently gave an awesome talk  titled <a href="http://www.omnisio.com/startupschool08/david-heinemeier-hansson-at-startup-school-08">The secret to making money online</a> at the <a href="http://ycombinator.com">Y Combinator</a> Startup School.  Aside from being entertaining, David keeps hammering at the VC-fueled dreams of today&#8217;s web entrepreneurs.  David has been at this for a long time, and what he is saying is <em>obvious</em> and <em>common-sense</em> (and David will tell you so).</p>&#x000A;<p>And yet, we always hear people talking about the <strong>Money Maker</strong>, or how they are going to target 1% of a <strong>$10 billion industry</strong>, or other self-defeating filters.  If you find yourself uttering those kind of phrases in response to your own ideas or the ideas of others, <strong>stop</strong>.</p>&#x000A;<p>Refocus on what the idea is, and evaluate it on its merits.  Thinking about how to build a <a href="http://www.37signals.com/svn/archives2/google_yahoo_microsoft_gym.php">GYM</a> acquisition or targeting a market that will attract $10 million in VC funding is a waste of your time.</p>&#x000A;<p>Should you ignore pricing and profits?  Maybe; if you do look at them, examine them in a reasonable context &#8212; what do I need to just run the service on a minimal server?  With no paid staff?  With minimal time commitments?  How would it look like if I had 100 customers?  1000 customers?</p>&#x000A;<p>Yes, this means you are no longer playing in the VC startup space<sup class="footnote"><a href="#fn1">1</a></sup>.  Cool.  If you really want to play there, you will be <strong>much</strong> better off playing there after you already have those 100 customers.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am unsure about investors like Y Combinator, as they <em>seem</em> to be advocates for this way of thinking.</p>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/8/14/obvious-intangibles.txt'>
-                Obvious Intangibles
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Thu Aug 14 12:06:07 -0400 2008'>
-              Posted
-              August 14, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p><a href="http://sethgodin.typepad.com/seths_blog">Seth Godin</a> has just put up a fantastic post on <a href="http://sethgodin.typepad.com/seths_blog/2008/08/the-intangibles.html">The intangibles</a> &#8212; ways to set your product or service apart.</p>&#x000A;<p>Many of them read as <em>common-sense</em> or <em>obvious</em>, but like most <em>common-sense</em> and <em>obvious</em> advice, it is rarely actually practiced; often the advice is even actively dismissed with an annoyed &#8216;Of course we do that!&#8217; &#8212; only you do not do that, and you are fooling yourself by saying so.</p>&#x000A;<p>Take stock of what you are doing, and ask yourself if you are really doing the <em>common-sense</em> and <em>obvious</em> things.</p>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/index3.html">&larr; Prev</a>
