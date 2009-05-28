@@ -8,7 +8,7 @@ filter:
   - textile
   - coderay
 --- 
-We use "S3":http://aws.amazon.com/s3/ for a lot of our projects using the "aws-s3":http://amazon.rubyforge.org/ gem.  One thing that has continually plagued me is copying objects from one bucket to another.  Having rolled this twice already, I am placing it here for future reference.  Enjoy.
+We use "S3":http://aws.amazon.com/s3/ for a lot of our projects using the "aws-s3":http://amazon.rubyforge.org/ gem.  One thing that has continually plagued me is copying objects from one bucket to another.  Having rewritten this snippet of code twice already, I am placing it here for future reference.  Enjoy.
 
 <notextile>
 <coderay:ruby>

@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-05-28T15:50:37-04:00</updated>
+  <updated>2009-05-28T15:53:00-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -20,7 +20,7 @@
     
     <published>2009-05-28T15:43:44-04:00</published>
     <updated>2009-05-28T15:43:44-04:00</updated>
-    <content type="html">&lt;p&gt;We use &lt;a href=&quot;http://aws.amazon.com/s3/&quot;&gt;S3&lt;/a&gt; for a lot of our projects using the &lt;a href=&quot;http://amazon.rubyforge.org/&quot;&gt;aws-s3&lt;/a&gt; gem.  One thing that has continually plagued me is copying objects from one bucket to another.  Having rolled this twice already, I am placing it here for future reference.  Enjoy.&lt;/p&gt;
+    <content type="html">&lt;p&gt;We use &lt;a href=&quot;http://aws.amazon.com/s3/&quot;&gt;S3&lt;/a&gt; for a lot of our projects using the &lt;a href=&quot;http://amazon.rubyforge.org/&quot;&gt;aws-s3&lt;/a&gt; gem.  One thing that has continually plagued me is copying objects from one bucket to another.  Having rewritten this snippet of code twice already, I am placing it here for future reference.  Enjoy.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;S3Object&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.copy_across_buckets(src_bucket, src_key, dest_bucket, dest_key, options = {})
