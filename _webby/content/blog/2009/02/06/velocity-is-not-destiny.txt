@@ -7,6 +7,7 @@ blog_post:  true
 filter:
   - textile
   - coderay
+  - hashrocket
 --- 
 
 One of the most persistent and pernicious stumbling blocks I see when a team is starting out with Agile[1] is equating story points and velocity directly with hours.  

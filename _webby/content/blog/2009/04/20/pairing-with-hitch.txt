@@ -7,6 +7,7 @@ blog_post:  true
 filter:
   - textile
   - coderay
+  - hashrocket
 --- 
 
 Pair programming does present some unique problems, one that we encountered at "Hashrocket":http://www.hashrocket.com was commit attribution: a commit message would be identified with one member of the pair only.  This is not exactly tragic, but from the perspective of a passioniate developer, having commit credit (and accountability) is a critical and visible part of the ethos.

@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-05-28T15:53:00-04:00</updated>
+  <updated>2009-06-01T09:27:29-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -101,7 +101,7 @@ Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp
 &lt;p&gt;To see who you are currently paired with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;% hitch&lt;/code&gt;&lt;/pre&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; Add &lt;code&gt;github.com&lt;/code&gt; to your gem sources with &lt;code&gt;gem sources -a http://gems.github.com/&lt;/code&gt;&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Read about email tags on &lt;a href=&quot;http://en.wikipedia.org/wiki/E-mail_address#Sub-addressing&quot;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;</content>
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Read about email tags on &lt;a href=&quot;http://en.wikipedia.org/wiki/E-mail_address#Sub-addressing&quot;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;&lt;!-- #hashrocket --&gt;</content>
   </entry>
   
   <entry>
@@ -124,7 +124,7 @@ Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp
 &lt;p&gt;That is, just having one other developer look at a bug will likely resolve it.  Of course, developer&amp;#8217;s who are &lt;a href=&quot;http://en.wikipedia.org/wiki/Pair_programming&quot;&gt;pair programming&lt;/a&gt; already know this and are ahead of the game.&lt;/p&gt;
 &lt;p&gt;On a related note, pretty much every developer has been in the following situation.  You are called over by a collegue to look over a bug, often accompanied by the statement, &amp;#8216;This should work.&amp;#8217;  You give a cursory examination and you resolve the problem with a quick change, often one that is &lt;em&gt;obvious&lt;/em&gt; (after you pointed it out!)&lt;/p&gt;
 &lt;p&gt;If you come away from that experience thinking &amp;#8216;Fresh pair of eyes&amp;#8217; or some such, good for you, you passed the test.&lt;/p&gt;
-&lt;p&gt;If you come away from that experience thinking &amp;#8216;I am so awesome!&amp;#8217; or some such, not so good for you, you are probably not even competent.&lt;/p&gt;</content>
+&lt;p&gt;If you come away from that experience thinking &amp;#8216;I am so awesome!&amp;#8217; or some such, not so good for you, you are probably not even competent.&lt;/p&gt;&lt;!-- #hashrocket --&gt;</content>
   </entry>
   
   <entry>
@@ -164,7 +164,7 @@ Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp
 &lt;p&gt;Understanding that velocity is accurate &lt;strong&gt;and&lt;/strong&gt; dynamic is key to using it for iteration planning.  Most other software project management methodologies pretend that the project is static in all aspects, that all variables are known and quantified.  Agile acknowledges that a software project is a dynamic system, and provides simple evidence based tools to manage the dynamism inherent in building new software.&lt;/p&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; I use the term to encompass the variations of Agile methodologies that use story points and velocity.&lt;/p&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; I first heard this poetic phrase from Amy Kline, an awesome scrum master and friend.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt; Peter Jackson has written a great summary of why we use story points in &lt;a href=&quot;http://blog.peteonrails.com/articles/2009/02/05/the-case-for-story-points/&quot;&gt;The Case for Story Points&lt;/a&gt; .&lt;/p&gt;</content>
+&lt;p class=&quot;footnote&quot; id=&quot;fn3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt; Peter Jackson has written a great summary of why we use story points in &lt;a href=&quot;http://blog.peteonrails.com/articles/2009/02/05/the-case-for-story-points/&quot;&gt;The Case for Story Points&lt;/a&gt; .&lt;/p&gt;&lt;!-- #hashrocket --&gt;</content>
   </entry>
   
   <entry>
