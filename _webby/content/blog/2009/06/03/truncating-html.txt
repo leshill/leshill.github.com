@@ -15,6 +15,7 @@ We recently needed to show a truncated version of existing HTML content.  Althou
 # By Henrik Nyh <http://henrik.nyh.se> 2008-01-30.
 # Free to modify and redistribute with credit.
 # Word truncation and fixes by Les Hill <http://blog.leshill.org> 2009-06-02
+#
 
 require "rubygems"
 require "hpricot"

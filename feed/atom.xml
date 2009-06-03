@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://blog.leshill.org//" rel="self" />
   <link href="http://blog.leshill.org/" />
-  <updated>2009-06-03T13:33:07-04:00</updated>
+  <updated>2009-06-03T13:35:37-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -25,63 +25,64 @@
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# By Henrik Nyh &amp;lt;http://henrik.nyh.se&amp;gt; 2008-01-30.&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Free to modify and redistribute with credit.&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Word truncation and fixes by Les Hill &amp;lt;http://blog.leshill.org&amp;gt; 2009-06-02&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;rubygems&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;hpricot&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;TextHelper&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Like the Rails _truncate_ helper but doesn't break HTML tags or entities.&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;truncate_html&lt;/span&gt;(text, max_length = &lt;span class=&quot;i&quot;&gt;30&lt;/span&gt;, ellipsis = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; text.nil?
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;     doc = Hpricot(text.to_s)
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;     doc.inner_text.chars.length &amp;gt; max_length ? doc.truncate(max_length, ellipsis).inner_html : text.to_s
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.truncate_at_space(text, max_length, ellipsis = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;     l = [max_length - ellipsis.length, &lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;].max
-&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt;     stop = text.rindex(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, l) || &lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;     (text.length &amp;gt; max_length ? text[&lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;...stop] + ellipsis : text).to_s
-&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;HpricotTruncator&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;25&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;NodeWithChildren&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;26&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;truncate&lt;/span&gt;(max_length, ellipsis)
-&lt;span class=&quot;no&quot;&gt;27&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; inner_text.chars.length &amp;lt;= max_length
-&lt;span class=&quot;no&quot;&gt;28&lt;/span&gt;       truncated_node = dup
-&lt;span class=&quot;no&quot;&gt;29&lt;/span&gt;       truncated_node.name = name
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;30&lt;/strong&gt;&lt;/span&gt;       truncated_node.raw_attributes = raw_attributes
-&lt;span class=&quot;no&quot;&gt;31&lt;/span&gt;       truncated_node.children = []
-&lt;span class=&quot;no&quot;&gt;32&lt;/span&gt;       each_child &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |node|
-&lt;span class=&quot;no&quot;&gt;33&lt;/span&gt;         &lt;span class=&quot;r&quot;&gt;break&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; max_length &amp;lt;= &lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;34&lt;/span&gt;         node_length = node.inner_text.chars.length
-&lt;span class=&quot;no&quot;&gt;35&lt;/span&gt;         truncated_node.children &amp;lt;&amp;lt; node.truncate(max_length, ellipsis)
-&lt;span class=&quot;no&quot;&gt;36&lt;/span&gt;         max_length = max_length - node_length
-&lt;span class=&quot;no&quot;&gt;37&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;38&lt;/span&gt;       truncated_node
-&lt;span class=&quot;no&quot;&gt;39&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;40&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;41&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;42&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;TextNode&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;43&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;truncate&lt;/span&gt;(max_length, ellipsis)
-&lt;span class=&quot;no&quot;&gt;44&lt;/span&gt;       &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.content = &lt;span class=&quot;co&quot;&gt;TextHelper&lt;/span&gt;.truncate_at_space(content, max_length, ellipsis)
-&lt;span class=&quot;no&quot;&gt;45&lt;/span&gt;       &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;46&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;47&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;48&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;49&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;IgnoredTag&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;50&lt;/strong&gt;&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;truncate&lt;/span&gt;(max_length, ellipsis)
-&lt;span class=&quot;no&quot;&gt;51&lt;/span&gt;       &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;52&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;53&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;54&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;55&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;56&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Hpricot&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Doc&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;,       &lt;span class=&quot;co&quot;&gt;HpricotTruncator&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;NodeWithChildren&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;57&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Hpricot&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Elem&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;,      &lt;span class=&quot;co&quot;&gt;HpricotTruncator&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;NodeWithChildren&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;58&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Hpricot&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Text&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;,      &lt;span class=&quot;co&quot;&gt;HpricotTruncator&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TextNode&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;59&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Hpricot&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;BogusETag&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;, &lt;span class=&quot;co&quot;&gt;HpricotTruncator&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;IgnoredTag&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;60&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Hpricot&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Comment&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;,   &lt;span class=&quot;co&quot;&gt;HpricotTruncator&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;IgnoredTag&lt;/span&gt;)&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;rubygems&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;hpricot&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;TextHelper&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Like the Rails _truncate_ helper but doesn't break HTML tags or entities.&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;truncate_html&lt;/span&gt;(text, max_length = &lt;span class=&quot;i&quot;&gt;30&lt;/span&gt;, ellipsis = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; text.nil?
+&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;     doc = Hpricot(text.to_s)
+&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;     doc.inner_text.chars.length &amp;gt; max_length ? doc.truncate(max_length, ellipsis).inner_html : text.to_s
+&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.truncate_at_space(text, max_length, ellipsis = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt;     l = [max_length - ellipsis.length, &lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;].max
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;     stop = text.rindex(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, l) || &lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;     (text.length &amp;gt; max_length ? text[&lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;...stop] + ellipsis : text).to_s
+&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;25&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;HpricotTruncator&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;26&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;NodeWithChildren&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;27&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;truncate&lt;/span&gt;(max_length, ellipsis)
+&lt;span class=&quot;no&quot;&gt;28&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; inner_text.chars.length &amp;lt;= max_length
+&lt;span class=&quot;no&quot;&gt;29&lt;/span&gt;       truncated_node = dup
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;30&lt;/strong&gt;&lt;/span&gt;       truncated_node.name = name
+&lt;span class=&quot;no&quot;&gt;31&lt;/span&gt;       truncated_node.raw_attributes = raw_attributes
+&lt;span class=&quot;no&quot;&gt;32&lt;/span&gt;       truncated_node.children = []
+&lt;span class=&quot;no&quot;&gt;33&lt;/span&gt;       each_child &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |node|
+&lt;span class=&quot;no&quot;&gt;34&lt;/span&gt;         &lt;span class=&quot;r&quot;&gt;break&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; max_length &amp;lt;= &lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;35&lt;/span&gt;         node_length = node.inner_text.chars.length
+&lt;span class=&quot;no&quot;&gt;36&lt;/span&gt;         truncated_node.children &amp;lt;&amp;lt; node.truncate(max_length, ellipsis)
+&lt;span class=&quot;no&quot;&gt;37&lt;/span&gt;         max_length = max_length - node_length
+&lt;span class=&quot;no&quot;&gt;38&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;39&lt;/span&gt;       truncated_node
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;40&lt;/strong&gt;&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;41&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;42&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;43&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;TextNode&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;44&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;truncate&lt;/span&gt;(max_length, ellipsis)
+&lt;span class=&quot;no&quot;&gt;45&lt;/span&gt;       &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.content = &lt;span class=&quot;co&quot;&gt;TextHelper&lt;/span&gt;.truncate_at_space(content, max_length, ellipsis)
+&lt;span class=&quot;no&quot;&gt;46&lt;/span&gt;       &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;47&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;48&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;49&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;50&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;IgnoredTag&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;51&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;truncate&lt;/span&gt;(max_length, ellipsis)
+&lt;span class=&quot;no&quot;&gt;52&lt;/span&gt;       &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;53&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;54&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;55&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;56&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;57&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Hpricot&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Doc&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;,       &lt;span class=&quot;co&quot;&gt;HpricotTruncator&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;NodeWithChildren&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;58&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Hpricot&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Elem&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;,      &lt;span class=&quot;co&quot;&gt;HpricotTruncator&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;NodeWithChildren&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;59&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Hpricot&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Text&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;,      &lt;span class=&quot;co&quot;&gt;HpricotTruncator&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TextNode&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;60&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Hpricot&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;BogusETag&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;, &lt;span class=&quot;co&quot;&gt;HpricotTruncator&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;IgnoredTag&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;61&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Hpricot&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Comment&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;,   &lt;span class=&quot;co&quot;&gt;HpricotTruncator&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;IgnoredTag&lt;/span&gt;)&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; For example: preventing XSS attacks, maintaining coherent styling.&lt;/p&gt;</content>
   </entry>
