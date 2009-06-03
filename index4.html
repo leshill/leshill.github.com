@@ -31,6 +31,22 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2008/10/27/information-addicted.html'>
+                Information Addicted
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Mon Oct 27 10:01:58 -0400 2008'>
+              Posted
+              October 27, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>Sunday, the <a href="http://www.nytimes.com/">New York Times</a> had an <a href="http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&amp;scp=1&amp;sq=boot%20time&amp;st=cse&amp;oref=slogin">article</a> about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.</p>&#x000A;<p>First, I rarely reboot my MacBook Pro; I just put the machine to sleep and wake it (and this is easily accomplished by closing and opening the lid).</p>&#x000A;<p>Second, I rarely reboot my phone; it also seems to sleep<sup class="footnote"><a href="#fn1">1</a></sup>.</p>&#x000A;<p>Third, the context driving this <em>War on Boot Times</em> is our increasing dependence on external information sources.  Think back to 1988<sup class="footnote"><a href="#fn2">2</a></sup> and you may recall a time when finding out what movies to see while you were away from a newspaper was a non-trivial task.  Now with a smart phone or a WiFi connected laptop, all the information to answer your question is readily available at a moment&#8217;s notice.  Think back to when you were out and would say: &#8216;I wish I could Google that&#8217;; now you just do it no matter where you are.</p>&#x000A;<p>The PC makers are fighting the last war.  This whole concept of reducing boot times is irrelevant.  The device should already be on and waiting on us.  No wait, make that <em>The Cloud</em> <strong>is</strong> already waiting on us.</p>&#x000A;<p>The trend is for <strong>more information, delivered faster, and requested instantaneously</strong>.  Someone should tell the PC makers.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am unsure exactly what the phone is doing when it is <em>asleep</em>.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Moviefone was created in 1989.</p>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2008/10/19/tip-using-haml-with-actionmailer.html'>
                 Tip: Using Haml With ActionMailer
               </a>
@@ -76,22 +92,6 @@
           </div>
           <div class='entry-content'>
             <p>The usual <a href="http://www.zenspider.com/ZSS/Products/ZenTest">autotest</a> workflow goes something like this:</p>&#x000A;<ul>&#x000A;	<li>Edit and save</li>&#x000A;	<li>Autotest runs associated specs</li>&#x000A;	<li>Are there failures?  Fix and start over</li>&#x000A;	<li>Autotest runs the entire suite</li>&#x000A;</ul>&#x000A;<p>Sometimes though, you want autotest to just ignore most of your specs and focus on a few specs.</p>&#x000A;<p>Last week, while Kevin, Rick, and Yossef  (<a href="http://bl.ogtastic.com">OG</a>) were here, they  shared an autotest tweak that does exactly that.</p>&#x000A;<p>The tweak allows you to specify a regular expression to limit the files which autotest watches; for example, to autotest only files matching <code>*user*.rb</code> you would start autotest like so (<em>atest</em> is an alias):</p>&#x000A;<pre><code>% atest user</code></pre>&#x000A;<p>Here is the (lightly modified) code to do this; in your <code>.autotest</code> file add:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">if</span> <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>] <span class="r">and</span> <span class="r">not</span> <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>].empty?&#x000A;<span class="no"> 2</span>   only_these_files_re = <span class="co">Regexp</span>.new(<span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>])&#x000A;<span class="no"> 3</span> &#x000A;<span class="no"> 4</span>   <span class="co">Autotest</span>.send(<span class="sy">:alias_method</span>, <span class="sy">:real_find_files</span>, <span class="sy">:find_files</span>)&#x000A;<span class="no"> 5</span>   <span class="co">Autotest</span>.send(<span class="sy">:define_method</span>, <span class="sy">:find_files</span>) <span class="r">do</span> |*args|&#x000A;<span class="no"> 6</span>     real_find_files.reject <span class="r">do</span> |k, v|&#x000A;<span class="no"> 7</span>       !only_these_files_re.match(k)&#x000A;<span class="no"> 8</span>     <span class="r">end</span>&#x000A;<span class="no"> 9</span>   <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>And in your <code>.bash_profile</code> add:</p>&#x000A;<pre><code># Autotest&#x000A;function fn_autotest() {&#x000A;  AUTOTEST=$1 autotest&#x000A;}&#x000A;alias atest='fn_autotest'</code></pre>&#x000A;<p>Now use the alias to invoke autotest.  For standard autotest behavior:</p>&#x000A;<pre><code>% atest</code></pre>&#x000A;<p>To limit what autotest is watching, pass a regular expression (which can be a simple string):</p>&#x000A;<pre><code>% atest user.*html&#x000A;</code></pre>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/8/15/obvious-money.txt'>
-                Obvious Money
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Fri Aug 15 09:00:42 -0400 2008'>
-              Posted
-              August 15, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p><a href="http://www.loudthinking.com">David Heinemeier Hansson</a> recently gave an awesome talk  titled <a href="http://www.omnisio.com/startupschool08/david-heinemeier-hansson-at-startup-school-08">The secret to making money online</a> at the <a href="http://ycombinator.com">Y Combinator</a> Startup School.  Aside from being entertaining, David keeps hammering at the VC-fueled dreams of today&#8217;s web entrepreneurs.  David has been at this for a long time, and what he is saying is <em>obvious</em> and <em>common-sense</em> (and David will tell you so).</p>&#x000A;<p>And yet, we always hear people talking about the <strong>Money Maker</strong>, or how they are going to target 1% of a <strong>$10 billion industry</strong>, or other self-defeating filters.  If you find yourself uttering those kind of phrases in response to your own ideas or the ideas of others, <strong>stop</strong>.</p>&#x000A;<p>Refocus on what the idea is, and evaluate it on its merits.  Thinking about how to build a <a href="http://www.37signals.com/svn/archives2/google_yahoo_microsoft_gym.php">GYM</a> acquisition or targeting a market that will attract $10 million in VC funding is a waste of your time.</p>&#x000A;<p>Should you ignore pricing and profits?  Maybe; if you do look at them, examine them in a reasonable context &#8212; what do I need to just run the service on a minimal server?  With no paid staff?  With minimal time commitments?  How would it look like if I had 100 customers?  1000 customers?</p>&#x000A;<p>Yes, this means you are no longer playing in the VC startup space<sup class="footnote"><a href="#fn1">1</a></sup>.  Cool.  If you really want to play there, you will be <strong>much</strong> better off playing there after you already have those 100 customers.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am unsure about investors like Y Combinator, as they <em>seem</em> to be advocates for this way of thinking.</p>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/index3.html">&larr; Prev</a>
@@ -144,6 +144,9 @@
                   </li>
                   <li class='month'>
                     <a href='/blog/2009/05'>May</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/06'>June</a>
                   </li>
                 </ul>
               </li>

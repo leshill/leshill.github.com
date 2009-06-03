@@ -31,6 +31,22 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2009/02/20/most-bugs-fall-to-the-second-pair-of-eyes.html'>
+                Most Bugs Fall to the Second Pair of Eyes
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Fri Feb 20 21:23:58 -0500 2009'>
+              Posted
+              February 20, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>While recently discussing if a power law applies to bugs at the ongoing seminar I sentimentally call <em>work</em>, I noted a corollary to <strong>Linus&#8217;s Law</strong>.</p>&#x000A;<p><a href="http://en.wikipedia.org/wiki/Linus&#39;s_Law">Linus&#8217;s Law</a> states:</p>&#x000A;<blockquote>&#x000A;<p>Given enough eyeballs, all bugs are shallow</p>&#x000A;</blockquote>&#x000A;<p>The corollary is:</p>&#x000A;<blockquote>&#x000A;<p>Most bugs fall to the second pair of eyes</p>&#x000A;</blockquote>&#x000A;<p>That is, just having one other developer look at a bug will likely resolve it.  Of course, developer&#8217;s who are <a href="http://en.wikipedia.org/wiki/Pair_programming">pair programming</a> already know this and are ahead of the game.</p>&#x000A;<p>On a related note, pretty much every developer has been in the following situation.  You are called over by a collegue to look over a bug, often accompanied by the statement, &#8216;This should work.&#8217;  You give a cursory examination and you resolve the problem with a quick change, often one that is <em>obvious</em> (after you pointed it out!)</p>&#x000A;<p>If you come away from that experience thinking &#8216;Fresh pair of eyes&#8217; or some such, good for you, you passed the test.</p>&#x000A;<p>If you come away from that experience thinking &#8216;I am so awesome!&#8217; or some such, not so good for you, you are probably not even competent.</p><!-- #hashrocket -->
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2009/02/06/velocity-is-not-destiny.html'>
                 Velocity Is Not Destiny
               </a>
@@ -76,22 +92,6 @@
           </div>
           <div class='entry-content'>
             <p>As of this post, this blog is now hosted by GitHub&#8217;s recently announced <a href="http://github.com/blog/272-github-pagesi">GitHub Pages</a>, still <a href="http://webby.rubyforge.org">Webby</a> powered, now with extra <em>git</em> goodness.</p>&#x000A;<p><strong>GitHub Pages</strong> generates a static site from a GitHub hosted repo, using <a href="http://github.com/mojombo/jekyll">Jekyll</a> to generate the files.  <strong>Jekyll</strong> understands two special directories <code>_posts</code> and <code>_layouts</code>, copying any other files and directories in the root of the repo that do not begin with an <code>_</code> directly to the static site.</p>&#x000A;<p><strong>Webby</strong> generates a static site from set of source files (<code>content</code>, <code>layouts</code>, etc), placing the results in the <code>output_dir</code> (defaults to <code>output</code> but can be changed.)</p>&#x000A;<p>To make <strong>Webby</strong> and <strong>GitHub Pages</strong> co-exist, I restructured my repo and made the following changes to my existing <strong>Webby</strong> site:</p>&#x000A;<ul>&#x000A;	<li>The root of the repo is the <code>output_dir</code> for <strong>Webby</strong></li>&#x000A;	<li>The <strong>Webby</strong> site (source files) are in a subdirectory name <code>_webby</code></li>&#x000A;	<li>The <code>webby</code> command line tool should be run from within the <code>_webby</code> directory, not the root of the repo</li>&#x000A;	<li>The <strong>Webby</strong> <code>clobber</code> target is overridden to ignore the <code>_webby</code> directory</li>&#x000A;	<li><code>Sitefile</code></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">SITE</span>.output_dir = <span class="s"><span class="dl">'</span><span class="k">..</span><span class="dl">'</span></span>&#x000A;<span class="no">2</span> &#x000A;<span class="no">3</span> task <span class="sy">:default</span> =&gt; <span class="sy">:clean_build</span></pre></div>&#x000A;</div>&#x000A;<ul>&#x000A;	<li><code>lib/override.rb</code> Rake monkey patch to allow overriding tasks found <a href="http://www.taknado.com/2007/7/30/overriding-rake-tasks">here</a></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="c"># From http://www.taknado.com/2007/7/30/overriding-rake-tasks</span>&#x000A;<span class="no"> 2</span> <span class="co">Rake</span>::<span class="co">TaskManager</span>.class_eval <span class="r">do</span>&#x000A;<span class="no"> 3</span>   <span class="r">def</span> <span class="fu">remove_task</span>(task_name)&#x000A;<span class="no"> 4</span>     <span class="iv">@tasks</span>.delete(task_name.to_s)&#x000A;<span class="no"> 5</span>   <span class="r">end</span>&#x000A;<span class="no"> 6</span> <span class="r">end</span>&#x000A;<span class="no"> 7</span> &#x000A;<span class="no"> 8</span> <span class="r">def</span> <span class="fu">remove_task</span>(task_name)&#x000A;<span class="no"> 9</span>   <span class="co">Rake</span>.application.remove_task(task_name)&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span>&#x000A;<span class="no">11</span> &#x000A;<span class="no">12</span> <span class="r">def</span> <span class="fu">override_task</span>(args, &amp;block)&#x000A;<span class="no">13</span>   name, deps = <span class="co">Rake</span>.application.resolve_args([args])  &#x000A;<span class="no">14</span>   remove_task <span class="co">Rake</span>.application[name].name&#x000A;<span class="no">15</span>   task(args, &amp;block)&#x000A;<span class="no">16</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<ul>&#x000A;	<li><code>tasks/github_pages.rake</code> redefines <code>clobber</code>  to ignore the <code>_webby</code> directory and the new (default) <code>clean_build</code> task allows for file deletions<sup class="footnote"><a href="#fn1">1</a></sup></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="c"># We only want to remove the generated files</span>&#x000A;<span class="no"> 2</span> desc <span class="s"><span class="dl">&quot;</span><span class="k">Delete the website</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"> 3</span> override_task <span class="sy">:clobber</span> <span class="r">do</span> |t|&#x000A;<span class="no"> 4</span>   <span class="co">Dir</span>.chdir(<span class="co">Webby</span>.site.output_dir) <span class="r">do</span>&#x000A;<span class="no"> 5</span>     <span class="co">Dir</span>[<span class="s"><span class="dl">'</span><span class="k">*</span><span class="dl">'</span></span>].entries.reject {|entry| entry == <span class="s"><span class="dl">'</span><span class="k">_webby</span><span class="dl">'</span></span>}.each {|entry| rm_rf entry}&#x000A;<span class="no"> 6</span>   <span class="r">end</span>&#x000A;<span class="no"> 7</span> <span class="r">end</span>&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span> desc <span class="s"><span class="dl">&quot;</span><span class="k">Clobber, then build the website</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"><strong>10</strong></span> task <span class="sy">:clean_build</span> =&gt; [<span class="sy">:clobber</span>, <span class="sy">:build</span>]</pre></div>&#x000A;</div>&#x000A;<p>The new workflow for adding a post to the new site is:</p>&#x000A;<ol>&#x000A;	<li>Change directory to <code>_webby</code></li>&#x000A;	<li>Generate a new blog post</li>&#x000A;	<li>Run <code>webby autobuild</code></li>&#x000A;	<li>Edit until completed</li>&#x000A;	<li>Commit all changes locally (<code>git add .</code> from the root)</li>&#x000A;	<li>Push the changes</li>&#x000A;</ol>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Webby does not know if you have deleted a source file, by forcing the entire site to be rebuilt, the deletion is reflected in the generated static files.</p>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2009/01/12/using-hoptoad-with-script-runner.html'>
-                Using Hoptoad With Script Runner
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Mon Jan 12 10:01:49 -0500 2009'>
-              Posted
-              January 12, 2009
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>I have been using <a href="http://hoptoadapp.com/">Hoptoad</a> to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple <code>include HoptoadNotifier::Catcher</code> in your <code>application.rb</code>, easy!</p>&#x000A;<p>However, I also wanted <strong>Hoptoad</strong> to track any exception which occurred in a cron job that was running with <code>script/runner</code>.  Again, a snap with <strong>Hoptoad</strong>, take a look:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">class</span> <span class="cl">CronJob</span>&#x000A;<span class="no">2</span>   <span class="r">def</span> <span class="pc">self</span>.process&#x000A;<span class="no">3</span>     <span class="c"># do stuff</span>&#x000A;<span class="no">4</span>   <span class="r">rescue</span> =&gt; ex&#x000A;<span class="no">5</span>     <span class="co">HoptoadNotifier</span>.notify(ex)&#x000A;<span class="no">6</span>   <span class="r">end</span>&#x000A;<span class="no">7</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;
           </div>
           <div class='prepend-1 span-15'>
             <a href="/">&larr; Prev</a>
@@ -144,6 +144,9 @@
                   </li>
                   <li class='month'>
                     <a href='/blog/2009/05'>May</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/06'>June</a>
                   </li>
                 </ul>
               </li>
