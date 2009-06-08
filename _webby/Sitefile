@@ -1,3 +1,4 @@
+#SITE.web_port = 80
 SITE.output_dir = '..'
 
 task :default => :clean_build
