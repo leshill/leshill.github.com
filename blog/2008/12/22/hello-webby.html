@@ -45,6 +45,21 @@
           <div class='entry-content'>
             <p>As of this post, I am using publishing <strong>Wonderland</strong> with <a href="http://webby.rubyforge.org">Webby</a> .</p>&#x000A;<p>Some of the things I like about <strong>Webby</strong>:</p>&#x000A;<ul>&#x000A;	<li>desktop based &#8212; updates are made on my laptop, giving me a wider choice of tools for writing this blog <sup class="footnote"><a href="#fn1">1</a></sup><sup class="footnote"><a href="#fn2">2</a></sup></li>&#x000A;	<li>static pages &#8212; the blog site is served from <strong>Apache</strong> as pure html files, there is no requirement to run a blogging server <sup class="footnote"><a href="#fn3">3</a></sup></li>&#x000A;	<li>extensible &#8212; <strong>Webby</strong> can be extended both with rake tasks and Ruby code<sup class="footnote"><a href="#fn4">4</a></sup></li>&#x000A;</ul>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Yes, this explains why I have not written a post recently.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> This post was edited with MacVim.</p>&#x000A;<p class="footnote" id="fn3"><sup>3</sup> I know, old school, some <a href="http://www.nedbatchelder.com">folks</a> have been publishing this way for a long time.</p>&#x000A;<p class="footnote" id="fn4"><sup>4</sup> Easy! A one-liner <a href="http://gist.github.com">gist</a> filter.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">Webby</span>::<span class="co">Filters</span>.register <span class="sy">:gist</span> { |input| input.gsub(<span class="rx"><span class="dl">/</span><span class="k">gist(</span><span class="ch">\d</span><span class="k">+)</span><span class="ch">\.</span><span class="dl">/</span></span>) { |s| <span class="s"><span class="dl">&quot;</span><span class="k">&lt;script src='http://gist.github.com/</span><span class="il"><span class="idl">#{</span><span class="gv">$1</span><span class="idl">}</span></span><span class="k">.js'&gt;&lt;/script&gt;</span><span class="dl">&quot;</span></span> } }</pre></div>&#x000A;</div>&#x000A;
           </div>
+          <div class='comments'>
+            <div id='disqus_thread'></div>
+            <script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script>
+            <noscript>
+              <a href='http://leshill.disqus.com/?url=ref'>
+                View the discussion thread.
+              </a>
+            </noscript>
+            <a class='dsq-brlink' href='http://disqus.com'>
+              blog comments powered by
+              <span class='logo-disqus'>
+                Disqus
+              </span>
+            </a>
+          </div>
         </div>
       </div>
       <div class='span-6 append-1 last' id='sidebar'>
@@ -92,6 +107,9 @@
                   <li class='month'>
                     <a href='/blog/2009/05'>May</a>
                   </li>
+                  <li class='month'>
+                    <a href='/blog/2009/06'>June</a>
+                  </li>
                 </ul>
               </li>
               <li class='year'>
@@ -136,4 +154,18 @@
       </p>
     </div>
   </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+          }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+      })();
+    //]]>
+  </script>
 </body>

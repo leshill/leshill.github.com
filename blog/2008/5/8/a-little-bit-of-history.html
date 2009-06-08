@@ -45,6 +45,21 @@
           <div class='entry-content'>
             <p>I am a bit late on the history <a href="http://diveintomark.org/archives/2008/04/15/history-meme">meme</a>.  Here I am:</p>&#x000A;<pre><code>Wonderland$ history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head&#x000A;149 git&#x000A;60 spec&#x000A;46 ls&#x000A;45 gst&#x000A;42 cd&#x000A;28 rake&#x000A;14 ssh&#x000A;8 ss&#x000A;7 houston&#x000A;7 gco</code></pre>&#x000A;<p>Things to note<sup class="footnote"><a href="#fn1">1</a></sup>:</p>&#x000A;<ol>&#x000A;	<li>3 are git</li>&#x000A;	<li>3 are Rails development related</li>&#x000A;	<li>4 are common unix commands</li>&#x000A;</ol>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> 4 are aliases</p>
           </div>
+          <div class='comments'>
+            <div id='disqus_thread'></div>
+            <script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script>
+            <noscript>
+              <a href='http://leshill.disqus.com/?url=ref'>
+                View the discussion thread.
+              </a>
+            </noscript>
+            <a class='dsq-brlink' href='http://disqus.com'>
+              blog comments powered by
+              <span class='logo-disqus'>
+                Disqus
+              </span>
+            </a>
+          </div>
         </div>
       </div>
       <div class='span-6 append-1 last' id='sidebar'>
@@ -92,6 +107,9 @@
                   <li class='month'>
                     <a href='/blog/2009/05'>May</a>
                   </li>
+                  <li class='month'>
+                    <a href='/blog/2009/06'>June</a>
+                  </li>
                 </ul>
               </li>
               <li class='year'>
@@ -136,4 +154,18 @@
       </p>
     </div>
   </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+          }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+      })();
+    //]]>
+  </script>
 </body>

@@ -44,6 +44,16 @@ filter:
           .entry-content
             :preserve
               #{@content}
+          .comments
+            #disqus_thread
+            %script{ :type => "text/javascript", :src => "http://disqus.com/forums/leshill/embed.js" }
+            %noscript
+              %a{ :href => "http://leshill.disqus.com/?url=ref" }
+                View the discussion thread.
+            %a.dsq-brlink{ :href => "http://disqus.com" }
+              blog comments powered by
+              %span.logo-disqus
+                Disqus
       .span-6.append-1.last#sidebar
         .span-6.height-1
         .prepend-1.span-5#about
@@ -76,3 +86,14 @@ filter:
         %a{ :href => 'http://github.com/blog/272-github-pages'}GitHub Pages
       %p
         == Les Hill &copy; 2008&ndash;#{Date.today.year}
+  :javascript
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();

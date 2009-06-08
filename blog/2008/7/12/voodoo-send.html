@@ -45,6 +45,21 @@
           <div class='entry-content'>
             <p>Recently when looking through some plugin&#8217;s code, we found the following line:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="pc">self</span>.send(<span class="sy">:include</span>, <span class="co">Foo</span>)</pre></div>&#x000A;</div>&#x000A;<p>This <em>seems</em> to be an acceptable variant of the commonly used</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">ActiveRecord</span>::<span class="co">Base</span>.send(<span class="sy">:include</span>, <span class="co">Foo</span>)</pre></div>&#x000A;</div>&#x000A;<p>As you may have surmised, it is not an acceptable variant.  This is a <a href="http://en.wikipedia.org/wiki/Voodoo_programming">Voodoo programming</a> smell, as it indicates a misunderstanding of exactly what the semantics of <code>send</code> are.  There is also a clearer, more intention revealing, and identical<sup class="footnote"><a href="#fn1">1</a></sup> alternative <code>include Foo</code> or with the omitted parenthesis <code>include(Foo)</code> .</p>&#x000A;<p>This of course, leads us to why <code>ActiveRecord::Base.send(:include, Foo)</code> is acceptable.  The <code>include</code> method is private, so the most elegant way to invoke it on <em>another</em> object is by using <code>send</code>; this is possible because <code>send</code> ignores access control allowing us to invoke <code>include</code> directly.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> <em>Almost</em>, the difference is that <code>send</code> is in the call stack.</p>
           </div>
+          <div class='comments'>
+            <div id='disqus_thread'></div>
+            <script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script>
+            <noscript>
+              <a href='http://leshill.disqus.com/?url=ref'>
+                View the discussion thread.
+              </a>
+            </noscript>
+            <a class='dsq-brlink' href='http://disqus.com'>
+              blog comments powered by
+              <span class='logo-disqus'>
+                Disqus
+              </span>
+            </a>
+          </div>
         </div>
       </div>
       <div class='span-6 append-1 last' id='sidebar'>
@@ -92,6 +107,9 @@
                   <li class='month'>
                     <a href='/blog/2009/05'>May</a>
                   </li>
+                  <li class='month'>
+                    <a href='/blog/2009/06'>June</a>
+                  </li>
                 </ul>
               </li>
               <li class='year'>
@@ -136,4 +154,18 @@
       </p>
     </div>
   </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+          }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+      })();
+    //]]>
+  </script>
 </body>

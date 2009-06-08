@@ -45,6 +45,9 @@
           <div class='entry-content'>
             <p>I have been using <a href="http://hoptoadapp.com/">Hoptoad</a> to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple <code>include HoptoadNotifier::Catcher</code> in your <code>application.rb</code>, easy!</p>&#x000A;<p>However, I also wanted <strong>Hoptoad</strong> to track any exception which occurred in a cron job that was running with <code>script/runner</code>.  Again, a snap with <strong>Hoptoad</strong>, take a look:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">class</span> <span class="cl">CronJob</span>&#x000A;<span class="no">2</span>   <span class="r">def</span> <span class="pc">self</span>.process&#x000A;<span class="no">3</span>     <span class="c"># do stuff</span>&#x000A;<span class="no">4</span>   <span class="r">rescue</span> =&gt; ex&#x000A;<span class="no">5</span>     <span class="co">HoptoadNotifier</span>.notify(ex)&#x000A;<span class="no">6</span>   <span class="r">end</span>&#x000A;<span class="no">7</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;
           </div>
+          <div class='comments'>
+            <a href='/blog/2009/01/12/using-hoptoad-with-script-runner.html#disqus_thread'>  </a>
+          </div>
           <div class='title'>
             <h2 class='entry-title'>
               <a href='/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html'>
@@ -60,6 +63,9 @@
           </div>
           <div class='entry-content'>
             <p><a href=":http://www.thoughtbot.com/projects/paperclip">Paperclip</a> supports <strong>AWS S3</strong> with a default of <em>public-read</em> access policy.  This allows anyone who knows the URL of the resource to access it.</p>&#x000A;<p>For some applications, you might want a more restricted access policy.  The <em>authenticated-read</em> access policy requires that the URL of the resource be presented by an authenticated user.</p>&#x000A;<p>To use <em>authenticated-read</em> with <strong>Paperclip</strong>:</p>&#x000A;<ul>&#x000A;	<li>set the <code>:s3_permissions</code> option on your attachment:</li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="sy">:s3_permssions</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">authenticated-read</span><span class="dl">'</span></span></pre></div>&#x000A;</div>&#x000A;<ul>&#x000A;	<li>use <code>RightAws::S3Interface#get_link</code> to generate an <em>authenticated-read</em> URL for the attachment:</li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">def</span> <span class="fu">s3_url</span>(style = <span class="pc">nil</span>, time_limit = <span class="i">15</span>.minutes)&#x000A;<span class="no">2</span>   attachment.s3.interface.get_link(attachment.s3_bucket.to_s, attachment.path(style), time_limit)&#x000A;<span class="no">3</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>If you do not normally need to time limit the access, use <code>nil</code> as the default value for <code>time_limit</code></p>
+          </div>
+          <div class='comments'>
+            <a href='/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html#disqus_thread'>  </a>
           </div>
           <div class='title'>
             <h2 class='entry-title'>
@@ -77,6 +83,9 @@
           <div class='entry-content'>
             <p>If you are making substantial changes to your <a href="http://github.com/TwP/based">Webby</a> site, you will have no doubt noticed that deleted files are not automatically removed from the <code>output</code> directory or the deploy server.</p>&#x000A;<p>Use the following <code>Sitefile</code> to:</p>&#x000A;<ul>&#x000A;	<li>clear the output directory</li>&#x000A;	<li>build the site</li>&#x000A;	<li>deploy the site with <strong>rsync</strong> with the checksum and delete options<sup class="footnote"><a href="#fn1">1</a></sup><sup class="footnote"><a href="#fn2">2</a></sup></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="co">SITE</span>.host = <span class="s"><span class="dl">'</span><span class="k">HOST</span><span class="dl">'</span></span>&#x000A;<span class="no"> 2</span> <span class="c"># use delete and checksum through ssh</span>&#x000A;<span class="no"> 3</span> <span class="co">SITE</span>.rsync_args = [<span class="s"><span class="dl">'</span><span class="k">-r</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">-c</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">--delete</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">--rsh=ssh</span><span class="dl">'</span></span>]&#x000A;<span class="no"> 4</span> <span class="co">SITE</span>.remote_dir = <span class="s"><span class="dl">'</span><span class="k">/SOME/DIR</span><span class="dl">'</span></span>&#x000A;<span class="no"> 5</span> &#x000A;<span class="no"> 6</span> &#x000A;<span class="no"> 7</span> task <span class="sy">:default</span> =&gt; <span class="sy">:build</span>&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span> desc <span class="s"><span class="dl">'</span><span class="k">deploy the site to the webserver</span><span class="dl">'</span></span>&#x000A;<span class="no"><strong>10</strong></span> task <span class="sy">:deploy</span> =&gt; [<span class="sy">:clobber</span>, <span class="sy">:build</span>, <span class="s"><span class="dl">'</span><span class="k">deploy:rsync</span><span class="dl">'</span></span>]</pre></div>&#x000A;</div>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> <strong>Rsync</strong> will only update changed files, and will detect deleted files.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Using the <code>--delete</code> option will remove files from your deploy server; if you have mixed your <strong>Webby</strong> content with server-only files<sup class="footnote"><a href="#fn3">3</a></sup>, you should not use this.</p>&#x000A;<p class="footnote" id="fn3"><sup>3</sup> You may want to reconsider doing that.</p>
           </div>
+          <div class='comments'>
+            <a href='/blog/2008/12/24/tip-rsync-options-for-webby.html#disqus_thread'>  </a>
+          </div>
           <div class='title'>
             <h2 class='entry-title'>
               <a href='/blog/2008/12/22/hello-webby.html'>
@@ -92,6 +101,9 @@
           </div>
           <div class='entry-content'>
             <p>As of this post, I am using publishing <strong>Wonderland</strong> with <a href="http://webby.rubyforge.org">Webby</a> .</p>&#x000A;<p>Some of the things I like about <strong>Webby</strong>:</p>&#x000A;<ul>&#x000A;	<li>desktop based &#8212; updates are made on my laptop, giving me a wider choice of tools for writing this blog <sup class="footnote"><a href="#fn1">1</a></sup><sup class="footnote"><a href="#fn2">2</a></sup></li>&#x000A;	<li>static pages &#8212; the blog site is served from <strong>Apache</strong> as pure html files, there is no requirement to run a blogging server <sup class="footnote"><a href="#fn3">3</a></sup></li>&#x000A;	<li>extensible &#8212; <strong>Webby</strong> can be extended both with rake tasks and Ruby code<sup class="footnote"><a href="#fn4">4</a></sup></li>&#x000A;</ul>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Yes, this explains why I have not written a post recently.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> This post was edited with MacVim.</p>&#x000A;<p class="footnote" id="fn3"><sup>3</sup> I know, old school, some <a href="http://www.nedbatchelder.com">folks</a> have been publishing this way for a long time.</p>&#x000A;<p class="footnote" id="fn4"><sup>4</sup> Easy! A one-liner <a href="http://gist.github.com">gist</a> filter.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">Webby</span>::<span class="co">Filters</span>.register <span class="sy">:gist</span> { |input| input.gsub(<span class="rx"><span class="dl">/</span><span class="k">gist(</span><span class="ch">\d</span><span class="k">+)</span><span class="ch">\.</span><span class="dl">/</span></span>) { |s| <span class="s"><span class="dl">&quot;</span><span class="k">&lt;script src='http://gist.github.com/</span><span class="il"><span class="idl">#{</span><span class="gv">$1</span><span class="idl">}</span></span><span class="k">.js'&gt;&lt;/script&gt;</span><span class="dl">&quot;</span></span> } }</pre></div>&#x000A;</div>&#x000A;
+          </div>
+          <div class='comments'>
+            <a href='/blog/2008/12/22/hello-webby.html#disqus_thread'>  </a>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/index2.html">&larr; Prev</a>
@@ -192,4 +204,18 @@
       </p>
     </div>
   </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+          }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+      })();
+    //]]>
+  </script>
 </body>

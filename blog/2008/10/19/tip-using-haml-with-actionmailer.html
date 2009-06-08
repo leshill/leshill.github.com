@@ -45,6 +45,21 @@
           <div class='entry-content'>
             <p>You can use Haml to write your mailer views and still use the implicit multipart template feature by letting <code>ActionMailer</code> know about Haml:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">ActionMailer</span>::<span class="co">Base</span>.register_template_extension(<span class="s"><span class="dl">'</span><span class="k">haml</span><span class="dl">'</span></span>)</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>This is no longer necessary with <strong>Rails 2.2</strong> and <strong>Haml 2.0.5</strong> .</p>
           </div>
+          <div class='comments'>
+            <div id='disqus_thread'></div>
+            <script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script>
+            <noscript>
+              <a href='http://leshill.disqus.com/?url=ref'>
+                View the discussion thread.
+              </a>
+            </noscript>
+            <a class='dsq-brlink' href='http://disqus.com'>
+              blog comments powered by
+              <span class='logo-disqus'>
+                Disqus
+              </span>
+            </a>
+          </div>
         </div>
       </div>
       <div class='span-6 append-1 last' id='sidebar'>
@@ -92,6 +107,9 @@
                   <li class='month'>
                     <a href='/blog/2009/05'>May</a>
                   </li>
+                  <li class='month'>
+                    <a href='/blog/2009/06'>June</a>
+                  </li>
                 </ul>
               </li>
               <li class='year'>
@@ -136,4 +154,18 @@
       </p>
     </div>
   </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+          }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+      })();
+    //]]>
+  </script>
 </body>

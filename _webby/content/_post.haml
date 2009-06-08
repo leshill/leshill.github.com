@@ -12,3 +12,5 @@ filter: haml
 .entry-content
   :preserve
     #{render post}
+.comments
+  %a{ :href => "#{post.url}#disqus_thread"}

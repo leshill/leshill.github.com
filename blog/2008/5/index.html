@@ -47,6 +47,9 @@
             <div class='entry-content'>
               <p><a href="http://www.shirky.com">Clay Shirky</a> is brilliant, and I have been reading his essays for a very long time<sup class="footnote"><a href="#fn1">1</a></sup>.  Recently, he has been discussing his notion of a <a href="http://www.herecomeseverybody.org/2008/04/looking-for-the-mouse.html">Cognitive Surplus</a> .  Good stuff; if you have not read it, go read it now.</p>&#x000A;<p>The headline is that if we just switch 1% of yearly TV consumption hours to &#8216;participation&#8217; we get the equivalent of 100 Wikipedia projects a year (that is development, comments, authors, editors, talk; the whole corpus as it stands today).</p>&#x000A;<p>This the <em>Cognitive Surplus</em>; previously the surplus was masked by mind-numbing television until we switched from just being able to <em>consume</em> media to <strong>consuming, producing, and sharing</strong> media.</p>&#x000A;<p>We are in a new media landscape, transformed irrevocably from mass consumption of media due to the communication advances of the last few decades.</p>&#x000A;<p>Those advances enabled us to erase a <strong>participation deficit</strong>.  The way the deficit manifested for me was an apparent inability to be alone (so says my wife) in spite of being a person who values solitude.  Before the nascent intertubes, I had no way to participate.  I could (<em>and did</em>) watch television.  But I also did many other things, including hack on computers.  Only there was no sharing, no participation.  Once the nascent intertubes arrived, I<sup class="footnote"><a href="#fn2">2</a></sup> and many others did participate.  Our participation accelerated on the wave of Moore&#8217;s and Metcalfe&#8217;s laws to transform society in ways we could not anticipate, but that we were already exploring.  We still cannot anticipate how we are changing society, and we are still exploring.</p>&#x000A;<p>If you have read this, take a moment and write your own blog entry or tweet or upload a photo/video or post a message or whatever-social-sharing-thing-you-might-do and revel in your participation.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> A decade?</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> My first email (lost forever) was in 1982.</p>
             </div>
+            <div class='comments'>
+              <a href='/blog/2008/5/11/a-participation-deficit.html#disqus_thread'>  </a>
+            </div>
             <div class='title'>
               <h2 class='entry-title'>
                 <a href='/blog/2008/5/8/a-little-bit-of-history.html'>
@@ -63,6 +66,9 @@
             <div class='entry-content'>
               <p>I am a bit late on the history <a href="http://diveintomark.org/archives/2008/04/15/history-meme">meme</a>.  Here I am:</p>&#x000A;<pre><code>Wonderland$ history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head&#x000A;149 git&#x000A;60 spec&#x000A;46 ls&#x000A;45 gst&#x000A;42 cd&#x000A;28 rake&#x000A;14 ssh&#x000A;8 ss&#x000A;7 houston&#x000A;7 gco</code></pre>&#x000A;<p>Things to note<sup class="footnote"><a href="#fn1">1</a></sup>:</p>&#x000A;<ol>&#x000A;	<li>3 are git</li>&#x000A;	<li>3 are Rails development related</li>&#x000A;	<li>4 are common unix commands</li>&#x000A;</ol>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> 4 are aliases</p>
             </div>
+            <div class='comments'>
+              <a href='/blog/2008/5/8/a-little-bit-of-history.html#disqus_thread'>  </a>
+            </div>
             <div class='title'>
               <h2 class='entry-title'>
                 <a href='/blog/2008/5/6/stone-knives-and-bearskins.html'>
@@ -78,6 +84,9 @@
             </div>
             <div class='entry-content'>
               <p>Recently while discussing <a href="http://jquery.com/">jQuery</a>, we got onto the topic of <a href="http://en.wikipedia.org/wiki/Ajax_%28programming%29">AJAX</a>.  This prompted me to declare:</p>&#x000A;<p><em>Before AJAX, we used stone knives and bearskins to make our web apps</em></p>&#x000A;<p>Actually, we were using JavaScript and XML to drive our web apps, we just did not call it AJAX, and it was a very challenging task.  In spite of the difficulty of building it, we stuck with it and we were pretty darn happy with our <strong>pre-web 2.0 web2.0</strong> app; so much so that we actually had people coming by just to see our UI in action.</p>&#x000A;<p>I went back and looked for some of our old code, hoping to find the CVS repository<sup class="footnote"><a href="#fn1">1</a></sup>, but only finding a tarball of version 1.4.  The following code is from <code>client/script/services.js</code> and dated <strong>August 24, 2001</strong> &#8212; although some version of this code would have existed in the spring of <strong>2000</strong>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> BrServices.prototype.issueRequest = <span class="kw">function</span> (action) {&#x000A;<span class="no"> 2</span> <span class="c">// deleted ...</span>&#x000A;<span class="no"> 3</span>     <span class="kw">var</span> request = brUtils.newXmlDOM(action);&#x000A;<span class="no"> 4</span>     <span class="kw">var</span> tryCount = <span class="i">0</span>;&#x000A;<span class="no"> 5</span>     <span class="kw">var</span> condition = brServices.isOkay;&#x000A;<span class="no"> 6</span>     <span class="kw">var</span> s = <span class="s"><span class="dl">&quot;</span><span class="dl">&quot;</span></span>;&#x000A;<span class="no"> 7</span>     <span class="kw">while</span> (condition == brServices.isOkay) {&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span>         <span class="kw">try</span> {&#x000A;<span class="no"><strong>10</strong></span>             <span class="kw">var</span> httpOb = <span class="kw">new</span> ActiveXObject(<span class="s"><span class="dl">&quot;</span><span class="k">MSXML2.XMLHTTP</span><span class="dl">&quot;</span></span>); <span class="c">// Was Microsoft.XMLHTTP</span>&#x000A;<span class="no">11</span>             httpOb.open(<span class="s"><span class="dl">&quot;</span><span class="k">POST</span><span class="dl">&quot;</span></span>, brServices.brxmlURL, <span class="kw">false</span>);&#x000A;<span class="no">12</span>             httpOb.setRequestHeader(<span class="s"><span class="dl">&quot;</span><span class="k">Content-Type</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">text/xml; charset='UTF-8'</span><span class="dl">&quot;</span></span>);&#x000A;<span class="no">13</span> &#x000A;<span class="no">14</span>             httpOb.send(request);&#x000A;<span class="no">15</span> <span class="c">// deleted ...</span></pre></div>&#x000A;</div>&#x000A;<p>Just looking at this snippet from our internal library makes me all the happier that we made the thing work at all.  Kudos to <a href="http://markjudd.com">Mark Judd</a> and <a href="http://brianlevine.blogspot.com">Brian Levine</a>, two of our very talented small team, who were responsible for our UI.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> You already know this, but just in case, CVS was a source code repository that pretty much everyone used before Subversion (unless you bought one from a vendor).</p>
+            </div>
+            <div class='comments'>
+              <a href='/blog/2008/5/6/stone-knives-and-bearskins.html#disqus_thread'>  </a>
             </div>
             <div class='prepend-1 span-15'>
               
@@ -179,4 +188,18 @@
       </p>
     </div>
   </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+          }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+      })();
+    //]]>
+  </script>
 </body>

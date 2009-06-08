@@ -45,6 +45,9 @@
           <div class='entry-content'>
             <p>Sunday, the <a href="http://www.nytimes.com/">New York Times</a> had an <a href="http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&amp;scp=1&amp;sq=boot%20time&amp;st=cse&amp;oref=slogin">article</a> about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.</p>&#x000A;<p>First, I rarely reboot my MacBook Pro; I just put the machine to sleep and wake it (and this is easily accomplished by closing and opening the lid).</p>&#x000A;<p>Second, I rarely reboot my phone; it also seems to sleep<sup class="footnote"><a href="#fn1">1</a></sup>.</p>&#x000A;<p>Third, the context driving this <em>War on Boot Times</em> is our increasing dependence on external information sources.  Think back to 1988<sup class="footnote"><a href="#fn2">2</a></sup> and you may recall a time when finding out what movies to see while you were away from a newspaper was a non-trivial task.  Now with a smart phone or a WiFi connected laptop, all the information to answer your question is readily available at a moment&#8217;s notice.  Think back to when you were out and would say: &#8216;I wish I could Google that&#8217;; now you just do it no matter where you are.</p>&#x000A;<p>The PC makers are fighting the last war.  This whole concept of reducing boot times is irrelevant.  The device should already be on and waiting on us.  No wait, make that <em>The Cloud</em> <strong>is</strong> already waiting on us.</p>&#x000A;<p>The trend is for <strong>more information, delivered faster, and requested instantaneously</strong>.  Someone should tell the PC makers.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am unsure exactly what the phone is doing when it is <em>asleep</em>.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Moviefone was created in 1989.</p>
           </div>
+          <div class='comments'>
+            <a href='/blog/2008/10/27/information-addicted.html#disqus_thread'>  </a>
+          </div>
           <div class='title'>
             <h2 class='entry-title'>
               <a href='/blog/2008/10/19/tip-using-haml-with-actionmailer.html'>
@@ -60,6 +63,9 @@
           </div>
           <div class='entry-content'>
             <p>You can use Haml to write your mailer views and still use the implicit multipart template feature by letting <code>ActionMailer</code> know about Haml:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">ActionMailer</span>::<span class="co">Base</span>.register_template_extension(<span class="s"><span class="dl">'</span><span class="k">haml</span><span class="dl">'</span></span>)</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>This is no longer necessary with <strong>Rails 2.2</strong> and <strong>Haml 2.0.5</strong> .</p>
+          </div>
+          <div class='comments'>
+            <a href='/blog/2008/10/19/tip-using-haml-with-actionmailer.html#disqus_thread'>  </a>
           </div>
           <div class='title'>
             <h2 class='entry-title'>
@@ -77,6 +83,9 @@
           <div class='entry-content'>
             <p>I  recently set up a new repository on <a href="http://www.github.com/">github</a>.  Creating the repository on github yields a page of instructions covering the two common scenarios: new and existing repositories.  After following the new repository instructions,  I had a repository on github, a local repository, and the following in response to my <code>git pull</code> command:</p>&#x000A;<pre><code>You asked me to pull without telling me which branch you want to merge with, and 'branch.master.merge' in your configuration file does not tell me either.  Please name which branch you want to merge on the command line and try again (e.g. 'git pull &lt;repository&gt; &lt;refspec&gt;'). See git-pull(1) for details on the refspec.&#x000A;  &#x000A;If you often merge with the same branch, you may want to configure the following variables in your configuration file:&#x000A;  &#x000A;  branch.master.remote = &lt;nickname&gt;&#x000A;  branch.master.merge = &lt;remote-ref&gt;&#x000A;  remote.&lt;nickname&gt;.url = &lt;url&gt;&#x000A;  remote.&lt;nickname&gt;.fetch = &lt;refspec&gt;&#x000A;  &#x000A;See git-config(1) for details.</code>&#x000A;&#x000A;</pre>&#x000A;<p>Not exactly what I wanted, and certainly not what I expected.  What I <em>expected</em> was a local repository with the upstream for <strong>master</strong> to be set to point at <strong>master</strong> on the github repository.</p>&#x000A;<p>Setting this up can be done easily in two similar ways:</p>&#x000A;<ul>&#x000A;	<li>You can edit the configuration file as directed by the error message</li>&#x000A;	<li>You can use <code>git config</code></li>&#x000A;</ul>&#x000A;<p>I opted for <code>git config</code> as it was easier and required no thinking &#8212; the commands are always the same<sup class="footnote"><a href="#fn1">1</a></sup>; here they are:</p>&#x000A;<pre><code>% git config branch.master.remote origin&#x000A;% git config branch.master.merge refs/heads/master</code></pre>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> For the scenario of a local empty repository pushed up to a remote, where the remote will be the upstream master.</p>
           </div>
+          <div class='comments'>
+            <a href='/blog/2008/8/24/git-setting-your-upstream-default.html#disqus_thread'>  </a>
+          </div>
           <div class='title'>
             <h2 class='entry-title'>
               <a href='/blog/2008/8/24/focusing-autotest.html'>
@@ -92,6 +101,9 @@
           </div>
           <div class='entry-content'>
             <p>The usual <a href="http://www.zenspider.com/ZSS/Products/ZenTest">autotest</a> workflow goes something like this:</p>&#x000A;<ul>&#x000A;	<li>Edit and save</li>&#x000A;	<li>Autotest runs associated specs</li>&#x000A;	<li>Are there failures?  Fix and start over</li>&#x000A;	<li>Autotest runs the entire suite</li>&#x000A;</ul>&#x000A;<p>Sometimes though, you want autotest to just ignore most of your specs and focus on a few specs.</p>&#x000A;<p>Last week, while Kevin, Rick, and Yossef  (<a href="http://bl.ogtastic.com">OG</a>) were here, they  shared an autotest tweak that does exactly that.</p>&#x000A;<p>The tweak allows you to specify a regular expression to limit the files which autotest watches; for example, to autotest only files matching <code>*user*.rb</code> you would start autotest like so (<em>atest</em> is an alias):</p>&#x000A;<pre><code>% atest user</code></pre>&#x000A;<p>Here is the (lightly modified) code to do this; in your <code>.autotest</code> file add:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">if</span> <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>] <span class="r">and</span> <span class="r">not</span> <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>].empty?&#x000A;<span class="no"> 2</span>   only_these_files_re = <span class="co">Regexp</span>.new(<span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>])&#x000A;<span class="no"> 3</span> &#x000A;<span class="no"> 4</span>   <span class="co">Autotest</span>.send(<span class="sy">:alias_method</span>, <span class="sy">:real_find_files</span>, <span class="sy">:find_files</span>)&#x000A;<span class="no"> 5</span>   <span class="co">Autotest</span>.send(<span class="sy">:define_method</span>, <span class="sy">:find_files</span>) <span class="r">do</span> |*args|&#x000A;<span class="no"> 6</span>     real_find_files.reject <span class="r">do</span> |k, v|&#x000A;<span class="no"> 7</span>       !only_these_files_re.match(k)&#x000A;<span class="no"> 8</span>     <span class="r">end</span>&#x000A;<span class="no"> 9</span>   <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>And in your <code>.bash_profile</code> add:</p>&#x000A;<pre><code># Autotest&#x000A;function fn_autotest() {&#x000A;  AUTOTEST=$1 autotest&#x000A;}&#x000A;alias atest='fn_autotest'</code></pre>&#x000A;<p>Now use the alias to invoke autotest.  For standard autotest behavior:</p>&#x000A;<pre><code>% atest</code></pre>&#x000A;<p>To limit what autotest is watching, pass a regular expression (which can be a simple string):</p>&#x000A;<pre><code>% atest user.*html&#x000A;</code></pre>
+          </div>
+          <div class='comments'>
+            <a href='/blog/2008/8/24/focusing-autotest.html#disqus_thread'>  </a>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/index3.html">&larr; Prev</a>
@@ -192,4 +204,18 @@
       </p>
     </div>
   </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+          }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+      })();
+    //]]>
+  </script>
 </body>
