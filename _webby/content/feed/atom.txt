@@ -11,7 +11,7 @@ filter:    erb
 ---
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
- 
+
   <title><%= h(@page.title) %></title>
   <subtitle><%= h(@page.subtitle) %></subtitle>
   <link href="http://<%= @page.site %>//" rel="self" />
@@ -27,7 +27,7 @@ filter:    erb
                  :recursive => true,
                  :sort_by => 'created_at',
                  :reverse => true,
-		 :blog_post => true).each do |article|
+                 :blog_post => true).each do |article|
   %>
   <entry>
     <title><%= h(article.title) %></title>
