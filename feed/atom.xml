@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
- 
+
   <title>Wonderland</title>
   <subtitle>A Blog</subtitle>
-  <link href="http://blog.leshill.org//" rel="self" />
-  <link href="http://blog.leshill.org/" />
-  <updated>2009-06-08T10:45:25-04:00</updated>
+  <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
+  <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
+  <updated>2009-06-08T12:41:32-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>

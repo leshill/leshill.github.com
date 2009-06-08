@@ -14,8 +14,8 @@ filter:    erb
 
   <title><%= h(@page.title) %></title>
   <subtitle><%= h(@page.subtitle) %></subtitle>
-  <link href="http://<%= @page.site %>//" rel="self" />
-  <link href="http://<%= @page.site %>/" />
+  <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
+  <link href="http://<%= @page.site %>/" type="text/html" rel="alternate" />
   <updated><%= Time.now.xmlschema %></updated>
   <author>
     <name><%= h(@page.author) %></name>
