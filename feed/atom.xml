@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2009-06-10T20:28:11-04:00</updated>
+  <updated>2009-06-11T06:11:56-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -21,7 +21,7 @@
     <published>2009-06-10T19:34:47-04:00</published>
     <updated>2009-06-10T19:34:47-04:00</updated>
     <content type="html">&lt;h3&gt;Ruby and the argument collecting hash syntax&lt;/h3&gt;
-&lt;p&gt;Unlike other languages, ruby does not support keyword arguments.  As an alternative, we use ruby&amp;#8217;s syntactic shorthand to pass a hash as the final argument to a method using the &lt;code&gt;key =&amp;gt; value&lt;/code&gt; syntax:&lt;/p&gt;
+&lt;p&gt;Unlike other languages, ruby does not support keyword parameters.  As an alternative, we use ruby&amp;#8217;s syntactic shorthand to pass a hash as the final argument to a method using the &lt;code&gt;key =&amp;gt; value&lt;/code&gt; syntax:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; some_method(first_arg, &lt;span class=&quot;sy&quot;&gt;:key1&lt;/span&gt; =&amp;gt; value1, &lt;span class=&quot;sy&quot;&gt;:key2&lt;/span&gt; =&amp;gt; value2)&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
