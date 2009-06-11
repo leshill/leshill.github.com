@@ -5,12 +5,66 @@
   <subtitle>A Blog</subtitle>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2009-06-08T12:41:32-04:00</updated>
+  <updated>2009-06-10T20:28:11-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Default Options With Ruby</title>
+    <link href="http://blog.leshill.org/blog/2009/06/10/default-options-with-ruby.html" />
+    
+    <id>tag:blog.leshill.org,2009-06-10:1244676887</id>
+    
+    <published>2009-06-10T19:34:47-04:00</published>
+    <updated>2009-06-10T19:34:47-04:00</updated>
+    <content type="html">&lt;h3&gt;Ruby and the argument collecting hash syntax&lt;/h3&gt;
+&lt;p&gt;Unlike other languages, ruby does not support keyword arguments.  As an alternative, we use ruby&amp;#8217;s syntactic shorthand to pass a hash as the final argument to a method using the &lt;code&gt;key =&amp;gt; value&lt;/code&gt; syntax:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; some_method(first_arg, &lt;span class=&quot;sy&quot;&gt;:key1&lt;/span&gt; =&amp;gt; value1, &lt;span class=&quot;sy&quot;&gt;:key2&lt;/span&gt; =&amp;gt; value2)&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;some_method&lt;/code&gt; will receive a hash as its second argument with the specified key/value pairs.  Unlike regular arguments, there is no way to provide default values for the individual key/value pairs (you can provide a default for the hash argument though):&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;some_method&lt;/span&gt;(thing, options = {})
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;#...&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;There are a few ruby idioms for providing default options to an option hash, one of the most common is available in rails, using the core extension &lt;code&gt;Hash#reverse_merge&lt;/code&gt; from &lt;code&gt;ActiveSupport&lt;/code&gt;&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;some_method&lt;/span&gt;(thing, options = {})
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   options.reverse_merge!({&lt;span class=&quot;sy&quot;&gt;:key1&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;})
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;#...&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If you do not have access to &lt;code&gt;ActiveSupport&lt;/code&gt;, you can use ruby&amp;#8217;s &lt;code&gt;Hash#merge&lt;/code&gt;&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; as an alternative:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;some_method&lt;/span&gt;(thing, options = {})
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   options = {&lt;span class=&quot;sy&quot;&gt;:key1&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;}.merge(options)
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;#...&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If that seems like too much code to be typing all the time, you can open up &lt;code&gt;Hash&lt;/code&gt; and add a method.  Careful!  This is simple enough to get wrong.  Here is some code&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn3&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; from a very useful rails plugin:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;default!&lt;/span&gt;(defaults = {})
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   defaults.each &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |key, value|
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;[key] = value &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;[key].nil?
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt;   &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This code works until you want to set a default value to &lt;code&gt;nil&lt;/code&gt;.  This can be fixed by replacing the conditional on line three with &lt;code&gt;unless self.has_key?(key)&lt;/code&gt;.  Or you can simply rewrite this in terms of &lt;code&gt;Hash#merge&lt;/code&gt;&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn4&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;default!&lt;/span&gt;(defaults = {})
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   replace(defaults.merge(&lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;))
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; Which builds on ruby&amp;#8217;s &lt;code&gt;Hash#merge&lt;/code&gt;.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Or merge-bang (&lt;code&gt;merge!&lt;/code&gt;).&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt; Slightly modified for readability.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn4&quot;&gt;&lt;sup&gt;4&lt;/sup&gt; &lt;code&gt;ActiveSupport&lt;/code&gt; does something similar.&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Truncating HTML</title>
@@ -348,34 +402,6 @@ Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp
 &lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 </content>
-  </entry>
-  
-  <entry>
-    <title>Using S3 Authenticated-Read With Paperclip</title>
-    <link href="http://blog.leshill.org/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html" />
-    
-    <id>tag:blog.leshill.org,2009-01-01:1230821176</id>
-    
-    <published>2009-01-01T09:46:16-05:00</published>
-    <updated>2009-01-01T09:46:16-05:00</updated>
-    <content type="html">&lt;p&gt;&lt;a href=&quot;:http://www.thoughtbot.com/projects/paperclip&quot;&gt;Paperclip&lt;/a&gt; supports &lt;strong&gt;AWS S3&lt;/strong&gt; with a default of &lt;em&gt;public-read&lt;/em&gt; access policy.  This allows anyone who knows the URL of the resource to access it.&lt;/p&gt;
-&lt;p&gt;For some applications, you might want a more restricted access policy.  The &lt;em&gt;authenticated-read&lt;/em&gt; access policy requires that the URL of the resource be presented by an authenticated user.&lt;/p&gt;
-&lt;p&gt;To use &lt;em&gt;authenticated-read&lt;/em&gt; with &lt;strong&gt;Paperclip&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;set the &lt;code&gt;:s3_permissions&lt;/code&gt; option on your attachment:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;sy&quot;&gt;:s3_permssions&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;authenticated-read&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-	&lt;li&gt;use &lt;code&gt;RightAws::S3Interface#get_link&lt;/code&gt; to generate an &lt;em&gt;authenticated-read&lt;/em&gt; URL for the attachment:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;s3_url&lt;/span&gt;(style = &lt;span class=&quot;pc&quot;&gt;nil&lt;/span&gt;, time_limit = &lt;span class=&quot;i&quot;&gt;15&lt;/span&gt;.minutes)
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   attachment.s3.interface.get_link(attachment.s3_bucket.to_s, attachment.path(style), time_limit)
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;If you do not normally need to time limit the access, use &lt;code&gt;nil&lt;/code&gt; as the default value for &lt;code&gt;time_limit&lt;/code&gt;&lt;/p&gt;</content>
   </entry>
   
 </feed>

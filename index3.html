@@ -31,6 +31,25 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2009/01/24/webby-meet-github-pages.html'>
+                Webby, Meet GitHub Pages
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Sat Jan 24 12:54:15 -0500 2009'>
+              Posted
+              January 24, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>As of this post, this blog is now hosted by GitHub&#8217;s recently announced <a href="http://github.com/blog/272-github-pagesi">GitHub Pages</a>, still <a href="http://webby.rubyforge.org">Webby</a> powered, now with extra <em>git</em> goodness.</p>&#x000A;<p><strong>GitHub Pages</strong> generates a static site from a GitHub hosted repo, using <a href="http://github.com/mojombo/jekyll">Jekyll</a> to generate the files.  <strong>Jekyll</strong> understands two special directories <code>_posts</code> and <code>_layouts</code>, copying any other files and directories in the root of the repo that do not begin with an <code>_</code> directly to the static site.</p>&#x000A;<p><strong>Webby</strong> generates a static site from set of source files (<code>content</code>, <code>layouts</code>, etc), placing the results in the <code>output_dir</code> (defaults to <code>output</code> but can be changed.)</p>&#x000A;<p>To make <strong>Webby</strong> and <strong>GitHub Pages</strong> co-exist, I restructured my repo and made the following changes to my existing <strong>Webby</strong> site:</p>&#x000A;<ul>&#x000A;	<li>The root of the repo is the <code>output_dir</code> for <strong>Webby</strong></li>&#x000A;	<li>The <strong>Webby</strong> site (source files) are in a subdirectory name <code>_webby</code></li>&#x000A;	<li>The <code>webby</code> command line tool should be run from within the <code>_webby</code> directory, not the root of the repo</li>&#x000A;	<li>The <strong>Webby</strong> <code>clobber</code> target is overridden to ignore the <code>_webby</code> directory</li>&#x000A;	<li><code>Sitefile</code></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">SITE</span>.output_dir = <span class="s"><span class="dl">'</span><span class="k">..</span><span class="dl">'</span></span>&#x000A;<span class="no">2</span> &#x000A;<span class="no">3</span> task <span class="sy">:default</span> =&gt; <span class="sy">:clean_build</span></pre></div>&#x000A;</div>&#x000A;<ul>&#x000A;	<li><code>lib/override.rb</code> Rake monkey patch to allow overriding tasks found <a href="http://www.taknado.com/2007/7/30/overriding-rake-tasks">here</a></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="c"># From http://www.taknado.com/2007/7/30/overriding-rake-tasks</span>&#x000A;<span class="no"> 2</span> <span class="co">Rake</span>::<span class="co">TaskManager</span>.class_eval <span class="r">do</span>&#x000A;<span class="no"> 3</span>   <span class="r">def</span> <span class="fu">remove_task</span>(task_name)&#x000A;<span class="no"> 4</span>     <span class="iv">@tasks</span>.delete(task_name.to_s)&#x000A;<span class="no"> 5</span>   <span class="r">end</span>&#x000A;<span class="no"> 6</span> <span class="r">end</span>&#x000A;<span class="no"> 7</span> &#x000A;<span class="no"> 8</span> <span class="r">def</span> <span class="fu">remove_task</span>(task_name)&#x000A;<span class="no"> 9</span>   <span class="co">Rake</span>.application.remove_task(task_name)&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span>&#x000A;<span class="no">11</span> &#x000A;<span class="no">12</span> <span class="r">def</span> <span class="fu">override_task</span>(args, &amp;block)&#x000A;<span class="no">13</span>   name, deps = <span class="co">Rake</span>.application.resolve_args([args])  &#x000A;<span class="no">14</span>   remove_task <span class="co">Rake</span>.application[name].name&#x000A;<span class="no">15</span>   task(args, &amp;block)&#x000A;<span class="no">16</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<ul>&#x000A;	<li><code>tasks/github_pages.rake</code> redefines <code>clobber</code>  to ignore the <code>_webby</code> directory and the new (default) <code>clean_build</code> task allows for file deletions<sup class="footnote"><a href="#fn1">1</a></sup></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="c"># We only want to remove the generated files</span>&#x000A;<span class="no"> 2</span> desc <span class="s"><span class="dl">&quot;</span><span class="k">Delete the website</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"> 3</span> override_task <span class="sy">:clobber</span> <span class="r">do</span> |t|&#x000A;<span class="no"> 4</span>   <span class="co">Dir</span>.chdir(<span class="co">Webby</span>.site.output_dir) <span class="r">do</span>&#x000A;<span class="no"> 5</span>     <span class="co">Dir</span>[<span class="s"><span class="dl">'</span><span class="k">*</span><span class="dl">'</span></span>].entries.reject {|entry| entry == <span class="s"><span class="dl">'</span><span class="k">_webby</span><span class="dl">'</span></span>}.each {|entry| rm_rf entry}&#x000A;<span class="no"> 6</span>   <span class="r">end</span>&#x000A;<span class="no"> 7</span> <span class="r">end</span>&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span> desc <span class="s"><span class="dl">&quot;</span><span class="k">Clobber, then build the website</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"><strong>10</strong></span> task <span class="sy">:clean_build</span> =&gt; [<span class="sy">:clobber</span>, <span class="sy">:build</span>]</pre></div>&#x000A;</div>&#x000A;<p>The new workflow for adding a post to the new site is:</p>&#x000A;<ol>&#x000A;	<li>Change directory to <code>_webby</code></li>&#x000A;	<li>Generate a new blog post</li>&#x000A;	<li>Run <code>webby autobuild</code></li>&#x000A;	<li>Edit until completed</li>&#x000A;	<li>Commit all changes locally (<code>git add .</code> from the root)</li>&#x000A;	<li>Push the changes</li>&#x000A;</ol>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Webby does not know if you have deleted a source file, by forcing the entire site to be rebuilt, the deletion is reflected in the generated static files.</p>
+          </div>
+          <div class='comments'>
+            <a href='/blog/2009/01/24/webby-meet-github-pages.html#disqus_thread'>  </a>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2009/01/12/using-hoptoad-with-script-runner.html'>
                 Using Hoptoad With Script Runner
               </a>
@@ -85,25 +104,6 @@
           </div>
           <div class='comments'>
             <a href='/blog/2008/12/24/tip-rsync-options-for-webby.html#disqus_thread'>  </a>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/12/22/hello-webby.html'>
-                Hello Webby!
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Mon Dec 22 20:34:53 -0500 2008'>
-              Posted
-              December 22, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>As of this post, I am using publishing <strong>Wonderland</strong> with <a href="http://webby.rubyforge.org">Webby</a> .</p>&#x000A;<p>Some of the things I like about <strong>Webby</strong>:</p>&#x000A;<ul>&#x000A;	<li>desktop based &#8212; updates are made on my laptop, giving me a wider choice of tools for writing this blog <sup class="footnote"><a href="#fn1">1</a></sup><sup class="footnote"><a href="#fn2">2</a></sup></li>&#x000A;	<li>static pages &#8212; the blog site is served from <strong>Apache</strong> as pure html files, there is no requirement to run a blogging server <sup class="footnote"><a href="#fn3">3</a></sup></li>&#x000A;	<li>extensible &#8212; <strong>Webby</strong> can be extended both with rake tasks and Ruby code<sup class="footnote"><a href="#fn4">4</a></sup></li>&#x000A;</ul>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Yes, this explains why I have not written a post recently.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> This post was edited with MacVim.</p>&#x000A;<p class="footnote" id="fn3"><sup>3</sup> I know, old school, some <a href="http://www.nedbatchelder.com">folks</a> have been publishing this way for a long time.</p>&#x000A;<p class="footnote" id="fn4"><sup>4</sup> Easy! A one-liner <a href="http://gist.github.com">gist</a> filter.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">Webby</span>::<span class="co">Filters</span>.register <span class="sy">:gist</span> { |input| input.gsub(<span class="rx"><span class="dl">/</span><span class="k">gist(</span><span class="ch">\d</span><span class="k">+)</span><span class="ch">\.</span><span class="dl">/</span></span>) { |s| <span class="s"><span class="dl">&quot;</span><span class="k">&lt;script src='http://gist.github.com/</span><span class="il"><span class="idl">#{</span><span class="gv">$1</span><span class="idl">}</span></span><span class="k">.js'&gt;&lt;/script&gt;</span><span class="dl">&quot;</span></span> } }</pre></div>&#x000A;</div>&#x000A;
-          </div>
-          <div class='comments'>
-            <a href='/blog/2008/12/22/hello-webby.html#disqus_thread'>  </a>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/index2.html">&larr; Prev</a>

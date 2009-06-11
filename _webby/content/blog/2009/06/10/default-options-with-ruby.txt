@@ -1,0 +1,83 @@
+--- 
+title:      'Default Options With Ruby'
+author: Les Hill
+created_at: 2009-06-10 19:34:47.563389 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+
+h3. Ruby and the argument collecting hash syntax
+
+Unlike other languages, ruby does not support keyword arguments.  As an alternative, we use ruby's syntactic shorthand to pass a hash as the final argument to a method using the @key => value@ syntax:
+
+<notextile>
+<coderay:ruby>
+some_method(first_arg, :key1 => value1, :key2 => value2)
+</coderay>
+</notextile>
+
+@some_method@ will receive a hash as its second argument with the specified key/value pairs.  Unlike regular arguments, there is no way to provide default values for the individual key/value pairs (you can provide a default for the hash argument though):
+
+<notextile>
+<coderay:ruby>
+def some_method(thing, options = {})
+  #...
+end
+</coderay>
+</notextile>
+
+There are a few ruby idioms for providing default options to an option hash, one of the most common is available in rails, using the core extension @Hash#reverse_merge@ from @ActiveSupport@[1]:
+
+<notextile>
+<coderay:ruby>
+def some_method(thing, options = {})
+  options.reverse_merge!({:key1 => 'default'})
+  #...
+end
+</coderay>
+</notextile>
+
+If you do not have access to @ActiveSupport@, you can use ruby's @Hash#merge@[2] as an alternative:
+
+<notextile>
+<coderay:ruby>
+def some_method(thing, options = {})
+  options = {:key1 => 'default'}.merge(options)
+  #...
+end
+</coderay>
+</notextile>
+
+If that seems like too much code to be typing all the time, you can open up @Hash@ and add a method.  Careful!  This is simple enough to get wrong.  Here is some code[3] from a very useful rails plugin:
+
+<notextile>
+<coderay:ruby>
+def default!(defaults = {})
+  defaults.each do |key, value|
+    self[key] = value if self[key].nil?
+  end
+  self
+end
+</coderay>
+</notextile>
+
+This code works until you want to set a default value to @nil@.  This can be fixed by replacing the conditional on line three with @unless self.has_key?(key)@.  Or you can simply rewrite this in terms of @Hash#merge@[4]:
+
+<notextile>
+<coderay:ruby>
+def default!(defaults = {})
+  replace(defaults.merge(self))
+end
+</coderay>
+</notextile>
+
+fn1. Which builds on ruby's @Hash#merge@.
+
+fn2. Or merge-bang (@merge!@).
+
+fn3. Slightly modified for readability.
+
+fn4. @ActiveSupport@ does something similar.

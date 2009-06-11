@@ -31,6 +31,25 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2008/12/22/hello-webby.html'>
+                Hello Webby!
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Mon Dec 22 20:34:53 -0500 2008'>
+              Posted
+              December 22, 2008
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>As of this post, I am using publishing <strong>Wonderland</strong> with <a href="http://webby.rubyforge.org">Webby</a> .</p>&#x000A;<p>Some of the things I like about <strong>Webby</strong>:</p>&#x000A;<ul>&#x000A;	<li>desktop based &#8212; updates are made on my laptop, giving me a wider choice of tools for writing this blog <sup class="footnote"><a href="#fn1">1</a></sup><sup class="footnote"><a href="#fn2">2</a></sup></li>&#x000A;	<li>static pages &#8212; the blog site is served from <strong>Apache</strong> as pure html files, there is no requirement to run a blogging server <sup class="footnote"><a href="#fn3">3</a></sup></li>&#x000A;	<li>extensible &#8212; <strong>Webby</strong> can be extended both with rake tasks and Ruby code<sup class="footnote"><a href="#fn4">4</a></sup></li>&#x000A;</ul>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Yes, this explains why I have not written a post recently.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> This post was edited with MacVim.</p>&#x000A;<p class="footnote" id="fn3"><sup>3</sup> I know, old school, some <a href="http://www.nedbatchelder.com">folks</a> have been publishing this way for a long time.</p>&#x000A;<p class="footnote" id="fn4"><sup>4</sup> Easy! A one-liner <a href="http://gist.github.com">gist</a> filter.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">Webby</span>::<span class="co">Filters</span>.register <span class="sy">:gist</span> { |input| input.gsub(<span class="rx"><span class="dl">/</span><span class="k">gist(</span><span class="ch">\d</span><span class="k">+)</span><span class="ch">\.</span><span class="dl">/</span></span>) { |s| <span class="s"><span class="dl">&quot;</span><span class="k">&lt;script src='http://gist.github.com/</span><span class="il"><span class="idl">#{</span><span class="gv">$1</span><span class="idl">}</span></span><span class="k">.js'&gt;&lt;/script&gt;</span><span class="dl">&quot;</span></span> } }</pre></div>&#x000A;</div>&#x000A;
+          </div>
+          <div class='comments'>
+            <a href='/blog/2008/12/22/hello-webby.html#disqus_thread'>  </a>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2008/10/27/information-addicted.html'>
                 Information Addicted
               </a>
@@ -85,25 +104,6 @@
           </div>
           <div class='comments'>
             <a href='/blog/2008/8/24/git-setting-your-upstream-default.html#disqus_thread'>  </a>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/8/24/focusing-autotest.html'>
-                Focusing Autotest
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Sun Aug 24 10:53:57 -0400 2008'>
-              Posted
-              August 24, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>The usual <a href="http://www.zenspider.com/ZSS/Products/ZenTest">autotest</a> workflow goes something like this:</p>&#x000A;<ul>&#x000A;	<li>Edit and save</li>&#x000A;	<li>Autotest runs associated specs</li>&#x000A;	<li>Are there failures?  Fix and start over</li>&#x000A;	<li>Autotest runs the entire suite</li>&#x000A;</ul>&#x000A;<p>Sometimes though, you want autotest to just ignore most of your specs and focus on a few specs.</p>&#x000A;<p>Last week, while Kevin, Rick, and Yossef  (<a href="http://bl.ogtastic.com">OG</a>) were here, they  shared an autotest tweak that does exactly that.</p>&#x000A;<p>The tweak allows you to specify a regular expression to limit the files which autotest watches; for example, to autotest only files matching <code>*user*.rb</code> you would start autotest like so (<em>atest</em> is an alias):</p>&#x000A;<pre><code>% atest user</code></pre>&#x000A;<p>Here is the (lightly modified) code to do this; in your <code>.autotest</code> file add:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">if</span> <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>] <span class="r">and</span> <span class="r">not</span> <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>].empty?&#x000A;<span class="no"> 2</span>   only_these_files_re = <span class="co">Regexp</span>.new(<span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>])&#x000A;<span class="no"> 3</span> &#x000A;<span class="no"> 4</span>   <span class="co">Autotest</span>.send(<span class="sy">:alias_method</span>, <span class="sy">:real_find_files</span>, <span class="sy">:find_files</span>)&#x000A;<span class="no"> 5</span>   <span class="co">Autotest</span>.send(<span class="sy">:define_method</span>, <span class="sy">:find_files</span>) <span class="r">do</span> |*args|&#x000A;<span class="no"> 6</span>     real_find_files.reject <span class="r">do</span> |k, v|&#x000A;<span class="no"> 7</span>       !only_these_files_re.match(k)&#x000A;<span class="no"> 8</span>     <span class="r">end</span>&#x000A;<span class="no"> 9</span>   <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>And in your <code>.bash_profile</code> add:</p>&#x000A;<pre><code># Autotest&#x000A;function fn_autotest() {&#x000A;  AUTOTEST=$1 autotest&#x000A;}&#x000A;alias atest='fn_autotest'</code></pre>&#x000A;<p>Now use the alias to invoke autotest.  For standard autotest behavior:</p>&#x000A;<pre><code>% atest</code></pre>&#x000A;<p>To limit what autotest is watching, pass a regular expression (which can be a simple string):</p>&#x000A;<pre><code>% atest user.*html&#x000A;</code></pre>
-          </div>
-          <div class='comments'>
-            <a href='/blog/2008/8/24/focusing-autotest.html#disqus_thread'>  </a>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/index3.html">&larr; Prev</a>
