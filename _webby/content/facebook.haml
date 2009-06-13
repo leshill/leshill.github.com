@@ -1,0 +1,12 @@
+---
+author:    Les Hill
+title:  Facebook
+dirty: true
+layout: redirect
+redirect_to: http://facebook.com/leshill
+filter:
+  - haml
+---
+%a{:href => @page.redirect_to}
+  == #{@page.author} on #{@page.title}
+

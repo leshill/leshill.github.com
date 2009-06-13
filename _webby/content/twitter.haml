@@ -1,0 +1,11 @@
+---
+author:    Les Hill
+title:  Twitter
+dirty: true
+layout: redirect
+redirect_to: http://twitter.com/leshill
+filter:
+  - haml
+---
+%a{:href => @page.redirect_to}
+  == #{@page.author} on #{@page.title}

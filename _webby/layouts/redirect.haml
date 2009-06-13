@@ -1,0 +1,14 @@
+---
+extension: html
+filter: haml
+---
+!!!
+%head
+  %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "content-type" }/
+  %meta{ :name => "author", :content => "#{@page.author}" }/
+  %meta{ 'http-equiv' => "refresh", :content => "2;url=#{@page.redirect_to}" }/
+  %title
+    == #{@page.author} on #{@page.title}
+
+%body
+  = @content
