@@ -5,12 +5,54 @@
   <subtitle>A Blog</subtitle>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2009-06-13T17:57:13-04:00</updated>
+  <updated>2009-06-27T10:36:27-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Semantic List Markup with will_paginate</title>
+    <link href="http://blog.leshill.org/blog/2009/06/27/semantic-list-markup-with-will-paginate.html" />
+    
+    <id>tag:blog.leshill.org,2009-06-27:1246106129</id>
+    
+    <published>2009-06-27T08:35:29-04:00</published>
+    <updated>2009-06-27T08:35:29-04:00</updated>
+    <content type="html">&lt;h3&gt;will_paginate using ul and li tags&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://github.com/mislav/will_paginate/tree/master&quot;&gt;will_paginate&lt;/a&gt; is the defacto standard plugin for the Rails community.  Almost every app will need pagination and &lt;strong&gt;will_paginate&lt;/strong&gt; does &lt;em&gt;almost&lt;/em&gt; everything you need.&lt;/p&gt;
+&lt;p&gt;The one thing will_paginate does not do is generate &lt;em&gt;semantic&lt;/em&gt; pagination markup.  Semantic markup uses standard HTML tags to convey structure and meaning.  For example using an &lt;code&gt;h1&lt;/code&gt; tag for a heading rather than styling a &lt;code&gt;div&lt;/code&gt; tag to do the same.&lt;/p&gt;
+&lt;p&gt;The default &lt;strong&gt;will_paginate&lt;/strong&gt; pagination is a series of anchors and spans strung together.  As many a designer has pointed out, that series is really a list of pagination controls.  If you are working with such a designer or you are writing semantic markup, try out my &lt;a href=&quot;git://github.com/leshill/will_paginate.git&quot;&gt;fork&lt;/a&gt; and enjoy &lt;strong&gt;will_paginate&lt;/strong&gt; with semantic pagination.&lt;/p&gt;
+&lt;h3&gt;How to install&lt;/h3&gt;
+&lt;p&gt;As of this moment, you can install it as a plugin.  I am considering releasing this as a gem; ideally the patch to &lt;strong&gt;will_paginate&lt;/strong&gt; would be accepted (see below).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;%script/plugin install git://github.com/leshill/will_paginate.git&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;How to use&lt;/h3&gt;
+&lt;p&gt;Use the &lt;code&gt;will_paginate&lt;/code&gt; view helper, passing the &lt;code&gt;:semantic =&amp;gt; true&lt;/code&gt; option.  If you do not want the enclosing &lt;code&gt;ul&lt;/code&gt; tag, pass &lt;code&gt;:container =&amp;gt; false&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;%= will_paginate @pages, :semantic =&amp;gt; true %&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which looks like:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;ta&quot;&gt;&amp;lt;ul&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;pagination&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;disabled prev_page&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;en&quot;&gt;&amp;amp;laquo;&lt;/span&gt; Previous&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;current&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;1&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;rel&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;2&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=3&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;3&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=4&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;4&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=5&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;5&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=6&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;6&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=7&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;7&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=8&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;8&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=9&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;9&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;gap&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;en&quot;&gt;&amp;amp;hellip;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=33&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;33&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=34&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;34&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;next_page&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;next_page&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;rel&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;Next &lt;span class=&quot;en&quot;&gt;&amp;amp;raquo;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;ta&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Will this patch be accepted?&lt;/h3&gt;
+&lt;p&gt;Signs point to &amp;#8216;uncertain&amp;#8217;.  Mislav has in the past indicated that he was not convinced that list support was necessary in the plugin since you can replace the renderer&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.  Since semantic markup is commonly used, I have sent a pull request.  In any event, the authors of &lt;strong&gt;will_paginate&lt;/strong&gt; have my thanks for creating a very useful plugin.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; So why the fork?  In order to support the containing &lt;code&gt;ul&lt;/code&gt; directly, the core of the helper had to be modified. See the change on &lt;a href=&quot;http://github.com/leshill/will_paginate/commit/6db9356185c9172d35d548000ab91d1bd8cbc7b2&quot;&gt;github&lt;/a&gt; .&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Default Options With Ruby</title>
@@ -380,28 +422,6 @@ Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp
 	&lt;li&gt;Push the changes&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; Webby does not know if you have deleted a source file, by forcing the entire site to be rebuilt, the deletion is reflected in the generated static files.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Using Hoptoad With Script Runner</title>
-    <link href="http://blog.leshill.org/blog/2009/01/12/using-hoptoad-with-script-runner.html" />
-    
-    <id>tag:blog.leshill.org,2009-01-12:1231772509</id>
-    
-    <published>2009-01-12T10:01:49-05:00</published>
-    <updated>2009-01-12T10:01:49-05:00</updated>
-    <content type="html">&lt;p&gt;I have been using &lt;a href=&quot;http://hoptoadapp.com/&quot;&gt;Hoptoad&lt;/a&gt; to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple &lt;code&gt;include HoptoadNotifier::Catcher&lt;/code&gt; in your &lt;code&gt;application.rb&lt;/code&gt;, easy!&lt;/p&gt;
-&lt;p&gt;However, I also wanted &lt;strong&gt;Hoptoad&lt;/strong&gt; to track any exception which occurred in a cron job that was running with &lt;code&gt;script/runner&lt;/code&gt;.  Again, a snap with &lt;strong&gt;Hoptoad&lt;/strong&gt;, take a look:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;CronJob&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.process
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;# do stuff&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;rescue&lt;/span&gt; =&amp;gt; ex
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;HoptoadNotifier&lt;/span&gt;.notify(ex)
-&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-</content>
   </entry>
   
 </feed>

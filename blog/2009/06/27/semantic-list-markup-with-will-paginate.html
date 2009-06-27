@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+  <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+  <meta content='Les Hill' name='author' />
+  <title>
+    Wonderland &mdash; Semantic List Markup with will_paginate
+  </title>
+  <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
+  <!--[if IE]> <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" /> <![endif]-->
+  <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/jquery.twitter.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script>
+  <script src='/javascript/jquery.twitter.js' type='text/javascript'></script>
+  <script src='/javascript/application.js' type='text/javascript'></script>
+  <link href='http://feeds2.feedburner.com/leshill' rel='alternate' title='RSS feed' type='application/atom+xml' />
+</head>
+<body>
+  <div class='container'>
+    <div class='span-24' id='header'>
+      <div class='prepend-1 span-11 append-8'>
+        <a href='/'>
+          <img src='/images/title.png' />
+        </a>
+      </div>
+    </div>
+    <div class='span-24' id='main'>
+      <div class='prepend-1 span-15 append-1' id='content'>
+        <div class='span-15 height-1'></div>
+        <div class='span-15' id='content'>
+          <div class='title'>
+            <h2 class='entry-title'>
+              <a href='/blog/2009/06/27/semantic-list-markup-with-will-paginate.html'>
+                Semantic List Markup with will_paginate
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Sat Jun 27 08:35:29 -0400 2009'>
+              Posted
+              June 27, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <h3>will_paginate using ul and li tags</h3>&#x000A;<p><a href="http://github.com/mislav/will_paginate/tree/master">will_paginate</a> is the defacto standard plugin for the Rails community.  Almost every app will need pagination and <strong>will_paginate</strong> does <em>almost</em> everything you need.</p>&#x000A;<p>The one thing will_paginate does not do is generate <em>semantic</em> pagination markup.  Semantic markup uses standard HTML tags to convey structure and meaning.  For example using an <code>h1</code> tag for a heading rather than styling a <code>div</code> tag to do the same.</p>&#x000A;<p>The default <strong>will_paginate</strong> pagination is a series of anchors and spans strung together.  As many a designer has pointed out, that series is really a list of pagination controls.  If you are working with such a designer or you are writing semantic markup, try out my <a href="git://github.com/leshill/will_paginate.git">fork</a> and enjoy <strong>will_paginate</strong> with semantic pagination.</p>&#x000A;<h3>How to install</h3>&#x000A;<p>As of this moment, you can install it as a plugin.  I am considering releasing this as a gem; ideally the patch to <strong>will_paginate</strong> would be accepted (see below).</p>&#x000A;<pre><code>%script/plugin install git://github.com/leshill/will_paginate.git</code></pre>&#x000A;<h3>How to use</h3>&#x000A;<p>Use the <code>will_paginate</code> view helper, passing the <code>:semantic =&gt; true</code> option.  If you do not want the enclosing <code>ul</code> tag, pass <code>:container =&gt; false</code>.</p>&#x000A;<pre><code>&lt;%= will_paginate @pages, :semantic =&gt; true %&gt;</code></pre>&#x000A;<p>Which looks like:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="ta">&lt;ul</span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">pagination</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>&#x000A;<span class="no"> 2</span>   <span class="ta">&lt;li</span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">disabled prev_page</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span><span class="en">&amp;laquo;</span> Previous<span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 3</span>   <span class="ta">&lt;li</span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">current</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>1<span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 4</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=2</span><span class="dl">&quot;</span></span> <span class="an">rel</span>=<span class="s"><span class="dl">&quot;</span><span class="k">next</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>2<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 5</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=3</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>3<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 6</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=4</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>4<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 7</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=5</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>5<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 8</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=6</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>6<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 9</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=7</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>7<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"><strong>10</strong></span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=8</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>8<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">11</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=9</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>9<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">12</span>   <span class="ta">&lt;li</span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">gap</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span><span class="en">&amp;hellip;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">13</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=33</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>33<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">14</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=34</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>34<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">15</span>   <span class="ta">&lt;li</span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">next_page</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=2</span><span class="dl">&quot;</span></span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">next_page</span><span class="dl">&quot;</span></span> <span class="an">rel</span>=<span class="s"><span class="dl">&quot;</span><span class="k">next</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>Next <span class="en">&amp;raquo;</span><span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">16</span> <span class="ta">&lt;/ul&gt;</span></pre></div>&#x000A;</div>&#x000A;<h3>Will this patch be accepted?</h3>&#x000A;<p>Signs point to &#8216;uncertain&#8217;.  Mislav has in the past indicated that he was not convinced that list support was necessary in the plugin since you can replace the renderer<sup class="footnote"><a href="#fn1">1</a></sup>.  Since semantic markup is commonly used, I have sent a pull request.  In any event, the authors of <strong>will_paginate</strong> have my thanks for creating a very useful plugin.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> So why the fork?  In order to support the containing <code>ul</code> directly, the core of the helper had to be modified. See the change on <a href="http://github.com/leshill/will_paginate/commit/6db9356185c9172d35d548000ab91d1bd8cbc7b2">github</a> .</p>
+          </div>
+          <div class='comments'>
+            <div id='disqus_thread'></div>
+            <script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script>
+            <noscript>
+              <a href='http://leshill.disqus.com/?url=ref'>
+                View the discussion thread.
+              </a>
+            </noscript>
+            <a class='dsq-brlink' href='http://disqus.com'>
+              blog comments powered by
+              <span class='logo-disqus'>
+                Disqus
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class='span-6 append-1 last' id='sidebar'>
+        <div class='span-6 height-1'></div>
+        <div class='prepend-1 span-5' id='about'>
+          <h2>About</h2>
+          <ul>
+            <li>
+              Les Hill is a software adventurer who works with
+              <a href='http://www.ruby-lang.org'>Ruby</a>
+              at
+              <a href='http://hashrocket.com'>Hashrocket</a>
+              .
+            </li>
+            <li class='last'>
+              Follow me on <a href="http://www.twitter.com/leshill">Twitter</a>
+            </li>
+          </ul>
+        </div>
+        <div class='prepend-1 span-5' id='twitter'></div>
+        <div class='prepend-1 span-5'>
+          <h2>Subscribe</h2>
+          <ul>
+            <li>
+              <a class='feed' href='http://feeds2.feedburner.com/leshill'>RSS</a>
+            </li>
+          </ul>
+        </div>
+        <div class='prepend-1 span-5'>
+          <div class='archives'>
+            <h2>Archives</h2>
+            <ul>
+              <li class='year'>
+                <a href='/blog/2009'>2009</a>
+                <ul>
+                  <li class='month'>
+                    <a href='/blog/2009/01'>January</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/02'>February</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/04'>April</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/05'>May</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/06'>June</a>
+                  </li>
+                </ul>
+              </li>
+              <li class='year'>
+                <a href='/blog/2008'>2008</a>
+                <ul>
+                  <li class='month'>
+                    <a href='/blog/2008/2'>February</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/5'>May</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/7'>July</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/8'>August</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/10'>October</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2008/12'>December</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='span-24' id='footer'>
+      <p>
+        Wonderland is styled using
+        <a href='http://www.blueprintcss.org/'>blueprint css</a>
+        and powered by
+        <a href='http://webby.rubyforge.org/'>Webby</a>
+        and
+        <a href='http://github.com/blog/272-github-pages'>GitHub Pages</a>
+      </p>
+      <p>
+        Les Hill &copy; 2008&ndash;2009
+      </p>
+    </div>
+  </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+          }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+      })();
+    //]]>
+  </script>
+</body>

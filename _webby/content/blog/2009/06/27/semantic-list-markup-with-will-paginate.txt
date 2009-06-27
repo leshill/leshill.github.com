@@ -1,0 +1,58 @@
+--- 
+title:      'Semantic List Markup with will_paginate'
+author: Les Hill
+created_at: 2009-06-27 08:35:29.132393 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+h3. will_paginate using ul and li tags
+
+"will_paginate":http://github.com/mislav/will_paginate/tree/master is the defacto standard plugin for the Rails community.  Almost every app will need pagination and *will_paginate* does _almost_ everything you need.
+
+The one thing will_paginate does not do is generate _semantic_ pagination markup.  Semantic markup uses standard HTML tags to convey structure and meaning.  For example using an @h1@ tag for a heading rather than styling a @div@ tag to do the same.
+
+The default *will_paginate* pagination is a series of anchors and spans strung together.  As many a designer has pointed out, that series is really a list of pagination controls.  If you are working with such a designer or you are writing semantic markup, try out my "fork":git://github.com/leshill/will_paginate.git and enjoy *will_paginate* with semantic pagination.
+
+h3. How to install
+
+As of this moment, you can install it as a plugin.  I am considering releasing this as a gem; ideally the patch to *will_paginate* would be accepted (see below).
+
+bc. %script/plugin install git://github.com/leshill/will_paginate.git
+
+h3. How to use
+
+Use the @will_paginate@ view helper, passing the @:semantic => true@ option.  If you do not want the enclosing @ul@ tag, pass @:container => false@.
+
+bc. <%= will_paginate @pages, :semantic => true %>
+
+Which looks like:
+
+<notextile>
+<coderay:html>
+<ul class="pagination">
+  <li class="disabled prev_page">&laquo; Previous</li>
+  <li class="current">1</li>
+  <li><a href="/pages?page=2" rel="next">2</a></li>
+  <li><a href="/pages?page=3">3</a></li>
+  <li><a href="/pages?page=4">4</a></li>
+  <li><a href="/pages?page=5">5</a></li>
+  <li><a href="/pages?page=6">6</a></li>
+  <li><a href="/pages?page=7">7</a></li>
+  <li><a href="/pages?page=8">8</a></li>
+  <li><a href="/pages?page=9">9</a></li>
+  <li class="gap">&hellip;</li>
+  <li><a href="/pages?page=33">33</a></li>
+  <li><a href="/pages?page=34">34</a></li>
+  <li class="next_page"><a href="/pages?page=2" class="next_page" rel="next">Next &raquo;</a></li>
+</ul>
+</coderay>
+</notextile>
+
+h3. Will this patch be accepted?
+
+Signs point to 'uncertain'.  Mislav has in the past indicated that he was not convinced that list support was necessary in the plugin since you can replace the renderer[1].  Since semantic markup is commonly used, I have sent a pull request.  In any event, the authors of *will_paginate* have my thanks for creating a very useful plugin.
+
+fn1. So why the fork?  In order to support the containing @ul@ directly, the core of the helper had to be modified. See the change on "github":http://github.com/leshill/will_paginate/commit/6db9356185c9172d35d548000ab91d1bd8cbc7b2 .
