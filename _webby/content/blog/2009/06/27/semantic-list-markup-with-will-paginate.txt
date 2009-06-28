@@ -14,7 +14,7 @@ h3. will_paginate using ul and li tags
 
 The one thing will_paginate does not do is generate _semantic_ pagination markup.  Semantic markup uses standard HTML tags to convey structure and meaning.  For example using an @h1@ tag for a heading rather than styling a @div@ tag to do the same.
 
-The default *will_paginate* pagination is a series of anchors and spans strung together.  As many a designer has pointed out, that series is really a list of pagination controls.  If you are working with such a designer or you are writing semantic markup, try out my "fork":git://github.com/leshill/will_paginate.git and enjoy *will_paginate* with semantic pagination.
+The default *will_paginate* pagination is a series of anchors and spans strung together.  As many a designer has pointed out, that series is really a list of pagination controls.  If you are working with such a designer or you are writing semantic markup, try out my "fork":http://github.com/leshill/will_paginate/tree/master and enjoy *will_paginate* with semantic pagination.
 
 h3. How to install
 

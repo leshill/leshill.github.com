@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2009-06-27T10:36:27-04:00</updated>
+  <updated>2009-06-28T06:46:37-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -23,7 +23,7 @@
     <content type="html">&lt;h3&gt;will_paginate using ul and li tags&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&quot;http://github.com/mislav/will_paginate/tree/master&quot;&gt;will_paginate&lt;/a&gt; is the defacto standard plugin for the Rails community.  Almost every app will need pagination and &lt;strong&gt;will_paginate&lt;/strong&gt; does &lt;em&gt;almost&lt;/em&gt; everything you need.&lt;/p&gt;
 &lt;p&gt;The one thing will_paginate does not do is generate &lt;em&gt;semantic&lt;/em&gt; pagination markup.  Semantic markup uses standard HTML tags to convey structure and meaning.  For example using an &lt;code&gt;h1&lt;/code&gt; tag for a heading rather than styling a &lt;code&gt;div&lt;/code&gt; tag to do the same.&lt;/p&gt;
-&lt;p&gt;The default &lt;strong&gt;will_paginate&lt;/strong&gt; pagination is a series of anchors and spans strung together.  As many a designer has pointed out, that series is really a list of pagination controls.  If you are working with such a designer or you are writing semantic markup, try out my &lt;a href=&quot;git://github.com/leshill/will_paginate.git&quot;&gt;fork&lt;/a&gt; and enjoy &lt;strong&gt;will_paginate&lt;/strong&gt; with semantic pagination.&lt;/p&gt;
+&lt;p&gt;The default &lt;strong&gt;will_paginate&lt;/strong&gt; pagination is a series of anchors and spans strung together.  As many a designer has pointed out, that series is really a list of pagination controls.  If you are working with such a designer or you are writing semantic markup, try out my &lt;a href=&quot;http://github.com/leshill/will_paginate/tree/master&quot;&gt;fork&lt;/a&gt; and enjoy &lt;strong&gt;will_paginate&lt;/strong&gt; with semantic pagination.&lt;/p&gt;
 &lt;h3&gt;How to install&lt;/h3&gt;
 &lt;p&gt;As of this moment, you can install it as a plugin.  I am considering releasing this as a gem; ideally the patch to &lt;strong&gt;will_paginate&lt;/strong&gt; would be accepted (see below).&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;%script/plugin install git://github.com/leshill/will_paginate.git&lt;/code&gt;&lt;/pre&gt;
