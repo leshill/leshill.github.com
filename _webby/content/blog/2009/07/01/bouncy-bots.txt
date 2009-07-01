@@ -24,7 +24,7 @@ After you have the gem installed, add a @config.gem@ line to your @environment.r
 
 <notextile>
 <coderay:ruby>
-config.gem 'leshill-bouncy_bots', :version => 0.1.0
+config.gem 'leshill-bouncy_bots', :lib => 'bouncy_bots', :version => 0.1.0
 </coderay>
 </notextile>
 
