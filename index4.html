@@ -31,6 +31,25 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html'>
+                Using S3 Authenticated-Read With Paperclip
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Thu Jan 01 09:46:16 -0500 2009'>
+              Posted
+              January 01, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p><a href=":http://www.thoughtbot.com/projects/paperclip">Paperclip</a> supports <strong>AWS S3</strong> with a default of <em>public-read</em> access policy.  This allows anyone who knows the URL of the resource to access it.</p>&#x000A;<p>For some applications, you might want a more restricted access policy.  The <em>authenticated-read</em> access policy requires that the URL of the resource be presented by an authenticated user.</p>&#x000A;<p>To use <em>authenticated-read</em> with <strong>Paperclip</strong>:</p>&#x000A;<ul>&#x000A;	<li>set the <code>:s3_permissions</code> option on your attachment:</li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="sy">:s3_permssions</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">authenticated-read</span><span class="dl">'</span></span></pre></div>&#x000A;</div>&#x000A;<ul>&#x000A;	<li>use <code>RightAws::S3Interface#get_link</code> to generate an <em>authenticated-read</em> URL for the attachment:</li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">def</span> <span class="fu">s3_url</span>(style = <span class="pc">nil</span>, time_limit = <span class="i">15</span>.minutes)&#x000A;<span class="no">2</span>   attachment.s3.interface.get_link(attachment.s3_bucket.to_s, attachment.path(style), time_limit)&#x000A;<span class="no">3</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>If you do not normally need to time limit the access, use <code>nil</code> as the default value for <code>time_limit</code></p>
+          </div>
+          <div class='comments'>
+            <a href='/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html#disqus_thread'>  </a>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2008/12/24/tip-rsync-options-for-webby.html'>
                 Tip: Rsync Options for Webby
               </a>
@@ -86,25 +105,6 @@
           <div class='comments'>
             <a href='/blog/2008/10/27/information-addicted.html#disqus_thread'>  </a>
           </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/10/19/tip-using-haml-with-actionmailer.html'>
-                Tip: Using Haml With ActionMailer
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Sun Oct 19 21:54:10 -0400 2008'>
-              Posted
-              October 19, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>You can use Haml to write your mailer views and still use the implicit multipart template feature by letting <code>ActionMailer</code> know about Haml:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">ActionMailer</span>::<span class="co">Base</span>.register_template_extension(<span class="s"><span class="dl">'</span><span class="k">haml</span><span class="dl">'</span></span>)</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>This is no longer necessary with <strong>Rails 2.2</strong> and <strong>Haml 2.0.5</strong> .</p>
-          </div>
-          <div class='comments'>
-            <a href='/blog/2008/10/19/tip-using-haml-with-actionmailer.html#disqus_thread'>  </a>
-          </div>
           <div class='prepend-1 span-15'>
             <a href="/index3.html">&larr; Prev</a>
             &nbsp;
@@ -159,6 +159,9 @@
                   </li>
                   <li class='month'>
                     <a href='/blog/2009/06'>June</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/07'>July</a>
                   </li>
                 </ul>
               </li>

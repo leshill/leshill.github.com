@@ -3,7 +3,7 @@
   <meta content='text/html; charset=utf-8' http-equiv='content-type' />
   <meta content='Les Hill' name='author' />
   <title>
-    Wonderland &mdash; Archive for April 2009
+    Wonderland &mdash; Bouncy Bots!
   </title>
   <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
@@ -29,32 +29,36 @@
       <div class='prepend-1 span-15 append-1' id='content'>
         <div class='span-15 height-1'></div>
         <div class='span-15' id='content'>
-          <div class='archives'>
-            <h2>Archive for April 2009</h2>
-            <div class='title'>
-              <h2 class='entry-title'>
-                <a href='/blog/2009/04/20/pairing-with-hitch.html'>
-                  Pairing With Hitch
-                </a>
-              </h2>
-            </div>
-            <div class='post-date'>
-              <abbr class='published' title='Mon Apr 20 16:18:52 -0400 2009'>
-                Posted
-                April 20, 2009
-              </abbr>
-            </div>
-            <div class='entry-content'>
-              <p>Pair programming does present some unique problems, one that we encountered at <a href="http://www.hashrocket.com">Hashrocket</a> was commit attribution: a commit message would be identified with one member of the pair only.  This is not exactly tragic, but from the perspective of a passioniate developer, having commit credit (and accountability) is a critical and visible part of the ethos.</p>&#x000A;<p><a href="http://tpope.net">Tim Pope</a> had the brilliant idea of using a group email address with tags (such as <em>group+you@example.com</em>) to identify the commits a pair made to git.  A little <em>bash script fu</em> lead to a nifty command line utility that let us track pairs with our git commits.  With that script as a starting point, <a href="http://blog.therubymug.com">Ro Samour</a> wrote a pure ruby implementation: <code>hitch</code></p>&#x000A;<p><code>hitch</code> will modify your git configuration to reflect who you are pairing with. Here is a <code>hitch</code> commit message using <code>git log --pretty=full</code>:</p>&#x000A;<pre><code>commit e518dd0637e7d1d77d3bd79a645e5d0bc93eae2d&#x000A;Author: Les Hill and Rogelio Samour &lt;bleep+bleep+bleep@hashrocket.com&gt;&#x000A;Commit: Les Hill and Rogelio Samour &lt;bleep+bleep+bleep@hashrocket.com&gt;&#x000A; &#x000A;    Adding show note icon</code></pre>&#x000A;<p>This is a commit message from <code>hitch</code> on github:</p>&#x000A;<p><img src="/images/github_commit.png" title="Github hitch commit message" alt="Github hitch commit message" /></p>&#x000A;<p><code>hitch</code> is open source and is <a href="http://github.com/therubymug/hitch/tree/master">available</a> from github.</p>&#x000A;<h2>Getting started</h2>&#x000A;<p>You will need to install the <code>hitch</code> gem from github<sup class="footnote"><a href="#fn1">1</a></sup>:</p>&#x000A;<pre><code>% sudo gem install therubymug-hitch</code></pre>&#x000A;<p>You will need a group email account with a service such as <a href="http://mail.google.com">GMail</a> that allows email tags<sup class="footnote"><a href="#fn2">2</a></sup> (as an example, <code>news</code> is a tag in this email address <em>yourname+news@example.com</em> which is considered to be the same email address as <em>yourname@example.com</em>):</p>&#x000A;<p>You really want a <a href="http://gravatar.com">Gravatar</a> for your group email account so that the commits show the custom gravatar along with your commit messages.  For every pair, register a new gravatar and associate it with a tagged email address of the form:</p>&#x000A;<pre><code>dev+github_user_1+github_user_2@example.com</code></pre>&#x000A;<p>The github usernames should appear in the local part of the address in alphabetical order after the group address local part, each github username seperated by a <code>+</code>.</p>&#x000A;<p>Initialize <code>hitch</code> by running <code>hitchrc</code> and giving it your name, github username, and group email address when prompted:</p>&#x000A;<pre><code>% hitchrc</code></pre>&#x000A;<h2>Using <code>hitch</code></h2>&#x000A;<p>To pair with another developer whose github username is <code>pair</code>:</p>&#x000A;<pre><code>% hitch pair</code></pre>&#x000A;<p><code>hitch</code> will prompt you if it does not recognize github username of your pair and save it for later use.</p>&#x000A;<p>To unpair and code solo:</p>&#x000A;<pre><code>% unhitch</code></pre>&#x000A;<p>To see who you are currently paired with:</p>&#x000A;<pre><code>% hitch</code></pre>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Add <code>github.com</code> to your gem sources with <code>gem sources -a http://gems.github.com/</code></p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Read about email tags on <a href="http://en.wikipedia.org/wiki/E-mail_address#Sub-addressing">Wikipedia</a></p><!-- #hashrocket -->
-            </div>
-            <div class='comments'>
-              <a href='/blog/2009/04/20/pairing-with-hitch.html#disqus_thread'>  </a>
-            </div>
-            <div class='prepend-1 span-15'>
-              
-              
-              
-            </div>
+          <div class='title'>
+            <h2 class='entry-title'>
+              <a href='/blog/2009/07/01/bouncy-bots.html'>
+                Bouncy Bots!
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Wed Jul 01 10:08:30 -0400 2009'>
+              Posted
+              July 01, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <h3>A simple negative captcha for Rails.</h3>&#x000A;<p>A negative captcha flips the normal captcha on its head, rather than asking humans identify themselves, we trick the bots into identifying themselves.  We do this by placing honey pots in a form that are invisible to a human, but visible to a bot.  When the bot submits the form, we look for the honey pot entries and discard the form submission if we find any.</p>&#x000A;<p>The source is MIT licensed and available on <a href="http://github.com/leshill/bouncy_bots/tree/master">github</a>.</p>&#x000A;<h3>Installing Bouncy Bots!</h3>&#x000A;<p>Bouncy Bots! is available as a gem from github.  Install the gem with the following command:</p>&#x000A;<pre><code>% sudo gem install --source http://gems.github.com/ leshill-bouncy_bots</code></pre>&#x000A;<p>After you have the gem installed, add a <code>config.gem</code> line to your <code>environment.rb</code> file:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> config.gem <span class="s"><span class="dl">'</span><span class="k">bouncy_bots</span><span class="dl">'</span></span>, <span class="sy">:version</span> =&gt; <span class="fl">0.1</span>.<span class="i">0</span></pre></div>&#x000A;</div>&#x000A;<h3>Using Bouncy Bots!</h3>&#x000A;<h4>Controllers</h4>&#x000A;<p>Use the <code>bounce_bots</code> macro in your controllers to detect and bounce bots.  The macro takes two parameters, the honey pot field name and the redirect path or url.  For example, to check for the field <code>:blog_url</code> and redirect bots to the <code>pages_path</code> :</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> bounce_bots <span class="sy">:blog_url</span>, <span class="sy">:pages_path</span></pre></div>&#x000A;</div>&#x000A;<p>You can also pass the standard controller filter options such as <code>:only</code> or <code>:except</code> :</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> bounce_bots <span class="sy">:blog_url</span>, <span class="sy">:pages_path</span>, <span class="sy">:only</span> =&gt; [<span class="sy">:create</span>, <span class="sy">:update</span>]</pre></div>&#x000A;</div>&#x000A;<h4>Views</h4>&#x000A;<p>In your form views, add the honey pot field.  If you are using <code>form_tag</code>, you can use any form element, for example (using <a href="http://haml.hamptoncatlin.com/">haml</a>):</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> = text_field_tag <span class="sy">:blog_url</span>, <span class="pc">nil</span>, <span class="sy">:class</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">long_required</span><span class="dl">'</span></span></pre></div>&#x000A;</div>&#x000A;<p>In your stylesheet, add a rule to &#8216;hide&#8217; the field:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="kw">input</span><span class="cl">.long_required</span> { <span class="ke">display</span>:<span class="vl">none</span>; }</pre></div>&#x000A;</div>&#x000A;<p>If you use <code>form_for</code>, there are two helpers to simplify making the honey pot.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> = f.bounce_label <span class="s"><span class="dl">'</span><span class="k">Blog Url</span><span class="dl">'</span></span>, <span class="sy">:class</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">long_required</span><span class="dl">'</span></span>&#x000A;<span class="no">2</span> %br&#x000A;<span class="no">3</span> = f.bounce_field <span class="sy">:class</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">long_required</span><span class="dl">'</span></span></pre></div>&#x000A;</div>&#x000A;<p>And that&#8217;s it.</p>
+          </div>
+          <div class='comments'>
+            <div id='disqus_thread'></div>
+            <script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script>
+            <noscript>
+              <a href='http://leshill.disqus.com/?url=ref'>
+                View the discussion thread.
+              </a>
+            </noscript>
+            <a class='dsq-brlink' href='http://disqus.com'>
+              blog comments powered by
+              <span class='logo-disqus'>
+                Disqus
+              </span>
+            </a>
           </div>
         </div>
       </div>

@@ -5,12 +5,58 @@
   <subtitle>A Blog</subtitle>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2009-06-28T06:46:37-04:00</updated>
+  <updated>2009-07-01T10:23:02-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Bouncy Bots!</title>
+    <link href="http://blog.leshill.org/blog/2009/07/01/bouncy-bots.html" />
+    
+    <id>tag:blog.leshill.org,2009-07-01:1246457310</id>
+    
+    <published>2009-07-01T10:08:30-04:00</published>
+    <updated>2009-07-01T10:08:30-04:00</updated>
+    <content type="html">&lt;h3&gt;A simple negative captcha for Rails.&lt;/h3&gt;
+&lt;p&gt;A negative captcha flips the normal captcha on its head, rather than asking humans identify themselves, we trick the bots into identifying themselves.  We do this by placing honey pots in a form that are invisible to a human, but visible to a bot.  When the bot submits the form, we look for the honey pot entries and discard the form submission if we find any.&lt;/p&gt;
+&lt;p&gt;The source is MIT licensed and available on &lt;a href=&quot;http://github.com/leshill/bouncy_bots/tree/master&quot;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Installing Bouncy Bots!&lt;/h3&gt;
+&lt;p&gt;Bouncy Bots! is available as a gem from github.  Install the gem with the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% sudo gem install --source http://gems.github.com/ leshill-bouncy_bots&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After you have the gem installed, add a &lt;code&gt;config.gem&lt;/code&gt; line to your &lt;code&gt;environment.rb&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; config.gem &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;bouncy_bots&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:version&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;0.1&lt;/span&gt;.&lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Using Bouncy Bots!&lt;/h3&gt;
+&lt;h4&gt;Controllers&lt;/h4&gt;
+&lt;p&gt;Use the &lt;code&gt;bounce_bots&lt;/code&gt; macro in your controllers to detect and bounce bots.  The macro takes two parameters, the honey pot field name and the redirect path or url.  For example, to check for the field &lt;code&gt;:blog_url&lt;/code&gt; and redirect bots to the &lt;code&gt;pages_path&lt;/code&gt; :&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; bounce_bots &lt;span class=&quot;sy&quot;&gt;:blog_url&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:pages_path&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;You can also pass the standard controller filter options such as &lt;code&gt;:only&lt;/code&gt; or &lt;code&gt;:except&lt;/code&gt; :&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; bounce_bots &lt;span class=&quot;sy&quot;&gt;:blog_url&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:pages_path&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:only&lt;/span&gt; =&amp;gt; [&lt;span class=&quot;sy&quot;&gt;:create&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:update&lt;/span&gt;]&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;h4&gt;Views&lt;/h4&gt;
+&lt;p&gt;In your form views, add the honey pot field.  If you are using &lt;code&gt;form_tag&lt;/code&gt;, you can use any form element, for example (using &lt;a href=&quot;http://haml.hamptoncatlin.com/&quot;&gt;haml&lt;/a&gt;):&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; = text_field_tag &lt;span class=&quot;sy&quot;&gt;:blog_url&lt;/span&gt;, &lt;span class=&quot;pc&quot;&gt;nil&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:class&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;long_required&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;In your stylesheet, add a rule to &amp;#8216;hide&amp;#8217; the field:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;cl&quot;&gt;.long_required&lt;/span&gt; { &lt;span class=&quot;ke&quot;&gt;display&lt;/span&gt;:&lt;span class=&quot;vl&quot;&gt;none&lt;/span&gt;; }&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;If you use &lt;code&gt;form_for&lt;/code&gt;, there are two helpers to simplify making the honey pot.&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; = f.bounce_label &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Blog Url&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:class&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;long_required&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; %br
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; = f.bounce_field &lt;span class=&quot;sy&quot;&gt;:class&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;long_required&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And that&amp;#8217;s it.&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Semantic List Markup with will_paginate</title>
@@ -350,78 +396,6 @@ Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp
 &lt;blockquote&gt;
 &lt;p&gt;It just goes to show you that Microsoft, without the advantages of the Windows/Office monopoly, is simply just another ordinary company — nothing special, nothing innovative.&lt;/p&gt;
 &lt;/blockquote&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Webby, Meet GitHub Pages</title>
-    <link href="http://blog.leshill.org/blog/2009/01/24/webby-meet-github-pages.html" />
-    
-    <id>tag:blog.leshill.org,2009-01-24:1232819655</id>
-    
-    <published>2009-01-24T12:54:15-05:00</published>
-    <updated>2009-01-24T12:54:15-05:00</updated>
-    <content type="html">&lt;p&gt;As of this post, this blog is now hosted by GitHub&amp;#8217;s recently announced &lt;a href=&quot;http://github.com/blog/272-github-pagesi&quot;&gt;GitHub Pages&lt;/a&gt;, still &lt;a href=&quot;http://webby.rubyforge.org&quot;&gt;Webby&lt;/a&gt; powered, now with extra &lt;em&gt;git&lt;/em&gt; goodness.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;GitHub Pages&lt;/strong&gt; generates a static site from a GitHub hosted repo, using &lt;a href=&quot;http://github.com/mojombo/jekyll&quot;&gt;Jekyll&lt;/a&gt; to generate the files.  &lt;strong&gt;Jekyll&lt;/strong&gt; understands two special directories &lt;code&gt;_posts&lt;/code&gt; and &lt;code&gt;_layouts&lt;/code&gt;, copying any other files and directories in the root of the repo that do not begin with an &lt;code&gt;_&lt;/code&gt; directly to the static site.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Webby&lt;/strong&gt; generates a static site from set of source files (&lt;code&gt;content&lt;/code&gt;, &lt;code&gt;layouts&lt;/code&gt;, etc), placing the results in the &lt;code&gt;output_dir&lt;/code&gt; (defaults to &lt;code&gt;output&lt;/code&gt; but can be changed.)&lt;/p&gt;
-&lt;p&gt;To make &lt;strong&gt;Webby&lt;/strong&gt; and &lt;strong&gt;GitHub Pages&lt;/strong&gt; co-exist, I restructured my repo and made the following changes to my existing &lt;strong&gt;Webby&lt;/strong&gt; site:&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;The root of the repo is the &lt;code&gt;output_dir&lt;/code&gt; for &lt;strong&gt;Webby&lt;/strong&gt;&lt;/li&gt;
-	&lt;li&gt;The &lt;strong&gt;Webby&lt;/strong&gt; site (source files) are in a subdirectory name &lt;code&gt;_webby&lt;/code&gt;&lt;/li&gt;
-	&lt;li&gt;The &lt;code&gt;webby&lt;/code&gt; command line tool should be run from within the &lt;code&gt;_webby&lt;/code&gt; directory, not the root of the repo&lt;/li&gt;
-	&lt;li&gt;The &lt;strong&gt;Webby&lt;/strong&gt; &lt;code&gt;clobber&lt;/code&gt; target is overridden to ignore the &lt;code&gt;_webby&lt;/code&gt; directory&lt;/li&gt;
-	&lt;li&gt;&lt;code&gt;Sitefile&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;SITE&lt;/span&gt;.output_dir = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;..&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; task &lt;span class=&quot;sy&quot;&gt;:default&lt;/span&gt; =&amp;gt; &lt;span class=&quot;sy&quot;&gt;:clean_build&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-	&lt;li&gt;&lt;code&gt;lib/override.rb&lt;/code&gt; Rake monkey patch to allow overriding tasks found &lt;a href=&quot;http://www.taknado.com/2007/7/30/overriding-rake-tasks&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# From http://www.taknado.com/2007/7/30/overriding-rake-tasks&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Rake&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;TaskManager&lt;/span&gt;.class_eval &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;remove_task&lt;/span&gt;(task_name)
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@tasks&lt;/span&gt;.delete(task_name.to_s)
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;remove_task&lt;/span&gt;(task_name)
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   &lt;span class=&quot;co&quot;&gt;Rake&lt;/span&gt;.application.remove_task(task_name)
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;override_task&lt;/span&gt;(args, &amp;amp;block)
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   name, deps = &lt;span class=&quot;co&quot;&gt;Rake&lt;/span&gt;.application.resolve_args([args])  
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;   remove_task &lt;span class=&quot;co&quot;&gt;Rake&lt;/span&gt;.application[name].name
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;   task(args, &amp;amp;block)
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-	&lt;li&gt;&lt;code&gt;tasks/github_pages.rake&lt;/code&gt; redefines &lt;code&gt;clobber&lt;/code&gt;  to ignore the &lt;code&gt;_webby&lt;/code&gt; directory and the new (default) &lt;code&gt;clean_build&lt;/code&gt; task allows for file deletions&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# We only want to remove the generated files&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; desc &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Delete the website&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; override_task &lt;span class=&quot;sy&quot;&gt;:clobber&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |t|
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;co&quot;&gt;Dir&lt;/span&gt;.chdir(&lt;span class=&quot;co&quot;&gt;Webby&lt;/span&gt;.site.output_dir) &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Dir&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;].entries.reject {|entry| entry == &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;_webby&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;}.each {|entry| rm_rf entry}
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt; desc &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Clobber, then build the website&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; task &lt;span class=&quot;sy&quot;&gt;:clean_build&lt;/span&gt; =&amp;gt; [&lt;span class=&quot;sy&quot;&gt;:clobber&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:build&lt;/span&gt;]&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;The new workflow for adding a post to the new site is:&lt;/p&gt;
-&lt;ol&gt;
-	&lt;li&gt;Change directory to &lt;code&gt;_webby&lt;/code&gt;&lt;/li&gt;
-	&lt;li&gt;Generate a new blog post&lt;/li&gt;
-	&lt;li&gt;Run &lt;code&gt;webby autobuild&lt;/code&gt;&lt;/li&gt;
-	&lt;li&gt;Edit until completed&lt;/li&gt;
-	&lt;li&gt;Commit all changes locally (&lt;code&gt;git add .&lt;/code&gt; from the root)&lt;/li&gt;
-	&lt;li&gt;Push the changes&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; Webby does not know if you have deleted a source file, by forcing the entire site to be rebuilt, the deletion is reflected in the generated static files.&lt;/p&gt;</content>
   </entry>
   
 </feed>
