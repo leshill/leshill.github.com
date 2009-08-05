@@ -1,0 +1,40 @@
+---
+title:      'Update for stub_chain for Mocha'
+author: Les Hill
+created_at: 2009-08-05 14:02:42.975504 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+---
+
+Thanks to "Josh Nichols":http://technicalpickles.com for pointing out that the original code (and the RSpec mock code!) did not handle stubbing the same part of the chain multiple times, for example:
+
+bc. stub_chain(:votes, :supporting, :count).returns(supporting_count)
+stub_chain(:votes, :opposing, :count).returns(opposing_count)
+
+Here is the updated snippet that works when you stub the same part of the chain multiple times:
+
+<notextile>
+<coderay:ruby>
+module StubChainMocha
+  module Object
+    def stub_chain(*methods)
+      if methods.length > 1
+        next_in_chain = ::Object.new
+        stubs(methods.shift).returns(next_in_chain)
+        next_in_chain.stub_chain(*methods)
+      else
+        stubs(methods.shift)
+      end
+    end
+  end
+end
+
+Object.send(:include, StubChainMocha::Object)
+</coderay>
+</notextile>
+
+Copy that into @spec/stub_chain_mocha.rb@ and then require it from @spec_helper.rb@.
+

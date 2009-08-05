@@ -31,6 +31,25 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2009/01/12/using-hoptoad-with-script-runner.html'>
+                Using Hoptoad With Script Runner
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Mon Jan 12 10:01:49 -0500 2009'>
+              Posted
+              January 12, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>I have been using <a href="http://hoptoadapp.com/">Hoptoad</a> to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple <code>include HoptoadNotifier::Catcher</code> in your <code>application.rb</code>, easy!</p>&#x000A;<p>However, I also wanted <strong>Hoptoad</strong> to track any exception which occurred in a cron job that was running with <code>script/runner</code>.  Again, a snap with <strong>Hoptoad</strong>, take a look:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">class</span> <span class="cl">CronJob</span>&#x000A;<span class="no">2</span>   <span class="r">def</span> <span class="pc">self</span>.process&#x000A;<span class="no">3</span>     <span class="c"># do stuff</span>&#x000A;<span class="no">4</span>   <span class="r">rescue</span> =&gt; ex&#x000A;<span class="no">5</span>     <span class="co">HoptoadNotifier</span>.notify(ex)&#x000A;<span class="no">6</span>   <span class="r">end</span>&#x000A;<span class="no">7</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;
+          </div>
+          <div class='comments'>
+            <a href='/blog/2009/01/12/using-hoptoad-with-script-runner.html#disqus_thread'>  </a>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html'>
                 Using S3 Authenticated-Read With Paperclip
               </a>
@@ -85,25 +104,6 @@
           </div>
           <div class='comments'>
             <a href='/blog/2008/12/22/hello-webby.html#disqus_thread'>  </a>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/10/27/information-addicted.html'>
-                Information Addicted
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Mon Oct 27 10:01:58 -0400 2008'>
-              Posted
-              October 27, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>Sunday, the <a href="http://www.nytimes.com/">New York Times</a> had an <a href="http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&amp;scp=1&amp;sq=boot%20time&amp;st=cse&amp;oref=slogin">article</a> about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.</p>&#x000A;<p>First, I rarely reboot my MacBook Pro; I just put the machine to sleep and wake it (and this is easily accomplished by closing and opening the lid).</p>&#x000A;<p>Second, I rarely reboot my phone; it also seems to sleep<sup class="footnote"><a href="#fn1">1</a></sup>.</p>&#x000A;<p>Third, the context driving this <em>War on Boot Times</em> is our increasing dependence on external information sources.  Think back to 1988<sup class="footnote"><a href="#fn2">2</a></sup> and you may recall a time when finding out what movies to see while you were away from a newspaper was a non-trivial task.  Now with a smart phone or a WiFi connected laptop, all the information to answer your question is readily available at a moment&#8217;s notice.  Think back to when you were out and would say: &#8216;I wish I could Google that&#8217;; now you just do it no matter where you are.</p>&#x000A;<p>The PC makers are fighting the last war.  This whole concept of reducing boot times is irrelevant.  The device should already be on and waiting on us.  No wait, make that <em>The Cloud</em> <strong>is</strong> already waiting on us.</p>&#x000A;<p>The trend is for <strong>more information, delivered faster, and requested instantaneously</strong>.  Someone should tell the PC makers.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am unsure exactly what the phone is doing when it is <em>asleep</em>.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Moviefone was created in 1989.</p>
-          </div>
-          <div class='comments'>
-            <a href='/blog/2008/10/27/information-addicted.html#disqus_thread'>  </a>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/index3.html">&larr; Prev</a>
@@ -162,6 +162,9 @@
                   </li>
                   <li class='month'>
                     <a href='/blog/2009/07'>July</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/08'>August</a>
                   </li>
                 </ul>
               </li>
