@@ -31,7 +31,7 @@ filter:    erb
   %>
   <entry>
     <title><%= h(article.title) %></title>
-    <link href="http://blog.leshill.org<%= article.url %>" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org<%= article.url %>" />
     <% if article.tag %>
     <id>tag:<%= article.tag %></id>
     <% else %>

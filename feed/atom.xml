@@ -5,7 +5,7 @@
   <subtitle>A Blog</subtitle>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2009-08-05T19:52:26-04:00</updated>
+  <updated>2009-09-08T20:40:26+10:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -14,12 +14,12 @@
   
   <entry>
     <title>Update for stub_chain for Mocha</title>
-    <link href="http://blog.leshill.org/blog/2009/08/05/update-for-stub-chain-for-mocha.html" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/08/05/update-for-stub-chain-for-mocha.html" />
     
-    <id>tag:blog.leshill.org,2009-08-05:1249495362</id>
+    <id>tag:blog.leshill.org,2009-08-06:1249495362</id>
     
-    <published>2009-08-05T14:02:42-04:00</published>
-    <updated>2009-08-05T14:02:42-04:00</updated>
+    <published>2009-08-06T04:02:42+10:00</published>
+    <updated>2009-08-06T04:02:42+10:00</updated>
     <content type="html">&lt;p&gt;Thanks to &lt;a href=&quot;http://technicalpickles.com&quot;&gt;Josh Nichols&lt;/a&gt; for pointing out that the original code (and the RSpec mock code!) did not handle stubbing the same part of the chain multiple times, for example:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;stub_chain(:votes, :supporting, :count).returns(supporting_count)
 stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/pre&gt;
@@ -46,12 +46,12 @@ stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/p
   
   <entry>
     <title>Bouncy Bots!</title>
-    <link href="http://blog.leshill.org/blog/2009/07/01/bouncy-bots.html" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/07/01/bouncy-bots.html" />
     
-    <id>tag:blog.leshill.org,2009-07-01:1246457310</id>
+    <id>tag:blog.leshill.org,2009-07-02:1246457310</id>
     
-    <published>2009-07-01T10:08:30-04:00</published>
-    <updated>2009-07-01T10:08:30-04:00</updated>
+    <published>2009-07-02T00:08:30+10:00</published>
+    <updated>2009-07-02T00:08:30+10:00</updated>
     <content type="html">&lt;h3&gt;A simple negative captcha for Rails.&lt;/h3&gt;
 &lt;p&gt;A negative captcha flips the normal captcha on its head, rather than asking humans identify themselves, we trick the bots into identifying themselves.  We do this by placing honey pots in a form that are invisible to a human, but visible to a bot.  When the bot submits the form, we look for the honey pot entries and discard the form submission if we find any.&lt;/p&gt;
 &lt;p&gt;The source is MIT licensed and available on &lt;a href=&quot;http://github.com/leshill/bouncy_bots/tree/master&quot;&gt;github&lt;/a&gt;.&lt;/p&gt;
@@ -92,12 +92,12 @@ stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/p
   
   <entry>
     <title>Semantic List Markup with will_paginate</title>
-    <link href="http://blog.leshill.org/blog/2009/06/27/semantic-list-markup-with-will-paginate.html" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/06/27/semantic-list-markup-with-will-paginate.html" />
     
     <id>tag:blog.leshill.org,2009-06-27:1246106129</id>
     
-    <published>2009-06-27T08:35:29-04:00</published>
-    <updated>2009-06-27T08:35:29-04:00</updated>
+    <published>2009-06-27T22:35:29+10:00</published>
+    <updated>2009-06-27T22:35:29+10:00</updated>
     <content type="html">&lt;h3&gt;will_paginate using ul and li tags&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&quot;http://github.com/mislav/will_paginate/tree/master&quot;&gt;will_paginate&lt;/a&gt; is the defacto standard plugin for the Rails community.  Almost every app will need pagination and &lt;strong&gt;will_paginate&lt;/strong&gt; does &lt;em&gt;almost&lt;/em&gt; everything you need.&lt;/p&gt;
 &lt;p&gt;The one thing will_paginate does not do is generate &lt;em&gt;semantic&lt;/em&gt; pagination markup.  Semantic markup uses standard HTML tags to convey structure and meaning.  For example using an &lt;code&gt;h1&lt;/code&gt; tag for a heading rather than styling a &lt;code&gt;div&lt;/code&gt; tag to do the same.&lt;/p&gt;
@@ -134,12 +134,12 @@ stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/p
   
   <entry>
     <title>Default Options With Ruby</title>
-    <link href="http://blog.leshill.org/blog/2009/06/10/default-options-with-ruby.html" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/06/10/default-options-with-ruby.html" />
     
-    <id>tag:blog.leshill.org,2009-06-10:1244676887</id>
+    <id>tag:blog.leshill.org,2009-06-11:1244676887</id>
     
-    <published>2009-06-10T19:34:47-04:00</published>
-    <updated>2009-06-10T19:34:47-04:00</updated>
+    <published>2009-06-11T09:34:47+10:00</published>
+    <updated>2009-06-11T09:34:47+10:00</updated>
     <content type="html">&lt;h3&gt;Ruby and the argument collecting hash syntax&lt;/h3&gt;
 &lt;p&gt;Unlike other languages, ruby does not support keyword parameters.  As an alternative, we use ruby&amp;#8217;s syntactic shorthand to pass a hash as the final argument to a method using the &lt;code&gt;key =&amp;gt; value&lt;/code&gt; syntax:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
@@ -188,12 +188,12 @@ stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/p
   
   <entry>
     <title>Truncating HTML</title>
-    <link href="http://blog.leshill.org/blog/2009/06/03/truncating-html.html" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/06/03/truncating-html.html" />
     
-    <id>tag:blog.leshill.org,2009-06-03:1244046220</id>
+    <id>tag:blog.leshill.org,2009-06-04:1244046220</id>
     
-    <published>2009-06-03T12:23:40-04:00</published>
-    <updated>2009-06-03T12:23:40-04:00</updated>
+    <published>2009-06-04T02:23:40+10:00</published>
+    <updated>2009-06-04T02:23:40+10:00</updated>
     <content type="html">&lt;p&gt;We recently needed to show a truncated version of existing HTML content.  Although there are several issues&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; when dealing with HTML content, our specific concern was maintaining the integrity of the HTML.   Some quick googling led to a nice helper written by &lt;a href=&quot;http://henrik.nyh.se&quot;&gt;Henrik Nyh&lt;/a&gt; last year.  We tweaked the original a bit to append the ellipsis within the tag at the truncation point and truncate at a word (or tag) boundary.  Here it is, enjoy.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# By Henrik Nyh &amp;lt;http://henrik.nyh.se&amp;gt; 2008-01-30.&lt;/span&gt;
@@ -263,12 +263,12 @@ stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/p
   
   <entry>
     <title>AWS S3 Bucket Copy</title>
-    <link href="http://blog.leshill.org/blog/2009/05/28/aws-s3-bucket-copy.html" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/05/28/aws-s3-bucket-copy.html" />
     
-    <id>tag:blog.leshill.org,2009-05-28:1243539824</id>
+    <id>tag:blog.leshill.org,2009-05-29:1243539824</id>
     
-    <published>2009-05-28T15:43:44-04:00</published>
-    <updated>2009-05-28T15:43:44-04:00</updated>
+    <published>2009-05-29T05:43:44+10:00</published>
+    <updated>2009-05-29T05:43:44+10:00</updated>
     <content type="html">&lt;p&gt;We use &lt;a href=&quot;http://aws.amazon.com/s3/&quot;&gt;S3&lt;/a&gt; for a lot of our projects using the &lt;a href=&quot;http://amazon.rubyforge.org/&quot;&gt;aws-s3&lt;/a&gt; gem.  One thing that has continually plagued me is copying objects from one bucket to another.  Having rewritten this snippet of code twice already, I am placing it here for future reference.  Enjoy.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;S3Object&lt;/span&gt;
@@ -289,12 +289,12 @@ stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/p
   
   <entry>
     <title>RSpec stub_chain for Mocha</title>
-    <link href="http://blog.leshill.org/blog/2009/05/05/rspec-stub-chain-for-mocha.html" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/05/05/rspec-stub-chain-for-mocha.html" />
     
-    <id>tag:blog.leshill.org,2009-05-05:1241576025</id>
+    <id>tag:blog.leshill.org,2009-05-06:1241576025</id>
     
-    <published>2009-05-05T22:13:45-04:00</published>
-    <updated>2009-05-05T22:13:45-04:00</updated>
+    <published>2009-05-06T12:13:45+10:00</published>
+    <updated>2009-05-06T12:13:45+10:00</updated>
     <content type="html">&lt;p&gt;I am not at &lt;a href=&quot;http://en.oreilly.com/rails2009&quot;&gt;RailsConf&lt;/a&gt; but I have been following the tweets of my coworkers, so I heard about &lt;a href=&quot;http://rspec.info&quot;&gt;RSpec&lt;/a&gt;&amp;#8216;s new &lt;code&gt;stub_chain&lt;/code&gt; method.  Since I prefer &lt;a href=&quot;http://mocha.rubyforge.org&quot;&gt;Mocha&lt;/a&gt;&amp;#8217;s syntax to that of the built-in RSpec stubbing framework, I created a monkey patch to add &lt;code&gt;stub_chain&lt;/code&gt; to Mocha:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;StubChainMocha&lt;/span&gt;
@@ -315,12 +315,12 @@ stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/p
   
   <entry>
     <title>Pairing With Hitch</title>
-    <link href="http://blog.leshill.org/blog/2009/04/20/pairing-with-hitch.html" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/04/20/pairing-with-hitch.html" />
     
-    <id>tag:blog.leshill.org,2009-04-20:1240258732</id>
+    <id>tag:blog.leshill.org,2009-04-21:1240258732</id>
     
-    <published>2009-04-20T16:18:52-04:00</published>
-    <updated>2009-04-20T16:18:52-04:00</updated>
+    <published>2009-04-21T06:18:52+10:00</published>
+    <updated>2009-04-21T06:18:52+10:00</updated>
     <content type="html">&lt;p&gt;Pair programming does present some unique problems, one that we encountered at &lt;a href=&quot;http://www.hashrocket.com&quot;&gt;Hashrocket&lt;/a&gt; was commit attribution: a commit message would be identified with one member of the pair only.  This is not exactly tragic, but from the perspective of a passioniate developer, having commit credit (and accountability) is a critical and visible part of the ethos.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://tpope.net&quot;&gt;Tim Pope&lt;/a&gt; had the brilliant idea of using a group email address with tags (such as &lt;em&gt;group+you@example.com&lt;/em&gt;) to identify the commits a pair made to git.  A little &lt;em&gt;bash script fu&lt;/em&gt; lead to a nifty command line utility that let us track pairs with our git commits.  With that script as a starting point, &lt;a href=&quot;http://blog.therubymug.com&quot;&gt;Ro Samour&lt;/a&gt; wrote a pure ruby implementation: &lt;code&gt;hitch&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;hitch&lt;/code&gt; will modify your git configuration to reflect who you are pairing with. Here is a &lt;code&gt;hitch&lt;/code&gt; commit message using &lt;code&gt;git log --pretty=full&lt;/code&gt;:&lt;/p&gt;
@@ -355,12 +355,12 @@ Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp
   
   <entry>
     <title>Most Bugs Fall to the Second Pair of Eyes</title>
-    <link href="http://blog.leshill.org/blog/2009/02/20/most-bugs-fall-to-the-second-pair-of-eyes.html" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/02/20/most-bugs-fall-to-the-second-pair-of-eyes.html" />
     
-    <id>tag:blog.leshill.org,2009-02-20:1235183038</id>
+    <id>tag:blog.leshill.org,2009-02-21:1235183038</id>
     
-    <published>2009-02-20T21:23:58-05:00</published>
-    <updated>2009-02-20T21:23:58-05:00</updated>
+    <published>2009-02-21T12:23:58+10:00</published>
+    <updated>2009-02-21T12:23:58+10:00</updated>
     <content type="html">&lt;p&gt;While recently discussing if a power law applies to bugs at the ongoing seminar I sentimentally call &lt;em&gt;work&lt;/em&gt;, I noted a corollary to &lt;strong&gt;Linus&amp;#8217;s Law&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Linus&amp;#39;s_Law&quot;&gt;Linus&amp;#8217;s Law&lt;/a&gt; states:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -378,12 +378,12 @@ Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp
   
   <entry>
     <title>Velocity Is Not Destiny</title>
-    <link href="http://blog.leshill.org/blog/2009/02/06/velocity-is-not-destiny.html" />
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/02/06/velocity-is-not-destiny.html" />
     
-    <id>tag:blog.leshill.org,2009-02-06:1233953420</id>
+    <id>tag:blog.leshill.org,2009-02-07:1233953420</id>
     
-    <published>2009-02-06T15:50:20-05:00</published>
-    <updated>2009-02-06T15:50:20-05:00</updated>
+    <published>2009-02-07T06:50:20+10:00</published>
+    <updated>2009-02-07T06:50:20+10:00</updated>
     <content type="html">&lt;p&gt;One of the most persistent and pernicious stumbling blocks I see when a team is starting out with Agile&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; is equating story points and velocity directly with hours.&lt;/p&gt;
 &lt;p&gt;Often this stumbling block is not apparent immediately; it often crops up after a few iterations have passed.  As an example, a stakeholder who was new and unsure about agile, was eager to have a release a month into development as an affirmation of the decision to go with an agile approach.   After we had prioritized the feature set for the release, he turned to me and said, &amp;#8220;Let&amp;#8217;s see, we have 78 points in the release, so we can deliver the release four weeks from today.&amp;#8221;&lt;/p&gt;
 &lt;p&gt;My answer, &amp;#8220;Not exactly&amp;#8221;, surprised him.&lt;/p&gt;
