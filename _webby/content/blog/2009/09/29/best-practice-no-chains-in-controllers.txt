@@ -1,0 +1,13 @@
+--- 
+title:      'Best Practice: No Chains in Controllers'
+author: Les Hill
+created_at: 2009-09-29 23:39:00.472258 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+Dan Croak just posted "testing named scopes":http://robots.thoughtbot.com/post/200254501/testing-named-scopes which you should read right now.
+
+We also have been using the rule of thumb in the last paragraph: No Chains in Controllers.  Our experience is that not only do you immediately benefit from simpler tests, but we have also found that you get simpler and more expressive implementations.  If we do end up using a chain we usually encapsulate it in a method, keeping the tests and code clean.

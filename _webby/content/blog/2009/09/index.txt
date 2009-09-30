@@ -1,0 +1,18 @@
+---
+author:    Les Hill
+title:      Archive for September 2009
+created_at: 2009-09-29 23:39:00.448537 -04:00
+archive:    month
+filter:     haml
+dirty:      true
+layout:     index
+---
+.archives
+  %h2= @page.title
+  - posts = @pages.find(:all, :in_directory => @page.dir, :recursive => true, :sort_by => "created_at", :reverse => true, :blog_post => true)
+  - paginate(posts, 4) do |p|
+    = render(:partial => '/post', :locals => {:post => p})
+  .prepend-1.span-15
+    = link_to('&larr; Prev', @pager.prev) if @pager.prev?
+    = '&nbsp;' if @pager.prev?
+    = link_to('Next &rarr;', @pager.next) if @pager.next?
