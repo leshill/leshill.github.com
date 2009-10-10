@@ -31,6 +31,25 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2009/06/27/semantic-list-markup-with-will-paginate.html'>
+                Semantic List Markup with will_paginate
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Sat Jun 27 08:35:29 -0400 2009'>
+              Posted
+              June 27, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <h3>will_paginate using ul and li tags</h3>&#x000A;<p><a href="http://github.com/mislav/will_paginate/tree/master">will_paginate</a> is the defacto standard plugin for the Rails community.  Almost every app will need pagination and <strong>will_paginate</strong> does <em>almost</em> everything you need.</p>&#x000A;<p>The one thing will_paginate does not do is generate <em>semantic</em> pagination markup.  Semantic markup uses standard HTML tags to convey structure and meaning.  For example using an <code>h1</code> tag for a heading rather than styling a <code>div</code> tag to do the same.</p>&#x000A;<p>The default <strong>will_paginate</strong> pagination is a series of anchors and spans strung together.  As many a designer has pointed out, that series is really a list of pagination controls.  If you are working with such a designer or you are writing semantic markup, try out my <a href="http://github.com/leshill/will_paginate/tree/master">fork</a> and enjoy <strong>will_paginate</strong> with semantic pagination.</p>&#x000A;<h3>How to install</h3>&#x000A;<p>As of this moment, you can install it as a plugin.  I am considering releasing this as a gem; ideally the patch to <strong>will_paginate</strong> would be accepted (see below).</p>&#x000A;<pre><code>%script/plugin install git://github.com/leshill/will_paginate.git</code></pre>&#x000A;<h3>How to use</h3>&#x000A;<p>Use the <code>will_paginate</code> view helper, passing the <code>:semantic =&gt; true</code> option.  If you do not want the enclosing <code>ul</code> tag, pass <code>:container =&gt; false</code>.</p>&#x000A;<pre><code>&lt;%= will_paginate @pages, :semantic =&gt; true %&gt;</code></pre>&#x000A;<p>Which looks like:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="ta">&lt;ul</span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">pagination</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>&#x000A;<span class="no"> 2</span>   <span class="ta">&lt;li</span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">disabled prev_page</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span><span class="en">&amp;laquo;</span> Previous<span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 3</span>   <span class="ta">&lt;li</span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">current</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>1<span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 4</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=2</span><span class="dl">&quot;</span></span> <span class="an">rel</span>=<span class="s"><span class="dl">&quot;</span><span class="k">next</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>2<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 5</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=3</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>3<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 6</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=4</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>4<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 7</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=5</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>5<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 8</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=6</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>6<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"> 9</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=7</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>7<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no"><strong>10</strong></span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=8</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>8<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">11</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=9</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>9<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">12</span>   <span class="ta">&lt;li</span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">gap</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span><span class="en">&amp;hellip;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">13</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=33</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>33<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">14</span>   <span class="ta">&lt;li&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=34</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>34<span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">15</span>   <span class="ta">&lt;li</span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">next_page</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span><span class="ta">&lt;a</span> <span class="an">href</span>=<span class="s"><span class="dl">&quot;</span><span class="k">/pages?page=2</span><span class="dl">&quot;</span></span> <span class="an">class</span>=<span class="s"><span class="dl">&quot;</span><span class="k">next_page</span><span class="dl">&quot;</span></span> <span class="an">rel</span>=<span class="s"><span class="dl">&quot;</span><span class="k">next</span><span class="dl">&quot;</span></span><span class="ta">&gt;</span>Next <span class="en">&amp;raquo;</span><span class="ta">&lt;/a&gt;</span><span class="ta">&lt;/li&gt;</span>&#x000A;<span class="no">16</span> <span class="ta">&lt;/ul&gt;</span></pre></div>&#x000A;</div>&#x000A;<h3>Will this patch be accepted?</h3>&#x000A;<p>Signs point to &#8216;uncertain&#8217;.  Mislav has in the past indicated that he was not convinced that list support was necessary in the plugin since you can replace the renderer<sup class="footnote"><a href="#fn1">1</a></sup>.  Since semantic markup is commonly used, I have sent a pull request.  In any event, the authors of <strong>will_paginate</strong> have my thanks for creating a very useful plugin.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> So why the fork?  In order to support the containing <code>ul</code> directly, the core of the helper had to be modified. See the change on <a href="http://github.com/leshill/will_paginate/commit/6db9356185c9172d35d548000ab91d1bd8cbc7b2">github</a> .</p>
+          </div>
+          <div class='comments'>
+            <a href='/blog/2009/06/27/semantic-list-markup-with-will-paginate.html#disqus_thread'>  </a>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2009/06/10/default-options-with-ruby.html'>
                 Default Options With Ruby
               </a>
@@ -85,25 +104,6 @@
           </div>
           <div class='comments'>
             <a href='/blog/2009/05/28/aws-s3-bucket-copy.html#disqus_thread'>  </a>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2009/05/05/rspec-stub-chain-for-mocha.html'>
-                RSpec stub_chain for Mocha
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Tue May 05 22:13:45 -0400 2009'>
-              Posted
-              May 05, 2009
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>I am not at <a href="http://en.oreilly.com/rails2009">RailsConf</a> but I have been following the tweets of my coworkers, so I heard about <a href="http://rspec.info">RSpec</a>&#8216;s new <code>stub_chain</code> method.  Since I prefer <a href="http://mocha.rubyforge.org">Mocha</a>&#8217;s syntax to that of the built-in RSpec stubbing framework, I created a monkey patch to add <code>stub_chain</code> to Mocha:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">module</span> <span class="cl">StubChainMocha</span>&#x000A;<span class="no"> 2</span>   <span class="r">module</span> <span class="cl">Object</span>&#x000A;<span class="no"> 3</span>     <span class="r">def</span> <span class="fu">stub_chain</span>(*methods)&#x000A;<span class="no"> 4</span>       <span class="r">while</span> methods.length &gt; <span class="i">1</span> <span class="r">do</span>&#x000A;<span class="no"> 5</span>         stubs(methods.shift).returns(<span class="pc">self</span>)&#x000A;<span class="no"> 6</span>       <span class="r">end</span>&#x000A;<span class="no"> 7</span>       stubs(methods.shift)&#x000A;<span class="no"> 8</span>     <span class="r">end</span>&#x000A;<span class="no"> 9</span>   <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span>&#x000A;<span class="no">11</span> &#x000A;<span class="no">12</span> <span class="co">Object</span>.send(<span class="sy">:include</span>, <span class="co">StubChainMocha</span>::<span class="co">Object</span>)</pre></div>&#x000A;</div>&#x000A;<p>Copy that into <code>spec/stub_chain_mocha.rb</code> and then require it from <code>spec_helper.rb</code>.</p>
-          </div>
-          <div class='comments'>
-            <a href='/blog/2009/05/05/rspec-stub-chain-for-mocha.html#disqus_thread'>  </a>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/">&larr; Prev</a>
@@ -168,6 +168,9 @@
                   </li>
                   <li class='month'>
                     <a href='/blog/2009/09'>September</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/10'>October</a>
                   </li>
                 </ul>
               </li>

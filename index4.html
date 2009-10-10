@@ -31,6 +31,25 @@
         <div class='span-15' id='content'>
           <div class='title'>
             <h2 class='entry-title'>
+              <a href='/blog/2009/01/25/nothing-special.html'>
+                Nothing Special
+              </a>
+            </h2>
+          </div>
+          <div class='post-date'>
+            <abbr class='published' title='Sun Jan 25 20:28:30 -0500 2009'>
+              Posted
+              January 25, 2009
+            </abbr>
+          </div>
+          <div class='entry-content'>
+            <p>For those of us in a certain part of tech community, this quote from <a href="http://www.ritholtz.com/blog/2009/01/microsoft-zune-down-54/">Barry Ritholtz</a> is old news:</p>&#x000A;<blockquote>&#x000A;<p>It just goes to show you that Microsoft, without the advantages of the Windows/Office monopoly, is simply just another ordinary company — nothing special, nothing innovative.</p>&#x000A;</blockquote>
+          </div>
+          <div class='comments'>
+            <a href='/blog/2009/01/25/nothing-special.html#disqus_thread'>  </a>
+          </div>
+          <div class='title'>
+            <h2 class='entry-title'>
               <a href='/blog/2009/01/24/webby-meet-github-pages.html'>
                 Webby, Meet GitHub Pages
               </a>
@@ -85,25 +104,6 @@
           </div>
           <div class='comments'>
             <a href='/blog/2009/01/01/using-s3-authenticated-read-with-paperclip.html#disqus_thread'>  </a>
-          </div>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/12/24/tip-rsync-options-for-webby.html'>
-                Tip: Rsync Options for Webby
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Wed Dec 24 18:49:36 -0500 2008'>
-              Posted
-              December 24, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>If you are making substantial changes to your <a href="http://github.com/TwP/based">Webby</a> site, you will have no doubt noticed that deleted files are not automatically removed from the <code>output</code> directory or the deploy server.</p>&#x000A;<p>Use the following <code>Sitefile</code> to:</p>&#x000A;<ul>&#x000A;	<li>clear the output directory</li>&#x000A;	<li>build the site</li>&#x000A;	<li>deploy the site with <strong>rsync</strong> with the checksum and delete options<sup class="footnote"><a href="#fn1">1</a></sup><sup class="footnote"><a href="#fn2">2</a></sup></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="co">SITE</span>.host = <span class="s"><span class="dl">'</span><span class="k">HOST</span><span class="dl">'</span></span>&#x000A;<span class="no"> 2</span> <span class="c"># use delete and checksum through ssh</span>&#x000A;<span class="no"> 3</span> <span class="co">SITE</span>.rsync_args = [<span class="s"><span class="dl">'</span><span class="k">-r</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">-c</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">--delete</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">--rsh=ssh</span><span class="dl">'</span></span>]&#x000A;<span class="no"> 4</span> <span class="co">SITE</span>.remote_dir = <span class="s"><span class="dl">'</span><span class="k">/SOME/DIR</span><span class="dl">'</span></span>&#x000A;<span class="no"> 5</span> &#x000A;<span class="no"> 6</span> &#x000A;<span class="no"> 7</span> task <span class="sy">:default</span> =&gt; <span class="sy">:build</span>&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span> desc <span class="s"><span class="dl">'</span><span class="k">deploy the site to the webserver</span><span class="dl">'</span></span>&#x000A;<span class="no"><strong>10</strong></span> task <span class="sy">:deploy</span> =&gt; [<span class="sy">:clobber</span>, <span class="sy">:build</span>, <span class="s"><span class="dl">'</span><span class="k">deploy:rsync</span><span class="dl">'</span></span>]</pre></div>&#x000A;</div>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> <strong>Rsync</strong> will only update changed files, and will detect deleted files.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Using the <code>--delete</code> option will remove files from your deploy server; if you have mixed your <strong>Webby</strong> content with server-only files<sup class="footnote"><a href="#fn3">3</a></sup>, you should not use this.</p>&#x000A;<p class="footnote" id="fn3"><sup>3</sup> You may want to reconsider doing that.</p>
-          </div>
-          <div class='comments'>
-            <a href='/blog/2008/12/24/tip-rsync-options-for-webby.html#disqus_thread'>  </a>
           </div>
           <div class='prepend-1 span-15'>
             <a href="/index3.html">&larr; Prev</a>
@@ -168,6 +168,9 @@
                   </li>
                   <li class='month'>
                     <a href='/blog/2009/09'>September</a>
+                  </li>
+                  <li class='month'>
+                    <a href='/blog/2009/10'>October</a>
                   </li>
                 </ul>
               </li>

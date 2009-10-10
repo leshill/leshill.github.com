@@ -1,0 +1,34 @@
+--- 
+title:      'and vs &amp;&amp; - Fight!'
+author: Les Hill
+created_at: 2009-10-09 14:22:34.391271 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+At "Hashrocket":http://hashrocket.com we are always expressing our views on code, both the good and the bad, about both our own code and code written by others. Recently, the issue of when to use the two flavors of Ruby logic operators: the punctation operators @&&@, @||@, @!@ or the english operators @and@, @or@, @not@.
+
+Developers new to Ruby[1] should be following the rule to only use the punctuation operators for logic:
+
+bc. editable = user.admin? || item.editable?
+
+bc. if user.admin? && item.editable?
+
+and the english operators for flow control:
+
+bc. render :action => 'edit' and return if editable
+
+Once developers are proficient (see below for a quiz!) in Ruby, this rule should become a rule of thumb or just ignored.  For example, this reads better with @and@:
+
+bc. if user.admin? and item.editable?
+
+So how do you know if you should be following the rule or just be aware of it? Answer this:
+
+What happens if we replace the @||@ with @or@ in the first example and why?[2]
+
+fn1. Excluding those who are proficient in other languages and already recognize the issue.
+
+fn2. Did not know the answer?  Take a minute and learn "Ruby's operator precedence":http://phrogz.net/ProgrammingRuby/language.html#table_18.4
+
