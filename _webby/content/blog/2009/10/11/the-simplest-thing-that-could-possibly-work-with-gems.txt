@@ -1,0 +1,54 @@
+--- 
+title:      'The Simplest Thing That Could Possibly Work (With Gems)'
+author: Les Hill
+created_at: 2009-10-11 10:26:37.711093 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+There has been some turmoil in the Ruby community over the "github":http://github.com decision to stop building gems.
+
+Since I have a forked gem that was previously hosted on github, I and my fellow users of the fork are directly affected.
+
+In my case, I am going to do the simplest thing that could possibly work.  Move my existing published gem under the same name[1] (@leshill-will_paginate@) over to ["Gemcutter":http://gemcutter.org].  Why not follow along?
+
+Before getting started, I signed up with Gemcutter (go ahead, do so now).  Once you have confirmed your account, follow the very clear instructions and add your API key to @~/.gemrc@.
+
+bc. gemcutter_key: NOT_MY_REAL_API_KEY
+
+Gemcutter runs as a plugin to RubyGems, so lets install and configure it.
+
+bc. sudo gem install gemcutter
+gem tumble
+
+Great!  We are ready to start publishing. Gemcutter only accepts prebuilt gems, so we will have to build our gem locally first. Before doing that I will modify the @gemspec@ to make it clear that this is a fork by changing the name[2] and a few other fields.
+
+bc. Gem::Specification.new do |s|
+  s.name    = 'leshill-will_paginate'
+  s.version = '2.3.11'
+  s.date    = '2009-10-11'
+  s.summary = "Fork of the Most awesome pagination solution for Rails"
+  s.description = "The will_paginate library provides a simple, yet powerful and extensible API for ActiveRecord pagination and rendering of pagination links in ActionView templates."
+  s.authors  = ['Les Hill', 'Mislav Marohnić', 'PJ Hyett']
+  s.email    = 'someone@example.com'
+  s.homepage = 'http://github.com/leshill/will_paginate'
+
+Ok, now we can build it.
+
+bc. gem build will_paginate.gemspec
+
+Ready?  Let's push it up to Gemcutter
+
+bc. gem push leshill-will_paginate-2.3.11.gem
+
+We can now install my fork of ["will_paginate":http://github.com/leshill/will_paginate]:
+
+bc. sudo gem install leshill-will_paginate
+
+Done!
+
+fn1. This is one source of heat (of many?) in the current 'What to do?' gem discussion.  Who knew we were all unhappy with the github decision to publish gems as @user-gemname@?
+
+fn2. github prepended the github user automatically, now we have to do so explicitly in the @gemspec@.

@@ -5,12 +5,49 @@
   <subtitle>A Blog</subtitle>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2009-10-09T22:23:07-04:00</updated>
+  <updated>2009-10-11T12:00:56-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>The Simplest Thing That Could Possibly Work (With Gems)</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/10/11/the-simplest-thing-that-could-possibly-work-with-gems.html" />
+    
+    <id>tag:blog.leshill.org,2009-10-11:1255271197</id>
+    
+    <published>2009-10-11T10:26:37-04:00</published>
+    <updated>2009-10-11T10:26:37-04:00</updated>
+    <content type="html">&lt;p&gt;There has been some turmoil in the Ruby community over the &lt;a href=&quot;http://github.com&quot;&gt;github&lt;/a&gt; decision to stop building gems.&lt;/p&gt;
+&lt;p&gt;Since I have a forked gem that was previously hosted on github, I and my fellow users of the fork are directly affected.&lt;/p&gt;
+&lt;p&gt;In my case, I am going to do the simplest thing that could possibly work.  Move my existing published gem under the same name&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; (&lt;code&gt;leshill-will_paginate&lt;/code&gt;) over to &lt;a href=&quot;http://gemcutter.org&quot;&gt;Gemcutter&lt;/a&gt;.  Why not follow along?&lt;/p&gt;
+&lt;p&gt;Before getting started, I signed up with Gemcutter (go ahead, do so now).  Once you have confirmed your account, follow the very clear instructions and add your API key to &lt;code&gt;~/.gemrc&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gemcutter_key: NOT_MY_REAL_API_KEY&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Gemcutter runs as a plugin to RubyGems, so lets install and configure it.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo gem install gemcutter
+gem tumble&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Great!  We are ready to start publishing. Gemcutter only accepts prebuilt gems, so we will have to build our gem locally first. Before doing that I will modify the &lt;code&gt;gemspec&lt;/code&gt; to make it clear that this is a fork by changing the name&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and a few other fields.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Gem::Specification.new do |s|
+  s.name    = 'leshill-will_paginate'
+  s.version = '2.3.11'
+  s.date    = '2009-10-11'
+  s.summary = &quot;Fork of the Most awesome pagination solution for Rails&quot;
+  s.description = &quot;The will_paginate library provides a simple, yet powerful and extensible API for ActiveRecord pagination and rendering of pagination links in ActionView templates.&quot;
+  s.authors  = ['Les Hill', 'Mislav Marohnić', 'PJ Hyett']
+  s.email    = 'someone@example.com'
+  s.homepage = 'http://github.com/leshill/will_paginate'&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ok, now we can build it.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gem build will_paginate.gemspec&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ready?  Let&amp;#8217;s push it up to Gemcutter&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gem push leshill-will_paginate-2.3.11.gem&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can now install my fork of &lt;a href=&quot;http://github.com/leshill/will_paginate&quot;&gt;will_paginate&lt;/a&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo gem install leshill-will_paginate&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Done!&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; This is one source of heat (of many?) in the current &amp;#8216;What to do?&amp;#8217; gem discussion.  Who knew we were all unhappy with the github decision to publish gems as &lt;code&gt;user-gemname&lt;/code&gt;?&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; github prepended the github user automatically, now we have to do so explicitly in the &lt;code&gt;gemspec&lt;/code&gt;.&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>and vs &amp;amp;&amp;amp; - Fight!</title>
@@ -345,46 +382,6 @@ stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/p
 &lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Object&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;, &lt;span class=&quot;co&quot;&gt;StubChainMocha&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Object&lt;/span&gt;)&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;Copy that into &lt;code&gt;spec/stub_chain_mocha.rb&lt;/code&gt; and then require it from &lt;code&gt;spec_helper.rb&lt;/code&gt;.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Pairing With Hitch</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/04/20/pairing-with-hitch.html" />
-    
-    <id>tag:blog.leshill.org,2009-04-20:1240258732</id>
-    
-    <published>2009-04-20T16:18:52-04:00</published>
-    <updated>2009-04-20T16:18:52-04:00</updated>
-    <content type="html">&lt;p&gt;Pair programming does present some unique problems, one that we encountered at &lt;a href=&quot;http://www.hashrocket.com&quot;&gt;Hashrocket&lt;/a&gt; was commit attribution: a commit message would be identified with one member of the pair only.  This is not exactly tragic, but from the perspective of a passioniate developer, having commit credit (and accountability) is a critical and visible part of the ethos.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://tpope.net&quot;&gt;Tim Pope&lt;/a&gt; had the brilliant idea of using a group email address with tags (such as &lt;em&gt;group+you@example.com&lt;/em&gt;) to identify the commits a pair made to git.  A little &lt;em&gt;bash script fu&lt;/em&gt; lead to a nifty command line utility that let us track pairs with our git commits.  With that script as a starting point, &lt;a href=&quot;http://blog.therubymug.com&quot;&gt;Ro Samour&lt;/a&gt; wrote a pure ruby implementation: &lt;code&gt;hitch&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;hitch&lt;/code&gt; will modify your git configuration to reflect who you are pairing with. Here is a &lt;code&gt;hitch&lt;/code&gt; commit message using &lt;code&gt;git log --pretty=full&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;commit e518dd0637e7d1d77d3bd79a645e5d0bc93eae2d
-Author: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp;gt;
-Commit: Les Hill and Rogelio Samour &amp;lt;bleep+bleep+bleep@hashrocket.com&amp;gt;
- 
-    Adding show note icon&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This is a commit message from &lt;code&gt;hitch&lt;/code&gt; on github:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/images/github_commit.png&quot; title=&quot;Github hitch commit message&quot; alt=&quot;Github hitch commit message&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;hitch&lt;/code&gt; is open source and is &lt;a href=&quot;http://github.com/therubymug/hitch/tree/master&quot;&gt;available&lt;/a&gt; from github.&lt;/p&gt;
-&lt;h2&gt;Getting started&lt;/h2&gt;
-&lt;p&gt;You will need to install the &lt;code&gt;hitch&lt;/code&gt; gem from github&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% sudo gem install therubymug-hitch&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You will need a group email account with a service such as &lt;a href=&quot;http://mail.google.com&quot;&gt;GMail&lt;/a&gt; that allows email tags&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; (as an example, &lt;code&gt;news&lt;/code&gt; is a tag in this email address &lt;em&gt;yourname+news@example.com&lt;/em&gt; which is considered to be the same email address as &lt;em&gt;yourname@example.com&lt;/em&gt;):&lt;/p&gt;
-&lt;p&gt;You really want a &lt;a href=&quot;http://gravatar.com&quot;&gt;Gravatar&lt;/a&gt; for your group email account so that the commits show the custom gravatar along with your commit messages.  For every pair, register a new gravatar and associate it with a tagged email address of the form:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;dev+github_user_1+github_user_2@example.com&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The github usernames should appear in the local part of the address in alphabetical order after the group address local part, each github username seperated by a &lt;code&gt;+&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Initialize &lt;code&gt;hitch&lt;/code&gt; by running &lt;code&gt;hitchrc&lt;/code&gt; and giving it your name, github username, and group email address when prompted:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% hitchrc&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Using &lt;code&gt;hitch&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;To pair with another developer whose github username is &lt;code&gt;pair&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% hitch pair&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;hitch&lt;/code&gt; will prompt you if it does not recognize github username of your pair and save it for later use.&lt;/p&gt;
-&lt;p&gt;To unpair and code solo:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% unhitch&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To see who you are currently paired with:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% hitch&lt;/code&gt;&lt;/pre&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; Add &lt;code&gt;github.com&lt;/code&gt; to your gem sources with &lt;code&gt;gem sources -a http://gems.github.com/&lt;/code&gt;&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Read about email tags on &lt;a href=&quot;http://en.wikipedia.org/wiki/E-mail_address#Sub-addressing&quot;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;&lt;!-- #hashrocket --&gt;</content>
   </entry>
   
 </feed>

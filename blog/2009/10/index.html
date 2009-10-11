@@ -33,6 +33,25 @@
             <h2>Archive for October 2009</h2>
             <div class='title'>
               <h2 class='entry-title'>
+                <a href='/blog/2009/10/11/the-simplest-thing-that-could-possibly-work-with-gems.html'>
+                  The Simplest Thing That Could Possibly Work (With Gems)
+                </a>
+              </h2>
+            </div>
+            <div class='post-date'>
+              <abbr class='published' title='Sun Oct 11 10:26:37 -0400 2009'>
+                Posted
+                October 11, 2009
+              </abbr>
+            </div>
+            <div class='entry-content'>
+              <p>There has been some turmoil in the Ruby community over the <a href="http://github.com">github</a> decision to stop building gems.</p>&#x000A;<p>Since I have a forked gem that was previously hosted on github, I and my fellow users of the fork are directly affected.</p>&#x000A;<p>In my case, I am going to do the simplest thing that could possibly work.  Move my existing published gem under the same name<sup class="footnote"><a href="#fn1">1</a></sup> (<code>leshill-will_paginate</code>) over to <a href="http://gemcutter.org">Gemcutter</a>.  Why not follow along?</p>&#x000A;<p>Before getting started, I signed up with Gemcutter (go ahead, do so now).  Once you have confirmed your account, follow the very clear instructions and add your API key to <code>~/.gemrc</code>.</p>&#x000A;<pre><code>gemcutter_key: NOT_MY_REAL_API_KEY</code></pre>&#x000A;<p>Gemcutter runs as a plugin to RubyGems, so lets install and configure it.</p>&#x000A;<pre><code>sudo gem install gemcutter&#x000A;gem tumble</code></pre>&#x000A;<p>Great!  We are ready to start publishing. Gemcutter only accepts prebuilt gems, so we will have to build our gem locally first. Before doing that I will modify the <code>gemspec</code> to make it clear that this is a fork by changing the name<sup class="footnote"><a href="#fn2">2</a></sup> and a few other fields.</p>&#x000A;<pre><code>Gem::Specification.new do |s|&#x000A;  s.name    = 'leshill-will_paginate'&#x000A;  s.version = '2.3.11'&#x000A;  s.date    = '2009-10-11'&#x000A;  s.summary = "Fork of the Most awesome pagination solution for Rails"&#x000A;  s.description = "The will_paginate library provides a simple, yet powerful and extensible API for ActiveRecord pagination and rendering of pagination links in ActionView templates."&#x000A;  s.authors  = ['Les Hill', 'Mislav Marohnić', 'PJ Hyett']&#x000A;  s.email    = 'someone@example.com'&#x000A;  s.homepage = 'http://github.com/leshill/will_paginate'</code></pre>&#x000A;<p>Ok, now we can build it.</p>&#x000A;<pre><code>gem build will_paginate.gemspec</code></pre>&#x000A;<p>Ready?  Let&#8217;s push it up to Gemcutter</p>&#x000A;<pre><code>gem push leshill-will_paginate-2.3.11.gem</code></pre>&#x000A;<p>We can now install my fork of <a href="http://github.com/leshill/will_paginate">will_paginate</a>:</p>&#x000A;<pre><code>sudo gem install leshill-will_paginate</code></pre>&#x000A;<p>Done!</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> This is one source of heat (of many?) in the current &#8216;What to do?&#8217; gem discussion.  Who knew we were all unhappy with the github decision to publish gems as <code>user-gemname</code>?</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> github prepended the github user automatically, now we have to do so explicitly in the <code>gemspec</code>.</p>
+            </div>
+            <div class='comments'>
+              <a href='/blog/2009/10/11/the-simplest-thing-that-could-possibly-work-with-gems.html#disqus_thread'>  </a>
+            </div>
+            <div class='title'>
+              <h2 class='entry-title'>
                 <a href='/blog/2009/10/09/and-v.html'>
                   and vs &amp;&amp; - Fight!
                 </a>
