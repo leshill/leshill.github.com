@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+  <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+  <meta content='Les Hill' name='author' />
+  <title>
+    Les Hill &mdash; Home
+  </title>
+  <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/jquery.twitter.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script>
+  <script src='/javascript/jquery.twitter.js' type='text/javascript'></script>
+  <script src='/javascript/application.js' type='text/javascript'></script>
+  <link href='http://feeds2.feedburner.com/leshill' rel='alternate' title='RSS feed' type='application/atom+xml' />
+</head>
+<body>
+  <div class='site'>
+    <div class='title'>
+      <a href='/'>
+        Les Hill
+      </a>
+      <a class='extra' href='/'>
+        home
+      </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/5/8/a-little-bit-of-history.html'>
+          A Little Bit of History
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Thu May 08 20:10:16 -0400 2008'>
+        Posted
+        May 08, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>I am a bit late on the history <a href="http://diveintomark.org/archives/2008/04/15/history-meme">meme</a>.  Here I am:</p>&#x000A;<pre><code>Wonderland$ history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head&#x000A;149 git&#x000A;60 spec&#x000A;46 ls&#x000A;45 gst&#x000A;42 cd&#x000A;28 rake&#x000A;14 ssh&#x000A;8 ss&#x000A;7 houston&#x000A;7 gco</code></pre>&#x000A;<p>Things to note<sup class="footnote"><a href="#fn1">1</a></sup>:</p>&#x000A;<ol>&#x000A;	<li>3 are git</li>&#x000A;	<li>3 are Rails development related</li>&#x000A;	<li>4 are common unix commands</li>&#x000A;</ol>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> 4 are aliases</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/5/8/a-little-bit-of-history.html#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/5/6/stone-knives-and-bearskins.html'>
+          Stone knives and bearskins
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Tue May 06 01:26:53 -0400 2008'>
+        Posted
+        May 06, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>Recently while discussing <a href="http://jquery.com/">jQuery</a>, we got onto the topic of <a href="http://en.wikipedia.org/wiki/Ajax_%28programming%29">AJAX</a>.  This prompted me to declare:</p>&#x000A;<p><em>Before AJAX, we used stone knives and bearskins to make our web apps</em></p>&#x000A;<p>Actually, we were using JavaScript and XML to drive our web apps, we just did not call it AJAX, and it was a very challenging task.  In spite of the difficulty of building it, we stuck with it and we were pretty darn happy with our <strong>pre-web 2.0 web2.0</strong> app; so much so that we actually had people coming by just to see our UI in action.</p>&#x000A;<p>I went back and looked for some of our old code, hoping to find the CVS repository<sup class="footnote"><a href="#fn1">1</a></sup>, but only finding a tarball of version 1.4.  The following code is from <code>client/script/services.js</code> and dated <strong>August 24, 2001</strong> &#8212; although some version of this code would have existed in the spring of <strong>2000</strong>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> BrServices.prototype.issueRequest = <span class="kw">function</span> (action) {&#x000A;<span class="no"> 2</span> <span class="c">// deleted ...</span>&#x000A;<span class="no"> 3</span>     <span class="kw">var</span> request = brUtils.newXmlDOM(action);&#x000A;<span class="no"> 4</span>     <span class="kw">var</span> tryCount = <span class="i">0</span>;&#x000A;<span class="no"> 5</span>     <span class="kw">var</span> condition = brServices.isOkay;&#x000A;<span class="no"> 6</span>     <span class="kw">var</span> s = <span class="s"><span class="dl">&quot;</span><span class="dl">&quot;</span></span>;&#x000A;<span class="no"> 7</span>     <span class="kw">while</span> (condition == brServices.isOkay) {&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span>         <span class="kw">try</span> {&#x000A;<span class="no"><strong>10</strong></span>             <span class="kw">var</span> httpOb = <span class="kw">new</span> ActiveXObject(<span class="s"><span class="dl">&quot;</span><span class="k">MSXML2.XMLHTTP</span><span class="dl">&quot;</span></span>); <span class="c">// Was Microsoft.XMLHTTP</span>&#x000A;<span class="no">11</span>             httpOb.open(<span class="s"><span class="dl">&quot;</span><span class="k">POST</span><span class="dl">&quot;</span></span>, brServices.brxmlURL, <span class="kw">false</span>);&#x000A;<span class="no">12</span>             httpOb.setRequestHeader(<span class="s"><span class="dl">&quot;</span><span class="k">Content-Type</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">text/xml; charset='UTF-8'</span><span class="dl">&quot;</span></span>);&#x000A;<span class="no">13</span> &#x000A;<span class="no">14</span>             httpOb.send(request);&#x000A;<span class="no">15</span> <span class="c">// deleted ...</span></pre></div>&#x000A;</div>&#x000A;<p>Just looking at this snippet from our internal library makes me all the happier that we made the thing work at all.  Kudos to <a href="http://markjudd.com">Mark Judd</a> and <a href="http://brianlevine.blogspot.com">Brian Levine</a>, two of our very talented small team, who were responsible for our UI.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> You already know this, but just in case, CVS was a source code repository that pretty much everyone used before Subversion (unless you bought one from a vendor).</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/5/6/stone-knives-and-bearskins.html#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/2/22/monkey-patch.html'>
+          Monkey Patch!
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Fri Feb 22 11:09:02 -0500 2008'>
+        Posted
+        February 22, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>So after missing the wisdom<sup class="footnote"><a href="#fn1">1</a></sup> of this:</p>&#x000A;<p><a href="http://xkcd.com/386">http://xkcd.com/386</a></p>&#x000A;<p>And responding to this:</p>&#x000A;<p><a href="http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript">http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript</a></p>&#x000A;<p>I went to bed.</p>&#x000A;<p>This morning I wrote my first <b>Rails</b> (really <b>Haml</b>) <i>Monkey Patch</i><sup class="footnote"><a href="#fn2">2</a></sup>.  This adds some of what Steve wanted: undisturbed inline javascript with variable interpolation.  I am not sure what else he wanted as I did not read his blog carefully :)</p>&#x000A;<p>Throw this into <code>lib/inline_javascript.rb</code></p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">module</span> <span class="cl">Haml</span>&#x000A;<span class="no"> 2</span>   <span class="r">module</span> <span class="cl">Filters</span>&#x000A;<span class="no"> 3</span>     <span class="r">class</span> <span class="cl">InlineJavascript</span>&#x000A;<span class="no"> 4</span>       <span class="co">HEAD</span> =<span class="s"><span class="dl">&lt;&lt;EOH</span></span><span class="s"><span class="k">&#x000A;<span class="no"> 5</span> &lt;script type=&quot;text/javascript&quot;&gt;&#x000A;<span class="no"> 6</span> //&lt;![CDATA[</span><span class="dl">&#x000A;<span class="no"> 7</span> EOH</span></span>&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span>       <span class="co">FOOT</span> =<span class="s"><span class="dl">&lt;&lt;EOF</span></span><span class="s"><span class="k">&#x000A;<span class="no"><strong>10</strong></span> //]]&gt;&#x000A;<span class="no">11</span> &lt;/script&gt;</span><span class="dl">&#x000A;<span class="no">12</span> EOF</span></span>&#x000A;<span class="no">13</span> &#x000A;<span class="no">14</span>       <span class="r">def</span> <span class="fu">initialize</span>(text)&#x000A;<span class="no">15</span>         <span class="iv">@text</span> = <span class="co">HEAD</span> + text + <span class="co">FOOT</span>&#x000A;<span class="no">16</span>       <span class="r">end</span>&#x000A;<span class="no">17</span> &#x000A;<span class="no">18</span>       <span class="r">def</span> <span class="fu">render</span>&#x000A;<span class="no">19</span>         <span class="iv">@text</span>&#x000A;<span class="no"><strong>20</strong></span>       <span class="r">end</span>&#x000A;<span class="no">21</span>     <span class="r">end</span>&#x000A;<span class="no">22</span>   <span class="r">end</span>&#x000A;<span class="no">23</span> &#x000A;<span class="no">24</span>   <span class="r">module</span> <span class="cl">Precompiler</span>&#x000A;<span class="no">25</span>     <span class="r">def</span> <span class="fu">close_filtered</span>(filter)&#x000A;<span class="no">26</span>       <span class="iv">@flat_spaces</span> = <span class="i">-1</span>&#x000A;<span class="no">27</span>       filtered = filter.new(<span class="iv">@filter_buffer</span>).render&#x000A;<span class="no">28</span> &#x000A;<span class="no">29</span>       <span class="r">if</span> filter == <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">Preserve</span>&#x000A;<span class="no"><strong>30</strong></span>         push_silent(<span class="s"><span class="dl">&quot;</span><span class="k">_hamlout.buffer &lt;&lt; </span><span class="il"><span class="idl">#{</span>filtered.dump<span class="idl">}</span></span><span class="k"> &lt;&lt; </span><span class="ch">\&quot;</span><span class="ch">\\</span><span class="k">n</span><span class="ch">\&quot;</span><span class="k">;</span><span class="dl">&quot;</span></span>)&#x000A;<span class="no">31</span>       <span class="r">elsif</span> filter == <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">InlineJavascript</span>&#x000A;<span class="no">32</span>         <span class="c"># suppress eval option does not apply to us</span>&#x000A;<span class="no">33</span>         flush_merged_text&#x000A;<span class="no">34</span>         js = unescape_interpolation(filtered)&#x000A;<span class="no">35</span>         <span class="iv">@precompiled</span>  &lt;&lt; <span class="s"><span class="dl">&quot;</span><span class="k">_hamlout.buffer &lt;&lt; </span><span class="il"><span class="idl">#{</span>js<span class="idl">}</span></span><span class="k">;</span><span class="dl">&quot;</span></span>&#x000A;<span class="no">36</span>       <span class="r">else</span>&#x000A;<span class="no">37</span>         push_text(filtered.rstrip.gsub(<span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="il"><span class="idl">#{</span><span class="s"><span class="dl">'</span><span class="k">  </span><span class="dl">'</span></span> * <span class="iv">@output_tabs</span><span class="idl">}</span></span><span class="dl">&quot;</span></span>))&#x000A;<span class="no">38</span>       <span class="r">end</span>&#x000A;<span class="no">39</span> &#x000A;<span class="no"><strong>40</strong></span>       <span class="iv">@filter_buffer</span> = <span class="pc">nil</span>&#x000A;<span class="no">41</span>       <span class="iv">@template_tabs</span> -= <span class="i">1</span>&#x000A;<span class="no">42</span>     <span class="r">end</span>&#x000A;<span class="no">43</span>   <span class="r">end</span>&#x000A;<span class="no">44</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>Throw this at the bottom of your <code>environment.rb</code>, taken from here <a href="http://groups.google.com/group/haml/msg/2d890cf1ede761ea">http://groups.google.com/group/haml/msg/2d890cf1ede761ea</a></p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> require <span class="s"><span class="dl">'</span><span class="k">inline_javascript</span><span class="dl">'</span></span>&#x000A;<span class="no">2</span> &#x000A;<span class="no">3</span> <span class="co">Haml</span>::<span class="co">Template</span>.options = {&#x000A;<span class="no">4</span>   <span class="sy">:filters</span> =&gt; {&#x000A;<span class="no">5</span>     <span class="s"><span class="dl">'</span><span class="k">javascript</span><span class="dl">'</span></span> =&gt; <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">InlineJavascript</span>&#x000A;<span class="no">6</span>   }&#x000A;<span class="no">7</span> }</pre></div>&#x000A;</div>&#x000A;<p>And then do this in your <b>Haml</b> file:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> :javascript&#x000A;<span class="no">2</span>   <span class="kw">function</span> oh_yea() {&#x000A;<span class="no">3</span>     alert(<span class="s"><span class="dl">'</span><span class="k">Hello</span><span class="dl">'</span></span> + <span class="s"><span class="dl">'</span><span class="k">#{@message}</span><span class="dl">'</span></span>)&#x000A;<span class="no">4</span>   }&#x000A;<span class="no">5</span> %a{ :href =&gt;<span class="s"><span class="dl">&quot;</span><span class="k">javascript:oh_yea()</span><span class="dl">&quot;</span></span> } Oh Yea!</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>I decided to make a patch and submit it to the <b>Haml</b> folks directly.  This gave me the &#8216;opportunity&#8217; to get <b>git</b> going.</p>&#x000A;<p>Nathan Weizenbaum took the time to put in a more comprehensive fix to expose the interpolation functionality to all filters &#8212; look for it in an upcoming release.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> It&#8217;s turtles all the way down.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> You do not want to know what my subconscious originally thought up as the way to do this &#8212; that was twisted.</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/2/22/monkey-patch.html#disqus_thread'>  </a>
+    </div>
+    <div class='prepend-1 span-15'>
+      <a href="/index27.html">&larr; Prev</a>
+      &nbsp;
+      
+    </div>
+    <div class='footer'>
+      <div class='contact'>
+        <p>
+          Les Hill
+          <br />
+          Developer @
+          <a href='http://hashrocket.com/'>
+            Hashrocket
+          </a>
+          <br />
+          les (at) hashrocket (dot) com
+        </p>
+      </div>
+      <div class='contact'>
+        <p>
+          <a href='http://github.com/leshill/'>
+            github.com/leshill
+          </a>
+          <br />
+          <a href='http://twitter.com/leshill/'>
+            twitter.com/leshill
+          </a>
+        </p>
+      </div>
+      <div class='rss'>
+        <a href='http://feeds2.feedburner.com/leshill'>
+          <img alt='Subscribe to RSS Feed' src='/images/rss.png' />
+        </a>
+      </div>
+      <div class='colophon'>
+        <p>
+          Les Hill &copy; 2008&ndash;2009
+        </p>
+        <p>
+          Thanks to
+          <a href='http://tom.preston-werner.com/'>
+            Tom Preston-Werner
+          </a>
+          for the CSS layout,
+          <a href='http://webby.rubyforge.org/'>
+            Webby
+          </a>
+          for the blog renderer,
+          and
+          <a href='http://github.com/blog/272-github-pages'>
+            GitHub Pages
+          </a>
+          for the blog hosting.
+        </p>
+      </div>
+    </div>
+  </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+          }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+      })();
+    //]]>
+  </script>
+</body>

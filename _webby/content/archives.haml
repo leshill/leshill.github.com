@@ -1,0 +1,10 @@
+---
+author:    Les Hill
+title:  Archives
+layout: index
+dirty:  true
+filter:
+  - haml
+---
+- posts =  @pages.find :all, :in_directory => 'blog', :recursive => true, :sort_by => "created_at", :reverse => true, :blog_post => true
+= render :partial => '/archives', :locals => {:posts => posts}

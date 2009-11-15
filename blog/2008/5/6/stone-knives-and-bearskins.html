@@ -3,169 +3,104 @@
   <meta content='text/html; charset=utf-8' http-equiv='content-type' />
   <meta content='Les Hill' name='author' />
   <title>
-    Wonderland &mdash; Stone knives and bearskins
+    Les Hill &mdash; Stone knives and bearskins
   </title>
-  <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
-  <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
-  <!--[if IE]> <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" /> <![endif]-->
+  <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
-  <link href='/css/jquery.twitter.css' media='screen, projection' rel='stylesheet' type='text/css' />
-  <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script>
   <script src='/javascript/jquery.twitter.js' type='text/javascript'></script>
   <script src='/javascript/application.js' type='text/javascript'></script>
   <link href='http://feeds2.feedburner.com/leshill' rel='alternate' title='RSS feed' type='application/atom+xml' />
 </head>
 <body>
-  <div class='container'>
-    <div class='span-24' id='header'>
-      <div class='prepend-1 span-11 append-8'>
-        <a href='/'>
-          <img src='/images/title.png' />
+  <div class='site'>
+    <div class='title'>
+      <a href="/">Les Hill</a>
+      <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+      <a href="http://github.com/leshill/" class="extra">github</a>
+      <a href="/archives.html" class="extra">archives</a>
+    </div>
+    <div id='post'>
+      <div class='title'>
+        <a href="/blog/2008/5/6/stone-knives-and-bearskins.html">Stone knives and bearskins</a>
+      </div>
+      <div class='meta'>
+        <abbr class='published' title='Tue May 06 01:26:53 -0400 2008'>
+          Posted May 06, 2008
+        </abbr>
+      </div>
+      <div class='content'>
+        <p>Recently while discussing <a href="http://jquery.com/">jQuery</a>, we got onto the topic of <a href="http://en.wikipedia.org/wiki/Ajax_%28programming%29">AJAX</a>.  This prompted me to declare:</p>&#x000A;<p><em>Before AJAX, we used stone knives and bearskins to make our web apps</em></p>&#x000A;<p>Actually, we were using JavaScript and XML to drive our web apps, we just did not call it AJAX, and it was a very challenging task.  In spite of the difficulty of building it, we stuck with it and we were pretty darn happy with our <strong>pre-web 2.0 web2.0</strong> app; so much so that we actually had people coming by just to see our UI in action.</p>&#x000A;<p>I went back and looked for some of our old code, hoping to find the CVS repository<sup class="footnote"><a href="#fn1">1</a></sup>, but only finding a tarball of version 1.4.  The following code is from <code>client/script/services.js</code> and dated <strong>August 24, 2001</strong> &#8212; although some version of this code would have existed in the spring of <strong>2000</strong>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> BrServices.prototype.issueRequest = <span class="kw">function</span> (action) {&#x000A;<span class="no"> 2</span> <span class="c">// deleted ...</span>&#x000A;<span class="no"> 3</span>     <span class="kw">var</span> request = brUtils.newXmlDOM(action);&#x000A;<span class="no"> 4</span>     <span class="kw">var</span> tryCount = <span class="i">0</span>;&#x000A;<span class="no"> 5</span>     <span class="kw">var</span> condition = brServices.isOkay;&#x000A;<span class="no"> 6</span>     <span class="kw">var</span> s = <span class="s"><span class="dl">&quot;</span><span class="dl">&quot;</span></span>;&#x000A;<span class="no"> 7</span>     <span class="kw">while</span> (condition == brServices.isOkay) {&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span>         <span class="kw">try</span> {&#x000A;<span class="no"><strong>10</strong></span>             <span class="kw">var</span> httpOb = <span class="kw">new</span> ActiveXObject(<span class="s"><span class="dl">&quot;</span><span class="k">MSXML2.XMLHTTP</span><span class="dl">&quot;</span></span>); <span class="c">// Was Microsoft.XMLHTTP</span>&#x000A;<span class="no">11</span>             httpOb.open(<span class="s"><span class="dl">&quot;</span><span class="k">POST</span><span class="dl">&quot;</span></span>, brServices.brxmlURL, <span class="kw">false</span>);&#x000A;<span class="no">12</span>             httpOb.setRequestHeader(<span class="s"><span class="dl">&quot;</span><span class="k">Content-Type</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">text/xml; charset='UTF-8'</span><span class="dl">&quot;</span></span>);&#x000A;<span class="no">13</span> &#x000A;<span class="no">14</span>             httpOb.send(request);&#x000A;<span class="no">15</span> <span class="c">// deleted ...</span></pre></div>&#x000A;</div>&#x000A;<p>Just looking at this snippet from our internal library makes me all the happier that we made the thing work at all.  Kudos to <a href="http://markjudd.com">Mark Judd</a> and <a href="http://brianlevine.blogspot.com">Brian Levine</a>, two of our very talented small team, who were responsible for our UI.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> You already know this, but just in case, CVS was a source code repository that pretty much everyone used before Subversion (unless you bought one from a vendor).</p>
+      </div>
+      <div class='comments'>
+        <div id='disqus_thread'></div>
+        <script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script>
+        <noscript>
+          <a href="http://leshill.disqus.com/?url=ref">View the discussion thread.</a>
+        </noscript>
+        <a class='dsq-brlink' href='http://disqus.com'>
+          blog comments powered by
+          <span class='logo-disqus'>
+            Disqus
+          </span>
         </a>
       </div>
     </div>
-    <div class='span-24' id='main'>
-      <div class='prepend-1 span-15 append-1' id='content'>
-        <div class='span-15 height-1'></div>
-        <div class='span-15' id='content'>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/5/6/stone-knives-and-bearskins.html'>
-                Stone knives and bearskins
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Tue May 06 01:26:53 -0400 2008'>
-              Posted
-              May 06, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>Recently while discussing <a href="http://jquery.com/">jQuery</a>, we got onto the topic of <a href="http://en.wikipedia.org/wiki/Ajax_%28programming%29">AJAX</a>.  This prompted me to declare:</p>&#x000A;<p><em>Before AJAX, we used stone knives and bearskins to make our web apps</em></p>&#x000A;<p>Actually, we were using JavaScript and XML to drive our web apps, we just did not call it AJAX, and it was a very challenging task.  In spite of the difficulty of building it, we stuck with it and we were pretty darn happy with our <strong>pre-web 2.0 web2.0</strong> app; so much so that we actually had people coming by just to see our UI in action.</p>&#x000A;<p>I went back and looked for some of our old code, hoping to find the CVS repository<sup class="footnote"><a href="#fn1">1</a></sup>, but only finding a tarball of version 1.4.  The following code is from <code>client/script/services.js</code> and dated <strong>August 24, 2001</strong> &#8212; although some version of this code would have existed in the spring of <strong>2000</strong>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> BrServices.prototype.issueRequest = <span class="kw">function</span> (action) {&#x000A;<span class="no"> 2</span> <span class="c">// deleted ...</span>&#x000A;<span class="no"> 3</span>     <span class="kw">var</span> request = brUtils.newXmlDOM(action);&#x000A;<span class="no"> 4</span>     <span class="kw">var</span> tryCount = <span class="i">0</span>;&#x000A;<span class="no"> 5</span>     <span class="kw">var</span> condition = brServices.isOkay;&#x000A;<span class="no"> 6</span>     <span class="kw">var</span> s = <span class="s"><span class="dl">&quot;</span><span class="dl">&quot;</span></span>;&#x000A;<span class="no"> 7</span>     <span class="kw">while</span> (condition == brServices.isOkay) {&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span>         <span class="kw">try</span> {&#x000A;<span class="no"><strong>10</strong></span>             <span class="kw">var</span> httpOb = <span class="kw">new</span> ActiveXObject(<span class="s"><span class="dl">&quot;</span><span class="k">MSXML2.XMLHTTP</span><span class="dl">&quot;</span></span>); <span class="c">// Was Microsoft.XMLHTTP</span>&#x000A;<span class="no">11</span>             httpOb.open(<span class="s"><span class="dl">&quot;</span><span class="k">POST</span><span class="dl">&quot;</span></span>, brServices.brxmlURL, <span class="kw">false</span>);&#x000A;<span class="no">12</span>             httpOb.setRequestHeader(<span class="s"><span class="dl">&quot;</span><span class="k">Content-Type</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">text/xml; charset='UTF-8'</span><span class="dl">&quot;</span></span>);&#x000A;<span class="no">13</span> &#x000A;<span class="no">14</span>             httpOb.send(request);&#x000A;<span class="no">15</span> <span class="c">// deleted ...</span></pre></div>&#x000A;</div>&#x000A;<p>Just looking at this snippet from our internal library makes me all the happier that we made the thing work at all.  Kudos to <a href="http://markjudd.com">Mark Judd</a> and <a href="http://brianlevine.blogspot.com">Brian Levine</a>, two of our very talented small team, who were responsible for our UI.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> You already know this, but just in case, CVS was a source code repository that pretty much everyone used before Subversion (unless you bought one from a vendor).</p>
-          </div>
-          <div class='comments'>
-            <div id='disqus_thread'></div>
-            <script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script>
-            <noscript>
-              <a href='http://leshill.disqus.com/?url=ref'>
-                View the discussion thread.
-              </a>
-            </noscript>
-            <a class='dsq-brlink' href='http://disqus.com'>
-              blog comments powered by
-              <span class='logo-disqus'>
-                Disqus
-              </span>
-            </a>
-          </div>
-        </div>
+    <div class='footer'>
+      <div class='contact'>
+        <p>
+          Les Hill
+          <br />
+          Software adventurer @
+          <a href='http://hashrocket.com/'>
+            Hashrocket
+          </a>
+          <br />
+          les (at) hashrocket (dot) com
+        </p>
       </div>
-      <div class='span-6 append-1 last' id='sidebar'>
-        <div class='span-6 height-1'></div>
-        <div class='prepend-1 span-5' id='about'>
-          <h2>About</h2>
-          <ul>
-            <li>
-              Les Hill is a software adventurer who works with
-              <a href='http://www.ruby-lang.org'>Ruby</a>
-              at
-              <a href='http://hashrocket.com'>Hashrocket</a>
-              .
-            </li>
-            <li class='last'>
-              Follow me on <a href="http://www.twitter.com/leshill">Twitter</a>
-            </li>
-          </ul>
-        </div>
-        <div class='prepend-1 span-5' id='twitter'></div>
-        <div class='prepend-1 span-5'>
-          <h2>Subscribe</h2>
-          <ul>
-            <li>
-              <a class='feed' href='http://feeds2.feedburner.com/leshill'>RSS</a>
-            </li>
-          </ul>
-        </div>
-        <div class='prepend-1 span-5'>
-          <div class='archives'>
-            <h2>Archives</h2>
-            <ul>
-              <li class='year'>
-                <a href='/blog/2009'>2009</a>
-                <ul>
-                  <li class='month'>
-                    <a href='/blog/2009/01'>January</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/02'>February</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/04'>April</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/05'>May</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/06'>June</a>
-                  </li>
-                </ul>
-              </li>
-              <li class='year'>
-                <a href='/blog/2008'>2008</a>
-                <ul>
-                  <li class='month'>
-                    <a href='/blog/2008/2'>February</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/5'>May</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/7'>July</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/8'>August</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/10'>October</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/12'>December</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div class='rss'>
+        <a href='http://feeds2.feedburner.com/leshill'>
+          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+        </a>
       </div>
     </div>
-    <div class='span-24' id='footer'>
+    <div class='colophon'>
       <p>
-        Wonderland is styled using
-        <a href='http://www.blueprintcss.org/'>blueprint css</a>
-        and powered by
-        <a href='http://webby.rubyforge.org/'>Webby</a>
+        Thanks to
+        <a href='http://tom.preston-werner.com/'>
+          Tom Preston-Werner
+        </a>
+        for the CSS layout,
+        <a href='http://webby.rubyforge.org/'>
+          Webby
+        </a>
+        for the blog renderer,
         and
-        <a href='http://github.com/blog/272-github-pages'>GitHub Pages</a>
+        <a href='http://github.com/blog/272-github-pages'>
+          GitHub Pages
+        </a>
+        for the blog hosting.
       </p>
-      <p>
-        Les Hill &copy; 2008&ndash;2009
-      </p>
+      <div class='copyright'>
+        <p>
+          Les Hill &copy; 2008&ndash;2009
+        </p>
+      </div>
     </div>
-  </div>
-  <script type='text/javascript'>
-    //<![CDATA[
-      (function() {
-        var links = document.getElementsByTagName('a');
-        var query = '?';
-        for(var i = 0; i < links.length; i++) {
-          if(links[i].href.indexOf('#disqus_thread') >= 0) {
-            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+    <script type='text/javascript'>
+      //<![CDATA[
+        (function() {
+          var links = document.getElementsByTagName('a');
+          var query = '?';
+          for(var i = 0; i < links.length; i++) {
+            if(links[i].href.indexOf('#disqus_thread') >= 0) {
+              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+            }
           }
-        }
-        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-      })();
-    //]]>
-  </script>
+          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+        })();
+      //]]>
+    </script>
+  </div>
 </body>

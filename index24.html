@@ -3,210 +3,161 @@
   <meta content='text/html; charset=utf-8' http-equiv='content-type' />
   <meta content='Les Hill' name='author' />
   <title>
-    Wonderland &mdash; Home
+    Les Hill &mdash; Home
   </title>
-  <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
-  <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
-  <!--[if IE]> <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" /> <![endif]-->
+  <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/jquery.twitter.css' media='screen, projection' rel='stylesheet' type='text/css' />
-  <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script>
   <script src='/javascript/jquery.twitter.js' type='text/javascript'></script>
   <script src='/javascript/application.js' type='text/javascript'></script>
-  <link href='http://blog.leshill.org/feed/atom.xml' rel='alternate' title='RSS feed' type='application/atom+xml' />
+  <link href='http://feeds2.feedburner.com/leshill' rel='alternate' title='RSS feed' type='application/atom+xml' />
 </head>
 <body>
-  <div class='container'>
-    <div class='span-24' id='header'>
-      <div class='prepend-1 span-11 append-8'>
-        <a href='/'>
-          <img src='/images/title.png' />
+  <div class='site'>
+    <div class='title'>
+      <a href='/'>
+        Les Hill
+      </a>
+      <a class='extra' href='/'>
+        home
+      </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2009/02/06/velocity-is-not-destiny.html'>
+          Velocity Is Not Destiny
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Fri Feb 06 15:50:20 -0500 2009'>
+        Posted
+        February 06, 2009
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>One of the most persistent and pernicious stumbling blocks I see when a team is starting out with Agile<sup class="footnote"><a href="#fn1">1</a></sup> is equating story points and velocity directly with hours.</p>&#x000A;<p>Often this stumbling block is not apparent immediately; it often crops up after a few iterations have passed.  As an example, a stakeholder who was new and unsure about agile, was eager to have a release a month into development as an affirmation of the decision to go with an agile approach.   After we had prioritized the feature set for the release, he turned to me and said, &#8220;Let&#8217;s see, we have 78 points in the release, so we can deliver the release four weeks from today.&#8221;</p>&#x000A;<p>My answer, &#8220;Not exactly&#8221;, surprised him.</p>&#x000A;<p>If the velocity of the team is an evidence-based number using the teams own story point estimations, how could such a statement be incorrect?  There are two related reasons such a statement needs to be qualified to be useful, the <em>Planning Fallacy</em> and <em>Velocity is not Destiny</em><sup class="footnote"><a href="#fn2">2</a></sup>.</p>&#x000A;<h3>The Planning Fallacy</h3>&#x000A;<p>As described in the <a href="http://www.overcomingbias.com/2007/09/planning-fallac.html">Overcoming Bias</a> blog, when students were asked in an experiment to forecast when they would complete an assignment:</p>&#x000A;<blockquote>&#x000A;<p>&#8220;Even when asked to make a highly conservative forecast, a prediction that they felt virtually certain that they would fulfill, students&#8217; confidence in their time estimates far exceeded their accomplishments.&#8221;<br />&#x000A;  More generally, this phenomenon is known as the &#8220;planning fallacy&#8221;.  The planning fallacy is that people think they can plan, ha ha.</p>&#x000A;</blockquote>&#x000A;<p>Since giving up on planning is not an option, we can make our estimates better through various techniques, one of which is to plan based on similarity to other known efforts, instead of estimations of time.</p>&#x000A;<blockquote>&#x000A;<p>a cross-cultural study, found that Japanese students expected to finish their essays 10 days before deadline.  They actually finished 1 day before deadline.  Asked when they had previously completed similar tasks, they responded, &#8220;1 day before deadline.&#8221;</p>&#x000A;</blockquote>&#x000A;<p>Agile mitigates the planning fallacy by eschewing estimates in hours or days and using story points<sup class="footnote"><a href="#fn3">3</a></sup>.  Story points are abstract esitmations based on similarity; a 4 point story should be of the same relative size or complexity as any other 4 point story.  Time is not a factor with story points.</p>&#x000A;<h3>Velocity is not Destiny</h3>&#x000A;<p>Given that story points yield better estimates, and velocity is an evidence based aggregate number smoothing out variations in individual stories, why qualify saying we can deliver four weeks from today?  Velocity is a continuous measurement of the past performance of your team and is not a constant.  The velocity of your team is a dynamic variable giving you direct and constant insight into how they are progressing.  A future iteration has no velocity, as it has not been (and cannot yet be) measured.  We can make predictions about future iterations based on velocity, but we cannot make any iron-clad guarantees.</p>&#x000A;<p>An analogy might help explain how to think of velocity.  You are taking a long automobile trip you have never taken before, where you will leave at 9 a.m.  and travel 250 miles to arrive at your destination.  Your car will accurately report your average velocity on the trip.  125 miles into the trip, your car reports an average velocity of 62.5 miles per hour, and you are currently on the highway going 70 miles per hour.  How long do you have left, and how much money would you bet that you are accurate within one minute?  Intuitively, most people understand that although the very clear math says you are 2 hours away from your destination, there are too many pitfalls such as traffic, accidents, road work, weather conditions, signals, etc to make a prediction that is accurate to the minute. (With your final average velocity, the very clear math will yield an exact and accurate result.)</p>&#x000A;<h3>Making the Release</h3>&#x000A;<p>There are many pitfalls in any software project, the one which was making me cautious about our release was a common one for novice stakeholders, <strong>Release Induced Focus</strong>.  <strong>RIF</strong> is the tendancy for novice stakeholders to only really pay attention when they have an immediate release pending, leading to a spike in the number of stories rejected and bugs filed, and a corresponding drop in velocity.  Given an experienced stakeholder who is rigorous about acceptance, the <em>bug tax on velocity</em> is taken out of velocity over time; with <strong>RIF</strong> the entire <em>bug tax on velocity</em> is paid in one or two velocity sapping iterations.</p>&#x000A;<p>After explaining this, and using velocity as a predictor, we adjusted our plan for the release.  We reprioritized the backlog to front load all the required features, moved unneeded features out of the release, and had the stakeholders exercise more rigor when doing their acceptance.  The release was made in four weeks, with the team and stakeholders delivering tangible value without the long hours and anxiety provoked by more static approaches to software project management.</p>&#x000A;<h3>Velocity is a Dynamic Measure</h3>&#x000A;<p>Velocity is a continous measurement of your team&#8217;s past performance over time; all of the previously known and unknown risk variables have been surfaced, made known, become constants, and reduced to one accurate numeric measure.  What velocity does not tell you is what the future holds.  To quote every mutual fund prospectus ever written:</p>&#x000A;<blockquote>&#x000A;<p>Past Performance is no Guarantee of Future Results</p>&#x000A;</blockquote>&#x000A;<p>Understanding that velocity is accurate <strong>and</strong> dynamic is key to using it for iteration planning.  Most other software project management methodologies pretend that the project is static in all aspects, that all variables are known and quantified.  Agile acknowledges that a software project is a dynamic system, and provides simple evidence based tools to manage the dynamism inherent in building new software.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I use the term to encompass the variations of Agile methodologies that use story points and velocity.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> I first heard this poetic phrase from Amy Kline, an awesome scrum master and friend.</p>&#x000A;<p class="footnote" id="fn3"><sup>3</sup> Peter Jackson has written a great summary of why we use story points in <a href="http://blog.peteonrails.com/articles/2009/02/05/the-case-for-story-points/">The Case for Story Points</a> .</p><!-- #hashrocket -->
+    </div>
+    <div class='comments'>
+      <a href='/blog/2009/02/06/velocity-is-not-destiny.html#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2009/01/25/nothing-special.html'>
+          Nothing Special
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Sun Jan 25 20:28:30 -0500 2009'>
+        Posted
+        January 25, 2009
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>For those of us in a certain part of tech community, this quote from <a href="http://www.ritholtz.com/blog/2009/01/microsoft-zune-down-54/">Barry Ritholtz</a> is old news:</p>&#x000A;<blockquote>&#x000A;<p>It just goes to show you that Microsoft, without the advantages of the Windows/Office monopoly, is simply just another ordinary company — nothing special, nothing innovative.</p>&#x000A;</blockquote>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2009/01/25/nothing-special.html#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2009/01/24/webby-meet-github-pages.html'>
+          Webby, Meet GitHub Pages
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Sat Jan 24 12:54:15 -0500 2009'>
+        Posted
+        January 24, 2009
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>As of this post, this blog is now hosted by GitHub&#8217;s recently announced <a href="http://github.com/blog/272-github-pagesi">GitHub Pages</a>, still <a href="http://webby.rubyforge.org">Webby</a> powered, now with extra <em>git</em> goodness.</p>&#x000A;<p><strong>GitHub Pages</strong> generates a static site from a GitHub hosted repo, using <a href="http://github.com/mojombo/jekyll">Jekyll</a> to generate the files.  <strong>Jekyll</strong> understands two special directories <code>_posts</code> and <code>_layouts</code>, copying any other files and directories in the root of the repo that do not begin with an <code>_</code> directly to the static site.</p>&#x000A;<p><strong>Webby</strong> generates a static site from set of source files (<code>content</code>, <code>layouts</code>, etc), placing the results in the <code>output_dir</code> (defaults to <code>output</code> but can be changed.)</p>&#x000A;<p>To make <strong>Webby</strong> and <strong>GitHub Pages</strong> co-exist, I restructured my repo and made the following changes to my existing <strong>Webby</strong> site:</p>&#x000A;<ul>&#x000A;	<li>The root of the repo is the <code>output_dir</code> for <strong>Webby</strong></li>&#x000A;	<li>The <strong>Webby</strong> site (source files) are in a subdirectory name <code>_webby</code></li>&#x000A;	<li>The <code>webby</code> command line tool should be run from within the <code>_webby</code> directory, not the root of the repo</li>&#x000A;	<li>The <strong>Webby</strong> <code>clobber</code> target is overridden to ignore the <code>_webby</code> directory</li>&#x000A;	<li><code>Sitefile</code></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">SITE</span>.output_dir = <span class="s"><span class="dl">'</span><span class="k">..</span><span class="dl">'</span></span>&#x000A;<span class="no">2</span> &#x000A;<span class="no">3</span> task <span class="sy">:default</span> =&gt; <span class="sy">:clean_build</span></pre></div>&#x000A;</div>&#x000A;<ul>&#x000A;	<li><code>lib/override.rb</code> Rake monkey patch to allow overriding tasks found <a href="http://www.taknado.com/2007/7/30/overriding-rake-tasks">here</a></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="c"># From http://www.taknado.com/2007/7/30/overriding-rake-tasks</span>&#x000A;<span class="no"> 2</span> <span class="co">Rake</span>::<span class="co">TaskManager</span>.class_eval <span class="r">do</span>&#x000A;<span class="no"> 3</span>   <span class="r">def</span> <span class="fu">remove_task</span>(task_name)&#x000A;<span class="no"> 4</span>     <span class="iv">@tasks</span>.delete(task_name.to_s)&#x000A;<span class="no"> 5</span>   <span class="r">end</span>&#x000A;<span class="no"> 6</span> <span class="r">end</span>&#x000A;<span class="no"> 7</span> &#x000A;<span class="no"> 8</span> <span class="r">def</span> <span class="fu">remove_task</span>(task_name)&#x000A;<span class="no"> 9</span>   <span class="co">Rake</span>.application.remove_task(task_name)&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span>&#x000A;<span class="no">11</span> &#x000A;<span class="no">12</span> <span class="r">def</span> <span class="fu">override_task</span>(args, &amp;block)&#x000A;<span class="no">13</span>   name, deps = <span class="co">Rake</span>.application.resolve_args([args])  &#x000A;<span class="no">14</span>   remove_task <span class="co">Rake</span>.application[name].name&#x000A;<span class="no">15</span>   task(args, &amp;block)&#x000A;<span class="no">16</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<ul>&#x000A;	<li><code>tasks/github_pages.rake</code> redefines <code>clobber</code>  to ignore the <code>_webby</code> directory and the new (default) <code>clean_build</code> task allows for file deletions<sup class="footnote"><a href="#fn1">1</a></sup></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="c"># We only want to remove the generated files</span>&#x000A;<span class="no"> 2</span> desc <span class="s"><span class="dl">&quot;</span><span class="k">Delete the website</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"> 3</span> override_task <span class="sy">:clobber</span> <span class="r">do</span> |t|&#x000A;<span class="no"> 4</span>   <span class="co">Dir</span>.chdir(<span class="co">Webby</span>.site.output_dir) <span class="r">do</span>&#x000A;<span class="no"> 5</span>     <span class="co">Dir</span>[<span class="s"><span class="dl">'</span><span class="k">*</span><span class="dl">'</span></span>].entries.reject {|entry| entry == <span class="s"><span class="dl">'</span><span class="k">_webby</span><span class="dl">'</span></span>}.each {|entry| rm_rf entry}&#x000A;<span class="no"> 6</span>   <span class="r">end</span>&#x000A;<span class="no"> 7</span> <span class="r">end</span>&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span> desc <span class="s"><span class="dl">&quot;</span><span class="k">Clobber, then build the website</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"><strong>10</strong></span> task <span class="sy">:clean_build</span> =&gt; [<span class="sy">:clobber</span>, <span class="sy">:build</span>]</pre></div>&#x000A;</div>&#x000A;<p>The new workflow for adding a post to the new site is:</p>&#x000A;<ol>&#x000A;	<li>Change directory to <code>_webby</code></li>&#x000A;	<li>Generate a new blog post</li>&#x000A;	<li>Run <code>webby autobuild</code></li>&#x000A;	<li>Edit until completed</li>&#x000A;	<li>Commit all changes locally (<code>git add .</code> from the root)</li>&#x000A;	<li>Push the changes</li>&#x000A;</ol>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> Webby does not know if you have deleted a source file, by forcing the entire site to be rebuilt, the deletion is reflected in the generated static files.</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2009/01/24/webby-meet-github-pages.html#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2009/01/12/using-hoptoad-with-script-runner.html'>
+          Using Hoptoad With Script Runner
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Mon Jan 12 10:01:49 -0500 2009'>
+        Posted
+        January 12, 2009
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>I have been using <a href="http://hoptoadapp.com/">Hoptoad</a> to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple <code>include HoptoadNotifier::Catcher</code> in your <code>application.rb</code>, easy!</p>&#x000A;<p>However, I also wanted <strong>Hoptoad</strong> to track any exception which occurred in a cron job that was running with <code>script/runner</code>.  Again, a snap with <strong>Hoptoad</strong>, take a look:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">class</span> <span class="cl">CronJob</span>&#x000A;<span class="no">2</span>   <span class="r">def</span> <span class="pc">self</span>.process&#x000A;<span class="no">3</span>     <span class="c"># do stuff</span>&#x000A;<span class="no">4</span>   <span class="r">rescue</span> =&gt; ex&#x000A;<span class="no">5</span>     <span class="co">HoptoadNotifier</span>.notify(ex)&#x000A;<span class="no">6</span>   <span class="r">end</span>&#x000A;<span class="no">7</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;
+    </div>
+    <div class='comments'>
+      <a href='/blog/2009/01/12/using-hoptoad-with-script-runner.html#disqus_thread'>  </a>
+    </div>
+    <div class='prepend-1 span-15'>
+      <a href="/index23.html">&larr; Prev</a>
+      &nbsp;
+      <a href="/index25.html">Next &rarr;</a>
+    </div>
+    <div class='footer'>
+      <div class='contact'>
+        <p>
+          Les Hill
+          <br />
+          Developer @
+          <a href='http://hashrocket.com/'>
+            Hashrocket
+          </a>
+          <br />
+          les (at) hashrocket (dot) com
+        </p>
+      </div>
+      <div class='contact'>
+        <p>
+          <a href='http://github.com/leshill/'>
+            github.com/leshill
+          </a>
+          <br />
+          <a href='http://twitter.com/leshill/'>
+            twitter.com/leshill
+          </a>
+        </p>
+      </div>
+      <div class='rss'>
+        <a href='http://feeds2.feedburner.com/leshill'>
+          <img alt='Subscribe to RSS Feed' src='/images/rss.png' />
         </a>
       </div>
-    </div>
-    <div class='span-24' id='main'>
-      <div class='prepend-1 span-15 append-1' id='content'>
-        <div class='span-15 height-1'></div>
-        <div class='span-15' id='content'>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/10/27/information-addicted.html#disqus_thread'>
-                Information Addicted
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Mon Oct 27 10:01:58 -0400 2008'>
-              Posted
-              October 27, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>Sunday, the <a href="http://www.nytimes.com/">New York Times</a> had an <a href="http://www.nytimes.com/2008/10/26/technology/26boot.html?_r=1&amp;scp=1&amp;sq=boot%20time&amp;st=cse&amp;oref=slogin">article</a> about PC makers wanting to reduce boot times.  As a long-time Mac (and Linux) user, I see the problem differently.</p>&#x000A;<p>First, I rarely reboot my MacBook Pro; I just put the machine to sleep and wake it (and this is easily accomplished by closing and opening the lid).</p>&#x000A;<p>Second, I rarely reboot my phone; it also seems to sleep<sup class="footnote"><a href="#fn1">1</a></sup>.</p>&#x000A;<p>Third, the context driving this <em>War on Boot Times</em> is our increasing dependence on external information sources.  Think back to 1988<sup class="footnote"><a href="#fn2">2</a></sup> and you may recall a time when finding out what movies to see while you were away from a newspaper was a non-trivial task.  Now with a smart phone or a WiFi connected laptop, all the information to answer your question is readily available at a moment&#8217;s notice.  Think back to when you were out and would say: &#8216;I wish I could Google that&#8217;; now you just do it no matter where you are.</p>&#x000A;<p>The PC makers are fighting the last war.  This whole concept of reducing boot times is irrelevant.  The device should already be on and waiting on us.  No wait, make that <em>The Cloud</em> <strong>is</strong> already waiting on us.</p>&#x000A;<p>The trend is for <strong>more information, delivered faster, and requested instantaneously</strong>.  Someone should tell the PC makers.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am unsure exactly what the phone is doing when it is <em>asleep</em>.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> Moviefone was created in 1989.</p>
-          </div><div id='disqus_thread'></div><script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script><noscript><a href='http://leshill.disqus.com/?url=ref'>View the discussion thread.</a></noscript><a class='dsq-brlink' href='http://disqus.com'>blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span></a>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/10/19/tip-using-haml-with-actionmailer.html#disqus_thread'>
-                Tip: Using Haml With ActionMailer
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Sun Oct 19 21:54:10 -0400 2008'>
-              Posted
-              October 19, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>You can use Haml to write your mailer views and still use the implicit multipart template feature by letting <code>ActionMailer</code> know about Haml:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">ActionMailer</span>::<span class="co">Base</span>.register_template_extension(<span class="s"><span class="dl">'</span><span class="k">haml</span><span class="dl">'</span></span>)</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>This is no longer necessary with <strong>Rails 2.2</strong> and <strong>Haml 2.0.5</strong> .</p>
-          </div><div id='disqus_thread'></div><script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script><noscript><a href='http://leshill.disqus.com/?url=ref'>View the discussion thread.</a></noscript><a class='dsq-brlink' href='http://disqus.com'>blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span></a>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/8/24/git-setting-your-upstream-default.html#disqus_thread'>
-                Git: Setting Your Upstream Default
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Sun Aug 24 20:28:02 -0400 2008'>
-              Posted
-              August 24, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>I  recently set up a new repository on <a href="http://www.github.com/">github</a>.  Creating the repository on github yields a page of instructions covering the two common scenarios: new and existing repositories.  After following the new repository instructions,  I had a repository on github, a local repository, and the following in response to my <code>git pull</code> command:</p>&#x000A;<pre><code>You asked me to pull without telling me which branch you want to merge with, and 'branch.master.merge' in your configuration file does not tell me either.  Please name which branch you want to merge on the command line and try again (e.g. 'git pull &lt;repository&gt; &lt;refspec&gt;'). See git-pull(1) for details on the refspec.&#x000A;  &#x000A;If you often merge with the same branch, you may want to configure the following variables in your configuration file:&#x000A;  &#x000A;  branch.master.remote = &lt;nickname&gt;&#x000A;  branch.master.merge = &lt;remote-ref&gt;&#x000A;  remote.&lt;nickname&gt;.url = &lt;url&gt;&#x000A;  remote.&lt;nickname&gt;.fetch = &lt;refspec&gt;&#x000A;  &#x000A;See git-config(1) for details.</code>&#x000A;&#x000A;</pre>&#x000A;<p>Not exactly what I wanted, and certainly not what I expected.  What I <em>expected</em> was a local repository with the upstream for <strong>master</strong> to be set to point at <strong>master</strong> on the github repository.</p>&#x000A;<p>Setting this up can be done easily in two similar ways:</p>&#x000A;<ul>&#x000A;	<li>You can edit the configuration file as directed by the error message</li>&#x000A;	<li>You can use <code>git config</code></li>&#x000A;</ul>&#x000A;<p>I opted for <code>git config</code> as it was easier and required no thinking &#8212; the commands are always the same<sup class="footnote"><a href="#fn1">1</a></sup>; here they are:</p>&#x000A;<pre><code>% git config branch.master.remote origin&#x000A;% git config branch.master.merge refs/heads/master</code></pre>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> For the scenario of a local empty repository pushed up to a remote, where the remote will be the upstream master.</p>
-          </div><div id='disqus_thread'></div><script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script><noscript><a href='http://leshill.disqus.com/?url=ref'>View the discussion thread.</a></noscript><a class='dsq-brlink' href='http://disqus.com'>blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span></a>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/8/24/focusing-autotest.html#disqus_thread'>
-                Focusing Autotest
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Sun Aug 24 10:53:57 -0400 2008'>
-              Posted
-              August 24, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>The usual <a href="http://www.zenspider.com/ZSS/Products/ZenTest">autotest</a> workflow goes something like this:</p>&#x000A;<ul>&#x000A;	<li>Edit and save</li>&#x000A;	<li>Autotest runs associated specs</li>&#x000A;	<li>Are there failures?  Fix and start over</li>&#x000A;	<li>Autotest runs the entire suite</li>&#x000A;</ul>&#x000A;<p>Sometimes though, you want autotest to just ignore most of your specs and focus on a few specs.</p>&#x000A;<p>Last week, while Kevin, Rick, and Yossef  (<a href="http://bl.ogtastic.com">OG</a>) were here, they  shared an autotest tweak that does exactly that.</p>&#x000A;<p>The tweak allows you to specify a regular expression to limit the files which autotest watches; for example, to autotest only files matching <code>*user*.rb</code> you would start autotest like so (<em>atest</em> is an alias):</p>&#x000A;<pre><code>% atest user</code></pre>&#x000A;<p>Here is the (lightly modified) code to do this; in your <code>.autotest</code> file add:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">if</span> <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>] <span class="r">and</span> <span class="r">not</span> <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>].empty?&#x000A;<span class="no"> 2</span>   only_these_files_re = <span class="co">Regexp</span>.new(<span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>])&#x000A;<span class="no"> 3</span> &#x000A;<span class="no"> 4</span>   <span class="co">Autotest</span>.send(<span class="sy">:alias_method</span>, <span class="sy">:real_find_files</span>, <span class="sy">:find_files</span>)&#x000A;<span class="no"> 5</span>   <span class="co">Autotest</span>.send(<span class="sy">:define_method</span>, <span class="sy">:find_files</span>) <span class="r">do</span> |*args|&#x000A;<span class="no"> 6</span>     real_find_files.reject <span class="r">do</span> |k, v|&#x000A;<span class="no"> 7</span>       !only_these_files_re.match(k)&#x000A;<span class="no"> 8</span>     <span class="r">end</span>&#x000A;<span class="no"> 9</span>   <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>And in your <code>.bash_profile</code> add:</p>&#x000A;<pre><code># Autotest&#x000A;function fn_autotest() {&#x000A;  AUTOTEST=$1 autotest&#x000A;}&#x000A;alias atest='fn_autotest'</code></pre>&#x000A;<p>Now use the alias to invoke autotest.  For standard autotest behavior:</p>&#x000A;<pre><code>% atest</code></pre>&#x000A;<p>To limit what autotest is watching, pass a regular expression (which can be a simple string):</p>&#x000A;<pre><code>% atest user.*html&#x000A;</code></pre>
-          </div><div id='disqus_thread'></div><script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script><noscript><a href='http://leshill.disqus.com/?url=ref'>View the discussion thread.</a></noscript><a class='dsq-brlink' href='http://disqus.com'>blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span></a>
-          <div class='prepend-1 span-15'>
-            <a href="/index23.html">&larr; Prev</a>
-            &nbsp;
-            <a href="/index25.html">Next &rarr;</a>
-          </div>
-        </div>
+      <div class='colophon'>
+        <p>
+          Les Hill &copy; 2008&ndash;2009
+        </p>
+        <p>
+          Thanks to
+          <a href='http://tom.preston-werner.com/'>
+            Tom Preston-Werner
+          </a>
+          for the CSS layout,
+          <a href='http://webby.rubyforge.org/'>
+            Webby
+          </a>
+          for the blog renderer,
+          and
+          <a href='http://github.com/blog/272-github-pages'>
+            GitHub Pages
+          </a>
+          for the blog hosting.
+        </p>
       </div>
-      <div class='span-6 append-1 last' id='sidebar'>
-        <div class='span-6 height-1'></div>
-        <div class='prepend-1 span-5' id='about'>
-          <h2>About</h2>
-          <ul>
-            <li>
-              Les Hill is a software adventurer who works with
-              <a href='http://www.ruby-lang.org'>Ruby</a>
-              at
-              <a href='http://hashrocket.com'>Hashrocket</a>
-              .
-            </li>
-            <li class='last'>
-              Follow me on <a href="http://www.twitter.com/leshill">Twitter</a>
-            </li>
-          </ul>
-        </div>
-        <div class='prepend-1 span-5' id='twitter'></div>
-        <div class='prepend-1 span-5'>
-          <h2>Subscribe</h2>
-          <ul>
-            <li>
-              <a class='feed' href='/feed/atom.xml'>RSS</a>
-            </li>
-          </ul>
-        </div>
-        <div class='prepend-1 span-5'>
-          <div class='archives'>
-            <h2>Archives</h2>
-            <ul>
-              <li class='year'>
-                <a href='/blog/2009'>2009</a>
-                <ul>
-                  <li class='month'>
-                    <a href='/blog/2009/01'>January</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/02'>February</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/04'>April</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/05'>May</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/06'>June</a>
-                  </li>
-                </ul>
-              </li>
-              <li class='year'>
-                <a href='/blog/2008'>2008</a>
-                <ul>
-                  <li class='month'>
-                    <a href='/blog/2008/2'>February</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/5'>May</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/7'>July</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/8'>August</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/10'>October</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/12'>December</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class='span-24' id='footer'>
-      <p>
-        Wonderland is styled using
-        <a href='http://www.blueprintcss.org/'>blueprint css</a>
-        and powered by
-        <a href='http://webby.rubyforge.org/'>Webby</a>
-        and
-        <a href='http://github.com/blog/272-github-pages'>GitHub Pages</a>
-      </p>
-      <p>
-        Les Hill &copy; 2008&ndash;2009
-      </p>
     </div>
   </div>
   <script type='text/javascript'>
     //<![CDATA[
-      \//
       (function() {
         var links = document.getElementsByTagName('a');
         var query = '?';
@@ -217,7 +168,6 @@
         }
         document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
       })();
-      \//
     //]]>
   </script>
 </body>

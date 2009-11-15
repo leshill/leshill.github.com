@@ -1,0 +1,35 @@
+---
+filter: haml
+---
+.footer
+  .contact
+    %p
+      Les Hill
+      %br
+      Software adventurer @ #{link_to 'Hashrocket', "http://hashrocket.com/" }
+      %br
+      les (at) hashrocket (dot) com
+  .rss
+    %a{ :href => "http://feeds2.feedburner.com/leshill" }
+      %img{ :src => "/images/feed-icon-28x28.png", :alt => "Subscribe to RSS Feed" }
+.colophon
+  %p
+    Thanks to #{link_to 'Tom Preston-Werner', 'http://tom.preston-werner.com/'}
+    for the CSS layout, #{link_to 'Webby', 'http://webby.rubyforge.org/'} for
+    the blog renderer, and
+    #{link_to 'GitHub Pages', 'http://github.com/blog/272-github-pages'} for
+    the blog hosting.
+  .copyright
+    %p
+      == Les Hill &copy; 2008&ndash;#{Date.today.year}
+:javascript
+  (function() {
+    var links = document.getElementsByTagName('a');
+    var query = '?';
+    for(var i = 0; i < links.length; i++) {
+      if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+      }
+    }
+    document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+  })();

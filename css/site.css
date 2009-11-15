@@ -43,14 +43,6 @@ pre {
   background: #EAF2F5;
 }
 
-.CodeRay pre {
-  border: none;
-  background: none;
-}
-
-.CodeRay {
-  margin: 0 0 1.5em;
-}
 
 .feed {
   margin-left: 3px;

@@ -8,92 +8,39 @@ filter:
   %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "content-type" }/
   %meta{ :name => "author", :content => "#{@page.author}" }/
   %title
-    == Wonderland &mdash; #{@page.title}
+    == Les Hill &mdash; #{@page.title}
 
-  %link{ :href => "/css/blueprint/screen.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css" }/
-  %link{ :href => "/css/blueprint/print.css", :rel => "stylesheet", :media => "print", :type => "text/css" }/
-  / [if IE] <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" />
+  %link{ :href => "/css/screen.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css" }/
   %link{ :href => "/css/coderay.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css" }/
-  %link{ :href => "/css/jquery.twitter.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css" }/
-  %link{ :href => "/css/site.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css" }/
 
   %script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"}
   %script{ :type => "text/javascript", :src => "/javascript/jquery.twitter.js"}
   %script{ :type => "text/javascript", :src => "/javascript/application.js"}
 
   %link{ :href => "http://feeds2.feedburner.com/leshill", :title => "RSS feed", :rel => "alternate", :type => "application/atom+xml" }/
-
 %body
-  .container
-    .span-24#header
-      .prepend-1.span-11.append-8
-        %a{:href => '/'}
-          %img{:src => '/images/title.png'}
-    .span-24#main
-      .prepend-1.span-15.append-1#content
-        .span-15.height-1
-        .span-15#content
-          .title
-            %h2.entry-title
-              %a{ :href => @page.url }
-                = @page.title
-          .post-date
-            %abbr.published{ :title => @page.created_at.to_s }
-              Posted
-              = @page.created_at.strftime('%B %d, %Y')
-          .entry-content
-            :preserve
-              #{@content}
-          .comments
-            #disqus_thread
-            %script{ :type => "text/javascript", :src => "http://disqus.com/forums/leshill/embed.js" }
-            %noscript
-              %a{ :href => "http://leshill.disqus.com/?url=ref" }
-                View the discussion thread.
-            %a.dsq-brlink{ :href => "http://disqus.com" }
-              blog comments powered by
-              %span.logo-disqus
-                Disqus
-      .span-6.append-1.last#sidebar
-        .span-6.height-1
-        .prepend-1.span-5#about
-          %h2 About
-          %ul
-            %li
-              Les Hill is a software adventurer who works with
-              %a{:href => 'http://www.ruby-lang.org'} Ruby
-              at
-              %a{:href => 'http://hashrocket.com'} Hashrocket
-              \.
-            %li.last
-              == Follow me on #{link_to("Twitter", "http://www.twitter.com/leshill")}
-        .prepend-1.span-5#twitter
-        .prepend-1.span-5
-          %h2 Subscribe
-          %ul
-            %li
-              %a.feed{:href => "http://feeds2.feedburner.com/leshill"} RSS
-        .prepend-1.span-5
-          - months = @pages.find(:all, :in_directory => 'blog', :recursive => true, :sort_by => "created_at", :reverse => true) {|p| p.archive == 'month'}
-          = render :partial => '/archives', :locals => {:months => months}
-    .span-24#footer
-      %p
-        Wonderland is styled using
-        %a{ :href => 'http://www.blueprintcss.org/'}blueprint css
-        and powered by
-        %a{ :href => 'http://webby.rubyforge.org/'}Webby
-        and
-        %a{ :href => 'http://github.com/blog/272-github-pages'}GitHub Pages
-      %p
-        == Les Hill &copy; 2008&ndash;#{Date.today.year}
-  :javascript
-    (function() {
-      var links = document.getElementsByTagName('a');
-      var query = '?';
-      for(var i = 0; i < links.length; i++) {
-        if(links[i].href.indexOf('#disqus_thread') >= 0) {
-          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-        }
-      }
-      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-    })();
+  .site
+    .title
+      = link_to 'Les Hill', '/'
+      = link_to 'twitter', "http://twitter.com/leshill/", :attrs => {:class => 'extra'}
+      = link_to 'github', "http://github.com/leshill/", :attrs => {:class => 'extra'}
+      = link_to 'archives', '/archives.html', :attrs => {:class => 'extra'}
+    #post
+      .title
+        = link_to @page.title, @page.url
+      .meta
+        %abbr.published{ :title => @page.created_at.to_s }
+          Posted #{@page.created_at.strftime('%B %d, %Y')}
+      .content
+        :preserve
+          #{@content}
+      .comments
+        #disqus_thread
+        %script{ :type => "text/javascript", :src => "http://disqus.com/forums/leshill/embed.js" }
+        %noscript
+          = link_to 'View the discussion thread.', "http://leshill.disqus.com/?url=ref"
+        %a.dsq-brlink{ :href => "http://disqus.com" }
+          blog comments powered by
+          %span.logo-disqus
+            Disqus
+    = render :partial => '/footer'

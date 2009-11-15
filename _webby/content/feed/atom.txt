@@ -1,6 +1,5 @@
 ---
-title:     Wonderland
-subtitle:  A Blog
+title:     Les Hill
 site:      blog.leshill.org
 author:    Les Hill
 email:     blog@leshill.org
@@ -13,7 +12,6 @@ filter:    erb
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><%= h(@page.title) %></title>
-  <subtitle><%= h(@page.subtitle) %></subtitle>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://<%= @page.site %>/" type="text/html" rel="alternate" />
   <updated><%= Time.now.xmlschema %></updated>

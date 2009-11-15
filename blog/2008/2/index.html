@@ -3,177 +3,100 @@
   <meta content='text/html; charset=utf-8' http-equiv='content-type' />
   <meta content='Les Hill' name='author' />
   <title>
-    Wonderland &mdash; Archive for February 2008
+    Les Hill &mdash; Archive for February 2008
   </title>
-  <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
-  <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
-  <!--[if IE]> <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" /> <![endif]-->
+  <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
-  <link href='/css/jquery.twitter.css' media='screen, projection' rel='stylesheet' type='text/css' />
-  <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script>
   <script src='/javascript/jquery.twitter.js' type='text/javascript'></script>
   <script src='/javascript/application.js' type='text/javascript'></script>
   <link href='http://feeds2.feedburner.com/leshill' rel='alternate' title='RSS feed' type='application/atom+xml' />
 </head>
 <body>
-  <div class='container'>
-    <div class='span-24' id='header'>
-      <div class='prepend-1 span-11 append-8'>
-        <a href='/'>
-          <img src='/images/title.png' />
+  <div class='site'>
+    <div class='title'>
+      <a href="/">Les Hill</a>
+      <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+      <a href="http://github.com/leshill/" class="extra">github</a>
+      <a href="/archives.html" class="extra">archives</a>
+    </div>
+    <div class='archives'>
+      <h2>Archive for February 2008</h2>
+      <div id='post'>
+        <div class='title'>
+          <a href="/blog/2008/2/22/monkey-patch.html">Monkey Patch!</a>
+        </div>
+        <div class='meta'>
+          <abbr class='published' title='Fri Feb 22 11:09:02 -0500 2008'>
+            Posted February 22, 2008
+          </abbr>
+        </div>
+        <div class='content'>
+          <p>So after missing the wisdom<sup class="footnote"><a href="#fn1">1</a></sup> of this:</p>&#x000A;<p><a href="http://xkcd.com/386">http://xkcd.com/386</a></p>&#x000A;<p>And responding to this:</p>&#x000A;<p><a href="http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript">http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript</a></p>&#x000A;<p>I went to bed.</p>&#x000A;<p>This morning I wrote my first <b>Rails</b> (really <b>Haml</b>) <i>Monkey Patch</i><sup class="footnote"><a href="#fn2">2</a></sup>.  This adds some of what Steve wanted: undisturbed inline javascript with variable interpolation.  I am not sure what else he wanted as I did not read his blog carefully :)</p>&#x000A;<p>Throw this into <code>lib/inline_javascript.rb</code></p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">module</span> <span class="cl">Haml</span>&#x000A;<span class="no"> 2</span>   <span class="r">module</span> <span class="cl">Filters</span>&#x000A;<span class="no"> 3</span>     <span class="r">class</span> <span class="cl">InlineJavascript</span>&#x000A;<span class="no"> 4</span>       <span class="co">HEAD</span> =<span class="s"><span class="dl">&lt;&lt;EOH</span></span><span class="s"><span class="k">&#x000A;<span class="no"> 5</span> &lt;script type=&quot;text/javascript&quot;&gt;&#x000A;<span class="no"> 6</span> //&lt;![CDATA[</span><span class="dl">&#x000A;<span class="no"> 7</span> EOH</span></span>&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span>       <span class="co">FOOT</span> =<span class="s"><span class="dl">&lt;&lt;EOF</span></span><span class="s"><span class="k">&#x000A;<span class="no"><strong>10</strong></span> //]]&gt;&#x000A;<span class="no">11</span> &lt;/script&gt;</span><span class="dl">&#x000A;<span class="no">12</span> EOF</span></span>&#x000A;<span class="no">13</span> &#x000A;<span class="no">14</span>       <span class="r">def</span> <span class="fu">initialize</span>(text)&#x000A;<span class="no">15</span>         <span class="iv">@text</span> = <span class="co">HEAD</span> + text + <span class="co">FOOT</span>&#x000A;<span class="no">16</span>       <span class="r">end</span>&#x000A;<span class="no">17</span> &#x000A;<span class="no">18</span>       <span class="r">def</span> <span class="fu">render</span>&#x000A;<span class="no">19</span>         <span class="iv">@text</span>&#x000A;<span class="no"><strong>20</strong></span>       <span class="r">end</span>&#x000A;<span class="no">21</span>     <span class="r">end</span>&#x000A;<span class="no">22</span>   <span class="r">end</span>&#x000A;<span class="no">23</span> &#x000A;<span class="no">24</span>   <span class="r">module</span> <span class="cl">Precompiler</span>&#x000A;<span class="no">25</span>     <span class="r">def</span> <span class="fu">close_filtered</span>(filter)&#x000A;<span class="no">26</span>       <span class="iv">@flat_spaces</span> = <span class="i">-1</span>&#x000A;<span class="no">27</span>       filtered = filter.new(<span class="iv">@filter_buffer</span>).render&#x000A;<span class="no">28</span> &#x000A;<span class="no">29</span>       <span class="r">if</span> filter == <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">Preserve</span>&#x000A;<span class="no"><strong>30</strong></span>         push_silent(<span class="s"><span class="dl">&quot;</span><span class="k">_hamlout.buffer &lt;&lt; </span><span class="il"><span class="idl">#{</span>filtered.dump<span class="idl">}</span></span><span class="k"> &lt;&lt; </span><span class="ch">\&quot;</span><span class="ch">\\</span><span class="k">n</span><span class="ch">\&quot;</span><span class="k">;</span><span class="dl">&quot;</span></span>)&#x000A;<span class="no">31</span>       <span class="r">elsif</span> filter == <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">InlineJavascript</span>&#x000A;<span class="no">32</span>         <span class="c"># suppress eval option does not apply to us</span>&#x000A;<span class="no">33</span>         flush_merged_text&#x000A;<span class="no">34</span>         js = unescape_interpolation(filtered)&#x000A;<span class="no">35</span>         <span class="iv">@precompiled</span>  &lt;&lt; <span class="s"><span class="dl">&quot;</span><span class="k">_hamlout.buffer &lt;&lt; </span><span class="il"><span class="idl">#{</span>js<span class="idl">}</span></span><span class="k">;</span><span class="dl">&quot;</span></span>&#x000A;<span class="no">36</span>       <span class="r">else</span>&#x000A;<span class="no">37</span>         push_text(filtered.rstrip.gsub(<span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="il"><span class="idl">#{</span><span class="s"><span class="dl">'</span><span class="k">  </span><span class="dl">'</span></span> * <span class="iv">@output_tabs</span><span class="idl">}</span></span><span class="dl">&quot;</span></span>))&#x000A;<span class="no">38</span>       <span class="r">end</span>&#x000A;<span class="no">39</span> &#x000A;<span class="no"><strong>40</strong></span>       <span class="iv">@filter_buffer</span> = <span class="pc">nil</span>&#x000A;<span class="no">41</span>       <span class="iv">@template_tabs</span> -= <span class="i">1</span>&#x000A;<span class="no">42</span>     <span class="r">end</span>&#x000A;<span class="no">43</span>   <span class="r">end</span>&#x000A;<span class="no">44</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>Throw this at the bottom of your <code>environment.rb</code>, taken from here <a href="http://groups.google.com/group/haml/msg/2d890cf1ede761ea">http://groups.google.com/group/haml/msg/2d890cf1ede761ea</a></p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> require <span class="s"><span class="dl">'</span><span class="k">inline_javascript</span><span class="dl">'</span></span>&#x000A;<span class="no">2</span> &#x000A;<span class="no">3</span> <span class="co">Haml</span>::<span class="co">Template</span>.options = {&#x000A;<span class="no">4</span>   <span class="sy">:filters</span> =&gt; {&#x000A;<span class="no">5</span>     <span class="s"><span class="dl">'</span><span class="k">javascript</span><span class="dl">'</span></span> =&gt; <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">InlineJavascript</span>&#x000A;<span class="no">6</span>   }&#x000A;<span class="no">7</span> }</pre></div>&#x000A;</div>&#x000A;<p>And then do this in your <b>Haml</b> file:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> :javascript&#x000A;<span class="no">2</span>   <span class="kw">function</span> oh_yea() {&#x000A;<span class="no">3</span>     alert(<span class="s"><span class="dl">'</span><span class="k">Hello</span><span class="dl">'</span></span> + <span class="s"><span class="dl">'</span><span class="k">#{@message}</span><span class="dl">'</span></span>)&#x000A;<span class="no">4</span>   }&#x000A;<span class="no">5</span> %a{ :href =&gt;<span class="s"><span class="dl">&quot;</span><span class="k">javascript:oh_yea()</span><span class="dl">&quot;</span></span> } Oh Yea!</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>I decided to make a patch and submit it to the <b>Haml</b> folks directly.  This gave me the &#8216;opportunity&#8217; to get <b>git</b> going.</p>&#x000A;<p>Nathan Weizenbaum took the time to put in a more comprehensive fix to expose the interpolation functionality to all filters &#8212; look for it in an upcoming release.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> It&#8217;s turtles all the way down.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> You do not want to know what my subconscious originally thought up as the way to do this &#8212; that was twisted.</p>
+        </div>
+        <div class='comments'>
+          <div id='disqus_thread'></div>
+          <script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script>
+          <noscript>
+            <a href="http://leshill.disqus.com/?url=ref">View the discussion thread.</a>
+          </noscript>
+          <a class='dsq-brlink' href='http://disqus.com'>
+            blog comments powered by
+            <span class='logo-disqus'>
+              Disqus
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class='prepend-1 span-15'>
+        
+        
+        
+      </div>
+    </div>
+    <div class='footer'>
+      <div class='contact'>
+        <p>
+          Les Hill
+          <br />
+          Software adventurer @ <a href="http://hashrocket.com/">Hashrocket</a>
+          <br />
+          les (at) hashrocket (dot) com
+        </p>
+      </div>
+      <div class='rss'>
+        <a href='http://feeds2.feedburner.com/leshill'>
+          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
         </a>
       </div>
     </div>
-    <div class='span-24' id='main'>
-      <div class='prepend-1 span-15 append-1' id='content'>
-        <div class='span-15 height-1'></div>
-        <div class='span-15' id='content'>
-          <div class='archives'>
-            <h2>Archive for February 2008</h2>
-            <div class='title'>
-              <h2 class='entry-title'>
-                <a href='/blog/2008/2/22/monkey-patch.html'>
-                  Monkey Patch!
-                </a>
-              </h2>
-            </div>
-            <div class='post-date'>
-              <abbr class='published' title='Fri Feb 22 11:09:02 -0500 2008'>
-                Posted
-                February 22, 2008
-              </abbr>
-            </div>
-            <div class='entry-content'>
-              <p>So after missing the wisdom<sup class="footnote"><a href="#fn1">1</a></sup> of this:</p>&#x000A;<p><a href="http://xkcd.com/386">http://xkcd.com/386</a></p>&#x000A;<p>And responding to this:</p>&#x000A;<p><a href="http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript">http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript</a></p>&#x000A;<p>I went to bed.</p>&#x000A;<p>This morning I wrote my first <b>Rails</b> (really <b>Haml</b>) <i>Monkey Patch</i><sup class="footnote"><a href="#fn2">2</a></sup>.  This adds some of what Steve wanted: undisturbed inline javascript with variable interpolation.  I am not sure what else he wanted as I did not read his blog carefully :)</p>&#x000A;<p>Throw this into <code>lib/inline_javascript.rb</code></p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">module</span> <span class="cl">Haml</span>&#x000A;<span class="no"> 2</span>   <span class="r">module</span> <span class="cl">Filters</span>&#x000A;<span class="no"> 3</span>     <span class="r">class</span> <span class="cl">InlineJavascript</span>&#x000A;<span class="no"> 4</span>       <span class="co">HEAD</span> =<span class="s"><span class="dl">&lt;&lt;EOH</span></span><span class="s"><span class="k">&#x000A;<span class="no"> 5</span> &lt;script type=&quot;text/javascript&quot;&gt;&#x000A;<span class="no"> 6</span> //&lt;![CDATA[</span><span class="dl">&#x000A;<span class="no"> 7</span> EOH</span></span>&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span>       <span class="co">FOOT</span> =<span class="s"><span class="dl">&lt;&lt;EOF</span></span><span class="s"><span class="k">&#x000A;<span class="no"><strong>10</strong></span> //]]&gt;&#x000A;<span class="no">11</span> &lt;/script&gt;</span><span class="dl">&#x000A;<span class="no">12</span> EOF</span></span>&#x000A;<span class="no">13</span> &#x000A;<span class="no">14</span>       <span class="r">def</span> <span class="fu">initialize</span>(text)&#x000A;<span class="no">15</span>         <span class="iv">@text</span> = <span class="co">HEAD</span> + text + <span class="co">FOOT</span>&#x000A;<span class="no">16</span>       <span class="r">end</span>&#x000A;<span class="no">17</span> &#x000A;<span class="no">18</span>       <span class="r">def</span> <span class="fu">render</span>&#x000A;<span class="no">19</span>         <span class="iv">@text</span>&#x000A;<span class="no"><strong>20</strong></span>       <span class="r">end</span>&#x000A;<span class="no">21</span>     <span class="r">end</span>&#x000A;<span class="no">22</span>   <span class="r">end</span>&#x000A;<span class="no">23</span> &#x000A;<span class="no">24</span>   <span class="r">module</span> <span class="cl">Precompiler</span>&#x000A;<span class="no">25</span>     <span class="r">def</span> <span class="fu">close_filtered</span>(filter)&#x000A;<span class="no">26</span>       <span class="iv">@flat_spaces</span> = <span class="i">-1</span>&#x000A;<span class="no">27</span>       filtered = filter.new(<span class="iv">@filter_buffer</span>).render&#x000A;<span class="no">28</span> &#x000A;<span class="no">29</span>       <span class="r">if</span> filter == <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">Preserve</span>&#x000A;<span class="no"><strong>30</strong></span>         push_silent(<span class="s"><span class="dl">&quot;</span><span class="k">_hamlout.buffer &lt;&lt; </span><span class="il"><span class="idl">#{</span>filtered.dump<span class="idl">}</span></span><span class="k"> &lt;&lt; </span><span class="ch">\&quot;</span><span class="ch">\\</span><span class="k">n</span><span class="ch">\&quot;</span><span class="k">;</span><span class="dl">&quot;</span></span>)&#x000A;<span class="no">31</span>       <span class="r">elsif</span> filter == <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">InlineJavascript</span>&#x000A;<span class="no">32</span>         <span class="c"># suppress eval option does not apply to us</span>&#x000A;<span class="no">33</span>         flush_merged_text&#x000A;<span class="no">34</span>         js = unescape_interpolation(filtered)&#x000A;<span class="no">35</span>         <span class="iv">@precompiled</span>  &lt;&lt; <span class="s"><span class="dl">&quot;</span><span class="k">_hamlout.buffer &lt;&lt; </span><span class="il"><span class="idl">#{</span>js<span class="idl">}</span></span><span class="k">;</span><span class="dl">&quot;</span></span>&#x000A;<span class="no">36</span>       <span class="r">else</span>&#x000A;<span class="no">37</span>         push_text(filtered.rstrip.gsub(<span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="il"><span class="idl">#{</span><span class="s"><span class="dl">'</span><span class="k">  </span><span class="dl">'</span></span> * <span class="iv">@output_tabs</span><span class="idl">}</span></span><span class="dl">&quot;</span></span>))&#x000A;<span class="no">38</span>       <span class="r">end</span>&#x000A;<span class="no">39</span> &#x000A;<span class="no"><strong>40</strong></span>       <span class="iv">@filter_buffer</span> = <span class="pc">nil</span>&#x000A;<span class="no">41</span>       <span class="iv">@template_tabs</span> -= <span class="i">1</span>&#x000A;<span class="no">42</span>     <span class="r">end</span>&#x000A;<span class="no">43</span>   <span class="r">end</span>&#x000A;<span class="no">44</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>Throw this at the bottom of your <code>environment.rb</code>, taken from here <a href="http://groups.google.com/group/haml/msg/2d890cf1ede761ea">http://groups.google.com/group/haml/msg/2d890cf1ede761ea</a></p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> require <span class="s"><span class="dl">'</span><span class="k">inline_javascript</span><span class="dl">'</span></span>&#x000A;<span class="no">2</span> &#x000A;<span class="no">3</span> <span class="co">Haml</span>::<span class="co">Template</span>.options = {&#x000A;<span class="no">4</span>   <span class="sy">:filters</span> =&gt; {&#x000A;<span class="no">5</span>     <span class="s"><span class="dl">'</span><span class="k">javascript</span><span class="dl">'</span></span> =&gt; <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">InlineJavascript</span>&#x000A;<span class="no">6</span>   }&#x000A;<span class="no">7</span> }</pre></div>&#x000A;</div>&#x000A;<p>And then do this in your <b>Haml</b> file:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> :javascript&#x000A;<span class="no">2</span>   <span class="kw">function</span> oh_yea() {&#x000A;<span class="no">3</span>     alert(<span class="s"><span class="dl">'</span><span class="k">Hello</span><span class="dl">'</span></span> + <span class="s"><span class="dl">'</span><span class="k">#{@message}</span><span class="dl">'</span></span>)&#x000A;<span class="no">4</span>   }&#x000A;<span class="no">5</span> %a{ :href =&gt;<span class="s"><span class="dl">&quot;</span><span class="k">javascript:oh_yea()</span><span class="dl">&quot;</span></span> } Oh Yea!</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>I decided to make a patch and submit it to the <b>Haml</b> folks directly.  This gave me the &#8216;opportunity&#8217; to get <b>git</b> going.</p>&#x000A;<p>Nathan Weizenbaum took the time to put in a more comprehensive fix to expose the interpolation functionality to all filters &#8212; look for it in an upcoming release.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> It&#8217;s turtles all the way down.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> You do not want to know what my subconscious originally thought up as the way to do this &#8212; that was twisted.</p>
-            </div>
-            <div class='comments'>
-              <a href='/blog/2008/2/22/monkey-patch.html#disqus_thread'>  </a>
-            </div>
-            <div class='prepend-1 span-15'>
-              
-              
-              
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class='span-6 append-1 last' id='sidebar'>
-        <div class='span-6 height-1'></div>
-        <div class='prepend-1 span-5' id='about'>
-          <h2>About</h2>
-          <ul>
-            <li>
-              Les Hill is a software adventurer who works with
-              <a href='http://www.ruby-lang.org'>Ruby</a>
-              at
-              <a href='http://hashrocket.com'>Hashrocket</a>
-              .
-            </li>
-            <li class='last'>
-              Follow me on <a href="http://www.twitter.com/leshill">Twitter</a>
-            </li>
-          </ul>
-        </div>
-        <div class='prepend-1 span-5' id='twitter'></div>
-        <div class='prepend-1 span-5'>
-          <h2>Subscribe</h2>
-          <ul>
-            <li>
-              <a class='feed' href='http://feeds2.feedburner.com/leshill'>RSS</a>
-            </li>
-          </ul>
-        </div>
-        <div class='prepend-1 span-5'>
-          <div class='archives'>
-            <h2>Archives</h2>
-            <ul>
-              <li class='year'>
-                <a href='/blog/2009'>2009</a>
-                <ul>
-                  <li class='month'>
-                    <a href='/blog/2009/01'>January</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/02'>February</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/04'>April</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/05'>May</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/06'>June</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/07'>July</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/08'>August</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/09'>September</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/10'>October</a>
-                  </li>
-                </ul>
-              </li>
-              <li class='year'>
-                <a href='/blog/2008'>2008</a>
-                <ul>
-                  <li class='month'>
-                    <a href='/blog/2008/2'>February</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/5'>May</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/7'>July</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/8'>August</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/10'>October</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/12'>December</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
+    <div class='colophon'>
+      <p>
+        Thanks to <a href="http://tom.preston-werner.com/">Tom Preston-Werner</a>
+        for the CSS layout, <a href="http://webby.rubyforge.org/">Webby</a> for
+        the blog renderer, and
+        <a href="http://github.com/blog/272-github-pages">GitHub Pages</a> for
+        the blog hosting.
+      </p>
+      <div class='copyright'>
+        <p>
+          Les Hill &copy; 2008&ndash;2009
+        </p>
       </div>
     </div>
-    <div class='span-24' id='footer'>
-      <p>
-        Wonderland is styled using
-        <a href='http://www.blueprintcss.org/'>blueprint css</a>
-        and powered by
-        <a href='http://webby.rubyforge.org/'>Webby</a>
-        and
-        <a href='http://github.com/blog/272-github-pages'>GitHub Pages</a>
-      </p>
-      <p>
-        Les Hill &copy; 2008&ndash;2009
-      </p>
-    </div>
-  </div>
-  <script type='text/javascript'>
-    //<![CDATA[
-      (function() {
-        var links = document.getElementsByTagName('a');
-        var query = '?';
-        for(var i = 0; i < links.length; i++) {
-          if(links[i].href.indexOf('#disqus_thread') >= 0) {
-            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+    <script type='text/javascript'>
+      //<![CDATA[
+        (function() {
+          var links = document.getElementsByTagName('a');
+          var query = '?';
+          for(var i = 0; i < links.length; i++) {
+            if(links[i].href.indexOf('#disqus_thread') >= 0) {
+              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+            }
           }
-        }
-        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-      })();
-    //]]>
-  </script>
+          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+        })();
+      //]]>
+    </script>
+  </div>
 </body>

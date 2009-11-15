@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+  <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+  <meta content='Les Hill' name='author' />
+  <title>
+    Les Hill &mdash; Home
+  </title>
+  <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/jquery.twitter.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script>
+  <script src='/javascript/jquery.twitter.js' type='text/javascript'></script>
+  <script src='/javascript/application.js' type='text/javascript'></script>
+  <link href='http://feeds2.feedburner.com/leshill' rel='alternate' title='RSS feed' type='application/atom+xml' />
+</head>
+<body>
+  <div class='site'>
+    <div class='title'>
+      <a href='/'>
+        Les Hill
+      </a>
+      <a class='extra' href='/'>
+        home
+      </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/8/14/obvious-intangibles.txt'>
+          Obvious Intangibles
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Thu Aug 14 12:06:07 -0400 2008'>
+        Posted
+        August 14, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p><a href="http://sethgodin.typepad.com/seths_blog">Seth Godin</a> has just put up a fantastic post on <a href="http://sethgodin.typepad.com/seths_blog/2008/08/the-intangibles.html">The intangibles</a> &#8212; ways to set your product or service apart.</p>&#x000A;<p>Many of them read as <em>common-sense</em> or <em>obvious</em>, but like most <em>common-sense</em> and <em>obvious</em> advice, it is rarely actually practiced; often the advice is even actively dismissed with an annoyed &#8216;Of course we do that!&#8217; &#8212; only you do not do that, and you are fooling yourself by saying so.</p>&#x000A;<p>Take stock of what you are doing, and ask yourself if you are really doing the <em>common-sense</em> and <em>obvious</em> things.</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/8/14/obvious-intangibles.txt#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/7/12/voodoo-send.html'>
+          Voodoo send
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Sat Jul 12 00:33:10 -0400 2008'>
+        Posted
+        July 12, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>Recently when looking through some plugin&#8217;s code, we found the following line:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="pc">self</span>.send(<span class="sy">:include</span>, <span class="co">Foo</span>)</pre></div>&#x000A;</div>&#x000A;<p>This <em>seems</em> to be an acceptable variant of the commonly used</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">ActiveRecord</span>::<span class="co">Base</span>.send(<span class="sy">:include</span>, <span class="co">Foo</span>)</pre></div>&#x000A;</div>&#x000A;<p>As you may have surmised, it is not an acceptable variant.  This is a <a href="http://en.wikipedia.org/wiki/Voodoo_programming">Voodoo programming</a> smell, as it indicates a misunderstanding of exactly what the semantics of <code>send</code> are.  There is also a clearer, more intention revealing, and identical<sup class="footnote"><a href="#fn1">1</a></sup> alternative <code>include Foo</code> or with the omitted parenthesis <code>include(Foo)</code> .</p>&#x000A;<p>This of course, leads us to why <code>ActiveRecord::Base.send(:include, Foo)</code> is acceptable.  The <code>include</code> method is private, so the most elegant way to invoke it on <em>another</em> object is by using <code>send</code>; this is possible because <code>send</code> ignores access control allowing us to invoke <code>include</code> directly.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> <em>Almost</em>, the difference is that <code>send</code> is in the call stack.</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/7/12/voodoo-send.html#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/7/1/rspec-1-dot-1-dot-4-and-helpers.html'>
+          RSpec 1.1.4 and Helpers
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Wed Jul 02 00:50:46 -0400 2008'>
+        Posted
+        July 02, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>Last week, <b>RSpec 1.1.4</b> was released; and given my optimistic disposition I immediately upgraded.  Happily, the upgrade was almost seamless.  Two interdependent issues kept this from being a flawless upgrade:</p>&#x000A;<ol>&#x000A;	<li>A new deprecation warning on our helper specs (<em>no one really likes to see deprecation warnings</em>)</li>&#x000A;	<li>A bug in the new way to write helper specs (<em>a show stopper</em>)</li>&#x000A;</ol>&#x000A;<p>Lets see what happens when we run our spec<sup class="footnote"><a href="#fn1">1</a></sup>.</p>&#x000A;<pre><code>Wonderland$ spec spec/helpers/dog_helper_spec.rb &#x000A;Modules will no longer be automatically included in RSpec version 1.1.4.  Called from ./spec/helpers/dog_helper_spec.rb:8&#x000A;.Modules will no longer be automatically included in RSpec version 1.1.4.  Called from ./spec/helpers/dog_helper_spec.rb:16&#x000A;.&#x000A;Finished in 0.393129 seconds&#x000A;2 examples, 0 failures</code></pre>&#x000A;<p>Lets examine the helper spec that generated these warnings:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> require <span class="co">File</span>.expand_path(<span class="co">File</span>.dirname(<span class="pc">__FILE__</span>) + <span class="s"><span class="dl">'</span><span class="k">/../spec_helper</span><span class="dl">'</span></span>)&#x000A;<span class="no"> 2</span> &#x000A;<span class="no"> 3</span> describe <span class="co">DogHelper</span> <span class="r">do</span>&#x000A;<span class="no"> 4</span> &#x000A;<span class="no"> 5</span>   describe <span class="s"><span class="dl">&quot;</span><span class="k">name_or_description()</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no"> 6</span>     it <span class="s"><span class="dl">&quot;</span><span class="k">should return a description for a dog without a name</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no"> 7</span>       dog = mock_model(<span class="co">Dog</span>, <span class="sy">:name</span> =&gt; <span class="pc">nil</span>, <span class="sy">:sex</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">male</span><span class="dl">'</span></span>, <span class="sy">:breed</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Labrador</span><span class="dl">'</span></span>, <span class="sy">:color</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">black</span><span class="dl">'</span></span>)&#x000A;<span class="no"> 8</span>       name_or_description(dog).should == <span class="s"><span class="dl">&quot;</span><span class="k">(male Labrador, black)</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"> 9</span>     <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span>   <span class="r">end</span>&#x000A;<span class="no">11</span> &#x000A;<span class="no">12</span>   describe <span class="s"><span class="dl">&quot;</span><span class="k">owner_link()</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no">13</span>     it <span class="s"><span class="dl">&quot;</span><span class="k">should return a link to the owner</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no">14</span>       owner = mock_model(<span class="co">User</span>, <span class="sy">:login</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">sally_smith</span><span class="dl">'</span></span>, <span class="sy">:to_param</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">sally_smith</span><span class="dl">'</span></span>)&#x000A;<span class="no">15</span>       dog = mock_model(<span class="co">Dog</span>, <span class="sy">:owner</span> =&gt; owner)&#x000A;<span class="no">16</span>       owner_link(dog).should =~ <span class="rx"><span class="dl">/</span><span class="k">users</span><span class="ch">\/</span><span class="k">sally_smith</span><span class="dl">/</span></span>&#x000A;<span class="no">17</span>     <span class="r">end</span>&#x000A;<span class="no">18</span>   <span class="r">end</span>&#x000A;<span class="no">19</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>So, what does this deprecation warning tell us?  We are being warned that calls to <strong>name_or_description</strong> and <strong>owner_link</strong>, which are called on the implicit <strong>self</strong> of the RSpec <em>it</em> blocks, are going to fail in the future when the helper module (<strong>DogHelper</strong> in this example) is no longer automatically included by RSpec.</p>&#x000A;<p>Or put another way, calling helper methods like <strong>name_or_description</strong> directly, <em>exactly as one might in a view</em>, will no longer work.</p>&#x000A;<p>The new way to call helper methods is through the <strong>helper</strong> attribute of RSpec, giving access to an <code>ActionView::Base</code> instance with the helper module included.  Lets go ahead and make this change to our two helper calls:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> require <span class="co">File</span>.expand_path(<span class="co">File</span>.dirname(<span class="pc">__FILE__</span>) + <span class="s"><span class="dl">'</span><span class="k">/../spec_helper</span><span class="dl">'</span></span>)&#x000A;<span class="no"> 2</span> &#x000A;<span class="no"> 3</span> describe <span class="co">DogHelper</span> <span class="r">do</span>&#x000A;<span class="no"> 4</span> &#x000A;<span class="no"> 5</span>   describe <span class="s"><span class="dl">&quot;</span><span class="k">name_or_description()</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no"> 6</span>     it <span class="s"><span class="dl">&quot;</span><span class="k">should return a description for a dog without a name</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no"> 7</span>       dog = mock_model(<span class="co">Dog</span>, <span class="sy">:name</span> =&gt; <span class="pc">nil</span>, <span class="sy">:sex</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">male</span><span class="dl">'</span></span>, <span class="sy">:breed</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Labrador</span><span class="dl">'</span></span>, <span class="sy">:color</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">black</span><span class="dl">'</span></span>)&#x000A;<span class="no"> 8</span>       helper.name_or_description(dog).should == <span class="s"><span class="dl">&quot;</span><span class="k">(male Labrador, black)</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"> 9</span>     <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span>   <span class="r">end</span>&#x000A;<span class="no">11</span> &#x000A;<span class="no">12</span>   describe <span class="s"><span class="dl">&quot;</span><span class="k">owner_link()</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no">13</span>     it <span class="s"><span class="dl">&quot;</span><span class="k">should return a link to the owner</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no">14</span>       owner = mock_model(<span class="co">User</span>, <span class="sy">:login</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">sally_smith</span><span class="dl">'</span></span>, <span class="sy">:to_param</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">sally_smith</span><span class="dl">'</span></span>)&#x000A;<span class="no">15</span>       dog = mock_model(<span class="co">Dog</span>, <span class="sy">:owner</span> =&gt; owner)&#x000A;<span class="no">16</span>       helper.owner_link(dog).should =~ <span class="rx"><span class="dl">/</span><span class="k">users</span><span class="ch">\/</span><span class="k">sally_smith</span><span class="dl">/</span></span>&#x000A;<span class="no">17</span>     <span class="r">end</span>&#x000A;<span class="no">18</span>   <span class="r">end</span>&#x000A;<span class="no">19</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>Lets try this out!</p>&#x000A;<pre><code>Wonderland$ spec spec/helpers/dog_helper_spec.rb &#x000A;.F&#x000A;1) NoMethodError in 'DogHelper owner_link() should return a link to the owner'&#x000A;You have a nil object when you didn't expect it!&#x000A;The error occurred while evaluating nil.url_for&#x000A;(eval):17:in `user_path'&#x000A;/Users/leshill/src/rails/rspec114/app/helpers/dog_helper.rb:9:in `owner_link'&#x000A;./spec/helpers/dog_helper_spec.rb:16:&#x000A;Finished in 0.398686 seconds&#x000A;2 examples, 1 failure</code></pre>&#x000A;<p>Hmmm, we have gotten rid of the deprecation warnings, but we now have a new (and truly unexpected!) failure.</p>&#x000A;<p>This is a bona-fide bug in 1.1.4, and might lead to our having to rollback to 1.1.3 if there was no easy workaround.  Thankfully, there is a fix already available for 1.1.5 , and that fix can be easily adapted within our own specs.</p>&#x000A;<p>Lets add this <strong>before</strong> block to our spec:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> before(<span class="sy">:each</span>) <span class="r">do</span>&#x000A;<span class="no">2</span>   <span class="c"># Patch until 1.1.5</span>&#x000A;<span class="no">3</span>   helper_controller = <span class="iv">@controller</span>&#x000A;<span class="no">4</span>   helper.instance_eval { <span class="iv">@controller</span> = helper_controller }&#x000A;<span class="no">5</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>And then try it out:</p>&#x000A;<pre><code>Wonderland$ spec spec/helpers/dog_helper_spec.rb &#x000A;..&#x000A;Finished in 0.40663 seconds&#x000A;2 examples, 0 failures</code></pre>&#x000A;<p>Much better!</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am using a mock spec to demonstrate the issue, the minimal Rails app which fits around this spec is left as an exercise for the reader.</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/7/1/rspec-1-dot-1-dot-4-and-helpers.html#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/5/11/a-participation-deficit.html'>
+          A participation deficit
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Sun May 11 22:02:01 -0400 2008'>
+        Posted
+        May 11, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p><a href="http://www.shirky.com">Clay Shirky</a> is brilliant, and I have been reading his essays for a very long time<sup class="footnote"><a href="#fn1">1</a></sup>.  Recently, he has been discussing his notion of a <a href="http://www.herecomeseverybody.org/2008/04/looking-for-the-mouse.html">Cognitive Surplus</a> .  Good stuff; if you have not read it, go read it now.</p>&#x000A;<p>The headline is that if we just switch 1% of yearly TV consumption hours to &#8216;participation&#8217; we get the equivalent of 100 Wikipedia projects a year (that is development, comments, authors, editors, talk; the whole corpus as it stands today).</p>&#x000A;<p>This the <em>Cognitive Surplus</em>; previously the surplus was masked by mind-numbing television until we switched from just being able to <em>consume</em> media to <strong>consuming, producing, and sharing</strong> media.</p>&#x000A;<p>We are in a new media landscape, transformed irrevocably from mass consumption of media due to the communication advances of the last few decades.</p>&#x000A;<p>Those advances enabled us to erase a <strong>participation deficit</strong>.  The way the deficit manifested for me was an apparent inability to be alone (so says my wife) in spite of being a person who values solitude.  Before the nascent intertubes, I had no way to participate.  I could (<em>and did</em>) watch television.  But I also did many other things, including hack on computers.  Only there was no sharing, no participation.  Once the nascent intertubes arrived, I<sup class="footnote"><a href="#fn2">2</a></sup> and many others did participate.  Our participation accelerated on the wave of Moore&#8217;s and Metcalfe&#8217;s laws to transform society in ways we could not anticipate, but that we were already exploring.  We still cannot anticipate how we are changing society, and we are still exploring.</p>&#x000A;<p>If you have read this, take a moment and write your own blog entry or tweet or upload a photo/video or post a message or whatever-social-sharing-thing-you-might-do and revel in your participation.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> A decade?</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> My first email (lost forever) was in 1982.</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/5/11/a-participation-deficit.html#disqus_thread'>  </a>
+    </div>
+    <div class='prepend-1 span-15'>
+      <a href="/index26.html">&larr; Prev</a>
+      &nbsp;
+      <a href="/index28.html">Next &rarr;</a>
+    </div>
+    <div class='footer'>
+      <div class='contact'>
+        <p>
+          Les Hill
+          <br />
+          Developer @
+          <a href='http://hashrocket.com/'>
+            Hashrocket
+          </a>
+          <br />
+          les (at) hashrocket (dot) com
+        </p>
+      </div>
+      <div class='contact'>
+        <p>
+          <a href='http://github.com/leshill/'>
+            github.com/leshill
+          </a>
+          <br />
+          <a href='http://twitter.com/leshill/'>
+            twitter.com/leshill
+          </a>
+        </p>
+      </div>
+      <div class='rss'>
+        <a href='http://feeds2.feedburner.com/leshill'>
+          <img alt='Subscribe to RSS Feed' src='/images/rss.png' />
+        </a>
+      </div>
+      <div class='colophon'>
+        <p>
+          Les Hill &copy; 2008&ndash;2009
+        </p>
+        <p>
+          Thanks to
+          <a href='http://tom.preston-werner.com/'>
+            Tom Preston-Werner
+          </a>
+          for the CSS layout,
+          <a href='http://webby.rubyforge.org/'>
+            Webby
+          </a>
+          for the blog renderer,
+          and
+          <a href='http://github.com/blog/272-github-pages'>
+            GitHub Pages
+          </a>
+          for the blog hosting.
+        </p>
+      </div>
+    </div>
+  </div>
+  <script type='text/javascript'>
+    //<![CDATA[
+      (function() {
+        var links = document.getElementsByTagName('a');
+        var query = '?';
+        for(var i = 0; i < links.length; i++) {
+          if(links[i].href.indexOf('#disqus_thread') >= 0) {
+            query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+          }
+        }
+        document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+      })();
+    //]]>
+  </script>
+</body>

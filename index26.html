@@ -3,210 +3,161 @@
   <meta content='text/html; charset=utf-8' http-equiv='content-type' />
   <meta content='Les Hill' name='author' />
   <title>
-    Wonderland &mdash; Home
+    Les Hill &mdash; Home
   </title>
-  <link href='/css/blueprint/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
-  <link href='/css/blueprint/print.css' media='print' rel='stylesheet' type='text/css' />
-  <!--[if IE]> <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection" /> <![endif]-->
+  <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/jquery.twitter.css' media='screen, projection' rel='stylesheet' type='text/css' />
-  <link href='/css/site.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script>
   <script src='/javascript/jquery.twitter.js' type='text/javascript'></script>
   <script src='/javascript/application.js' type='text/javascript'></script>
-  <link href='http://blog.leshill.org/feed/atom.xml' rel='alternate' title='RSS feed' type='application/atom+xml' />
+  <link href='http://feeds2.feedburner.com/leshill' rel='alternate' title='RSS feed' type='application/atom+xml' />
 </head>
 <body>
-  <div class='container'>
-    <div class='span-24' id='header'>
-      <div class='prepend-1 span-11 append-8'>
-        <a href='/'>
-          <img src='/images/title.png' />
+  <div class='site'>
+    <div class='title'>
+      <a href='/'>
+        Les Hill
+      </a>
+      <a class='extra' href='/'>
+        home
+      </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/10/19/tip-using-haml-with-actionmailer.html'>
+          Tip: Using Haml With ActionMailer
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Sun Oct 19 21:54:10 -0400 2008'>
+        Posted
+        October 19, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>You can use Haml to write your mailer views and still use the implicit multipart template feature by letting <code>ActionMailer</code> know about Haml:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">ActionMailer</span>::<span class="co">Base</span>.register_template_extension(<span class="s"><span class="dl">'</span><span class="k">haml</span><span class="dl">'</span></span>)</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>This is no longer necessary with <strong>Rails 2.2</strong> and <strong>Haml 2.0.5</strong> .</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/10/19/tip-using-haml-with-actionmailer.html#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/8/24/git-setting-your-upstream-default.html'>
+          Git: Setting Your Upstream Default
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Sun Aug 24 20:28:02 -0400 2008'>
+        Posted
+        August 24, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>I  recently set up a new repository on <a href="http://www.github.com/">github</a>.  Creating the repository on github yields a page of instructions covering the two common scenarios: new and existing repositories.  After following the new repository instructions,  I had a repository on github, a local repository, and the following in response to my <code>git pull</code> command:</p>&#x000A;<pre><code>You asked me to pull without telling me which branch you want to merge with, and 'branch.master.merge' in your configuration file does not tell me either.  Please name which branch you want to merge on the command line and try again (e.g. 'git pull &lt;repository&gt; &lt;refspec&gt;'). See git-pull(1) for details on the refspec.&#x000A;  &#x000A;If you often merge with the same branch, you may want to configure the following variables in your configuration file:&#x000A;  &#x000A;  branch.master.remote = &lt;nickname&gt;&#x000A;  branch.master.merge = &lt;remote-ref&gt;&#x000A;  remote.&lt;nickname&gt;.url = &lt;url&gt;&#x000A;  remote.&lt;nickname&gt;.fetch = &lt;refspec&gt;&#x000A;  &#x000A;See git-config(1) for details.</code>&#x000A;&#x000A;</pre>&#x000A;<p>Not exactly what I wanted, and certainly not what I expected.  What I <em>expected</em> was a local repository with the upstream for <strong>master</strong> to be set to point at <strong>master</strong> on the github repository.</p>&#x000A;<p>Setting this up can be done easily in two similar ways:</p>&#x000A;<ul>&#x000A;	<li>You can edit the configuration file as directed by the error message</li>&#x000A;	<li>You can use <code>git config</code></li>&#x000A;</ul>&#x000A;<p>I opted for <code>git config</code> as it was easier and required no thinking &#8212; the commands are always the same<sup class="footnote"><a href="#fn1">1</a></sup>; here they are:</p>&#x000A;<pre><code>% git config branch.master.remote origin&#x000A;% git config branch.master.merge refs/heads/master</code></pre>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> For the scenario of a local empty repository pushed up to a remote, where the remote will be the upstream master.</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/8/24/git-setting-your-upstream-default.html#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/8/24/focusing-autotest.html'>
+          Focusing Autotest
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Sun Aug 24 10:53:57 -0400 2008'>
+        Posted
+        August 24, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p>The usual <a href="http://www.zenspider.com/ZSS/Products/ZenTest">autotest</a> workflow goes something like this:</p>&#x000A;<ul>&#x000A;	<li>Edit and save</li>&#x000A;	<li>Autotest runs associated specs</li>&#x000A;	<li>Are there failures?  Fix and start over</li>&#x000A;	<li>Autotest runs the entire suite</li>&#x000A;</ul>&#x000A;<p>Sometimes though, you want autotest to just ignore most of your specs and focus on a few specs.</p>&#x000A;<p>Last week, while Kevin, Rick, and Yossef  (<a href="http://bl.ogtastic.com">OG</a>) were here, they  shared an autotest tweak that does exactly that.</p>&#x000A;<p>The tweak allows you to specify a regular expression to limit the files which autotest watches; for example, to autotest only files matching <code>*user*.rb</code> you would start autotest like so (<em>atest</em> is an alias):</p>&#x000A;<pre><code>% atest user</code></pre>&#x000A;<p>Here is the (lightly modified) code to do this; in your <code>.autotest</code> file add:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">if</span> <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>] <span class="r">and</span> <span class="r">not</span> <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>].empty?&#x000A;<span class="no"> 2</span>   only_these_files_re = <span class="co">Regexp</span>.new(<span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">AUTOTEST</span><span class="dl">'</span></span>])&#x000A;<span class="no"> 3</span> &#x000A;<span class="no"> 4</span>   <span class="co">Autotest</span>.send(<span class="sy">:alias_method</span>, <span class="sy">:real_find_files</span>, <span class="sy">:find_files</span>)&#x000A;<span class="no"> 5</span>   <span class="co">Autotest</span>.send(<span class="sy">:define_method</span>, <span class="sy">:find_files</span>) <span class="r">do</span> |*args|&#x000A;<span class="no"> 6</span>     real_find_files.reject <span class="r">do</span> |k, v|&#x000A;<span class="no"> 7</span>       !only_these_files_re.match(k)&#x000A;<span class="no"> 8</span>     <span class="r">end</span>&#x000A;<span class="no"> 9</span>   <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>And in your <code>.bash_profile</code> add:</p>&#x000A;<pre><code># Autotest&#x000A;function fn_autotest() {&#x000A;  AUTOTEST=$1 autotest&#x000A;}&#x000A;alias atest='fn_autotest'</code></pre>&#x000A;<p>Now use the alias to invoke autotest.  For standard autotest behavior:</p>&#x000A;<pre><code>% atest</code></pre>&#x000A;<p>To limit what autotest is watching, pass a regular expression (which can be a simple string):</p>&#x000A;<pre><code>% atest user.*html&#x000A;</code></pre>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/8/24/focusing-autotest.html#disqus_thread'>  </a>
+    </div>
+    <div class='title'>
+      <h2 class='entry-title'>
+        <a href='/blog/2008/8/15/obvious-money.txt'>
+          Obvious Money
+        </a>
+      </h2>
+    </div>
+    <div class='post-date'>
+      <abbr class='published' title='Fri Aug 15 09:00:42 -0400 2008'>
+        Posted
+        August 15, 2008
+      </abbr>
+    </div>
+    <div class='entry-content'>
+      <p><a href="http://www.loudthinking.com">David Heinemeier Hansson</a> recently gave an awesome talk  titled <a href="http://www.omnisio.com/startupschool08/david-heinemeier-hansson-at-startup-school-08">The secret to making money online</a> at the <a href="http://ycombinator.com">Y Combinator</a> Startup School.  Aside from being entertaining, David keeps hammering at the VC-fueled dreams of today&#8217;s web entrepreneurs.  David has been at this for a long time, and what he is saying is <em>obvious</em> and <em>common-sense</em> (and David will tell you so).</p>&#x000A;<p>And yet, we always hear people talking about the <strong>Money Maker</strong>, or how they are going to target 1% of a <strong>$10 billion industry</strong>, or other self-defeating filters.  If you find yourself uttering those kind of phrases in response to your own ideas or the ideas of others, <strong>stop</strong>.</p>&#x000A;<p>Refocus on what the idea is, and evaluate it on its merits.  Thinking about how to build a <a href="http://www.37signals.com/svn/archives2/google_yahoo_microsoft_gym.php">GYM</a> acquisition or targeting a market that will attract $10 million in VC funding is a waste of your time.</p>&#x000A;<p>Should you ignore pricing and profits?  Maybe; if you do look at them, examine them in a reasonable context &#8212; what do I need to just run the service on a minimal server?  With no paid staff?  With minimal time commitments?  How would it look like if I had 100 customers?  1000 customers?</p>&#x000A;<p>Yes, this means you are no longer playing in the VC startup space<sup class="footnote"><a href="#fn1">1</a></sup>.  Cool.  If you really want to play there, you will be <strong>much</strong> better off playing there after you already have those 100 customers.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> I am unsure about investors like Y Combinator, as they <em>seem</em> to be advocates for this way of thinking.</p>
+    </div>
+    <div class='comments'>
+      <a href='/blog/2008/8/15/obvious-money.txt#disqus_thread'>  </a>
+    </div>
+    <div class='prepend-1 span-15'>
+      <a href="/index25.html">&larr; Prev</a>
+      &nbsp;
+      <a href="/index27.html">Next &rarr;</a>
+    </div>
+    <div class='footer'>
+      <div class='contact'>
+        <p>
+          Les Hill
+          <br />
+          Developer @
+          <a href='http://hashrocket.com/'>
+            Hashrocket
+          </a>
+          <br />
+          les (at) hashrocket (dot) com
+        </p>
+      </div>
+      <div class='contact'>
+        <p>
+          <a href='http://github.com/leshill/'>
+            github.com/leshill
+          </a>
+          <br />
+          <a href='http://twitter.com/leshill/'>
+            twitter.com/leshill
+          </a>
+        </p>
+      </div>
+      <div class='rss'>
+        <a href='http://feeds2.feedburner.com/leshill'>
+          <img alt='Subscribe to RSS Feed' src='/images/rss.png' />
         </a>
       </div>
-    </div>
-    <div class='span-24' id='main'>
-      <div class='prepend-1 span-15 append-1' id='content'>
-        <div class='span-15 height-1'></div>
-        <div class='span-15' id='content'>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/5/11/a-participation-deficit.html#disqus_thread'>
-                A participation deficit
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Sun May 11 22:02:01 -0400 2008'>
-              Posted
-              May 11, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p><a href="http://www.shirky.com">Clay Shirky</a> is brilliant, and I have been reading his essays for a very long time<sup class="footnote"><a href="#fn1">1</a></sup>.  Recently, he has been discussing his notion of a <a href="http://www.herecomeseverybody.org/2008/04/looking-for-the-mouse.html">Cognitive Surplus</a> .  Good stuff; if you have not read it, go read it now.</p>&#x000A;<p>The headline is that if we just switch 1% of yearly TV consumption hours to &#8216;participation&#8217; we get the equivalent of 100 Wikipedia projects a year (that is development, comments, authors, editors, talk; the whole corpus as it stands today).</p>&#x000A;<p>This the <em>Cognitive Surplus</em>; previously the surplus was masked by mind-numbing television until we switched from just being able to <em>consume</em> media to <strong>consuming, producing, and sharing</strong> media.</p>&#x000A;<p>We are in a new media landscape, transformed irrevocably from mass consumption of media due to the communication advances of the last few decades.</p>&#x000A;<p>Those advances enabled us to erase a <strong>participation deficit</strong>.  The way the deficit manifested for me was an apparent inability to be alone (so says my wife) in spite of being a person who values solitude.  Before the nascent intertubes, I had no way to participate.  I could (<em>and did</em>) watch television.  But I also did many other things, including hack on computers.  Only there was no sharing, no participation.  Once the nascent intertubes arrived, I<sup class="footnote"><a href="#fn2">2</a></sup> and many others did participate.  Our participation accelerated on the wave of Moore&#8217;s and Metcalfe&#8217;s laws to transform society in ways we could not anticipate, but that we were already exploring.  We still cannot anticipate how we are changing society, and we are still exploring.</p>&#x000A;<p>If you have read this, take a moment and write your own blog entry or tweet or upload a photo/video or post a message or whatever-social-sharing-thing-you-might-do and revel in your participation.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> A decade?</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> My first email (lost forever) was in 1982.</p>
-          </div><div id='disqus_thread'></div><script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script><noscript><a href='http://leshill.disqus.com/?url=ref'>View the discussion thread.</a></noscript><a class='dsq-brlink' href='http://disqus.com'>blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span></a>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/5/8/a-little-bit-of-history.html#disqus_thread'>
-                A Little Bit of History
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Thu May 08 20:10:16 -0400 2008'>
-              Posted
-              May 08, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>I am a bit late on the history <a href="http://diveintomark.org/archives/2008/04/15/history-meme">meme</a>.  Here I am:</p>&#x000A;<pre><code>Wonderland$ history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head&#x000A;149 git&#x000A;60 spec&#x000A;46 ls&#x000A;45 gst&#x000A;42 cd&#x000A;28 rake&#x000A;14 ssh&#x000A;8 ss&#x000A;7 houston&#x000A;7 gco</code></pre>&#x000A;<p>Things to note<sup class="footnote"><a href="#fn1">1</a></sup>:</p>&#x000A;<ol>&#x000A;	<li>3 are git</li>&#x000A;	<li>3 are Rails development related</li>&#x000A;	<li>4 are common unix commands</li>&#x000A;</ol>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> 4 are aliases</p>
-          </div><div id='disqus_thread'></div><script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script><noscript><a href='http://leshill.disqus.com/?url=ref'>View the discussion thread.</a></noscript><a class='dsq-brlink' href='http://disqus.com'>blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span></a>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/5/6/stone-knives-and-bearskins.html#disqus_thread'>
-                Stone knives and bearskins
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Tue May 06 01:26:53 -0400 2008'>
-              Posted
-              May 06, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>Recently while discussing <a href="http://jquery.com/">jQuery</a>, we got onto the topic of <a href="http://en.wikipedia.org/wiki/Ajax_%28programming%29">AJAX</a>.  This prompted me to declare:</p>&#x000A;<p><em>Before AJAX, we used stone knives and bearskins to make our web apps</em></p>&#x000A;<p>Actually, we were using JavaScript and XML to drive our web apps, we just did not call it AJAX, and it was a very challenging task.  In spite of the difficulty of building it, we stuck with it and we were pretty darn happy with our <strong>pre-web 2.0 web2.0</strong> app; so much so that we actually had people coming by just to see our UI in action.</p>&#x000A;<p>I went back and looked for some of our old code, hoping to find the CVS repository<sup class="footnote"><a href="#fn1">1</a></sup>, but only finding a tarball of version 1.4.  The following code is from <code>client/script/services.js</code> and dated <strong>August 24, 2001</strong> &#8212; although some version of this code would have existed in the spring of <strong>2000</strong>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> BrServices.prototype.issueRequest = <span class="kw">function</span> (action) {&#x000A;<span class="no"> 2</span> <span class="c">// deleted ...</span>&#x000A;<span class="no"> 3</span>     <span class="kw">var</span> request = brUtils.newXmlDOM(action);&#x000A;<span class="no"> 4</span>     <span class="kw">var</span> tryCount = <span class="i">0</span>;&#x000A;<span class="no"> 5</span>     <span class="kw">var</span> condition = brServices.isOkay;&#x000A;<span class="no"> 6</span>     <span class="kw">var</span> s = <span class="s"><span class="dl">&quot;</span><span class="dl">&quot;</span></span>;&#x000A;<span class="no"> 7</span>     <span class="kw">while</span> (condition == brServices.isOkay) {&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span>         <span class="kw">try</span> {&#x000A;<span class="no"><strong>10</strong></span>             <span class="kw">var</span> httpOb = <span class="kw">new</span> ActiveXObject(<span class="s"><span class="dl">&quot;</span><span class="k">MSXML2.XMLHTTP</span><span class="dl">&quot;</span></span>); <span class="c">// Was Microsoft.XMLHTTP</span>&#x000A;<span class="no">11</span>             httpOb.open(<span class="s"><span class="dl">&quot;</span><span class="k">POST</span><span class="dl">&quot;</span></span>, brServices.brxmlURL, <span class="kw">false</span>);&#x000A;<span class="no">12</span>             httpOb.setRequestHeader(<span class="s"><span class="dl">&quot;</span><span class="k">Content-Type</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">text/xml; charset='UTF-8'</span><span class="dl">&quot;</span></span>);&#x000A;<span class="no">13</span> &#x000A;<span class="no">14</span>             httpOb.send(request);&#x000A;<span class="no">15</span> <span class="c">// deleted ...</span></pre></div>&#x000A;</div>&#x000A;<p>Just looking at this snippet from our internal library makes me all the happier that we made the thing work at all.  Kudos to <a href="http://markjudd.com">Mark Judd</a> and <a href="http://brianlevine.blogspot.com">Brian Levine</a>, two of our very talented small team, who were responsible for our UI.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> You already know this, but just in case, CVS was a source code repository that pretty much everyone used before Subversion (unless you bought one from a vendor).</p>
-          </div><div id='disqus_thread'></div><script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script><noscript><a href='http://leshill.disqus.com/?url=ref'>View the discussion thread.</a></noscript><a class='dsq-brlink' href='http://disqus.com'>blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span></a>
-          <div class='title'>
-            <h2 class='entry-title'>
-              <a href='/blog/2008/2/22/monkey-patch.html#disqus_thread'>
-                Monkey Patch!
-              </a>
-            </h2>
-          </div>
-          <div class='post-date'>
-            <abbr class='published' title='Fri Feb 22 11:09:02 -0500 2008'>
-              Posted
-              February 22, 2008
-            </abbr>
-          </div>
-          <div class='entry-content'>
-            <p>So after missing the wisdom<sup class="footnote"><a href="#fn1">1</a></sup> of this:</p>&#x000A;<p><a href="http://xkcd.com/386">http://xkcd.com/386</a></p>&#x000A;<p>And responding to this:</p>&#x000A;<p><a href="http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript">http://b.lesseverything.com/2008/2/19/haml-doesn-t-like-javascript</a></p>&#x000A;<p>I went to bed.</p>&#x000A;<p>This morning I wrote my first <b>Rails</b> (really <b>Haml</b>) <i>Monkey Patch</i><sup class="footnote"><a href="#fn2">2</a></sup>.  This adds some of what Steve wanted: undisturbed inline javascript with variable interpolation.  I am not sure what else he wanted as I did not read his blog carefully :)</p>&#x000A;<p>Throw this into <code>lib/inline_javascript.rb</code></p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">module</span> <span class="cl">Haml</span>&#x000A;<span class="no"> 2</span>   <span class="r">module</span> <span class="cl">Filters</span>&#x000A;<span class="no"> 3</span>     <span class="r">class</span> <span class="cl">InlineJavascript</span>&#x000A;<span class="no"> 4</span>       <span class="co">HEAD</span> =<span class="s"><span class="dl">&lt;&lt;EOH</span></span><span class="s"><span class="k">&#x000A;<span class="no"> 5</span> &lt;script type=&quot;text/javascript&quot;&gt;&#x000A;<span class="no"> 6</span> //&lt;![CDATA[</span><span class="dl">&#x000A;<span class="no"> 7</span> EOH</span></span>&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span>       <span class="co">FOOT</span> =<span class="s"><span class="dl">&lt;&lt;EOF</span></span><span class="s"><span class="k">&#x000A;<span class="no"><strong>10</strong></span> //]]&gt;&#x000A;<span class="no">11</span> &lt;/script&gt;</span><span class="dl">&#x000A;<span class="no">12</span> EOF</span></span>&#x000A;<span class="no">13</span> &#x000A;<span class="no">14</span>       <span class="r">def</span> <span class="fu">initialize</span>(text)&#x000A;<span class="no">15</span>         <span class="iv">@text</span> = <span class="co">HEAD</span> + text + <span class="co">FOOT</span>&#x000A;<span class="no">16</span>       <span class="r">end</span>&#x000A;<span class="no">17</span> &#x000A;<span class="no">18</span>       <span class="r">def</span> <span class="fu">render</span>&#x000A;<span class="no">19</span>         <span class="iv">@text</span>&#x000A;<span class="no"><strong>20</strong></span>       <span class="r">end</span>&#x000A;<span class="no">21</span>     <span class="r">end</span>&#x000A;<span class="no">22</span>   <span class="r">end</span>&#x000A;<span class="no">23</span> &#x000A;<span class="no">24</span>   <span class="r">module</span> <span class="cl">Precompiler</span>&#x000A;<span class="no">25</span>     <span class="r">def</span> <span class="fu">close_filtered</span>(filter)&#x000A;<span class="no">26</span>       <span class="iv">@flat_spaces</span> = <span class="i">-1</span>&#x000A;<span class="no">27</span>       filtered = filter.new(<span class="iv">@filter_buffer</span>).render&#x000A;<span class="no">28</span> &#x000A;<span class="no">29</span>       <span class="r">if</span> filter == <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">Preserve</span>&#x000A;<span class="no"><strong>30</strong></span>         push_silent(<span class="s"><span class="dl">&quot;</span><span class="k">_hamlout.buffer &lt;&lt; </span><span class="il"><span class="idl">#{</span>filtered.dump<span class="idl">}</span></span><span class="k"> &lt;&lt; </span><span class="ch">\&quot;</span><span class="ch">\\</span><span class="k">n</span><span class="ch">\&quot;</span><span class="k">;</span><span class="dl">&quot;</span></span>)&#x000A;<span class="no">31</span>       <span class="r">elsif</span> filter == <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">InlineJavascript</span>&#x000A;<span class="no">32</span>         <span class="c"># suppress eval option does not apply to us</span>&#x000A;<span class="no">33</span>         flush_merged_text&#x000A;<span class="no">34</span>         js = unescape_interpolation(filtered)&#x000A;<span class="no">35</span>         <span class="iv">@precompiled</span>  &lt;&lt; <span class="s"><span class="dl">&quot;</span><span class="k">_hamlout.buffer &lt;&lt; </span><span class="il"><span class="idl">#{</span>js<span class="idl">}</span></span><span class="k">;</span><span class="dl">&quot;</span></span>&#x000A;<span class="no">36</span>       <span class="r">else</span>&#x000A;<span class="no">37</span>         push_text(filtered.rstrip.gsub(<span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="il"><span class="idl">#{</span><span class="s"><span class="dl">'</span><span class="k">  </span><span class="dl">'</span></span> * <span class="iv">@output_tabs</span><span class="idl">}</span></span><span class="dl">&quot;</span></span>))&#x000A;<span class="no">38</span>       <span class="r">end</span>&#x000A;<span class="no">39</span> &#x000A;<span class="no"><strong>40</strong></span>       <span class="iv">@filter_buffer</span> = <span class="pc">nil</span>&#x000A;<span class="no">41</span>       <span class="iv">@template_tabs</span> -= <span class="i">1</span>&#x000A;<span class="no">42</span>     <span class="r">end</span>&#x000A;<span class="no">43</span>   <span class="r">end</span>&#x000A;<span class="no">44</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;<p>Throw this at the bottom of your <code>environment.rb</code>, taken from here <a href="http://groups.google.com/group/haml/msg/2d890cf1ede761ea">http://groups.google.com/group/haml/msg/2d890cf1ede761ea</a></p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> require <span class="s"><span class="dl">'</span><span class="k">inline_javascript</span><span class="dl">'</span></span>&#x000A;<span class="no">2</span> &#x000A;<span class="no">3</span> <span class="co">Haml</span>::<span class="co">Template</span>.options = {&#x000A;<span class="no">4</span>   <span class="sy">:filters</span> =&gt; {&#x000A;<span class="no">5</span>     <span class="s"><span class="dl">'</span><span class="k">javascript</span><span class="dl">'</span></span> =&gt; <span class="co">Haml</span>::<span class="co">Filters</span>::<span class="co">InlineJavascript</span>&#x000A;<span class="no">6</span>   }&#x000A;<span class="no">7</span> }</pre></div>&#x000A;</div>&#x000A;<p>And then do this in your <b>Haml</b> file:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> :javascript&#x000A;<span class="no">2</span>   <span class="kw">function</span> oh_yea() {&#x000A;<span class="no">3</span>     alert(<span class="s"><span class="dl">'</span><span class="k">Hello</span><span class="dl">'</span></span> + <span class="s"><span class="dl">'</span><span class="k">#{@message}</span><span class="dl">'</span></span>)&#x000A;<span class="no">4</span>   }&#x000A;<span class="no">5</span> %a{ :href =&gt;<span class="s"><span class="dl">&quot;</span><span class="k">javascript:oh_yea()</span><span class="dl">&quot;</span></span> } Oh Yea!</pre></div>&#x000A;</div>&#x000A;<h2>Update</h2>&#x000A;<p>I decided to make a patch and submit it to the <b>Haml</b> folks directly.  This gave me the &#8216;opportunity&#8217; to get <b>git</b> going.</p>&#x000A;<p>Nathan Weizenbaum took the time to put in a more comprehensive fix to expose the interpolation functionality to all filters &#8212; look for it in an upcoming release.</p>&#x000A;<p class="footnote" id="fn1"><sup>1</sup> It&#8217;s turtles all the way down.</p>&#x000A;<p class="footnote" id="fn2"><sup>2</sup> You do not want to know what my subconscious originally thought up as the way to do this &#8212; that was twisted.</p>
-          </div><div id='disqus_thread'></div><script src='http://disqus.com/forums/leshill/embed.js' type='text/javascript'></script><noscript><a href='http://leshill.disqus.com/?url=ref'>View the discussion thread.</a></noscript><a class='dsq-brlink' href='http://disqus.com'>blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span></a>
-          <div class='prepend-1 span-15'>
-            <a href="/index25.html">&larr; Prev</a>
-            &nbsp;
-            
-          </div>
-        </div>
+      <div class='colophon'>
+        <p>
+          Les Hill &copy; 2008&ndash;2009
+        </p>
+        <p>
+          Thanks to
+          <a href='http://tom.preston-werner.com/'>
+            Tom Preston-Werner
+          </a>
+          for the CSS layout,
+          <a href='http://webby.rubyforge.org/'>
+            Webby
+          </a>
+          for the blog renderer,
+          and
+          <a href='http://github.com/blog/272-github-pages'>
+            GitHub Pages
+          </a>
+          for the blog hosting.
+        </p>
       </div>
-      <div class='span-6 append-1 last' id='sidebar'>
-        <div class='span-6 height-1'></div>
-        <div class='prepend-1 span-5' id='about'>
-          <h2>About</h2>
-          <ul>
-            <li>
-              Les Hill is a software adventurer who works with
-              <a href='http://www.ruby-lang.org'>Ruby</a>
-              at
-              <a href='http://hashrocket.com'>Hashrocket</a>
-              .
-            </li>
-            <li class='last'>
-              Follow me on <a href="http://www.twitter.com/leshill">Twitter</a>
-            </li>
-          </ul>
-        </div>
-        <div class='prepend-1 span-5' id='twitter'></div>
-        <div class='prepend-1 span-5'>
-          <h2>Subscribe</h2>
-          <ul>
-            <li>
-              <a class='feed' href='/feed/atom.xml'>RSS</a>
-            </li>
-          </ul>
-        </div>
-        <div class='prepend-1 span-5'>
-          <div class='archives'>
-            <h2>Archives</h2>
-            <ul>
-              <li class='year'>
-                <a href='/blog/2009'>2009</a>
-                <ul>
-                  <li class='month'>
-                    <a href='/blog/2009/01'>January</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/02'>February</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/04'>April</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/05'>May</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2009/06'>June</a>
-                  </li>
-                </ul>
-              </li>
-              <li class='year'>
-                <a href='/blog/2008'>2008</a>
-                <ul>
-                  <li class='month'>
-                    <a href='/blog/2008/2'>February</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/5'>May</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/7'>July</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/8'>August</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/10'>October</a>
-                  </li>
-                  <li class='month'>
-                    <a href='/blog/2008/12'>December</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class='span-24' id='footer'>
-      <p>
-        Wonderland is styled using
-        <a href='http://www.blueprintcss.org/'>blueprint css</a>
-        and powered by
-        <a href='http://webby.rubyforge.org/'>Webby</a>
-        and
-        <a href='http://github.com/blog/272-github-pages'>GitHub Pages</a>
-      </p>
-      <p>
-        Les Hill &copy; 2008&ndash;2009
-      </p>
     </div>
   </div>
   <script type='text/javascript'>
     //<![CDATA[
-      \//
       (function() {
         var links = document.getElementsByTagName('a');
         var query = '?';
@@ -217,7 +168,6 @@
         }
         document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
       })();
-      \//
     //]]>
   </script>
 </body>
