@@ -1,0 +1,15 @@
+--- 
+title:      'Simplified Layout'
+author: Les Hill
+created_at: 2009-11-15 21:41:47.266941 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+Spurred on by the recent blog revamps of some fellow rocketeers, I have done the same and adopted a simple and direct layout. As is often the case, the restyling was really an opportunity to refactor and rethink.
+
+The most important refactoring was to break the myth of the *fold* with the blog archives. Previously, I was using ["Webby":http://webby.rubyforge.org]'s year and month index pages as the organization for the archives. Now the archives are on a single page as a reverse-chronological list that extends beneath the *fold*. The conventional wisdom on the *fold* is 'do not make your users scroll'.  And it is wrong.  Research has show that users do scroll[1]. Scrolling down a reverse-chronological list of posts does not make the user think -- the only organizing principle simpler than a reverse-chronological list is just an unorderd list. And that would not have been helpful.
+
+fn1. And it has for a long time! Here is ["Jakob Nielsen":http://www.useit.com/alertbox/9712a.html]'s take in 1997!
