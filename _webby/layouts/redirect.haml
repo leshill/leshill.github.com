@@ -11,4 +11,4 @@ filter: haml
     == #{@page.author} on #{@page.title}
 
 %body
-  = @content
+  = link_to "#{@page.author} on #{@page.title}", @page.redirect_to
