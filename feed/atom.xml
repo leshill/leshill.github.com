@@ -4,7 +4,7 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2009-11-17T23:24:01-05:00</updated>
+  <updated>2009-11-18T13:25:34-05:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -23,8 +23,8 @@
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;some_method&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   thing.method_that_might_raise!
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; thing
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; thing
 &lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;Before giving the answers to these two questions, let&amp;#8217;s go over what &lt;code&gt;ensure&lt;/code&gt; does.&lt;/p&gt;
@@ -34,11 +34,11 @@
 &lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   f = &lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.open(name, mode)
 &lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;   puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;calling your block&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;yield&lt;/span&gt; f
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; f
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;       f.close
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;       puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;file safely closed&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; f
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     f.close
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;     puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;file safely closed&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; 
 &lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; file_open_with_auto_close(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;) &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |file|
@@ -60,9 +60,9 @@
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;ensure_without_return&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;yield&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;     puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ensure&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;pc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ensure&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;pc&quot;&gt;true&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; 
 &lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; ensure_without_return { puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;; &lt;span class=&quot;pc&quot;&gt;false&lt;/span&gt; }
@@ -84,9 +84,9 @@
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;ensure_with_return&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;yield&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;     puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ensure&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ensure&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;true&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; 
 &lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; ensure_with_return { puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;; &lt;span class=&quot;pc&quot;&gt;false&lt;/span&gt; }
@@ -113,10 +113,10 @@
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;some_method&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   thing.method_that_might_raise!
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;rescue&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Exception&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;# we have rescued all possible exceptions&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; thing
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;rescue&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Exception&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# we have rescued all possible exceptions&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; thing
 &lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;Line 3 is a code smell.  Rescuing all exceptions is not desirable.  From our exploration of &lt;code&gt;ensure&lt;/code&gt; we can see that this code is the equivalent of the original code.&lt;/p&gt;

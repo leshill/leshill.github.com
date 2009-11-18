@@ -15,8 +15,8 @@ Quick! What does the following method do when @thing.method_that_might_raise!@ r
 <coderay:ruby>
 def some_method
   thing.method_that_might_raise!
-  ensure
-    return thing
+ensure
+  return thing
 end
 </coderay>
 </notextile>
@@ -31,11 +31,11 @@ def file_open_with_auto_close(name, mode = 'w', &block)
   f = File.open(name, mode)
   puts "calling your block"
   yield f
-  ensure
-    if f
-      f.close
-      puts "file safely closed"
-    end
+ensure
+  if f
+    f.close
+    puts "file safely closed"
+  end
 end
 
 file_open_with_auto_close('test') do |file|
@@ -64,9 +64,9 @@ Let's take a look at the difference in @irb@, first without an explicit @return@
 <coderay:ruby>
 def ensure_without_return
   yield
-  ensure
-    puts 'ensure'
-    true
+ensure
+  puts 'ensure'
+  true
 end
 
 ensure_without_return { puts 'block'; false }
@@ -93,9 +93,9 @@ And now with an explicit @return@ statement:
 <coderay:ruby>
 def ensure_with_return
   yield
-  ensure
-    puts 'ensure'
-    return true
+ensure
+  puts 'ensure'
+  return true
 end
 
 ensure_with_return { puts 'block'; false }
@@ -129,10 +129,10 @@ But why is this a code smell?  Consider the following code:
 <coderay:ruby>
 def some_method
   thing.method_that_might_raise!
-  rescue Exception
-    # we have rescued all possible exceptions
-  ensure
-    return thing
+rescue Exception
+  # we have rescued all possible exceptions
+ensure
+  return thing
 end
 </coderay>
 </notextile>
