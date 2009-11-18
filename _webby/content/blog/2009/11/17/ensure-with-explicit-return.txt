@@ -1,0 +1,170 @@
+---
+title:      'Ensure With Explicit Return'
+author: Les Hill
+created_at: 2009-11-17 12:30:31.167159 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+  - hashrocket
+---
+Quick! What does the following method do when @thing.method_that_might_raise!@ raises @SomeAppException@?  And why is this a code smell?
+
+<notextile>
+<coderay:ruby>
+def some_method
+  thing.method_that_might_raise!
+  ensure
+    return thing
+end
+</coderay>
+</notextile>
+
+Before giving the answers to these two questions, let's go over what @ensure@ does.
+
+The @ensure@ clause in Ruby is run regardless of whether a block has thrown an exception or not.  A simple example is opening a file[1]:
+
+<notextile>
+<coderay:ruby>
+def file_open_with_auto_close(name, mode = 'w', &block)
+  f = File.open(name, mode)
+  puts "calling your block"
+  yield f
+  ensure
+    if f
+      f.close
+      puts "file safely closed"
+    end
+end
+
+file_open_with_auto_close('test') do |file|
+  file << 'data'
+  raise 'exception raised'
+end
+#
+#calling your block
+#file safely closed
+#RuntimeError: exception raised
+#  from (irb):14
+#  from (irb):4:in `file_open_with_auto_close'
+#  from (irb):12
+</coderay>
+</notextile>
+
+Even if there is an exception while processing the file, like the one we @raise@ on line 14, @ensure@ allows us to close the file.
+
+After the @ensure@ clause has run, Ruby either continues the exception handling (in this case @irb@ rescues it and gives us a stack trace) or continues executing the block.
+
+*Except* if you have an explicit @return@ statement in your @ensure@ clause.
+
+Let's take a look at the difference in @irb@, first without an explicit @return@ statement:
+
+<notextile>
+<coderay:ruby>
+def ensure_without_return
+  yield
+  ensure
+    puts 'ensure'
+    true
+end
+
+ensure_without_return { puts 'block'; false }
+#
+#block
+#ensure
+#=> false
+#
+ensure_without_return { raise 'exception raised'; puts 'block'; false }
+#
+#ensure
+#RuntimeError: exception raised
+#  from (irb):21
+#  from (irb):16:in `ensure_without_return'
+#  from (irb):21
+</coderay>
+</notextile>
+
+Note that although the @ensure@ clause is run after the block from line 8, it has not changed the return value of the method.
+
+And now with an explicit @return@ statement:
+
+<notextile>
+<coderay:ruby>
+def ensure_with_return
+  yield
+  ensure
+    puts 'ensure'
+    return true
+end
+
+ensure_with_return { puts 'block'; false }
+#
+#block
+#ensure
+#=> true
+#
+ensure_with_return { raise 'exception raised'; puts 'block'; false }
+#
+#ensure
+#=> true
+</coderay>
+</notextile>
+
+The first thing to note is that the return of the method is now determined by the @return@ statement in the @ensure@ clause on line 5.
+
+The second thing to note is that the explicit @return@ statement acts as an implicit @rescue@ clause, allowing the code to resume as if no exception had been raised.
+
+Summarizing:
+
+* an @ensure@ clause runs whether an exception is raised or not
+* an @ensure@ clause without an explicit @return@ statement does not alter the return value
+* using the explicit @return@ changes the control flow as if a @rescue Exception@ clause was in place before the @ensure@ clause
+
+Back to our original questions.  You should now know what the method does when @thing.method_that_might_raise!@ raises @SomeAppException@.
+
+But why is this a code smell?  Consider the following code:
+
+<notextile>
+<coderay:ruby>
+def some_method
+  thing.method_that_might_raise!
+  rescue Exception
+    # we have rescued all possible exceptions
+  ensure
+    return thing
+end
+</coderay>
+</notextile>
+
+Line 3 is a code smell.  Rescuing all exceptions is not desirable.  From our exploration of @ensure@ we can see that this code is the equivalent of the original code.
+
+Can we refactor it? Yes. Yes we can.
+
+When we can recover from @SomeAppException@, we can just @rescue@:
+
+<notextile>
+<coderay:ruby>
+def some_method
+  begin
+    thing.method_that_might_raise!
+  rescue SomeAppException => e
+    # do something clever here
+  end
+  thing
+end
+</coderay>
+</notextile>
+
+And when we cannot recover from @SomeAppException@, we just let the exception propagate up the call stack:
+
+<notextile>
+<coderay:ruby>
+def some_method
+  thing.method_that_might_raise!
+  thing
+end
+</coderay>
+</notextile>
+
+fn1. @File.open@ already does this.
