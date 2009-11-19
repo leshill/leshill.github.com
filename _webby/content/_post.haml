@@ -13,7 +13,7 @@ filter: haml
   .comments
     #disqus_thread
     :javascript
-      var disqus_url = '#{post.url}';
+      var disqus_url = 'http://blog.leshill.org#{post.url}';
     %script{ :type => "text/javascript", :src => "http://disqus.com/forums/leshill/embed.js" }
     %noscript
       = link_to 'View the discussion thread.', "http://leshill.disqus.com/?url=ref"
