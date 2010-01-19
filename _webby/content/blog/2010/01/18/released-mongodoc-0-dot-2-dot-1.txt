@@ -158,3 +158,4 @@ MongoDoc.config_path = './config/mongodb.yml'
 </coderay>
 </notextile>
 
+fn1. The Ruby driver exposes an API that understands JSON.
