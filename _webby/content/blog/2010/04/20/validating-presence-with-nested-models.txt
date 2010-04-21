@@ -1,0 +1,100 @@
+--- 
+title:      'Validating Presence with Nested Models'
+author: Les Hill
+created_at: 2010-04-20 16:46:43.785629 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+A nifty little problem with a simple, lightly-documented solution came up recently while I was working on a _super-duper-top-secret-and-totally-awesome_ app for a client.
+
+@accepts_nested_attributes_for@ has been a boon in Rails 2.3 and a great replacement for the venerable @attribute_fu@. Under normal circumstances, you would use it like this to allow you to save an associated model thorough the parent model:
+
+<notextile>
+<coderay:ruby>
+class Book < ActiveRecord::Base
+  has_many :chapters
+
+  accepts_nested_attributes_for :chapters
+end
+</coderay>
+</notextile>
+
+In your forms, you can use @fields_for@ to specify associated @Chapter@ models. With a little *JavaScript-fu*, you can craft a form to create a @Book@ with multiple @Chapters@ all at once, without a lot of controller code. With a little more *JavaScript* and an option to @accepts_nested_attributes_for@ you can enable deletions:
+
+<notextile>
+<coderay:ruby>
+class Book < ActiveRecord::Base
+  has_many :chapters
+
+  accepts_nested_attributes_for :chapters,
+    :allow_destroy => true,
+end
+</coderay>
+</notextile>
+
+At this point, you may want to detect and reject empty associated models like this:
+
+<notextile>
+<coderay:ruby>
+class Book < ActiveRecord::Base
+  has_many :chapters
+
+  accepts_nested_attributes_for :chapters,
+    :allow_destroy => true,
+    :reject_if => proc {|attrs| attrs['title'].blank? }
+end
+</coderay>
+</notextile>
+
+The wrinkle comes in if you also want to validate that you always have at least *one* associated model. You might think of doing the following, which is close, but does not work in all situations:
+
+<notextile>
+<coderay:ruby>
+class Book < ActiveRecord::Base
+  has_many :chapters
+
+  accepts_nested_attributes_for :chapters,
+    :allow_destroy => true,
+    :reject_if => proc {|attrs| attrs['title'].blank? }
+
+  validate :must_have_one_chapter
+
+  def must_have_one_chapter
+    errors.add(:chapters, 'must have one chapter') if chapters_empty?
+  end
+
+  def chapters_empty?
+    chapters.empty?
+  end
+end
+</coderay>
+</notextile>
+
+This works except when you are destroying an associated model; the @destroy@ occurs *after* the validations have been run, making @chapters_empty?@ true. The fix is to check the associated models to see if they are @marked_for_destruction@ during the @save@, like so:
+
+<notextile>
+<coderay:ruby>
+class Book < ActiveRecord::Base
+  has_many :chapters
+
+  accepts_nested_attributes_for :chapters,
+    :allow_destroy => true,
+    :reject_if => proc {|attrs| attrs['title'].blank? }
+
+  validate :must_have_one_chapter
+
+  def must_have_one_chapter
+    errors.add(:chapters, 'must have one chapter') if chapters_empty?
+  end
+
+  def chapters_empty?
+    chapters.empty? or chapters.all? {|chapter| chapter.marked_for_destruction? }
+  end
+end
+</coderay>
+</notextile>
+
+Now the validation will fail as expected; you might check the associated models for destruction seperately to generate a more appropriate message.
