@@ -1,0 +1,6 @@
+source :gemcutter
+
+gem 'coderay'
+gem 'haml'
+gem 'RedCloth'
+gem 'webby'
