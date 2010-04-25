@@ -158,6 +158,18 @@ ul.posts {
 /*
 /*****************************************************************************/
 
+blockquote {
+  border-left: 1px solid #888;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 80%
+  margin: 2em 2em 2em 1em;
+  padding: 0px 0.75em 0px 1.25em;
+}
+
+.footnote a {
+  text-decoration: none;
+}
+
 #post {
   margin: 2em 0;
 }

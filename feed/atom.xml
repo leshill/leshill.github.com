@@ -4,12 +4,45 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2010-04-21T10:18:40-04:00</updated>
+  <updated>2010-04-25T00:05:36-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Dynamic Load Paths in OSX</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/04/24/dynamic-load-paths-in-osx.html" />
+    
+    <id>tag:blog.leshill.org,2010-04-24:1272165152</id>
+    
+    <published>2010-04-24T23:12:32-04:00</published>
+    <updated>2010-04-24T23:12:32-04:00</updated>
+    <content type="html">&lt;p&gt;This came up recently in the context of &lt;strong&gt;OSX&lt;/strong&gt; 10.5, &lt;code&gt;rvm&lt;/code&gt;, &lt;code&gt;nokogiri&lt;/code&gt;, and &lt;code&gt;libxml2&lt;/code&gt;. The issue is that the shipped &lt;code&gt;libxml2&lt;/code&gt; for Leopard is old, and when using &lt;code&gt;rvm&lt;/code&gt; with a compiled &lt;code&gt;ruby&lt;/code&gt; which uses the system installed &lt;code&gt;libxml2&lt;/code&gt;, &lt;code&gt;nokogiri&lt;/code&gt; will give this friendly message:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;HI.  You&amp;#8217;re using libxml2 version 2.6.16 which is over 4&lt;br /&gt;
+years old and has plenty of bugs.  We suggest that for maximum&lt;br /&gt;
+HTML/XML parsing pleasure, you upgrade your version of&lt;br /&gt;
+libxml2 and re-install nokogiri.  If you like using libxml2&lt;br /&gt;
+version 2.6.16, but don&amp;#8217;t like this warning, please&lt;br /&gt;
+define the constant&lt;br /&gt;
+I_KNOW_I_AM_USING_AN_OLD_AND_BUGGY_VERSION_OF_LIBXML2&lt;br /&gt;
+before requring nokogiri.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This becomes a problem when you have explicitly added a newer version of &lt;code&gt;libxml2&lt;/code&gt;, for example with &lt;a href=&quot;http://mxcl.github.com/homebrew/&quot;&gt;Homebrew&lt;/a&gt; , and &lt;code&gt;ruby&lt;/code&gt; is not finding it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;OSX&lt;/strong&gt; handles its shared library load paths this way&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;ol&gt;
+	&lt;li&gt;Find the requested library using &lt;strong&gt;DYLD_LIBRARY_PATH&lt;/strong&gt;&lt;sup class=&quot;footnote&quot; id=&quot;fnr2&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+	&lt;li&gt;Find the requested library where the binary thinks it should be&lt;/li&gt;
+	&lt;li&gt;Find the requested library using &lt;strong&gt;DYLD_FALLBACK_LIBRARY_PATH&lt;/strong&gt;&lt;sup class=&quot;footnote&quot; id=&quot;fnr3&quot;&gt;&lt;a href=&quot;#fn3&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;To make &lt;code&gt;ruby&lt;/code&gt; find your &lt;code&gt;libxml2&lt;/code&gt;, set the &lt;strong&gt;DYLD_LIBRARY_PATH&lt;/strong&gt; environment variable to include the path to where it is installed, for example &lt;code&gt;/usr/local/lib&lt;/code&gt;. In my case, I set it like so:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% export DYLD_LIBRARY_PATH=/usr/local/lib&lt;/code&gt;&lt;/pre&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; This is a first order approximation, there are plenty of missing nuances here.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;a href=&quot;#fnr2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; This is a colon seperated path variable.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn3&quot;&gt;&lt;a href=&quot;#fnr3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; Also a colon separated path variable; the default is &lt;code&gt;(HOME)/lib:/usr/local/lib:/lib:/usr/lib&lt;/code&gt;&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Validating Presence with Nested Models</title>
@@ -28,6 +61,7 @@
 &lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   accepts_nested_attributes_for &lt;span class=&quot;sy&quot;&gt;:chapters&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;In your forms, you can use &lt;code&gt;fields_for&lt;/code&gt; to specify associated &lt;code&gt;Chapter&lt;/code&gt; models. With a little &lt;strong&gt;JavaScript-fu&lt;/strong&gt;, you can craft a form to create a &lt;code&gt;Book&lt;/code&gt; with multiple &lt;code&gt;Chapters&lt;/code&gt; all at once, without a lot of controller code. With a little more &lt;strong&gt;JavaScript&lt;/strong&gt; and an option to &lt;code&gt;accepts_nested_attributes_for&lt;/code&gt; you can enable deletions:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Book&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;ActiveRecord&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Base&lt;/span&gt;
@@ -37,6 +71,7 @@
 &lt;span class=&quot;no&quot;&gt;5&lt;/span&gt;     &lt;span class=&quot;sy&quot;&gt;:allow_destroy&lt;/span&gt; =&amp;gt; &lt;span class=&quot;pc&quot;&gt;true&lt;/span&gt;,
 &lt;span class=&quot;no&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;At this point, you may want to detect and reject empty associated models like this:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Book&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;ActiveRecord&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Base&lt;/span&gt;
@@ -47,6 +82,7 @@
 &lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;     &lt;span class=&quot;sy&quot;&gt;:reject_if&lt;/span&gt; =&amp;gt; proc {|attrs| attrs[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;].blank? }
 &lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;The wrinkle comes in if you also want to validate that you always have at least &lt;strong&gt;one&lt;/strong&gt; associated model. You might think of doing the following, which is close, but does not work in all situations:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Book&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;ActiveRecord&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Base&lt;/span&gt;
@@ -67,6 +103,7 @@
 &lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;This works except when you are destroying an associated model; the &lt;code&gt;destroy&lt;/code&gt; occurs &lt;strong&gt;after&lt;/strong&gt; the validations have been run, making &lt;code&gt;chapters_empty?&lt;/code&gt; true. The fix is to check the associated models to see if they are &lt;code&gt;marked_for_destruction&lt;/code&gt; during the &lt;code&gt;save&lt;/code&gt;, like so:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Book&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;ActiveRecord&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Base&lt;/span&gt;
@@ -87,6 +124,7 @@
 &lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;Now the validation will fail as expected; you might check the associated models for destruction seperately to generate a more appropriate message.&lt;/p&gt;</content>
   </entry>
   
@@ -116,7 +154,8 @@
 &lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   attr_accessor &lt;span class=&quot;sy&quot;&gt;:street&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:city&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:state&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:zip&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:phone_number&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;With MongoDoc, instead of saving JSON&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, we can save an object directly:&lt;/p&gt;
+
+&lt;p&gt;With MongoDoc, instead of saving JSON&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, we can save an object directly:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; contact = &lt;span class=&quot;co&quot;&gt;Contact&lt;/span&gt;.new
 &lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; contact.name = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Hashrocket&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
@@ -132,12 +171,14 @@
 &lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; 
 &lt;span class=&quot;no&quot;&gt;13&lt;/span&gt; collection.save(contact)&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;We can query using the powerful mongoDB query syntax, and have it return Ruby objects:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; results = collection.find(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;addresses.state&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;FL&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
 &lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; hashrocket = results.to_a.find {|contact| contact.name == &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Hashrocket&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;}
 &lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; puts hashrocket.addresses.first.phone_number&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;Take a look in the examples directory for more code.&lt;/p&gt;
 &lt;h2&gt;Mapping Documents&lt;/h2&gt;
 &lt;p&gt;MongoDoc provides ActiveRecord-like persistence, associations, named scopes, and validations (from &lt;a href=&quot;http://github.com/durran/validatable&quot;&gt;Validatable&lt;/a&gt;) as well as a mongoDB query language (from &lt;a href=&quot;http://mongoid.org/home&quot;&gt;Mongoid&lt;/a&gt;). MongoDoc also plays nicely with Rails.&lt;/p&gt;
@@ -164,6 +205,7 @@
 &lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;   named_scope &lt;span class=&quot;sy&quot;&gt;:in_state&lt;/span&gt;, lambda {|state| {&lt;span class=&quot;sy&quot;&gt;:where&lt;/span&gt; =&amp;gt; {&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;addresses.state&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt; =&amp;gt; state}}}
 &lt;span class=&quot;no&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;Since a mongoDB document has no fixed schema, we define the composition of a document directly in our classes. Please note we do not specify types! We can also specify &lt;code&gt;has_one&lt;/code&gt; or &lt;code&gt;has_many&lt;/code&gt; associations.&lt;/p&gt;
 &lt;p&gt;Building and saving a document is easy:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
@@ -175,14 +217,17 @@
 &lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;:phone_number&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;877 885 8846&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
 &lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; contact.save&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;Now that we have some data, we can query using our named scope:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; hashrocket = &lt;span class=&quot;co&quot;&gt;Contact&lt;/span&gt;.in_state(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;FL&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;).find {|contact| contact.name == &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Hashrocket&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;}&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;And we can even perform partial updates:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; hashrocket.addresses.first.update_attributes(&lt;span class=&quot;sy&quot;&gt;:street&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;320 First Street North, #712&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;h2&gt;Installation&lt;/h2&gt;
 &lt;p&gt;MongoDoc &lt;strong&gt;requires&lt;/strong&gt; mongoDB v1.3 or later.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo gem install mongodoc&lt;/code&gt;&lt;/pre&gt;
@@ -197,7 +242,8 @@ options:
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;MongoDoc&lt;/span&gt;.config_path = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;./config/mongodb.yml&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; The Ruby driver exposes an API that understands JSON.&lt;/p&gt;</content>
+
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; The Ruby driver exposes an API that understands JSON.&lt;/p&gt;</content>
   </entry>
   
   <entry>
@@ -216,8 +262,9 @@ options:
 &lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; thing
 &lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;Before giving the answers to these two questions, let&amp;#8217;s go over what &lt;code&gt;ensure&lt;/code&gt; does.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;ensure&lt;/code&gt; clause in Ruby is run regardless of whether a block has thrown an exception or not.  A simple example is opening a file&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;ensure&lt;/code&gt; clause in Ruby is run regardless of whether a block has thrown an exception or not.  A simple example is opening a file&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;file_open_with_auto_close&lt;/span&gt;(name, mode = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &amp;amp;block)
 &lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   f = &lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.open(name, mode)
@@ -242,6 +289,7 @@ options:
 &lt;span class=&quot;no&quot;&gt;21&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#  from (irb):4:in `file_open_with_auto_close'&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;22&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#  from (irb):12&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;Even if there is an exception while processing the file, like the one we &lt;code&gt;raise&lt;/code&gt; on line 14, &lt;code&gt;ensure&lt;/code&gt; allows us to close the file.&lt;/p&gt;
 &lt;p&gt;After the &lt;code&gt;ensure&lt;/code&gt; clause has run, Ruby either continues the exception handling (in this case &lt;code&gt;irb&lt;/code&gt; rescues it and gives us a stack trace) or continues executing the block.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Except&lt;/strong&gt; if you have an explicit &lt;code&gt;return&lt;/code&gt; statement in your &lt;code&gt;ensure&lt;/code&gt; clause.&lt;/p&gt;
@@ -268,6 +316,7 @@ options:
 &lt;span class=&quot;no&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#  from (irb):16:in `ensure_without_return'&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#  from (irb):21&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;Note that although the &lt;code&gt;ensure&lt;/code&gt; clause is run after the block from line 8, it has not changed the return value of the method.&lt;/p&gt;
 &lt;p&gt;And now with an explicit &lt;code&gt;return&lt;/code&gt; statement:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
@@ -289,6 +338,7 @@ options:
 &lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#ensure&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;The first thing to note is that the return of the method is now determined by the &lt;code&gt;return&lt;/code&gt; statement in the &lt;code&gt;ensure&lt;/code&gt; clause on line 5.&lt;/p&gt;
 &lt;p&gt;The second thing to note is that the explicit &lt;code&gt;return&lt;/code&gt; statement acts as an implicit &lt;code&gt;rescue&lt;/code&gt; clause, allowing the code to resume as if no exception had been raised.&lt;/p&gt;
 &lt;p&gt;Summarizing:&lt;/p&gt;
@@ -308,6 +358,7 @@ options:
 &lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; thing
 &lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;Line 3 is a code smell.  Rescuing all exceptions is not desirable.  From our exploration of &lt;code&gt;ensure&lt;/code&gt; we can see that this code is the equivalent of the original code.&lt;/p&gt;
 &lt;p&gt;Can we refactor it? Yes. Yes we can.&lt;/p&gt;
 &lt;p&gt;When we can recover from &lt;code&gt;SomeAppException&lt;/code&gt;, we can just &lt;code&gt;rescue&lt;/code&gt;:&lt;/p&gt;
@@ -321,6 +372,7 @@ options:
 &lt;span class=&quot;no&quot;&gt;7&lt;/span&gt;   thing
 &lt;span class=&quot;no&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;And when we cannot recover from &lt;code&gt;SomeAppException&lt;/code&gt;, we just let the exception propagate up the call stack:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;some_method&lt;/span&gt;
@@ -328,7 +380,8 @@ options:
 &lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;   thing
 &lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; &lt;code&gt;File.open&lt;/code&gt; already does this.&lt;/p&gt;&lt;!-- #hashrocket --&gt;</content>
+
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; &lt;code&gt;File.open&lt;/code&gt; already does this.&lt;/p&gt;&lt;!-- #hashrocket --&gt;</content>
   </entry>
   
   <entry>
@@ -340,8 +393,8 @@ options:
     <published>2009-11-15T21:41:47-05:00</published>
     <updated>2009-11-15T21:41:47-05:00</updated>
     <content type="html">&lt;p&gt;Spurred on by the recent blog revamps of some fellow rocketeers, I have done the same and adopted a simple and direct layout. As is often the case, the restyling was really an opportunity to refactor and rethink.&lt;/p&gt;
-&lt;p&gt;The most important refactoring was to break the myth of the &lt;strong&gt;fold&lt;/strong&gt; with the blog archives. Previously, I was using &lt;a href=&quot;http://webby.rubyforge.org&quot;&gt;Webby&lt;/a&gt;&amp;#8216;s year and month index pages as the organization for the archives. Now the archives are on a single page as a reverse-chronological list that extends beneath the &lt;strong&gt;fold&lt;/strong&gt;. The conventional wisdom on the &lt;strong&gt;fold&lt;/strong&gt; is &amp;#8217;do not make your users scroll&amp;#8217;.  And it is wrong.  Research has show that users do scroll&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. Scrolling down a reverse-chronological list of posts does not make the user think &amp;#8212; the only organizing principle simpler than a reverse-chronological list is just an unorderd list. And that would not have been helpful.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; And it has for a long time! Here is &lt;a href=&quot;http://www.useit.com/alertbox/9712a.html&quot;&gt;Jakob Nielsen&lt;/a&gt;&amp;#8217;s take in 1997!&lt;/p&gt;</content>
+&lt;p&gt;The most important refactoring was to break the myth of the &lt;strong&gt;fold&lt;/strong&gt; with the blog archives. Previously, I was using &lt;a href=&quot;http://webby.rubyforge.org&quot;&gt;Webby&lt;/a&gt;&amp;#8216;s year and month index pages as the organization for the archives. Now the archives are on a single page as a reverse-chronological list that extends beneath the &lt;strong&gt;fold&lt;/strong&gt;. The conventional wisdom on the &lt;strong&gt;fold&lt;/strong&gt; is &amp;#8217;do not make your users scroll&amp;#8217;.  And it is wrong.  Research has show that users do scroll&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. Scrolling down a reverse-chronological list of posts does not make the user think &amp;#8212; the only organizing principle simpler than a reverse-chronological list is just an unorderd list. And that would not have been helpful.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; And it has for a long time! Here is &lt;a href=&quot;http://www.useit.com/alertbox/9712a.html&quot;&gt;Jakob Nielsen&lt;/a&gt;&amp;#8217;s take in 1997!&lt;/p&gt;</content>
   </entry>
   
   <entry>
@@ -354,13 +407,13 @@ options:
     <updated>2009-10-11T10:26:37-04:00</updated>
     <content type="html">&lt;p&gt;There has been some turmoil in the Ruby community over the &lt;a href=&quot;http://github.com&quot;&gt;github&lt;/a&gt; decision to stop building gems.&lt;/p&gt;
 &lt;p&gt;Since I have a forked gem that was previously hosted on github, I and my fellow users of the fork are directly affected.&lt;/p&gt;
-&lt;p&gt;In my case, I am going to do the simplest thing that could possibly work.  Move my existing published gem under the same name&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; (&lt;code&gt;leshill-will_paginate&lt;/code&gt;) over to &lt;a href=&quot;http://gemcutter.org&quot;&gt;Gemcutter&lt;/a&gt;.  Why not follow along?&lt;/p&gt;
+&lt;p&gt;In my case, I am going to do the simplest thing that could possibly work.  Move my existing published gem under the same name&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; (&lt;code&gt;leshill-will_paginate&lt;/code&gt;) over to &lt;a href=&quot;http://gemcutter.org&quot;&gt;Gemcutter&lt;/a&gt;.  Why not follow along?&lt;/p&gt;
 &lt;p&gt;Before getting started, I signed up with Gemcutter (go ahead, do so now).  Once you have confirmed your account, follow the very clear instructions and add your API key to &lt;code&gt;~/.gemrc&lt;/code&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;gemcutter_key: NOT_MY_REAL_API_KEY&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gemcutter runs as a plugin to RubyGems, so lets install and configure it.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo gem install gemcutter
 gem tumble&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Great!  We are ready to start publishing. Gemcutter only accepts prebuilt gems, so we will have to build our gem locally first. Before doing that I will modify the &lt;code&gt;gemspec&lt;/code&gt; to make it clear that this is a fork by changing the name&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and a few other fields.&lt;/p&gt;
+&lt;p&gt;Great!  We are ready to start publishing. Gemcutter only accepts prebuilt gems, so we will have to build our gem locally first. Before doing that I will modify the &lt;code&gt;gemspec&lt;/code&gt; to make it clear that this is a fork by changing the name&lt;sup class=&quot;footnote&quot; id=&quot;fnr2&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; and a few other fields.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Gem::Specification.new do |s|
   s.name    = 'leshill-will_paginate'
   s.version = '2.3.11'
@@ -377,8 +430,8 @@ gem tumble&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can now install my fork of &lt;a href=&quot;http://github.com/leshill/will_paginate&quot;&gt;will_paginate&lt;/a&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo gem install leshill-will_paginate&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Done!&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; This is one source of heat (of many?) in the current &amp;#8216;What to do?&amp;#8217; gem discussion.  Who knew we were all unhappy with the github decision to publish gems as &lt;code&gt;user-gemname&lt;/code&gt;?&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; github prepended the github user automatically, now we have to do so explicitly in the &lt;code&gt;gemspec&lt;/code&gt;.&lt;/p&gt;</content>
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; This is one source of heat (of many?) in the current &amp;#8216;What to do?&amp;#8217; gem discussion.  Who knew we were all unhappy with the github decision to publish gems as &lt;code&gt;user-gemname&lt;/code&gt;?&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;a href=&quot;#fnr2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; github prepended the github user automatically, now we have to do so explicitly in the &lt;code&gt;gemspec&lt;/code&gt;.&lt;/p&gt;</content>
   </entry>
   
   <entry>
@@ -390,7 +443,7 @@ gem tumble&lt;/code&gt;&lt;/pre&gt;
     <published>2009-10-09T14:22:34-04:00</published>
     <updated>2009-10-09T14:22:34-04:00</updated>
     <content type="html">&lt;p&gt;At &lt;a href=&quot;http://hashrocket.com&quot;&gt;Hashrocket&lt;/a&gt; we are always expressing our views on code, both the good and the bad, about both our own code and code written by others. Recently, the issue of when to use the two flavors of Ruby logic operators: the punctation operators &lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;, &lt;code&gt;||&lt;/code&gt;, &lt;code&gt;!&lt;/code&gt; or the english operators &lt;code&gt;and&lt;/code&gt;, &lt;code&gt;or&lt;/code&gt;, &lt;code&gt;not&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Developers new to Ruby&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; should be following the rule to only use the punctuation operators for logic:&lt;/p&gt;
+&lt;p&gt;Developers new to Ruby&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; should be following the rule to only use the punctuation operators for logic:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;editable = user.admin? || item.editable?&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;if user.admin? &amp;amp;&amp;amp; item.editable?&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and the english operators for flow control:&lt;/p&gt;
@@ -398,9 +451,9 @@ gem tumble&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Once developers are proficient (see below for a quiz!) in Ruby, this rule should become a rule of thumb or just ignored.  For example, this reads better with &lt;code&gt;and&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;if user.admin? and item.editable?&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;So how do you know if you should be following the rule or just be aware of it? Answer this:&lt;/p&gt;
-&lt;p&gt;What happens if we replace the &lt;code&gt;||&lt;/code&gt; with &lt;code&gt;or&lt;/code&gt; in the first example and why?&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; Excluding those who are proficient in other languages and already recognize the issue.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt; Did not know the answer?  Take a minute and learn &lt;a href=&quot;http://phrogz.net/ProgrammingRuby/language.html#table_18.4&quot;&gt;Ruby&amp;#8217;s operator precedence&lt;/a&gt;&lt;/p&gt;</content>
+&lt;p&gt;What happens if we replace the &lt;code&gt;||&lt;/code&gt; with &lt;code&gt;or&lt;/code&gt; in the first example and why?&lt;sup class=&quot;footnote&quot; id=&quot;fnr2&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; Excluding those who are proficient in other languages and already recognize the issue.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;a href=&quot;#fnr2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; Did not know the answer?  Take a minute and learn &lt;a href=&quot;http://phrogz.net/ProgrammingRuby/language.html#table_18.4&quot;&gt;Ruby&amp;#8217;s operator precedence&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
   
   <entry>
@@ -444,6 +497,7 @@ stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/p
 &lt;span class=&quot;no&quot;&gt;14&lt;/span&gt; 
 &lt;span class=&quot;no&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Object&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;, &lt;span class=&quot;co&quot;&gt;StubChainMocha&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Object&lt;/span&gt;)&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;Copy that into &lt;code&gt;spec/stub_chain_mocha.rb&lt;/code&gt; and then require it from &lt;code&gt;spec_helper.rb&lt;/code&gt;.&lt;/p&gt;</content>
   </entry>
   
@@ -465,74 +519,38 @@ stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/p
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; config.gem &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;leshill-bouncy_bots&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:lib&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;bouncy_bots&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:version&lt;/span&gt; =&amp;gt; &lt;span class=&quot;fl&quot;&gt;0.1&lt;/span&gt;.&lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;h3&gt;Using Bouncy Bots!&lt;/h3&gt;
 &lt;h4&gt;Controllers&lt;/h4&gt;
 &lt;p&gt;Use the &lt;code&gt;bounce_bots&lt;/code&gt; macro in your controllers to detect and bounce bots.  The macro takes two parameters, the honey pot field name and the redirect path or url.  For example, to check for the field &lt;code&gt;:blog_url&lt;/code&gt; and redirect bots to the &lt;code&gt;pages_path&lt;/code&gt; :&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; bounce_bots &lt;span class=&quot;sy&quot;&gt;:blog_url&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:pages_path&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;You can also pass the standard controller filter options such as &lt;code&gt;:only&lt;/code&gt; or &lt;code&gt;:except&lt;/code&gt; :&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; bounce_bots &lt;span class=&quot;sy&quot;&gt;:blog_url&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:pages_path&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:only&lt;/span&gt; =&amp;gt; [&lt;span class=&quot;sy&quot;&gt;:create&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:update&lt;/span&gt;]&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;h4&gt;Views&lt;/h4&gt;
 &lt;p&gt;In your form views, add the honey pot field.  If you are using &lt;code&gt;form_tag&lt;/code&gt;, you can use any form element, for example (using &lt;a href=&quot;http://haml.hamptoncatlin.com/&quot;&gt;haml&lt;/a&gt;):&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; = text_field_tag &lt;span class=&quot;sy&quot;&gt;:blog_url&lt;/span&gt;, &lt;span class=&quot;pc&quot;&gt;nil&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:class&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;long_required&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;In your stylesheet, add a rule to &amp;#8216;hide&amp;#8217; the field:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;cl&quot;&gt;.long_required&lt;/span&gt; { &lt;span class=&quot;ke&quot;&gt;display&lt;/span&gt;:&lt;span class=&quot;vl&quot;&gt;none&lt;/span&gt;; }&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;ty&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;cl&quot;&gt;.long_required&lt;/span&gt; { &lt;span class=&quot;ke&quot;&gt;display&lt;/span&gt;:&lt;span class=&quot;vl&quot;&gt;none&lt;/span&gt;; }&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;If you use &lt;code&gt;form_for&lt;/code&gt;, there are two helpers to simplify making the honey pot.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; = f.bounce_label &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Blog Url&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:class&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;long_required&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
 &lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; %br
 &lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; = f.bounce_field &lt;span class=&quot;sy&quot;&gt;:class&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;long_required&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
+
 &lt;p&gt;And that&amp;#8217;s it.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Semantic List Markup with will_paginate</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/06/27/semantic-list-markup-with-will-paginate.html" />
-    
-    <id>tag:blog.leshill.org,2009-06-27:1246106129</id>
-    
-    <published>2009-06-27T08:35:29-04:00</published>
-    <updated>2009-06-27T08:35:29-04:00</updated>
-    <content type="html">&lt;h3&gt;will_paginate using ul and li tags&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;http://github.com/mislav/will_paginate/tree/master&quot;&gt;will_paginate&lt;/a&gt; is the defacto standard plugin for the Rails community.  Almost every app will need pagination and &lt;strong&gt;will_paginate&lt;/strong&gt; does &lt;em&gt;almost&lt;/em&gt; everything you need.&lt;/p&gt;
-&lt;p&gt;The one thing will_paginate does not do is generate &lt;em&gt;semantic&lt;/em&gt; pagination markup.  Semantic markup uses standard HTML tags to convey structure and meaning.  For example using an &lt;code&gt;h1&lt;/code&gt; tag for a heading rather than styling a &lt;code&gt;div&lt;/code&gt; tag to do the same.&lt;/p&gt;
-&lt;p&gt;The default &lt;strong&gt;will_paginate&lt;/strong&gt; pagination is a series of anchors and spans strung together.  As many a designer has pointed out, that series is really a list of pagination controls.  If you are working with such a designer or you are writing semantic markup, try out my &lt;a href=&quot;http://github.com/leshill/will_paginate/tree/master&quot;&gt;fork&lt;/a&gt; and enjoy &lt;strong&gt;will_paginate&lt;/strong&gt; with semantic pagination.&lt;/p&gt;
-&lt;h3&gt;How to install&lt;/h3&gt;
-&lt;p&gt;As of this moment, you can install it as a plugin.  I am considering releasing this as a gem; ideally the patch to &lt;strong&gt;will_paginate&lt;/strong&gt; would be accepted (see below).&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;%script/plugin install git://github.com/leshill/will_paginate.git&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;How to use&lt;/h3&gt;
-&lt;p&gt;Use the &lt;code&gt;will_paginate&lt;/code&gt; view helper, passing the &lt;code&gt;:semantic =&amp;gt; true&lt;/code&gt; option.  If you do not want the enclosing &lt;code&gt;ul&lt;/code&gt; tag, pass &lt;code&gt;:container =&amp;gt; false&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;%= will_paginate @pages, :semantic =&amp;gt; true %&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Which looks like:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;ta&quot;&gt;&amp;lt;ul&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;pagination&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;disabled prev_page&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;en&quot;&gt;&amp;amp;laquo;&lt;/span&gt; Previous&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;current&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;1&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;rel&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;2&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=3&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;3&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=4&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;4&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=5&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;5&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=6&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;6&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=7&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;7&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=8&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;8&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=9&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;9&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;gap&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;en&quot;&gt;&amp;amp;hellip;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=33&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;33&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=34&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;34&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;next_page&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/pages?page=2&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;next_page&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;rel&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;Next &lt;span class=&quot;en&quot;&gt;&amp;amp;raquo;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;ta&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;h3&gt;Will this patch be accepted?&lt;/h3&gt;
-&lt;p&gt;Signs point to &amp;#8216;uncertain&amp;#8217;.  Mislav has in the past indicated that he was not convinced that list support was necessary in the plugin since you can replace the renderer&lt;sup class=&quot;footnote&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.  Since semantic markup is commonly used, I have sent a pull request.  In any event, the authors of &lt;strong&gt;will_paginate&lt;/strong&gt; have my thanks for creating a very useful plugin.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt; So why the fork?  In order to support the containing &lt;code&gt;ul&lt;/code&gt; directly, the core of the helper had to be modified. See the change on &lt;a href=&quot;http://github.com/leshill/will_paginate/commit/6db9356185c9172d35d548000ab91d1bd8cbc7b2&quot;&gt;github&lt;/a&gt; .&lt;/p&gt;</content>
   </entry>
   
 </feed>
