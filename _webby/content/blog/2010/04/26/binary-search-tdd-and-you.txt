@@ -1,0 +1,108 @@
+--- 
+title:      'Binary Search, TDD, and You'
+author: Les Hill
+created_at: 2010-04-26 23:02:38.317867 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+A bit late to the party, I took a programming challenge from "Mike Taylor":http://reprog.wordpress.com/2010/04/19/are-you-one-of-the-10-percent/ :
+
+bq. Are you one of the 10% of programmers who can write a binary search?
+
+The *10%* is a reference to an essay by Jon Bentley, who found that only
+*10%* of the programmers asked could write a binary search correctly given a
+description of the algorithm. The challenge from Mike was to write it without
+any *TESTING* whatsoever.
+
+Here is my answer in Ruby:
+
+<notextile>
+<coderay:ruby>
+def binary_search(value, array, start, finish = array.length - 1)
+  return -1 if finish < start
+  mid = (start + finish)/2
+  if array[mid] == value
+    mid
+  elsif array[mid] < value
+    binary_search(value, array, mid + 1, finish)
+  else
+    binary_search(value, array, start, mid - 1)
+  end
+end
+</coderay>
+</notextile>
+
+Pretty standard. This was about 1/2 an hour from start to finish; mostly due to
+not being able to run the code[1] and obsessing over whether I had handled all
+the edge cases, which is related to my motivation for taking the challenge.
+
+Aside from being a fun exercise, the comments Mike received led him to write
+two more blog posts!
+
+The third in the series, "Testing is not a substitute for thinking (binary
+search part
+3)":http://reprog.wordpress.com/2010/04/23/testing-is-not-a-substitute-for-thinking-binary-search-part-3/
+has some interesting and keen observations. I agree with most of them.
+
+However, the conclusion is absolutely, categorically wrong.
+
+bq.. Bearing in mind that binary search is in fact a pretty
+simple algorithm, it’s likely true that you could have
+bashed your way through to a working implementation after
+a few iterations of coding and testing.  But –
+
+Your code would be less clear
+
+You wouldn’t understand clearly why it works
+
+You would find it harder to extend or modify in future
+
+p. Inflammatory stuff. And totally *wrong*.
+
+A few paragraphs earlier, Mike lays out why he thinks this:
+
+bq. By using skills that are not often thought about
+in these days of test-driven kool-ade, reflexive
+application of design patterns and automatic refactoring
+tools.  Once more, let me be clear that all these things
+are good so far as they go — really, I agree with you,
+they are! — but they are no substitute for actually
+thinking, and thinking is what’s needed for hard problems.
+
+Indeed thinking is what is needed for hard problems. What Mike has failed to
+acknowledge is that TDD is not a tool for writing code, TDD is a tool for
+thinking clearly.
+
+As an example of this, in the spirit of Mike's challenge, I expressly wrote the
+binary search code without test-driving it. However, instead of writing the
+code directly from the description, I turned the description into a set of
+constraints. As each of those constraints became clear, I wrote code. And in
+the end I had a working binary search[2].
+
+So, am I saying Mike is an idiot? Absolutely not! After hearing more and more
+critiques (both thoughtful and thoughtless) of TDD, I am coming around to the
+conclusion that there is a problem. The problem is most people learn TDD
+from a book or a blog or even from a vague description and some positive can-do
+attitude (Commendable!  Really!)
+
+What has become apparent is that this will not work for most developers. What
+does work is deliberate study and mentoring, ideally by pairing.  A mentor who
+is showing you more than just the syntactic mechanics of writing test code and
+having it invoke the code under test. Someone who is explaining how tests are a
+tool for understanding and solving the problem.
+
+Folks interested in Software Craftsmanship have realized this truth about all
+aspects of software development: you learn better from a mentor and from
+deliberate practice.
+
+TDD is no exception.
+
+fn1. Sort-of, according to Mike's rules I could have shaken out syntax errors
+by running the code; in the case of Ruby, that felt like cheating, so I just
+stared at it.
+
+fn2. After the fact, I threw in a test scaffold to verify that it does work,
+and that it is log(2)N.
