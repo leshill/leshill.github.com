@@ -1,0 +1,47 @@
+--- 
+title:      'Rails 3, RSpec, Factory Girl, Haml, and jQuery'
+author: Les Hill
+created_at: 2010-05-08 23:56:10.279200 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+Easily generate a Rails 3 application with RSpec, Factory Girl, Haml, and jQuery in one line:
+
+bc. % rails my_app -J -T -m \
+    http://github.com/leshill/rails3-app/raw/master/app.rb
+
+h2. rvm
+
+We love @rvm@, so the application has an @.rvmrc@ generated to specify a gemset.
+
+h2. Generators
+
+This also gives you the Factory Girl and Haml Rails 3 generators &mdash; the generators for RSpec are in the RSpec gem &mdash; so that your factories and views are generated using Factory Girl and Haml, and that all your generated tests are specs. These generators are from the *rails3_generators* gem, we pulled them out to avoid all the other dependencies included in that gem.
+
+h2. JavaScript Includes
+
+Since the Rails helper @javascript_include_tag :defaults@ is looking for Prototype, we used "this":http://flow.handle.it/past/2010/2/9/jquery_in_rails to add a new JavaScript expansion to pull in the jQuery libraries. Use it like so:
+
+<notextile>
+<coderay:ruby>
+  = javascript_include_tag :jquery
+</coderay>
+</notextile>
+
+h2. git
+
+We love @git@, so the application has a git repo initialized with all the initial changes staged.
+
+h2. Wrap Up
+
+After the application has been generated, there are a few clean up commands to run:
+
+bc.   % cd my_app
+  % gem install bundler
+  % bundle install
+  % bundle lock
+  % script/rails generate rspec:install
+

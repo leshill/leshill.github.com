@@ -4,12 +4,44 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2010-04-27T00:50:16-04:00</updated>
+  <updated>2010-05-09T00:05:37-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Rails 3, RSpec, Factory Girl, Haml, and jQuery</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/05/08/rails-3-rspec-factory-girl-haml-and-jquery.html" />
+    
+    <id>tag:blog.leshill.org,2010-05-08:1273377370</id>
+    
+    <published>2010-05-08T23:56:10-04:00</published>
+    <updated>2010-05-08T23:56:10-04:00</updated>
+    <content type="html">&lt;p&gt;Easily generate a Rails 3 application with RSpec, Factory Girl, Haml, and jQuery in one line:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% rails my_app -J -T -m \
+    http://github.com/leshill/rails3-app/raw/master/app.rb&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;rvm&lt;/h2&gt;
+&lt;p&gt;We love &lt;code&gt;rvm&lt;/code&gt;, so the application has an &lt;code&gt;.rvmrc&lt;/code&gt; generated to specify a gemset.&lt;/p&gt;
+&lt;h2&gt;Generators&lt;/h2&gt;
+&lt;p&gt;This also gives you the Factory Girl and Haml Rails 3 generators &amp;mdash; the generators for RSpec are in the RSpec gem &amp;mdash; so that your factories and views are generated using Factory Girl and Haml, and that all your generated tests are specs. These generators are from the &lt;strong&gt;rails3_generators&lt;/strong&gt; gem, we pulled them out to avoid all the other dependencies included in that gem.&lt;/p&gt;
+&lt;h2&gt;JavaScript Includes&lt;/h2&gt;
+&lt;p&gt;Since the Rails helper &lt;code&gt;javascript_include_tag :defaults&lt;/code&gt; is looking for Prototype, we used &lt;a href=&quot;http://flow.handle.it/past/2010/2/9/jquery_in_rails&quot;&gt;this&lt;/a&gt; to add a new JavaScript expansion to pull in the jQuery libraries. Use it like so:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; = javascript_include_tag &lt;span class=&quot;sy&quot;&gt;:jquery&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;git&lt;/h2&gt;
+&lt;p&gt;We love &lt;code&gt;git&lt;/code&gt;, so the application has a git repo initialized with all the initial changes staged.&lt;/p&gt;
+&lt;h2&gt;Wrap Up&lt;/h2&gt;
+&lt;p&gt;After the application has been generated, there are a few clean up commands to run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  % cd my_app
+  % gem install bundler
+  % bundle install
+  % bundle lock
+  % script/rails generate rspec:install&lt;/code&gt;&lt;/pre&gt;</content>
+  </entry>
   
   <entry>
     <title>Binary Search, TDD, and You</title>
@@ -556,39 +588,6 @@ gem tumble&lt;/code&gt;&lt;/pre&gt;
     <updated>2009-09-29T23:39:00-04:00</updated>
     <content type="html">&lt;p&gt;Dan Croak just posted &lt;a href=&quot;http://robots.thoughtbot.com/post/200254501/testing-named-scopes&quot;&gt;testing named scopes&lt;/a&gt; which you should read right now.&lt;/p&gt;
 &lt;p&gt;We also have been using the rule of thumb in the last paragraph: No Chains in Controllers.  Our experience is that not only do you immediately benefit from simpler tests, but we have also found that you get simpler and more expressive implementations.  If we do end up using a chain we usually encapsulate it in a method, keeping the tests and code clean.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Update for stub_chain for Mocha</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/08/05/update-for-stub-chain-for-mocha.html" />
-    
-    <id>tag:blog.leshill.org,2009-08-05:1249495362</id>
-    
-    <published>2009-08-05T14:02:42-04:00</published>
-    <updated>2009-08-05T14:02:42-04:00</updated>
-    <content type="html">&lt;p&gt;Thanks to &lt;a href=&quot;http://technicalpickles.com&quot;&gt;Josh Nichols&lt;/a&gt; for pointing out that the original code (and the RSpec mock code!) did not handle stubbing the same part of the chain multiple times, for example:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;stub_chain(:votes, :supporting, :count).returns(supporting_count)
-stub_chain(:votes, :opposing, :count).returns(opposing_count)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here is the updated snippet that works when you stub the same part of the chain multiple times:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;StubChainMocha&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Object&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;stub_chain&lt;/span&gt;(*methods)
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; methods.length &amp;gt; &lt;span class=&quot;i&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;         next_in_chain = ::&lt;span class=&quot;co&quot;&gt;Object&lt;/span&gt;.new
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;         stubs(methods.shift).returns(next_in_chain)
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;         next_in_chain.stub_chain(*methods)
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;else&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;         stubs(methods.shift)
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Object&lt;/span&gt;.send(&lt;span class=&quot;sy&quot;&gt;:include&lt;/span&gt;, &lt;span class=&quot;co&quot;&gt;StubChainMocha&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Object&lt;/span&gt;)&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Copy that into &lt;code&gt;spec/stub_chain_mocha.rb&lt;/code&gt; and then require it from &lt;code&gt;spec_helper.rb&lt;/code&gt;.&lt;/p&gt;</content>
   </entry>
   
 </feed>
