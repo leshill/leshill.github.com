@@ -1,0 +1,72 @@
+--- 
+title:      'resque_spec for RSpec and Cucumber'
+author: Les Hill
+created_at: 2010-06-13 18:10:17.186073 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+@resque_spec@ is a simple RSpec and Cucumber matcher for "Resque":http://github.com/defunkt/resque , loosely based on "resque_unit":http://github.com/justinweiss/resque_unit .
+
+Install it as a gem:
+
+bc. % gem install resque_spec
+
+Given this scenario
+
+<notextile>
+<coderay:cucumber>
+Given a person
+When I recalculate
+Then the person has calculate queued
+</coderay>
+</notextile>
+
+And I write this spec using the @resque_spec@ matcher
+
+<notextile>
+<coderay:ruby>
+describe "#recalculate" do
+  before do
+    ResqueSpec.reset!
+  end
+
+  it "adds person.calculate to the Person queue" do
+    person.recalculate
+    Person.should have_queued(person.id, :calculate)
+  end
+end
+</coderay>
+</notextile>
+
+(And I take note of the @before@ block that is calling @reset!@ for every spec)
+
+And I might write this as a Cucumber step
+
+<notextile>
+<coderay:ruby>
+Then /the (\w?) has (\w?) queued/ do |thing, method|
+  thing_obj = instance_variable_get("@#{thing}")
+  thing_obj.class.should have_queued(thing_obj.id, method.to_sym)
+end
+</coderay>
+</notextile>
+
+Then I write some code to make it pass:
+
+<notextile>
+<coderay:ruby>
+class Person
+  @queue = :people
+
+  def recalculate
+    Resque.enqueue(Person, id, :calculate)
+  end
+end
+</coderay>
+</notextile>
+
+The source is up on "github":http://github.com/leshill/resque_spec .
+
