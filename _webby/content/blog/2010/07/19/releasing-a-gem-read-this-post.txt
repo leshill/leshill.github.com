@@ -1,0 +1,41 @@
+--- 
+title:      'Releasing A Gem? Read This Post!'
+author: Les Hill
+created_at: 2010-07-19 00:04:35.315777 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+One of the great things about the Ruby community is that we are very happy to release our code; to contribute back to the community. "RubyGems":http://rubygems.org and "github":http://github.com make it ridiculously easy.
+
+Another great thing about the Ruby community is that we also like to help out. Maybe, someone wants to fix a bug, or perhaps sees an opportunity for a new feature, or just wants to help make the code better.
+
+Lately, for whatever reason[1], I have been running across well-used gems that passively discourage contributions because their development environment setup is disastrous[2].
+
+Anyone should be able to contribute to your gem after doing this[3]:
+
+bc. % git clone http://github.com/leshill/makes_coffee.git
+% cd makes_coffee
+% cat > .rvmrc
+rvm_gemset_create_on_use_flag=1
+rvm gemset use makes_coffee
+^D
+% cd .
+% gem install bundler
+% bundle install
+% rake
+...All specs pass...
+
+That is all[4] it should take to get a development environment up and running for your gem.
+
+fn1. We are using _Rails 3_.
+
+fn2. It is disastrous if I have to repeatedly run @rake@ and look at stack traces for me to discern exactly what needs to be done to get a working development environment.
+
+fn3. Yea, I am using @bundler@ and @rvm@. You should be too.[5]
+
+fn4. Yea, the @rvmrc@ step should not need to be there :) Oh and there may need to be more done, like setting up a database. Put it in the @README@.
+
+fn5. Or your gem has a development setup in the @README@ or wiki, like "RSpec":http://github.com/rspec/rspec-dev.
