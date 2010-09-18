@@ -2,6 +2,7 @@
 author: Les Hill
 title:      Obvious Money
 created_at: 2008-08-15 08:00:42.949881 -05:00
+layout: blog_post
 blog_post:  true
 tag: 'blog.leshill.org,2008-08-15:22'
 filter:
