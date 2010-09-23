@@ -1,0 +1,18 @@
+--- 
+title:      'Cucumber Tips'
+author: Les Hill
+created_at: 2010-09-19 23:35:52.523317 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+As a happy "Cucumber":http://cukes.info user, I am really glad to see that a few of my favorite Rubyists have recently blogged some tips for using *Cucumber*:
+
+Jonas Nicklas "You're Cuking It Wrong":http://elabs.se/blog/15-you-re-cuking-it-wrong
+Mislav Marohnić "You're cuking it right":http://mislav.uniqpath.com/2010/09/cuking-it-right/
+Bodaniel Jeanes "Selctor-Free Cucumber Scenarios":http://bjeanes.com/2010/09/19/selector-free-cucumber-scenarios
+
+Thanks guys!
+

@@ -1,0 +1,21 @@
+--- 
+title:      "Everyone's first Rails app"
+author: Les Hill
+created_at: 2010-09-23 10:45:54.298053 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+There are some rumblings in the Ruby community now about the recently released "Diaspora":http://www.joindiaspora.com/ and the quality of its codebase.
+
+I took a look at it on the day it was released. What I saw was everyone's first Rails app. The code looked like it had been written directly after reading a tutorial or a book.
+
+This is not a bad thing. We all started with Rails and wrote an app like that.  It is the first step on the journey to mastery.
+
+Unfortunately for the Diaspora team, they have done this in public and with a great expectations and corresponding hype (Diaspora has been called a _Facebook Killer_).
+
+Fortunately for the Diaspora team, they have done this in public with a "github repository":http://github.com/diaspora/diaspora that others can contribute to[1] and make better.
+
+fn1. Sort of. I, and others, would have preferred an MIT license.
