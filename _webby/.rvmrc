@@ -1,1 +1,1 @@
-rvm gemset use blog
+rvm use ruby-1.8.7-p174@blog
