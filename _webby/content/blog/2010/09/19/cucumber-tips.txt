@@ -12,7 +12,6 @@ As a happy "Cucumber":http://cukes.info user, I am really glad to see that a few
 
 Jonas Nicklas "You're Cuking It Wrong":http://elabs.se/blog/15-you-re-cuking-it-wrong
 Mislav Marohnić "You're cuking it right":http://mislav.uniqpath.com/2010/09/cuking-it-right/
-Bodaniel Jeanes "Selctor-Free Cucumber Scenarios":http://bjeanes.com/2010/09/19/selector-free-cucumber-scenarios
+Bodaniel Jeanes "Selector-Free Cucumber Scenarios":http://bjeanes.com/2010/09/19/selector-free-cucumber-scenarios
 
 Thanks guys!
-

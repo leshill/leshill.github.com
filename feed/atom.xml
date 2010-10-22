@@ -4,7 +4,7 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2010-09-23T13:33:39-04:00</updated>
+  <updated>2010-10-22T10:45:42-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -38,7 +38,7 @@
     <content type="html">&lt;p&gt;As a happy &lt;a href=&quot;http://cukes.info&quot;&gt;Cucumber&lt;/a&gt; user, I am really glad to see that a few of my favorite Rubyists have recently blogged some tips for using &lt;strong&gt;Cucumber&lt;/strong&gt;:&lt;/p&gt;
 &lt;p&gt;Jonas Nicklas &lt;a href=&quot;http://elabs.se/blog/15-you-re-cuking-it-wrong&quot;&gt;You&amp;#8217;re Cuking It Wrong&lt;/a&gt;&lt;br /&gt;
 Mislav Marohnić &lt;a href=&quot;http://mislav.uniqpath.com/2010/09/cuking-it-right/&quot;&gt;You&amp;#8217;re cuking it right&lt;/a&gt;&lt;br /&gt;
-Bodaniel Jeanes &lt;a href=&quot;http://bjeanes.com/2010/09/19/selector-free-cucumber-scenarios&quot;&gt;Selctor-Free Cucumber Scenarios&lt;/a&gt;&lt;/p&gt;
+Bodaniel Jeanes &lt;a href=&quot;http://bjeanes.com/2010/09/19/selector-free-cucumber-scenarios&quot;&gt;Selector-Free Cucumber Scenarios&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Thanks guys!&lt;/p&gt;</content>
   </entry>
   
