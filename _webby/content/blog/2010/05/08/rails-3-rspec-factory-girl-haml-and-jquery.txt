@@ -10,7 +10,7 @@ filter:
 --- 
 Easily generate a Rails 3 application with RSpec, Factory Girl, Haml, and jQuery in one line:
 
-bc. % rails my_app -J -T -m \
+bc. % rails new my_app -J -T -m \
     http://github.com/leshill/rails3-app/raw/master/app.rb
 
 h2. rvm

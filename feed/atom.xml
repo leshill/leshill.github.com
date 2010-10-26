@@ -4,7 +4,7 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2010-10-22T10:45:42-04:00</updated>
+  <updated>2010-10-26T17:14:47-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -137,7 +137,7 @@ rvm gemset use makes_coffee
     <published>2010-05-08T23:56:10-04:00</published>
     <updated>2010-05-08T23:56:10-04:00</updated>
     <content type="html">&lt;p&gt;Easily generate a Rails 3 application with RSpec, Factory Girl, Haml, and jQuery in one line:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% rails my_app -J -T -m \
+&lt;pre&gt;&lt;code&gt;% rails new my_app -J -T -m \
     http://github.com/leshill/rails3-app/raw/master/app.rb&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;rvm&lt;/h2&gt;
 &lt;p&gt;We love &lt;code&gt;rvm&lt;/code&gt;, so the application has an &lt;code&gt;.rvmrc&lt;/code&gt; generated to specify a gemset.&lt;/p&gt;
