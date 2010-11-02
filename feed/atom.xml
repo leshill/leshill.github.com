@@ -4,12 +4,96 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2010-10-26T17:14:47-04:00</updated>
+  <updated>2010-11-02T00:38:20-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Heroku Environment Variables</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/11/02/heroku-environment-variables.html" />
+    
+    <id>tag:blog.leshill.org,2010-11-02:1288670966</id>
+    
+    <published>2010-11-02T00:09:26-04:00</published>
+    <updated>2010-11-02T00:09:26-04:00</updated>
+    <content type="html">&lt;h1&gt;Also Known As: Config Vars&lt;/h1&gt;
+&lt;p&gt;Deploying an app to &lt;a href=&quot;http://heroku.com&quot;&gt;Heroku&lt;/a&gt; is awesome. Really. If you have not yet done so, it is worth spending the few minutes to setup a simple Rails app and deploy to Heroku.&lt;/p&gt;
+&lt;p&gt;Awesome! Unless you have a lot of local configuration (perhaps your app talks to many external systems and has lots of settings). Then it becomes a bit less awesome, but we can fix that!&lt;/p&gt;
+&lt;p&gt;Heroku handles local configuration with something Heroku calls &lt;em&gt;config variables&lt;/em&gt;. They are effectively environment variables, but I will follow Heroku&amp;#8217;s lead and call them &lt;em&gt;config variables&lt;/em&gt;.&lt;/p&gt;
+&lt;h2&gt;Local configurations before Heroku&lt;/h2&gt;
+&lt;p&gt;Before &lt;a href=&quot;http://heroku.com&quot;&gt;Heroku&lt;/a&gt;, the issue of how to keep local configurations, like database settings (including passwords) and API tokens, was resolved by having a file that was not checked into source control, but that was avaiable in all environments.&lt;/p&gt;
+&lt;p&gt;An example we are all familiar with is Capistrano. One (or more) YAML (usually) files are setup locally on each host: your local development box, the staging server, the production server.  On the deployment hosts (i.e. staging, production) these files are located in the Capistrano shared directory and symlinked during the deploy so that the application can read them to load any configurations.&lt;/p&gt;
+&lt;h2&gt;Local configurations with Heroku&lt;/h2&gt;
+&lt;p&gt;Heroku applications cannot use local storage in the same way. There is no directory available to store your applications configuration files locally; and you do not want them in source control&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;Heroku instead provides each application with user defined config variables that are available in the your application&amp;#8217;s &lt;code&gt;ENV&lt;/code&gt; hash. If, for example, you are configuring &lt;code&gt;omniauth&lt;/code&gt; with Twitter support, you might have this code in &lt;strong&gt;config/initializers/omniauth.rb&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Rails&lt;/span&gt;.application.config.middleware.use &lt;span class=&quot;co&quot;&gt;OmniAuth&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Builder&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   provider &lt;span class=&quot;sy&quot;&gt;:twitter&lt;/span&gt;, &lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;TWITTER_KEY&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;], &lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;TWITTER_SECRET&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Your app will read the configuration from the &lt;code&gt;ENV&lt;/code&gt; hash. You use the &lt;code&gt;heroku&lt;/code&gt; command to set the config variables:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;heroku config:add TWITTER_KEY=key TWITTER_SECRET=secret --app myapp&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This quickly becomes painful if you have to do this many times on many Heroku applications. After googling around for a bit, I found one article by &lt;a href=&quot;http://tammersaleh.com/posts/managing-heroku-environment-variables-for-local-development&quot;&gt;Tammer Saleh&lt;/a&gt; that provided a bit of inspiration.&lt;/p&gt;
+&lt;h1&gt;Managing Heroku config variables using a local YAML file&lt;/h1&gt;
+&lt;p&gt;We can make things better by using a local file on your development machine to manage all the settings in one place.&lt;/p&gt;
+&lt;p&gt;Lets save our configuration to &lt;code&gt;config/heroku.yml&lt;/code&gt; which looks like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;apps:
+  staging: myapp-staging
+  production: myapp
+development: &amp;amp;defaults
+  admins: 'joe sue'
+  domain_url: http://localhost:3000
+  twitter_key: key
+  twitter_secret: secret
+test:
+  &amp;lt;&amp;lt;: *defaults
+staging:
+  admins: 'joe sue'
+  domain_url: http://myapp-staging.heroku.com
+  twitter_key: key
+  twitter_secret: secret
+production:
+  admins: 'joe sue'
+  domain_url: http://myapp.heroku.com
+  twitter_key: key
+  twitter_secret: secret&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The file should seem familiar; it is organized very much like the Rails &lt;code&gt;database.yml&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;apps&lt;/code&gt; key defines a mapping from an environment name like &lt;code&gt;staging&lt;/code&gt; to a Heroku application like &lt;code&gt;myapp-staging&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Each environment key has its own settings. Note that &lt;code&gt;development&lt;/code&gt; and &lt;code&gt;test&lt;/code&gt; are not named under the &lt;code&gt;apps&lt;/code&gt; key as they local and are not deployed to Heroku.&lt;/p&gt;
+&lt;p&gt;This file &lt;strong&gt;is not checked in&lt;/strong&gt; and should be added to your &lt;code&gt;.gitignore&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To load our YAML settings file at runtime, we have to modify &lt;code&gt;config/application.rb&lt;/code&gt; and add a new file: &lt;code&gt;config/heroku_env.rb&lt;/code&gt; (all files are on &lt;a href=&quot;http://github.com/leshill/heroku-thor&quot;&gt;github&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;We make the following modification to the top of  &lt;code&gt;config/application.rb&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;../boot&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;pc&quot;&gt;__FILE__&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;rails&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; load(&lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;../heroku_env.rb&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;pc&quot;&gt;__FILE__&lt;/span&gt;))&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Our app is now reading our YAML file and populating the application&amp;#8217;s &lt;code&gt;ENV&lt;/code&gt; hash based our settings file when we run locally.&lt;/p&gt;
+&lt;p&gt;To set the config variables on Heroku, we copy &lt;code&gt;heroku.thor&lt;/code&gt; (yes, &lt;a href=&quot;http://github.com/leshill/heroku-thor&quot;&gt;github&lt;/a&gt;) to our &lt;code&gt;lib/tasks&lt;/code&gt; directory.&lt;/p&gt;
+&lt;p&gt;It defines two tasks for each of your Heroku apps: &lt;code&gt;config&lt;/code&gt; to set the config variables from the settings files, and &lt;code&gt;rack_env&lt;/code&gt; to set the &lt;code&gt;RACK_ENV&lt;/code&gt; config variable.&lt;/p&gt;
+&lt;p&gt;We use &lt;code&gt;thor deploy:staging:config&lt;/code&gt; to setup our config variables on our Heroku staging application.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% thor deploy:staging:config
+heroku config:add ADMINS='joe sue' DOMAIN_URL='http://myappp-staging.heroku.com' TWITTER_KEY='key' TWITTER_SECRET='secret' --app myapp-staging
+Adding config vars:
+  ADMINS         =&amp;gt; joe sue
+  DOMAIN_URL     =&amp;gt; http://myapp-staging.heroku.com
+  TWITTER_KEY    =&amp;gt; key
+  TWITTER_SECRET =&amp;gt; secret
+Restarting app...done.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And your app is now configured.&lt;/p&gt;
+&lt;h2&gt;Better?&lt;/h2&gt;
+&lt;p&gt;I have found this approach to managing my Heroku apps useful. One way it can be improved is by extending the &lt;code&gt;thor&lt;/code&gt; file to include common Heroku commands such as deploys (and you could use &lt;code&gt;invoke&lt;/code&gt; to chain together the deploy and configuration settings).&lt;/p&gt;
+&lt;p&gt;Still, I am not pleased. Mostly this is because I have not packaged this up nicely. The need for locally modified files makes this a candidate for a Rails generator, something I may do if I get the time.&lt;/p&gt;
+&lt;p&gt;For now the raw source is up on &lt;a href=&quot;http://github.com/leshill/heroku-thor&quot;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; Really.&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Everyone's first Rails app</title>
@@ -483,144 +567,6 @@ options:
 &lt;/div&gt;
 
 &lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; The Ruby driver exposes an API that understands JSON.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Ensure With Explicit Return</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2009/11/17/ensure-with-explicit-return.html" />
-    
-    <id>tag:blog.leshill.org,2009-11-17:1258479031</id>
-    
-    <published>2009-11-17T12:30:31-05:00</published>
-    <updated>2009-11-17T12:30:31-05:00</updated>
-    <content type="html">&lt;p&gt;Quick! What does the following method do when &lt;code&gt;thing.method_that_might_raise!&lt;/code&gt; raises &lt;code&gt;SomeAppException&lt;/code&gt;?  And why is this a code smell?&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;some_method&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   thing.method_that_might_raise!
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; thing
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Before giving the answers to these two questions, let&amp;#8217;s go over what &lt;code&gt;ensure&lt;/code&gt; does.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;ensure&lt;/code&gt; clause in Ruby is run regardless of whether a block has thrown an exception or not.  A simple example is opening a file&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;file_open_with_auto_close&lt;/span&gt;(name, mode = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &amp;amp;block)
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   f = &lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.open(name, mode)
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;   puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;calling your block&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;yield&lt;/span&gt; f
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; f
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     f.close
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;     puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;file safely closed&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; file_open_with_auto_close(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;) &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |file|
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   file &amp;lt;&amp;lt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;   raise &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;exception raised&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#calling your block&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#file safely closed&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#RuntimeError: exception raised&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#  from (irb):14&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#  from (irb):4:in `file_open_with_auto_close'&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#  from (irb):12&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Even if there is an exception while processing the file, like the one we &lt;code&gt;raise&lt;/code&gt; on line 14, &lt;code&gt;ensure&lt;/code&gt; allows us to close the file.&lt;/p&gt;
-&lt;p&gt;After the &lt;code&gt;ensure&lt;/code&gt; clause has run, Ruby either continues the exception handling (in this case &lt;code&gt;irb&lt;/code&gt; rescues it and gives us a stack trace) or continues executing the block.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Except&lt;/strong&gt; if you have an explicit &lt;code&gt;return&lt;/code&gt; statement in your &lt;code&gt;ensure&lt;/code&gt; clause.&lt;/p&gt;
-&lt;p&gt;Let&amp;#8217;s take a look at the difference in &lt;code&gt;irb&lt;/code&gt;, first without an explicit &lt;code&gt;return&lt;/code&gt; statement:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;ensure_without_return&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;yield&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ensure&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;pc&quot;&gt;true&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; ensure_without_return { puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;; &lt;span class=&quot;pc&quot;&gt;false&lt;/span&gt; }
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#block&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; false&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt; ensure_without_return { raise &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;exception raised&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;; puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;; &lt;span class=&quot;pc&quot;&gt;false&lt;/span&gt; }
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#RuntimeError: exception raised&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#  from (irb):21&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#  from (irb):16:in `ensure_without_return'&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#  from (irb):21&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Note that although the &lt;code&gt;ensure&lt;/code&gt; clause is run after the block from line 8, it has not changed the return value of the method.&lt;/p&gt;
-&lt;p&gt;And now with an explicit &lt;code&gt;return&lt;/code&gt; statement:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;ensure_with_return&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;yield&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ensure&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;true&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; ensure_with_return { puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;; &lt;span class=&quot;pc&quot;&gt;false&lt;/span&gt; }
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#block&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt; ensure_with_return { raise &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;exception raised&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;; puts &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;block&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;; &lt;span class=&quot;pc&quot;&gt;false&lt;/span&gt; }
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#=&amp;gt; true&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The first thing to note is that the return of the method is now determined by the &lt;code&gt;return&lt;/code&gt; statement in the &lt;code&gt;ensure&lt;/code&gt; clause on line 5.&lt;/p&gt;
-&lt;p&gt;The second thing to note is that the explicit &lt;code&gt;return&lt;/code&gt; statement acts as an implicit &lt;code&gt;rescue&lt;/code&gt; clause, allowing the code to resume as if no exception had been raised.&lt;/p&gt;
-&lt;p&gt;Summarizing:&lt;/p&gt;
-&lt;ul&gt;
-	&lt;li&gt;an &lt;code&gt;ensure&lt;/code&gt; clause runs whether an exception is raised or not&lt;/li&gt;
-	&lt;li&gt;an &lt;code&gt;ensure&lt;/code&gt; clause without an explicit &lt;code&gt;return&lt;/code&gt; statement does not alter the return value&lt;/li&gt;
-	&lt;li&gt;using the explicit &lt;code&gt;return&lt;/code&gt; changes the control flow as if a &lt;code&gt;rescue Exception&lt;/code&gt; clause was in place before the &lt;code&gt;ensure&lt;/code&gt; clause&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Back to our original questions.  You should now know what the method does when &lt;code&gt;thing.method_that_might_raise!&lt;/code&gt; raises &lt;code&gt;SomeAppException&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;But why is this a code smell?  Consider the following code:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;some_method&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   thing.method_that_might_raise!
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;rescue&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Exception&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# we have rescued all possible exceptions&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;ensure&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; thing
-&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Line 3 is a code smell.  Rescuing all exceptions is not desirable.  From our exploration of &lt;code&gt;ensure&lt;/code&gt; we can see that this code is the equivalent of the original code.&lt;/p&gt;
-&lt;p&gt;Can we refactor it? Yes. Yes we can.&lt;/p&gt;
-&lt;p&gt;When we can recover from &lt;code&gt;SomeAppException&lt;/code&gt;, we can just &lt;code&gt;rescue&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;some_method&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;begin&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;     thing.method_that_might_raise!
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;rescue&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;SomeAppException&lt;/span&gt; =&amp;gt; e
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;# do something clever here&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt;   thing
-&lt;span class=&quot;no&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;And when we cannot recover from &lt;code&gt;SomeAppException&lt;/code&gt;, we just let the exception propagate up the call stack:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;some_method&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   thing.method_that_might_raise!
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;   thing
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; &lt;code&gt;File.open&lt;/code&gt; already does this.&lt;/p&gt;&lt;!-- #hashrocket --&gt;</content>
   </entry>
   
 </feed>

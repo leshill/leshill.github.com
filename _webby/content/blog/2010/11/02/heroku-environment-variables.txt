@@ -1,0 +1,142 @@
+---
+title:      'Heroku Environment Variables'
+author: Les Hill
+created_at: 2010-11-02 00:09:26.361082 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+---
+
+h1. Also Known As: Config Vars
+
+Deploying an app to "Heroku":http://heroku.com is awesome. Really. If you have not yet done so, it is worth spending the few minutes to setup a simple Rails app and deploy to Heroku.
+
+
+Awesome! Unless you have a lot of local configuration (perhaps your app talks to many external systems and has lots of settings). Then it becomes a bit less awesome, but we can fix that!
+
+
+Heroku handles local configuration with something Heroku calls _config variables_. They are effectively environment variables, but I will follow Heroku's lead and call them _config variables_.
+
+
+h2. Local configurations before Heroku
+
+Before "Heroku":http://heroku.com, the issue of how to keep local configurations, like database settings (including passwords) and API tokens, was resolved by having a file that was not checked into source control, but that was avaiable in all environments.
+
+
+An example we are all familiar with is Capistrano. One (or more) YAML (usually) files are setup locally on each host: your local development box, the staging server, the production server.  On the deployment hosts (i.e. staging, production) these files are located in the Capistrano shared directory and symlinked during the deploy so that the application can read them to load any configurations.
+
+
+h2. Local configurations with Heroku
+
+Heroku applications cannot use local storage in the same way. There is no directory available to store your applications configuration files locally; and you do not want them in source control[1].
+
+
+Heroku instead provides each application with user defined config variables that are available in the your application's @ENV@ hash. If, for example, you are configuring @omniauth@ with Twitter support, you might have this code in *config/initializers/omniauth.rb*:
+
+
+<notextile>
+<coderay:ruby>
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
+end
+</coderay>
+</notextile>
+
+
+Your app will read the configuration from the @ENV@ hash. You use the @heroku@ command to set the config variables:
+
+bc. heroku config:add TWITTER_KEY=key TWITTER_SECRET=secret --app myapp
+
+
+This quickly becomes painful if you have to do this many times on many Heroku applications. After googling around for a bit, I found one article by "Tammer Saleh":http://tammersaleh.com/posts/managing-heroku-environment-variables-for-local-development that provided a bit of inspiration.
+
+
+h1. Managing Heroku config variables using a local YAML file
+
+
+We can make things better by using a local file on your development machine to manage all the settings in one place.
+
+Lets save our configuration to @config/heroku.yml@ which looks like this:
+
+bc. apps:
+  staging: myapp-staging
+  production: myapp
+development: &defaults
+  admins: 'joe sue'
+  domain_url: http://localhost:3000
+  twitter_key: key
+  twitter_secret: secret
+test:
+  <<: *defaults
+staging:
+  admins: 'joe sue'
+  domain_url: http://myapp-staging.heroku.com
+  twitter_key: key
+  twitter_secret: secret
+production:
+  admins: 'joe sue'
+  domain_url: http://myapp.heroku.com
+  twitter_key: key
+  twitter_secret: secret
+
+The file should seem familiar; it is organized very much like the Rails @database.yml@ file.
+
+
+The @apps@ key defines a mapping from an environment name like @staging@ to a Heroku application like @myapp-staging@.
+
+
+Each environment key has its own settings. Note that @development@ and @test@ are not named under the @apps@ key as they local and are not deployed to Heroku.
+
+
+This file *is not checked in* and should be added to your @.gitignore@.
+
+
+To load our YAML settings file at runtime, we have to modify @config/application.rb@ and add a new file: @config/heroku_env.rb@ (all files are on "github":http://github.com/leshill/heroku-thor).
+
+
+We make the following modification to the top of  @config/application.rb@:
+
+
+<notextile>
+<coderay:ruby>
+require File.expand_path('../boot', __FILE__)
+
+require "rails"
+
+load(File.expand_path('../heroku_env.rb', __FILE__))
+</coderay>
+</notextile>
+
+
+Our app is now reading our YAML file and populating the application's @ENV@ hash based our settings file when we run locally.
+
+
+To set the config variables on Heroku, we copy @heroku.thor@ (yes, "github":http://github.com/leshill/heroku-thor) to our @lib/tasks@ directory.
+
+It defines two tasks for each of your Heroku apps: @config@ to set the config variables from the settings files, and @rack_env@ to set the @RACK_ENV@ config variable.
+
+We use @thor deploy:staging:config@ to setup our config variables on our Heroku staging application.
+
+bc. % thor deploy:staging:config
+heroku config:add ADMINS='joe sue' DOMAIN_URL='http://myappp-staging.heroku.com' TWITTER_KEY='key' TWITTER_SECRET='secret' --app myapp-staging
+Adding config vars:
+  ADMINS         => joe sue
+  DOMAIN_URL     => http://myapp-staging.heroku.com
+  TWITTER_KEY    => key
+  TWITTER_SECRET => secret
+Restarting app...done.
+
+
+And your app is now configured.
+
+h2. Better?
+
+I have found this approach to managing my Heroku apps useful. One way it can be improved is by extending the @thor@ file to include common Heroku commands such as deploys (and you could use @invoke@ to chain together the deploy and configuration settings).
+
+Still, I am not pleased. Mostly this is because I have not packaged this up nicely. The need for locally modified files makes this a candidate for a Rails generator, something I may do if I get the time.
+
+For now the raw source is up on "github":http://github.com/leshill/heroku-thor.
+
+fn1. Really.
