@@ -71,11 +71,13 @@ development: &defaults
 test:
   <<: *defaults
 staging:
+  bundle_without: development:test
   admins: 'joe sue'
   domain_url: http://myapp-staging.heroku.com
   twitter_key: key
   twitter_secret: secret
 production:
+  bundle_without: development:test
   admins: 'joe sue'
   domain_url: http://myapp.heroku.com
   twitter_key: key

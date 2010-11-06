@@ -4,7 +4,7 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2010-11-02T00:38:20-04:00</updated>
+  <updated>2010-11-06T11:24:16-04:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -52,11 +52,13 @@ development: &amp;amp;defaults
 test:
   &amp;lt;&amp;lt;: *defaults
 staging:
+  bundle_without: development:test
   admins: 'joe sue'
   domain_url: http://myapp-staging.heroku.com
   twitter_key: key
   twitter_secret: secret
 production:
+  bundle_without: development:test
   admins: 'joe sue'
   domain_url: http://myapp.heroku.com
   twitter_key: key
