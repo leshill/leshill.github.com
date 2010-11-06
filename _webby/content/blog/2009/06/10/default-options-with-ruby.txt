@@ -64,7 +64,7 @@ end
 </coderay>
 </notextile>
 
-This code works until you want to set a default value to @nil@.  This can be fixed by replacing the conditional on line three with @unless self.has_key?(key)@.  Or you can simply rewrite this in terms of @Hash#merge@[4]:
+This code works until you want to set a default value to @nil@.  This can be fixed by replacing the conditional on line three with @unless has_key?(key)@.  Or you can simply rewrite this in terms of @Hash#merge@[4]:
 
 <notextile>
 <coderay:ruby>
