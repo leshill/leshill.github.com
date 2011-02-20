@@ -1,0 +1,35 @@
+--- 
+title:      'Is BDD Right for a Startup?'
+author: Les Hill
+created_at: 2011-02-20 08:52:26.577226 -05:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+There is a thread over on "Hacker News":http://news.ycombinator.com/item?id=2240595 about this, and there is a question on "Quora":http://qr.ae/AeVm about it as well.
+
+TL;DR : Team knows TDD/BDD? Use it!
+
+To me the answer is absolutely yes, with an important qualification. The
+developers must be experienced with TDD/BDD. When the team is experienced with
+TDD/BDD and knows the tools, idioms, anti-patterns, and effective
+workflows it delivers better, higher quality, and more desirable results
+faster.
+
+When the team does not know how to go about TDD/BDD effectively, their lack of
+skill in driving features through testing will slow them down and will not
+yield better results[1] -- this is not unexpected. It takes practice and
+discipline to build testing skills.
+
+If you are at a startup, writing some code and asking the question "Do we
+TDD/BDD?" -- it seems to me that you have already crossed the Rubicon and are
+not going to be able to TDD/BDD effectively. The time to make that choice is
+when you are assembling your team.
+
+Founding your startup now? TDD/BDD experience should be one of the criteria you
+look for in your development team.
+
+fn1. In my experience, the efforts of someone new to TDD/BDD are usually
+ineffective at delivering clean and valuable code.

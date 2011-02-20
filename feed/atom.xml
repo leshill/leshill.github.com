@@ -4,12 +4,41 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2010-11-06T11:24:16-04:00</updated>
+  <updated>2011-02-20T12:22:41-05:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Is BDD Right for a Startup?</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2011/02/20/is-bdd-right-for-a-startup.html" />
+    
+    <id>tag:blog.leshill.org,2011-02-20:1298209946</id>
+    
+    <published>2011-02-20T08:52:26-05:00</published>
+    <updated>2011-02-20T08:52:26-05:00</updated>
+    <content type="html">&lt;p&gt;There is a thread over on &lt;a href=&quot;http://news.ycombinator.com/item?id=2240595&quot;&gt;Hacker News&lt;/a&gt; about this, and there is a question on &lt;a href=&quot;http://qr.ae/AeVm&quot;&gt;Quora&lt;/a&gt; about it as well.&lt;/p&gt;
+&lt;p&gt;TL;DR : Team knows TDD/BDD? Use it!&lt;/p&gt;
+&lt;p&gt;To me the answer is absolutely yes, with an important qualification. The&lt;br /&gt;
+developers must be experienced with TDD/BDD. When the team is experienced with&lt;br /&gt;
+TDD/BDD and knows the tools, idioms, anti-patterns, and effective&lt;br /&gt;
+workflows it delivers better, higher quality, and more desirable results&lt;br /&gt;
+faster.&lt;/p&gt;
+&lt;p&gt;When the team does not know how to go about TDD/BDD effectively, their lack of&lt;br /&gt;
+skill in driving features through testing will slow them down and will not&lt;br /&gt;
+yield better results&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; &amp;#8212; this is not unexpected. It takes practice and&lt;br /&gt;
+discipline to build testing skills.&lt;/p&gt;
+&lt;p&gt;If you are at a startup, writing some code and asking the question &amp;#8220;Do we&lt;br /&gt;
+TDD/BDD?&amp;#8221; &amp;#8212; it seems to me that you have already crossed the Rubicon and are&lt;br /&gt;
+not going to be able to TDD/BDD effectively. The time to make that choice is&lt;br /&gt;
+when you are assembling your team.&lt;/p&gt;
+&lt;p&gt;Founding your startup now? TDD/BDD experience should be one of the criteria you&lt;br /&gt;
+look for in your development team.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; In my experience, the efforts of someone new to TDD/BDD are usually&lt;br /&gt;
+ineffective at delivering clean and valuable code.&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Heroku Environment Variables</title>
@@ -451,124 +480,6 @@ before requring nokogiri.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Now the validation will fail as expected; you might check the associated models for destruction seperately to generate a more appropriate message.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Released: MongoDoc 0.2.1</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/01/18/released-mongodoc-0-dot-2-dot-1.html" />
-    
-    <id>tag:blog.leshill.org,2010-01-18:1263876532</id>
-    
-    <published>2010-01-18T23:48:52-05:00</published>
-    <updated>2010-01-18T23:48:52-05:00</updated>
-    <content type="html">&lt;p&gt;I just released &lt;a href=&quot;http://github.com/leshill/mongodoc&quot;&gt;MongoDoc&lt;/a&gt; v0.2.1, with mongodb 1.3 and partial update support.&lt;/p&gt;
-&lt;h2&gt;What is it?&lt;/h2&gt;
-&lt;p&gt;MongoDoc is a simple and easy to use ActiveRecord-like object mapper for &lt;a href=&quot;http://www.mongodb.org&quot;&gt;mongoDB&lt;/a&gt; in Ruby.&lt;/p&gt;
-&lt;p&gt;MongoDoc is &lt;em&gt;also&lt;/em&gt; an extension of the &lt;a href=&quot;http://github.com/mongodb/mongo-ruby-driver&quot;&gt;Mongo Ruby Driver&lt;/a&gt; making it a snap to get Ruby in and out of mongoDB.&lt;/p&gt;
-&lt;p&gt;MongoDoc is &lt;strong&gt;not&lt;/strong&gt; ActiveRecord for mongoDB.  We do not have callbacks, nor do we have dynamic finders.  We do have associations, named scopes, and other features.&lt;/p&gt;
-&lt;p&gt;MongoDoc &lt;strong&gt;is&lt;/strong&gt; simple, easy-to-use, and fast. And it works with Rails (2.3.x at the moment, 3 soonish?).&lt;/p&gt;
-&lt;p&gt;MongoDoc is designed to work with document data, if you are looking to map relational data in mongoDB, you will have to look elsewhere.&lt;/p&gt;
-&lt;h2&gt;Ruby objects in mongoDB&lt;/h2&gt;
-&lt;p&gt;Lets just get right into it and save some Ruby objects in mongoDB!&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Contact&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   attr_accessor &lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:addresses&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:interests&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Address&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   attr_accessor &lt;span class=&quot;sy&quot;&gt;:street&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:city&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:state&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:zip&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:phone_number&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;With MongoDoc, instead of saving JSON&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, we can save an object directly:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; contact = &lt;span class=&quot;co&quot;&gt;Contact&lt;/span&gt;.new
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; contact.name = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Hashrocket&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; contact.interests = [&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;rails&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;agile&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; address = &lt;span class=&quot;co&quot;&gt;Address&lt;/span&gt;.new
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt; address.street = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;320 First Street North, #712&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; address.city = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Jacksonville Beach&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt; address.state = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;FL&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt; address.zip = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;32250&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; address.phone_number = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;877 885 8846&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; contact.addresses = [address]
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt; collection.save(contact)&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;We can query using the powerful mongoDB query syntax, and have it return Ruby objects:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; results = collection.find(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;addresses.state&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;FL&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; hashrocket = results.to_a.find {|contact| contact.name == &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Hashrocket&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;}
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; puts hashrocket.addresses.first.phone_number&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Take a look in the examples directory for more code.&lt;/p&gt;
-&lt;h2&gt;Mapping Documents&lt;/h2&gt;
-&lt;p&gt;MongoDoc provides ActiveRecord-like persistence, associations, named scopes, and validations (from &lt;a href=&quot;http://github.com/durran/validatable&quot;&gt;Validatable&lt;/a&gt;) as well as a mongoDB query language (from &lt;a href=&quot;http://mongoid.org/home&quot;&gt;Mongoid&lt;/a&gt;). MongoDoc also plays nicely with Rails.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;MongoDoc::Document&lt;/code&gt; provides all these features as a mixin.  A &lt;code&gt;MongoDoc::Document&lt;/code&gt; can either be a top-level mongoDB document, or an embedded document contained within a top-level document. Top-level documents are stored in collections named after their class: &lt;code&gt;Contact&lt;/code&gt; objects are stored in the &amp;#8216;contacts&amp;#8217; collection (much like ActiveRecord).&lt;/p&gt;
-&lt;p&gt;Lets define a &lt;code&gt;Contact&lt;/code&gt; document with an &lt;code&gt;Address&lt;/code&gt; embedded document:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Address&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   include &lt;span class=&quot;co&quot;&gt;MongoDoc&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Document&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   key &lt;span class=&quot;sy&quot;&gt;:street&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   key &lt;span class=&quot;sy&quot;&gt;:city&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   key &lt;span class=&quot;sy&quot;&gt;:state&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;   key &lt;span class=&quot;sy&quot;&gt;:zip_code&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;   key &lt;span class=&quot;sy&quot;&gt;:phone_number&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Contact&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   include &lt;span class=&quot;co&quot;&gt;MongoDoc&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Document&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;   key &lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;   key &lt;span class=&quot;sy&quot;&gt;:interests&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;   has_many &lt;span class=&quot;sy&quot;&gt;:addresses&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;   named_scope &lt;span class=&quot;sy&quot;&gt;:in_state&lt;/span&gt;, lambda {|state| {&lt;span class=&quot;sy&quot;&gt;:where&lt;/span&gt; =&amp;gt; {&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;addresses.state&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt; =&amp;gt; state}}}
-&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Since a mongoDB document has no fixed schema, we define the composition of a document directly in our classes. Please note we do not specify types! We can also specify &lt;code&gt;has_one&lt;/code&gt; or &lt;code&gt;has_many&lt;/code&gt; associations.&lt;/p&gt;
-&lt;p&gt;Building and saving a document is easy:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; contact = &lt;span class=&quot;co&quot;&gt;Contact&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:name&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Hashrocket&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:interests&lt;/span&gt; =&amp;gt; [&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;rails&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;agile&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;])
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; contact.addresses &amp;lt;&amp;lt; &lt;span class=&quot;co&quot;&gt;Address&lt;/span&gt;.new(&lt;span class=&quot;sy&quot;&gt;:street&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;320 1st Street North, #712&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;:city&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Jacksonville Beach&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;:state&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;FL&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;:zip_code&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;32250&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;:phone_number&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;877 885 8846&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; contact.save&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Now that we have some data, we can query using our named scope:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; hashrocket = &lt;span class=&quot;co&quot;&gt;Contact&lt;/span&gt;.in_state(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;FL&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;).find {|contact| contact.name == &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Hashrocket&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;}&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;And we can even perform partial updates:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; hashrocket.addresses.first.update_attributes(&lt;span class=&quot;sy&quot;&gt;:street&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;320 First Street North, #712&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2&gt;Installation&lt;/h2&gt;
-&lt;p&gt;MongoDoc &lt;strong&gt;requires&lt;/strong&gt; mongoDB v1.3 or later.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sudo gem install mongodoc&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Configuration&lt;/h2&gt;
-&lt;p&gt;Configure your database connection in ./mongodb.yml, you do not need one if you are running on localhost with the default port&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;name: test
-host: localhost
-port: 27017
-options:
-  auto_reconnect: true&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You can change the location of the configuration file:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;MongoDoc&lt;/span&gt;.config_path = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;./config/mongodb.yml&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; The Ruby driver exposes an API that understands JSON.&lt;/p&gt;</content>
   </entry>
   
 </feed>
