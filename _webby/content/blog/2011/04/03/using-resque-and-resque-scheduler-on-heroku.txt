@@ -1,0 +1,213 @@
+---
+title:      'Using Resque and Resque Scheduler on Heroku'
+author: Les Hill
+created_at: 2011-04-03 23:10:03.926406 -04:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+---
+When it comes to background processing, I use ["resque":https://github.com/defunkt/resque] &mdash; I do not even consider the other popular alternative ["delayed_job":https://github.com/tobi/delayed_job]. I seem to be in good company, this is a tweet from ["@tobi":https://twitter.com/#!/tobi/status/11334664846], the author of @delayed_job@:
+
+bq. I feel like I have to write a imatrix style email about delayed_job and resque...
+
+Unfortunately, on Heroku, the sanctioned way to do background processing is to use a worker with @delayed_job@. Definitely not an option. A little googling turned up two blog posts[1] that give us almost all the pieces we need to do this very inexpensively[2]. Getting this to work with @resque-scheduler@ was a little tricky, so I have documented the setup here.
+
+To start, we need a @Redis@ database to use, "RedisToGo":http://redistogo.com offers a nano version for free. Add it to your Heroko app.
+
+bc. % heroku addons:add redistogo:nano
+
+To use @resque@, add the gem.
+
+<notextile>
+<coderay:ruby>
+  gem "resque"
+</coderay>
+</notextile>
+
+Make your class(es) work with @resque@, and then extend the class(es) with @HerokuResqueAutoscale@.
+
+<notextile>
+<coderay:ruby>
+class MyStuff < ActiveRecord::Base
+  extend HerokuResqueAutoscale
+
+  def self.queue
+    :my_queue
+  end
+
+  def self.perform(*args)
+    # work done here
+  end
+end
+</coderay>
+</notextile>
+
+@HerokuResqueAutoscale@ should be somewhere in your load path (@app/models@ works.)
+
+<notextile>
+<coderay:ruby>
+# Modified from: http://blog.darkhax.com/2010/07/30/auto-scale-your-resque-workers-on-heroku
+require 'heroku'
+
+module HerokuResqueAutoscale
+  module Scaler
+    extend self
+
+    def heroku
+      if ENV['HEROKU_USER'] && ENV['HEROKU_PASSWORD'] && ENV['HEROKU_APP']
+        @heroku ||= Heroku::Client.new(ENV['HEROKU_USER'], ENV['HEROKU_PASSWORD'])
+      else
+        false
+      end
+    end
+
+    def workers
+      if heroku
+        heroku.info(ENV['HEROKU_APP'])[:workers].to_i
+      else
+        0
+      end
+    end
+
+    def workers=(qty)
+      heroku.set_workers(ENV['HEROKU_APP'], qty) if heroku
+    end
+
+    def job_count
+      Resque.info[:pending].to_i
+    end
+  end
+
+  def scale_down!
+    # Nothing fancy, just shut everything but the scheduler down if we have no jobs
+    Scaler.workers = 1 if Scaler.job_count.zero?
+  end
+
+  def after_perform_scale_down(*args)
+    scale_down!
+  end
+
+  def after_enqueue_scale_up(*args)
+    [
+      { :workers => 2, # This many workers
+        :job_count => 1 # For this many jobs or more, until the next level
+      },
+      { :workers => 3,
+        :job_count => 15
+      },
+      { :workers => 4,
+        :job_count => 25
+      },
+      { :workers => 5,
+        :job_count => 40
+      },
+      { :workers => 6,
+        :job_count => 60
+      }
+    ].reverse_each do |scale_info|
+      # Run backwards so it gets set to the highest value first
+      # Otherwise if there were 70 jobs, it would get set to 1, then 2, then 3, etc
+
+      # If we have a job count greater than or equal to the job limit for this scale info
+      if Scaler.job_count >= scale_info[:job_count]
+        # Set the number of workers unless they are already set to a level we want. Don't scale down here!
+        if Scaler.workers <= scale_info[:workers]
+          Scaler.workers = scale_info[:workers]
+        end
+        break # We've set or ensured that the worker count is high enough
+      end
+    end
+  end
+
+  def on_failure(e, *args)
+    Rails.logger.info("Resque Exception for [#{self.to_s}, #{args.join(', ')}] : #{e.to_s}")
+    scale_down!
+  end
+end
+</coderay>
+</notextile>
+
+Scaling works by calling into the @heroku@ gem and issuing commands to your Heroku application; you need to have the @heroku@ gem and your Heroku credentials available. Add the @heroku@ gem.
+
+<notextile>
+<coderay:ruby>
+  # needs to be in your deployment environment, not just dev!
+  gem "heroku", ">= 1.19.1"
+</coderay>
+</notextile>
+
+You need to add three _config_ variables to Heroku to allow your workers to auto-scale. Check out my previous Heroku "blog post":http://blog.leshill.org/blog/2010/11/02/heroku-environment-variables.html for a neat way to manage your _config_ variables. Set the _config_ variables.
+
+bc. HEROKU_APP = your_app
+HEROKU_USER = your_user
+HEROKU_PASSWORD = your_password
+
+We need to run two kinds of workers on Heroku:
+
+* one (and only one) @resque-scheduler@ worker
+* any number of normal @resque@ workers
+
+Add this task file to @lib/tasks@ to run one @resque-scheduler@ worker, and as many normal @resque@ workers as needed.
+
+<notextile>
+<coderay:ruby>
+require 'resque/tasks'
+require 'resque_scheduler/tasks'
+
+module ResqueWorker
+  extend self
+
+  def scheduler_or_worker?
+    redis = Resque.redis
+    if redis.setnx('scheduler_active', 'active')
+      begin
+        yield 'scheduler'
+      ensure
+        redis.del('scheduler_active')
+      end
+    else
+      yield 'work'
+    end
+  end
+end
+
+task "resque:setup" => :environment
+task "resque:scheduler_setup" => :environment
+
+
+desc "Run Resque workers on Heroku"
+task "jobs:work" => ["resque:setup", "resque:scheduler_setup"] do
+  ENV['QUEUE'] = '*'
+  ResqueWorker.scheduler_or_worker? {|which| Rake::Task["resque:#{which}"].invoke }
+end
+</coderay>
+</notextile>
+
+Out of the box, @resque-scheduler@ will not work with our auto-scaling code because it is broken. Specifically, it does not invoke hooks (like @after_enqueue@!) when adding jobs to the @resque@ queues. "@l4rk":https://twitter.com/l4rk and I have patched it, use our fork of @resque-scheduler@.
+
+<notextile>
+<coderay:ruby>
+# https://github.com/bvandenbos/resque-scheduler/pull/68
+gem 'resque-scheduler', require: 'resque_scheduler', git: 'git://github.com/infbio/resque-scheduler', ref: 'strings_with_hooks'
+</coderay>
+</notextile>
+
+And we also need to initialize @resque@ and @resque-scheduler@.
+
+<notextile>
+<coderay:ruby>
+# config/initializers/resque.rb
+Resque.schedule = YAML.load_file(File.join(File.dirname(__FILE__), '../resque_schedule.yml'))
+Resque.after_fork = Proc.new { ActiveRecord::Base.establish_connection }
+</coderay>
+</notextile>
+
+When we put this all together, we have a _scheduler worker_ monitoring our scheduled/delayed jobs, and any number of workers working our @resque@ queues. Jobs are placed in our @resque@ queues either directly by our application, or by the _scheduler_ at the scheduled time.
+
+Finally, start one worker (the _scheduler_) and watch your work get done!
+
+fn1. First, James Bracy of "RedisToGo":http://redistogo.com wrote a nice "blog post":http://blog.redistogo.com/2010/07/26/resque-with-redis-to-go/ showing how to use Resque instead of delayed_job with Heroku. And Daniel Huckstep then wrote a great "blog post":http://blog.darkhax.com/2010/07/30/auto-scale-your-resque-workers-on-heroku on a nifty way to auto-scale workers on Heroku.
+
+fn2. Almost, @resque-scheduler@ requires a dedicated worker running all the time, and that will cost some money on Heroku. If you do not need @resque-scheduler@, then the cost can be almost nothing (depending on how fast your jobs run).
