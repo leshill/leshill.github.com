@@ -34,6 +34,10 @@ p {
   margin: 1em 0;
 }
 
+ul {
+  margin-left: 2em;
+}
+
 a {
   color: #00a;
 }
