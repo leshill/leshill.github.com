@@ -190,6 +190,11 @@ blockquote {
     overflow: auto;
   }
 
+  #post .update {
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+
 .postlist {
   margin: 2em 0;
 }

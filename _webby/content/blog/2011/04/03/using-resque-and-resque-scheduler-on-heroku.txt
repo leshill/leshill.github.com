@@ -8,6 +8,12 @@ filter:
   - textile
   - coderay
 ---
+<div class='update'>
+h2. Update! May 15, 2011
+
+I am going to be revising this post based on our experience using it. Check the comments for pointers on changes.
+</div>
+
 When it comes to background processing, I use ["resque":https://github.com/defunkt/resque] &mdash; I do not even consider the other popular alternative ["delayed_job":https://github.com/tobi/delayed_job]. I seem to be in good company, this is a tweet from ["@tobi":https://twitter.com/#!/tobi/status/11334664846], the author of @delayed_job@:
 
 bq. I feel like I have to write a imatrix style email about delayed_job and resque...
