@@ -162,6 +162,11 @@ ul.posts {
 /*
 /*****************************************************************************/
 
+.update {
+  background: #DDD;
+  padding: 1em;
+}
+
 blockquote {
   border-left: 1px solid #888;
   font-family: Monaco, "Courier New", monospace;
