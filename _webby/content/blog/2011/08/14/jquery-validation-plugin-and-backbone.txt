@@ -1,0 +1,166 @@
+---
+title:      'jQuery Validation plugin and Backbone'
+author: Les Hill
+created_at: 2011-08-14 12:47:51.247623 -07:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+---
+Ready for some heresy? Let's validate a ["Backbone.js":http://documentcloud.github.com/backbone/] model using the ["jQuery Validation plugin":http://docs.jquery.com/Plugins/validation] and a @View@.
+
+If you are interested in the heresy, skip to the bottom.
+
+Here is a simple sign up form for a Rails app. We want to validate that the user has entered an email address and filled in the password. Additionally, we would like to know if the email entered is available, so we will use AJAX to call down to the server to check availability dynamically.
+
+<notextile>
+<coderay:html>
+<form accept-charset="UTF-8" action="#" class="validate" id="new_user" method="post">
+  <div style="margin:0;padding:0;display:inline">
+    <input name="utf8" type="hidden" value="✓">
+    <input name="authenticity_token" type="hidden" value="dkjfhioeutgdkjdkfj">
+  </div>
+  <p>
+    <label for="user_email">Your email</label>
+    <input class="text required email" id="user_email" name="user[email]" size="30" type="email" value="">
+  </p>
+  <p>
+    <label for="user_password">Choose a password</label>
+    <input autocomplete="off" class="text required" id="user_password" name="user[password]" size="30" type="text">
+  </p>
+  <p class="buttons">
+    <input name="commit" type="submit" value="Get started">
+  </p>
+</form>
+</coderay>
+</notextile>
+
+As a starting point, this is how we might use Validation with jQuery to validate our form.
+
+<notextile>
+<coderay:javascript>
+$('#new_user').validate({
+  rules: {
+    'user[email]': {
+      required: true,
+      email: true,
+      remote: '/users/email_available'
+    },
+    'user[password]': {
+      required: true,
+      minlength: 6
+    }
+  },
+  messages: {
+    'user[email]': {
+      remote: $.format('{0} has already been taken')
+    }
+  },
+  submitHandler: function(form) {
+    var form = $(form);
+    var form_data = form.formParams()
+    $.ajax({
+      url: form.attr('action'),
+      dataType: 'json',
+      type: "POST",
+      data: form_data,
+      success: function (data, textStatus, xhr) {
+        // code for cleaning up form and showing response here...
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        // code for showing errors here...
+      }
+    });
+  }
+});
+</coderay>
+</notextile>
+
+If you have not used the Validation plugin before, it is a simple declarative way to validate forms. You specify the rules which apply to your form's input elements and they are checked as the user enters data and on submit. All the usual validations are provided by the plugin, including @remote@ which will make an Ajax call to your server to check the input. Messages for failed validations can be customized. And there are quite a few options available to change the behavior of the plugin.
+
+Now lets do this with a Backbone.js @View@.
+
+We will create a basic @FormView@ class to handle both create and edit, using a templated form. That is the extent of our brief for this blog post, a much more complete class is left as an exercise for the reader.
+
+Oh and we are using ["CoffeeScript":http://jashkenas.github.com/coffee-script/].
+
+<notextile>
+<coderay:ruby>
+class FormView extends Backbone.View
+  initialize: ->
+    @template = _.template($(@templateSelector).html())
+    @validationOptions = @options.validationOptions
+
+  fetchParams: (form) ->
+    rawdata = $(form).serialize()
+    data = $.deparam(rawdata)
+    data['user']
+
+  render: ->
+    template_values = if @model then @model.toJSON() else {}
+    $(@el).html(@template(template_values))
+    opts = { submitHandler: @submit }
+    opts = _.extend(opts, @validationOptions)
+    $(@el).find('form').validate(opts)
+    this
+
+  submit: (form) =>
+    if @model
+      @model.save(fetchParams(form))
+    else
+      @collection.create(fetchParams(form))
+
+class User extends Backbone.Model
+
+users = new Collection
+  model: User
+  url: '/users'
+
+view = new FormView
+  collection: users
+  el: $('#signup_form')
+  templateSelector: '#new_user_form'
+  validationOptions:
+    rules:
+      'user[email]':
+        remote: '/users/email_available'
+      'user[password]':
+        minlength: 6
+    messages:
+      'user[email]':
+        remote: $.format('{0} has already been taken')
+
+view.render()
+</coderay>
+</notextile>
+
+The @FormView@ class can handle either creating a new model or editing an existing model. When creating a new object pass in the @collection@ as an option, and when editing an existing model pass in the @model@ as an option. You need to specify the @el@ where the @FormView@ will render the form, and the @templateSelector@ that will identify the ["Underscore.js template":http://documentcloud.github.com/underscore/#template]. And of course you need to specify the validation rules, messages, and options for the Validation plugin, but *not* a @submitHandler@.
+
+Fire things up by calling @render@, and our form will now validate and if successfully validated, submit. Done!
+
+Here are some things to note:
+
+We are using classes on the inputs to indicate the basic Validation rules to apply.
+
+The @validationOptions@ do not include the @submitHandler@, which is added by the @FormView@.
+
+We are also using the @jquery.ba-bbq@ plugin for the @deparam@ method it adds to jQuery[1].
+
+h2. Heresy!
+
+On to the heresy. MVC dogma would say that the model should be responsible for its validation, and here the view is doing the validation &mdash; the Validation plugin is part of the @FormView@ view internals.
+
+h3. Pragmatism
+
+The existing model validation scheme for Backbone.js is weak. There is no easy declarative way to validate models at the moment. I am hopeful that Derrick Bailey's ["Backbone.ModelBinding":https://github.com/derickbailey/backbone.modelbinding] will eventually lead to an answer. On the other hand, the jQuery Validation plugin already works and works well with very little coding required.
+
+h3. Does &lsquo;dogma&rsquo; even apply?
+
+The remote email validation does not find neatly into the usual MVC validation scheme. If you have done this in Rails, you no doubt have written code that is not part of the normal validation process to achieve this. What is being validated is a single data field from a model independent of the model itself &mdash; and Backbone.js is no different: @validate@ operates on a model instance.
+
+Another way to think of this is that the view is gathering and validating input before passing it onto the model. In this case, the validation is part of the behavior of the form and the individual inputs, with the view doing the availabilty check as soon as there is an email address entered by the user. Once the view is valid, the submit passes the data onto the model. And of course, the model on the server is doing its own validations. And the model on the client? It is a one-liner, just a data container for passing data cleanly along from the view (which is doing the interesting work) to the model on the server. The crux is that the input &ldquo;validation&rdquo; is substantially more than just an &ldquo;email must be unique&rdquo; validation on the model, it is the user experience around entering potentially incorrect data.
+
+I am not convinced that MVC is misplaced here. Given a different framework, the model's validations could be flexible enough to really accomodate this scenario. Another possiblity is that this MVC is widget-y and hidden within my Backbone.js view. But for the time being, I am happy to keep shipping and live with this heresy.
+
+fn1. Why is this not in jQuery? Why is something like this not a standalone plugin?
