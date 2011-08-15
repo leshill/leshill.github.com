@@ -12,11 +12,20 @@ filter: haml
       #{render post}
   .comments
     #disqus_thread
-    :javascript
+    %script(type="text/javascript")
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '#{post.url}';
       var disqus_url = 'http://blog.leshill.org#{post.url}';
-    %script{ :type => "text/javascript", :src => "http://disqus.com/forums/leshill/embed.js" }
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     %noscript
-      = link_to 'View the discussion thread.', "http://leshill.disqus.com/?url=ref"
+      Please enable JavaScript to view the
+      %a(href="http://disqus.com/?ref_noscript")
+        comments powered by Disqus.
     %a.dsq-brlink{ :href => "http://disqus.com" }
       blog comments powered by
       %span.logo-disqus
