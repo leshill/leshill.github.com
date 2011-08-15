@@ -157,7 +157,7 @@ The existing model validation scheme for Backbone.js is weak. There is no easy d
 
 h3. Does &lsquo;dogma&rsquo; even apply?
 
-The remote email validation does not find neatly into the usual MVC validation scheme. If you have done this in Rails, you no doubt have written code that is not part of the normal validation process to achieve this. What is being validated is a single data field from a model independent of the model itself &mdash; and Backbone.js is no different: @validate@ operates on a model instance.
+The remote email validation does not fit neatly into the usual MVC validation scheme. If you have done this in Rails, you no doubt have written code that is not part of the normal validation process to achieve this. What is being validated is a single data field from a model independent of the model itself &mdash; and Backbone.js is no different: @validate@ operates on a model instance.
 
 Another way to think of this is that the view is gathering and validating input before passing it onto the model. In this case, the validation is part of the behavior of the form and the individual inputs, with the view doing the availabilty check as soon as there is an email address entered by the user. Once the view is valid, the submit passes the data onto the model. And of course, the model on the server is doing its own validations. And the model on the client? It is a one-liner, just a data container for passing data cleanly along from the view (which is doing the interesting work) to the model on the server. The crux is that the input &ldquo;validation&rdquo; is substantially more than just an &ldquo;email must be unique&rdquo; validation on the model, it is the user experience around entering potentially incorrect data.
 
