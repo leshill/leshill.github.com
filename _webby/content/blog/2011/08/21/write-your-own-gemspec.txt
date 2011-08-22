@@ -34,7 +34,7 @@ The hard way to do this is to find another gem and copy its gemspec and layout.
 
 Or we can cheat.
 
-*Bundler* will generate a gemspec and a layout for you[1]. And since we are cheating already, lets use use *rvm* as well, shall we?[2]. Here is what we are going to do:
+*Bundler* will generate a gemspec and a layout for you[1]. And since we are cheating already, lets use use *rvm* as well, shall we?[2]. You can follow along with this not-yet-released gem ["handlebars_assets":http://github.com/leshill/handlebars_assets][3]. Here is what we are going to do:
 
 * Create a gemset for _your_gem_
 * Install bundler
@@ -117,7 +117,7 @@ After you have written you gem's initial code, you will want to push it out for 
 * You need a "RubyGems.org":http://rubygems.org account
 * It is ridiculously easy
 
-Once you have your RubyGems account, lets build and push the gem using the @gem@ command from RubyGems. When you push, you will be asked to log into RubyGems one time. After that, your credentials will be saved for future use.
+Once you have your RubyGems account, lets build and push the gem using the @gem@ command. When you push, you will be asked to log into RubyGems one time. After that, your credentials will be saved for future use.
 
 bc. % gem build your_gem.gemspec
 % gem push your_gem-0.0.1.gem
@@ -154,3 +154,5 @@ Durran was right: just write the gemspec and be done.
 fn1. Not using Bundler? Do it the hard way. Better yet, use Bundler.
 
 fn2. Not using @rvm@? Why not? At least tell me you are using @rbenv@?
+
+fn3. This repo is currently (8/22/11) missing the @README.md@, you should have one.
