@@ -183,6 +183,14 @@ blockquote {
   margin: 2em 0;
 }
 
+  #post h1,h2,h3,h4,h5,h6,h7 {
+    margin: 2em 0 1em
+  }
+
+  #post ul {
+    margin: 1em 0 1em 1.5em;
+  }
+
   #post .title {
     margin: auto;
   }

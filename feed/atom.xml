@@ -4,12 +4,141 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2011-08-14T23:42:29-07:00</updated>
+  <updated>2011-08-22T00:51:59-07:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Write Your Own Gemspec</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2011/08/21/write-your-own-gemspec.html" />
+    
+    <id>tag:blog.leshill.org,2011-08-21:1313971982</id>
+    
+    <published>2011-08-21T17:13:02-07:00</published>
+    <updated>2011-08-21T17:13:02-07:00</updated>
+    <content type="html">&lt;p&gt;This blog post was inspired by &lt;a href=&quot;http://twiiter.com/garybernhardt&quot;&gt;@garybernhardt&lt;/a&gt;&amp;#8217;s &lt;a href=&quot;http://twitter.com/#!/garybernhardt/status/104716358092201985&quot;&gt;tweet&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Coming in a few minutes: my first actual Ruby gem. If I can figure out how to publish it.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In the distant past, I would have suggested to Gary that he use &lt;a href=&quot;http://rubygems.org/gems/jeweler&quot;&gt;Jeweler&lt;/a&gt; when starting a new Ruby Gem. Then one day I was deep in a conversation with Durran Jordan (&lt;a href=&quot;http://twitter.com/modetojoy&quot;&gt;@modetojoy&lt;/a&gt;) about some minutae of MongoDB and Mongoid when the topic of starting a new gem came up. Durran&amp;#8217;s reaction was stated with his usual aplomb:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Jeweller? Hoe? F*#!k that noise. Write your own gemspec and be done.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;When Durran says something, it is worth listening to. I went back and ripped out Jeweler. The world did not end. I published my gem. I even found I had a bunch of unnecessary baggage. Getting rid of Jeweler actually improved my understanding of the gem publishing process.&lt;/p&gt;
+&lt;h2&gt;How to publish your gem&lt;/h2&gt;
+&lt;p&gt;Publishing a gem is basically a three step process:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;Gem layout and Gemspec generation&lt;/li&gt;
+	&lt;li&gt;First push&lt;/li&gt;
+	&lt;li&gt;Subsequent pushes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Well, except for the &lt;em&gt;zeroth&lt;/em&gt; step: deciding on a gem name. It is well worth spending a little time googling and taking a look at existing &lt;a href=&quot;http://rubygems.org&quot;&gt;RubyGems.org&lt;/a&gt; before choosing your name.&lt;/p&gt;
+&lt;h2&gt;Gem layout and Gemspec generation&lt;/h2&gt;
+&lt;p&gt;The hard way to do this is to find another gem and copy its gemspec and layout.&lt;/p&gt;
+&lt;p&gt;Or we can cheat.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bundler&lt;/strong&gt; will generate a gemspec and a layout for you&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. And since we are cheating already, lets use use &lt;strong&gt;rvm&lt;/strong&gt; as well, shall we?&lt;sup class=&quot;footnote&quot; id=&quot;fnr2&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;. Here is what we are going to do:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;Create a gemset for &lt;em&gt;your_gem&lt;/em&gt;&lt;/li&gt;
+	&lt;li&gt;Install bundler&lt;/li&gt;
+	&lt;li&gt;Create the gem layout&lt;/li&gt;
+	&lt;li&gt;Create the &lt;code&gt;.rvmrc&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;Remove &lt;code&gt;Gemfile.lock&lt;/code&gt; from &lt;code&gt;.gitignore&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;Make the initial commit&lt;/li&gt;
+	&lt;li&gt;Edit the gemspec as needed&lt;/li&gt;
+	&lt;li&gt;Install all your dependencies&lt;/li&gt;
+	&lt;li&gt;Commit your changes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Easy!&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% rvm gemset create your_gem
+% rvm gemset use your_gem
+% gem install bundler
+% bundle gem your_gem
+% cd your_gem
+% cat &amp;gt; .rvmrc
+rvm use default@your_gem&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Edit &lt;code&gt;.gitignore&lt;/code&gt; to remove Gemfile.lock from the list of ignores.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% git add .
+% git commit -m 'Initial commit'&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We now need to edit our generated &lt;a href=&quot;http://docs.rubygems.org/read/chapter/20&quot;&gt;gemspec&lt;/a&gt;. There are three basic parts to the gemspec:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;Metadata&lt;/li&gt;
+	&lt;li&gt;Manifest&lt;/li&gt;
+	&lt;li&gt;Dependencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Our generated gemspec has placeholder metadata, a good starting manifest, and no dependencies.&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# -*- encoding: utf-8 -*-&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;gv&quot;&gt;$:&lt;/span&gt;.push &lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;../lib&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;pc&quot;&gt;__FILE__&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;your_gem/version&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Gem&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Specification&lt;/span&gt;.new &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |s|
+&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Metadata&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;   s.name        = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;your_gem&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;   s.version     = &lt;span class=&quot;co&quot;&gt;YourGem&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;VERSION&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   s.authors     = [&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Your Name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   s.email       = [&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;your_name@example.com&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;   s.homepage    = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   s.summary     = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;%q{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;TODO: Write a gem summary&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   s.description = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;%q{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;TODO: Write a gem description&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;   s.rubyforge_project = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;your_gem&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Manifest&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;   s.files         = &lt;span class=&quot;sh&quot;&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;git ls-files&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;/span&gt;.split(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt;   s.test_files    = &lt;span class=&quot;sh&quot;&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;git ls-files -- {test,spec,features}/*&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;/span&gt;.split(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;   s.executables   = &lt;span class=&quot;sh&quot;&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;git ls-files -- bin/*&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;/span&gt;.split(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;).map{ |f| &lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.basename(f) }
+&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;   s.require_paths = [&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lib&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Dependencies&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# specify any dependencies here; for example:&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;25&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# s.add_development_dependency &amp;quot;rspec&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;26&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# s.add_runtime_dependency &amp;quot;rest-client&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;27&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Edit the metadata to include your name, email, and what the gem is about. Unless you are doing something off the reservation, there should be no need to mess with the manifest.&lt;/p&gt;
+&lt;p&gt;The gemspec allows you to specify both runtime and development dependencies. Runtime dependencies are what the users of your gem will need installed with the gem. Development dependencies are used by developers working on your gem, for example gems used for testing only such as RSpec and Cucumber. Add the dependencies you know. You can change the dependency list later easily. &lt;strong&gt;Important!&lt;/strong&gt; Do not  edit the &lt;code&gt;Gemfile&lt;/code&gt;, bundler knows how to read the gemspec.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% bundle
+% git commit&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now comes the hard part, actually writing your gem.&lt;/p&gt;
+&lt;h2&gt;First push&lt;/h2&gt;
+&lt;p&gt;After you have written you gem&amp;#8217;s initial code, you will want to push it out for people to use. There are two things to know about this process:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;You need a &lt;a href=&quot;http://rubygems.org&quot;&gt;RubyGems.org&lt;/a&gt; account&lt;/li&gt;
+	&lt;li&gt;It is ridiculously easy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once you have your RubyGems account, lets build and push the gem using the &lt;code&gt;gem&lt;/code&gt; command from RubyGems. When you push, you will be asked to log into RubyGems one time. After that, your credentials will be saved for future use.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% gem build your_gem.gemspec
+% gem push your_gem-0.0.1.gem
+Enter your RubyGems.org credentials.
+Don't have an account yet? Create one at http://rubygems.org/sign_up
+   Email:   your_name@example.com
+Password:
+Pushing gem to https://rubygems.org...
+Signed in.
+Pushing gem to https://rubygems.org...
+Successfully registered gem: your_gem (0.0.1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Congratulations on publishing your gem!&lt;/p&gt;
+&lt;h2&gt;Subsequent pushes&lt;/h2&gt;
+&lt;p&gt;On subsequent pushes you will need to manage your version number. There are also two things to know about this process:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;The version number is in &lt;code&gt;lib/your_gem/version.rb&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;It is ridiculously easy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Update (but do not commit) your version number in &lt;code&gt;lib/your_gem/version.rb&lt;/code&gt;. If you have any other outstanding changes, commit those first &amp;mdash; we want our version number commit to be atomic and we are going to tag it. Now do this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% bundle
+% git commit -a 'v0.0.2'
+% git tag 'v0.0.2'
+% gem build your_gem.gemspec
+% gem push your_gem-0.0.2.gem&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Running bundle before the commit updates the version numbers in the Gemfile.lock file. Your git history will look nice and clean with your spiffy new atomic version commits!&lt;/p&gt;
+&lt;p&gt;Durran was right: just write the gemspec and be done.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; Not using Bundler? Do it the hard way. Better yet, use Bundler.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;a href=&quot;#fnr2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; Not using &lt;code&gt;rvm&lt;/code&gt;? Why not? At least tell me you are using &lt;code&gt;rbenv&lt;/code&gt;?&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>jQuery Validation plugin and Backbone</title>
@@ -667,96 +796,6 @@ rvm gemset use makes_coffee
   % bundle install
   % bundle lock
   % script/rails generate rspec:install&lt;/code&gt;&lt;/pre&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Binary Search, TDD, and You</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/04/26/binary-search-tdd-and-you.html" />
-    
-    <id>tag:blog.leshill.org,2010-04-26:1272337358</id>
-    
-    <published>2010-04-26T20:02:38-07:00</published>
-    <updated>2010-04-26T20:02:38-07:00</updated>
-    <content type="html">&lt;p&gt;A bit late to the party, I took a programming challenge from &lt;a href=&quot;http://reprog.wordpress.com/2010/04/19/are-you-one-of-the-10-percent/&quot;&gt;Mike Taylor&lt;/a&gt; :&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Are you one of the 10% of programmers who can write a binary search?&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;The &lt;strong&gt;10%&lt;/strong&gt; is a reference to an essay by Jon Bentley, who found that only&lt;br /&gt;
-&lt;strong&gt;10%&lt;/strong&gt; of the programmers asked could write a binary search correctly given a&lt;br /&gt;
-description of the algorithm. The challenge from Mike was to write it without&lt;br /&gt;
-any &lt;strong&gt;TESTING&lt;/strong&gt; whatsoever.&lt;/p&gt;
-&lt;p&gt;Here is my answer in Ruby:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;binary_search&lt;/span&gt;(value, array, start, finish = array.length - &lt;span class=&quot;i&quot;&gt;1&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;i&quot;&gt;-1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; finish &amp;lt; start
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;   mid = (start + finish)/&lt;span class=&quot;i&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; array[mid] == value
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;     mid
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;elsif&lt;/span&gt; array[mid] &amp;lt; value
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     binary_search(value, array, mid + &lt;span class=&quot;i&quot;&gt;1&lt;/span&gt;, finish)
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;else&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;     binary_search(value, array, start, mid - &lt;span class=&quot;i&quot;&gt;1&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Pretty standard. This was about 1/2 an hour from start to finish; mostly due to&lt;br /&gt;
-not being able to run the code&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; and obsessing over whether I had handled all&lt;br /&gt;
-the edge cases, which is related to my motivation for taking the challenge.&lt;/p&gt;
-&lt;p&gt;Aside from being a fun exercise, the comments Mike received led him to write&lt;br /&gt;
-two more blog posts!&lt;/p&gt;
-&lt;p&gt;The third in the series, &lt;a href=&quot;http://reprog.wordpress.com/2010/04/23/testing-is-not-a-substitute-for-thinking-binary-search-part-3/&quot; title=&quot;binary&lt;br /&gt;
-search part&lt;br /&gt;
-3&quot;&gt;Testing is not a substitute for thinking&lt;/a&gt;&lt;br /&gt;
-has some interesting and keen observations. I agree with most of them.&lt;/p&gt;
-&lt;p&gt;However, the conclusion is absolutely, categorically wrong.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Bearing in mind that binary search is in fact a pretty&lt;br /&gt;
-simple algorithm, it’s likely true that you could have&lt;br /&gt;
-bashed your way through to a working implementation after&lt;br /&gt;
-a few iterations of coding and testing.  But –&lt;/p&gt;
-&lt;p&gt;Your code would be less clear&lt;/p&gt;
-&lt;p&gt;You wouldn’t understand clearly why it works&lt;/p&gt;
-&lt;p&gt;You would find it harder to extend or modify in future&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Inflammatory stuff. And totally &lt;strong&gt;wrong&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;A few paragraphs earlier, Mike lays out why he thinks this:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;By using skills that are not often thought about&lt;br /&gt;
-in these days of test-driven kool-ade, reflexive&lt;br /&gt;
-application of design patterns and automatic refactoring&lt;br /&gt;
-tools.  Once more, let me be clear that all these things&lt;br /&gt;
-are good so far as they go — really, I agree with you,&lt;br /&gt;
-they are! — but they are no substitute for actually&lt;br /&gt;
-thinking, and thinking is what’s needed for hard problems.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Indeed thinking is what is needed for hard problems. What Mike has failed to&lt;br /&gt;
-acknowledge is that TDD is not a tool for writing code, TDD is a tool for&lt;br /&gt;
-thinking clearly.&lt;/p&gt;
-&lt;p&gt;As an example of this, in the spirit of Mike&amp;#8217;s challenge, I expressly wrote the&lt;br /&gt;
-binary search code without test-driving it. However, instead of writing the&lt;br /&gt;
-code directly from the description, I turned the description into a set of&lt;br /&gt;
-constraints. As each of those constraints became clear, I wrote code. And in&lt;br /&gt;
-the end I had a working binary search&lt;sup class=&quot;footnote&quot; id=&quot;fnr2&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;So, am I saying Mike is an idiot? Absolutely not! After hearing more and more&lt;br /&gt;
-critiques (both thoughtful and thoughtless) of TDD, I am coming around to the&lt;br /&gt;
-conclusion that there is a problem. The problem is most people learn TDD&lt;br /&gt;
-from a book or a blog or even from a vague description and some positive can-do&lt;br /&gt;
-attitude (Commendable!  Really!)&lt;/p&gt;
-&lt;p&gt;What has become apparent is that this will not work for most developers. What&lt;br /&gt;
-does work is deliberate study and mentoring, ideally by pairing.  A mentor who&lt;br /&gt;
-is showing you more than just the syntactic mechanics of writing test code and&lt;br /&gt;
-having it invoke the code under test. Someone who is explaining how tests are a&lt;br /&gt;
-tool for understanding and solving the problem.&lt;/p&gt;
-&lt;p&gt;Folks interested in Software Craftsmanship have realized this truth about all&lt;br /&gt;
-aspects of software development: you learn better from a mentor and from&lt;br /&gt;
-deliberate practice.&lt;/p&gt;
-&lt;p&gt;TDD is no exception.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; Sort-of, according to Mike&amp;#8217;s rules I could have shaken out syntax errors&lt;br /&gt;
-by running the code; in the case of Ruby, that felt like cheating, so I just&lt;br /&gt;
-stared at it.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;a href=&quot;#fnr2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; After the fact, I threw in a test scaffold to verify that it does work,&lt;br /&gt;
-and that it is log(2)N.&lt;/p&gt;</content>
   </entry>
   
 </feed>

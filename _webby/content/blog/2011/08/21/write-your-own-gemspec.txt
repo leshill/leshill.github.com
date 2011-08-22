@@ -1,0 +1,156 @@
+--- 
+title:      'Write Your Own Gemspec'
+author: Les Hill
+created_at: 2011-08-21 17:13:02.570660 -07:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+--- 
+This blog post was inspired by ["@garybernhardt":http://twiiter.com/garybernhardt]'s ["tweet":http://twitter.com/#!/garybernhardt/status/104716358092201985]
+
+bq. Coming in a few minutes: my first actual Ruby gem. If I can figure out how to publish it.
+
+In the distant past, I would have suggested to Gary that he use ["Jeweler":http://rubygems.org/gems/jeweler] when starting a new Ruby Gem. Then one day I was deep in a conversation with Durran Jordan (["@modetojoy":http://twitter.com/modetojoy]) about some minutae of MongoDB and Mongoid when the topic of starting a new gem came up. Durran's reaction was stated with his usual aplomb:
+
+bq. Jeweller? Hoe? F*#!k that noise. Write your own gemspec and be done.
+
+When Durran says something, it is worth listening to. I went back and ripped out Jeweler. The world did not end. I published my gem. I even found I had a bunch of unnecessary baggage. Getting rid of Jeweler actually improved my understanding of the gem publishing process.
+
+h2. How to publish your gem
+
+Publishing a gem is basically a three step process:
+
+* Gem layout and Gemspec generation
+* First push
+* Subsequent pushes
+
+Well, except for the _zeroth_ step: deciding on a gem name. It is well worth spending a little time googling and taking a look at existing "RubyGems.org":http://rubygems.org before choosing your name.
+
+h2. Gem layout and Gemspec generation
+
+The hard way to do this is to find another gem and copy its gemspec and layout.
+
+Or we can cheat.
+
+*Bundler* will generate a gemspec and a layout for you[1]. And since we are cheating already, lets use use *rvm* as well, shall we?[2]. Here is what we are going to do:
+
+* Create a gemset for _your_gem_
+* Install bundler
+* Create the gem layout
+* Create the @.rvmrc@
+* Remove @Gemfile.lock@ from @.gitignore@
+* Make the initial commit
+* Edit the gemspec as needed
+* Install all your dependencies
+* Commit your changes
+
+Easy!
+
+bc. % rvm gemset create your_gem
+% rvm gemset use your_gem
+% gem install bundler
+% bundle gem your_gem
+% cd your_gem
+% cat > .rvmrc
+rvm use default@your_gem
+
+Edit @.gitignore@ to remove Gemfile.lock from the list of ignores.
+
+bc. % git add .
+% git commit -m 'Initial commit'
+
+We now need to edit our generated ["gemspec":http://docs.rubygems.org/read/chapter/20]. There are three basic parts to the gemspec:
+
+* Metadata
+* Manifest
+* Dependencies
+
+Our generated gemspec has placeholder metadata, a good starting manifest, and no dependencies.
+
+<notextile>
+<coderay:ruby>
+# -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require "your_gem/version"
+
+Gem::Specification.new do |s|
+  # Metadata
+  s.name        = "your_gem"
+  s.version     = YourGem::VERSION
+  s.authors     = ["Your Name"]
+  s.email       = ["your_name@example.com"]
+  s.homepage    = ""
+  s.summary     = %q{TODO: Write a gem summary}
+  s.description = %q{TODO: Write a gem description}
+
+  s.rubyforge_project = "your_gem"
+
+  # Manifest
+  s.files         = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.require_paths = ["lib"]
+
+  # Dependencies
+  # specify any dependencies here; for example:
+  # s.add_development_dependency "rspec"
+  # s.add_runtime_dependency "rest-client"
+end
+</coderay>
+</notextile>
+
+Edit the metadata to include your name, email, and what the gem is about. Unless you are doing something off the reservation, there should be no need to mess with the manifest.
+
+The gemspec allows you to specify both runtime and development dependencies. Runtime dependencies are what the users of your gem will need installed with the gem. Development dependencies are used by developers working on your gem, for example gems used for testing only such as RSpec and Cucumber. Add the dependencies you know. You can change the dependency list later easily. *Important!* Do not  edit the @Gemfile@, bundler knows how to read the gemspec.
+
+bc. % bundle
+% git commit
+
+Now comes the hard part, actually writing your gem.
+
+h2. First push
+
+After you have written you gem's initial code, you will want to push it out for people to use. There are two things to know about this process:
+
+* You need a "RubyGems.org":http://rubygems.org account
+* It is ridiculously easy
+
+Once you have your RubyGems account, lets build and push the gem using the @gem@ command from RubyGems. When you push, you will be asked to log into RubyGems one time. After that, your credentials will be saved for future use.
+
+bc. % gem build your_gem.gemspec
+% gem push your_gem-0.0.1.gem
+Enter your RubyGems.org credentials.
+Don't have an account yet? Create one at http://rubygems.org/sign_up
+   Email:   your_name@example.com
+Password:
+Pushing gem to https://rubygems.org...
+Signed in.
+Pushing gem to https://rubygems.org...
+Successfully registered gem: your_gem (0.0.1)
+
+Congratulations on publishing your gem!
+
+h2. Subsequent pushes
+
+On subsequent pushes you will need to manage your version number. There are also two things to know about this process:
+
+* The version number is in @lib/your_gem/version.rb@
+* It is ridiculously easy
+
+Update (but do not commit) your version number in @lib/your_gem/version.rb@. If you have any other outstanding changes, commit those first &mdash; we want our version number commit to be atomic and we are going to tag it. Now do this:
+
+bc. % bundle
+% git commit -a 'v0.0.2'
+% git tag 'v0.0.2'
+% gem build your_gem.gemspec
+% gem push your_gem-0.0.2.gem
+
+Running bundle before the commit updates the version numbers in the Gemfile.lock file. Your git history will look nice and clean with your spiffy new atomic version commits!
+
+Durran was right: just write the gemspec and be done.
+
+fn1. Not using Bundler? Do it the hard way. Better yet, use Bundler.
+
+fn2. Not using @rvm@? Why not? At least tell me you are using @rbenv@?
