@@ -142,7 +142,7 @@ On subsequent pushes you will need to manage your version number. There are also
 Update (but do not commit) your version number in @lib/your_gem/version.rb@. If you have any other outstanding changes, commit those first &mdash; we want our version number commit to be atomic and we are going to tag it. Now do this:
 
 bc. % bundle
-% git commit -a 'v0.0.2'
+% git commit -am 'v0.0.2'
 % git tag 'v0.0.2'
 % gem build your_gem.gemspec
 % gem push your_gem-0.0.2.gem

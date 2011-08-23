@@ -4,7 +4,7 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2011-08-22T09:21:17-07:00</updated>
+  <updated>2011-08-22T23:23:44-07:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -130,7 +130,7 @@ Successfully registered gem: your_gem (0.0.1)&lt;/code&gt;&lt;/pre&gt;
 &lt;/ul&gt;
 &lt;p&gt;Update (but do not commit) your version number in &lt;code&gt;lib/your_gem/version.rb&lt;/code&gt;. If you have any other outstanding changes, commit those first &amp;mdash; we want our version number commit to be atomic and we are going to tag it. Now do this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;% bundle
-% git commit -a 'v0.0.2'
+% git commit -am 'v0.0.2'
 % git tag 'v0.0.2'
 % gem build your_gem.gemspec
 % gem push your_gem-0.0.2.gem&lt;/code&gt;&lt;/pre&gt;
