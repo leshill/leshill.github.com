@@ -106,7 +106,7 @@ Edit the metadata to include your name, email, and what the gem is about. Unless
 The gemspec allows you to specify both runtime and development dependencies. Runtime dependencies are what the users of your gem will need installed with the gem. Development dependencies are used by developers working on your gem, for example gems used for testing only such as RSpec and Cucumber. Add the dependencies you know. You can change the dependency list later easily. *Important!* Do not  edit the @Gemfile@, bundler knows how to read the gemspec.
 
 bc. % bundle
-% git commit
+% git commit -a
 
 Now comes the hard part, actually writing your gem.
 

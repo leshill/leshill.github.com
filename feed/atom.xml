@@ -4,7 +4,7 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2011-08-22T23:23:44-07:00</updated>
+  <updated>2011-08-25T11:06:07-07:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -102,7 +102,7 @@ rvm use default@your_gem&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Edit the metadata to include your name, email, and what the gem is about. Unless you are doing something off the reservation, there should be no need to mess with the manifest.&lt;/p&gt;
 &lt;p&gt;The gemspec allows you to specify both runtime and development dependencies. Runtime dependencies are what the users of your gem will need installed with the gem. Development dependencies are used by developers working on your gem, for example gems used for testing only such as RSpec and Cucumber. Add the dependencies you know. You can change the dependency list later easily. &lt;strong&gt;Important!&lt;/strong&gt; Do not  edit the &lt;code&gt;Gemfile&lt;/code&gt;, bundler knows how to read the gemspec.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;% bundle
-% git commit&lt;/code&gt;&lt;/pre&gt;
+% git commit -a&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now comes the hard part, actually writing your gem.&lt;/p&gt;
 &lt;h2&gt;First push&lt;/h2&gt;
 &lt;p&gt;After you have written you gem&amp;#8217;s initial code, you will want to push it out for people to use. There are two things to know about this process:&lt;/p&gt;
