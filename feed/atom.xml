@@ -4,12 +4,147 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2011-08-25T11:06:07-07:00</updated>
+  <updated>2011-10-23T23:43:40-07:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Fast Specs!</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2011/10/23/fast-specs.html" />
+    
+    <id>tag:blog.leshill.org,2011-10-23:1319432489</id>
+    
+    <published>2011-10-23T22:01:29-07:00</published>
+    <updated>2011-10-23T22:01:29-07:00</updated>
+    <content type="html">&lt;h1&gt;Fast Specs!&lt;/h1&gt;
+&lt;p&gt;Nothing sucks the joy out of writing your Rails app like having an incredibly slow test suite. Even running one file with a single spec on my &lt;em&gt;new&lt;/em&gt; MacBookPro takes almost five seconds!&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% time rspec spec/models/publish_spec.rb
+.&lt;/code&gt;
+
+&lt;code&gt;Finished in 4.48 seconds
+1 example, 0 failures&lt;/code&gt;
+
+&lt;code&gt;real    0m4.592s
+user    0m3.990s
+sys     0m0.536s&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Wait, maybe we can just run &lt;code&gt;ruby&lt;/code&gt;?&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% time ruby -Ispec spec/models/publish_spec.rb
+.&lt;/code&gt;
+
+&lt;code&gt;Finished in 0.71331 seconds
+1 example, 0 failures&lt;/code&gt;
+
+&lt;code&gt;real    0m4.468s
+user    0m3.953s
+sys     0m0.512s&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Five.&lt;/p&gt;
+&lt;p&gt;Seconds.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;F I V E  SECONDS&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;One Mississippi&lt;/em&gt;, &lt;em&gt;Two Mississippi&lt;/em&gt;, &lt;em&gt;Three Mississippi&lt;/em&gt;, &lt;em&gt;Four Mississippi&lt;/em&gt;, &lt;em&gt;Five Mississippi&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;An eternity.&lt;/p&gt;
+&lt;p&gt;Let&amp;#8217;s take a look at the admittedly ridiculous and contrived spec:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; it &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;publishes the item to the syndicate&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   syndicate = double()
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;   syndicate.should_receive(&lt;span class=&quot;sy&quot;&gt;:publish&lt;/span&gt;).with(item)
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   item.publish_to(syndicate)
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Maybe there is a &lt;code&gt;sleep&lt;/code&gt; hiding inside &lt;code&gt;#publish_to&lt;/code&gt;?&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;publish_to&lt;/span&gt;(syndicate)
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   syndicate.publish(&lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Nope.&lt;/p&gt;
+&lt;p&gt;Very little of the time spent has to do with either the code under test, or the testing code. The majority of the time is just getting the test to run.&lt;/p&gt;
+&lt;p&gt;The source of most of this is the default &lt;code&gt;spec_helper.rb&lt;/code&gt; that &lt;strong&gt;RSpec&lt;/strong&gt; generates to load up our test environment.&lt;/p&gt;
+&lt;p&gt;Asking around about this on Twitter (you should follow me &lt;a href=&quot;http://twitter.com/leshill&quot;&gt;@leshill&lt;/a&gt; :) yielded no examples on how you might write your specs to get some of that time back. So I wrote the &lt;a href=&quot;http://github.com/leshill/fast_specs&quot;&gt;fast_specs&lt;/a&gt; app (it is available on &lt;a href=&quot;http://github.com/leshill/fast_specs&quot;&gt;github&lt;/a&gt;) to demonstrate how to make your own specs faster.&lt;/p&gt;
+&lt;h2&gt;Writing Fast Specs&lt;/h2&gt;
+&lt;p&gt;The &lt;strong&gt;fast_specs&lt;/strong&gt; app has two spec suites, one a normal &lt;strong&gt;RSpec&lt;/strong&gt; suite that can be invoked as a whole with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% rake spec&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or invoked with individual specs with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% rspec spec/models/publish_spec.rb
+% ruby -Ispec spec/models/publish_spec.rb&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And a &lt;strong&gt;Fast Spec&lt;/strong&gt; suite that can be invoked as a while with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% rake fast&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or invoked with individual specs with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% rspec -Ifast_specs fast_specs/models/publish_spec.rb&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In order to use the &lt;strong&gt;Fast Spec&lt;/strong&gt; suite, we put our &lt;em&gt;fast&lt;/em&gt; specs under &lt;code&gt;fast_specs&lt;/code&gt; much like we do with normal &lt;strong&gt;RSpec&lt;/strong&gt; specs. For example, the spec for the &lt;code&gt;Publish&lt;/code&gt; model would be located at &lt;code&gt;fast_specs/modesl/publish_spec.rb&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;At the top of our simple spec, with no changes to the implementation or the contents of the &lt;code&gt;describe&lt;/code&gt; block, we require the &lt;code&gt;fast_spec_helper&lt;/code&gt;, and the &lt;code&gt;Publish&lt;/code&gt; model:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fast_spec_helper&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; app_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app/models/publish&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;fast_spec_helper&lt;/code&gt; adds a tiny bit of sugar by providing &lt;code&gt;app_require&lt;/code&gt; which just wraps loading files from your app.&lt;/p&gt;
+&lt;p&gt;Now when we run it:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% time rspec -Ifast_specs fast_specs/models/publish_spec.rb
+  .&lt;/code&gt;
+
+&lt;code&gt;  real    0m0.249s
+  user    0m0.183s
+  sys     0m0.064s&lt;/code&gt;
+
+&lt;code&gt;  Finished in 0.17153 seconds
+  1 example, 0 failures&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;One quarter of a second.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Oh point two five&lt;/em&gt; seconds.&lt;/p&gt;
+&lt;p&gt;Much faster.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;GO!&lt;/strong&gt; &lt;strong&gt;FAST&lt;/strong&gt; &lt;strong&gt;FASTER&lt;/strong&gt; &lt;strong&gt;FASTEST&lt;/strong&gt; &lt;strong&gt;GO!&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Give me some support&lt;/h2&gt;
+&lt;p&gt;Sometimes our code has some coupling to other parts of the system, and in those cases, we can just require the parts that we need during our spec. For example, if our &lt;code&gt;Post&lt;/code&gt; depends on &lt;code&gt;Publish&lt;/code&gt; our requires would look like:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fast_spec_helper&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; app_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app/models/publish&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; app_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app/models/post&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Not all specs are written completely with mocks (although more should be), and sometimes we need additional setup. For example, lets say that we are moving an existing &lt;em&gt;classic&lt;/em&gt; TDD model spec (again, completely contrived) for our &lt;code&gt;Post&lt;/code&gt; that looks like this:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; it &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;creates a post&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   expect &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Post&lt;/span&gt;.create(&lt;span class=&quot;sy&quot;&gt;title:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;a title&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;body:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;some body text&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;.to change(&lt;span class=&quot;co&quot;&gt;Post&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:count&lt;/span&gt;).from(&lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;).to(&lt;span class=&quot;i&quot;&gt;1&lt;/span&gt;)
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This spec requires accessing the database and ensuring some sort of &lt;em&gt;transactional fixture&lt;/em&gt; support. We can write these support files, place them in them in &lt;code&gt;fast_specs/support&lt;/code&gt; and then require them using another tiny bit of sugar with &lt;code&gt;support_require&lt;/code&gt; to load our support files:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fast_spec_helper&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; support_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; support_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;database_cleaner&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; 
+&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt; app_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app/models/publish&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; app_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app/models/post&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Timing this spec (which is using a transaction on the database) yields:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;% time rspec -Ifast_specs fast_specs/models/post_spec.rb
+.&lt;/code&gt;
+
+&lt;code&gt;Finished in 0.80608 seconds
+1 example, 0 failures&lt;/code&gt;
+
+&lt;code&gt;real    0m0.890s
+user    0m0.701s
+sys     0m0.170s&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Not bad. And most definitely faster than our previous isolated spec was :)&lt;/p&gt;
+&lt;h3&gt;Make this better!&lt;/h3&gt;
+&lt;p&gt;This is only the beginning of making your specs faster. Yes, shaving 4 seconds off when running an individual spec is fantastic. If you have suggestions for more techniques or code that helps even further, make a pull request!&lt;/p&gt;
+&lt;h2&gt;Thanks&lt;/h2&gt;
+&lt;p&gt;The approach outlined here is something that I just made up out of sheer frustration with the ridiculousness of waiting &lt;strong&gt;5 seconds&lt;/strong&gt; for a simple spec.&lt;/p&gt;
+&lt;p&gt;The idea of replacing the &lt;code&gt;spec_helper.rb&lt;/code&gt; was first mentioned to me by Gary Bernhardt over dinner a while back. Corey Haines has also been advocating this approach in some of his talks (and which I would love to see one of these days :)&lt;/p&gt;
+&lt;p&gt;And I know there was a blog post that suggested some serious stubbing for ActionController a while back (I cannot find it now, if you know it, please ping me.)&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Write Your Own Gemspec</title>
@@ -765,38 +900,6 @@ rvm gemset use makes_coffee
 &lt;/div&gt;
 
 &lt;p&gt;The source is up on &lt;a href=&quot;http://github.com/leshill/resque_spec&quot;&gt;github&lt;/a&gt; .&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Rails 3, RSpec, Factory Girl, Haml, and jQuery</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/05/08/rails-3-rspec-factory-girl-haml-and-jquery.html" />
-    
-    <id>tag:blog.leshill.org,2010-05-08:1273377370</id>
-    
-    <published>2010-05-08T20:56:10-07:00</published>
-    <updated>2010-05-08T20:56:10-07:00</updated>
-    <content type="html">&lt;p&gt;Easily generate a Rails 3 application with RSpec, Factory Girl, Haml, and jQuery in one line:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% rails new my_app -J -T -m \
-    http://github.com/leshill/rails3-app/raw/master/app.rb&lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;rvm&lt;/h2&gt;
-&lt;p&gt;We love &lt;code&gt;rvm&lt;/code&gt;, so the application has an &lt;code&gt;.rvmrc&lt;/code&gt; generated to specify a gemset.&lt;/p&gt;
-&lt;h2&gt;Generators&lt;/h2&gt;
-&lt;p&gt;This also gives you the Factory Girl and Haml Rails 3 generators &amp;mdash; the generators for RSpec are in the RSpec gem &amp;mdash; so that your factories and views are generated using Factory Girl and Haml, and that all your generated tests are specs. These generators are from the &lt;strong&gt;rails3_generators&lt;/strong&gt; gem, we pulled them out to avoid all the other dependencies included in that gem.&lt;/p&gt;
-&lt;h2&gt;JavaScript Includes&lt;/h2&gt;
-&lt;p&gt;Since the Rails helper &lt;code&gt;javascript_include_tag :defaults&lt;/code&gt; is looking for Prototype, we used &lt;a href=&quot;http://flow.handle.it/past/2010/2/9/jquery_in_rails&quot;&gt;this&lt;/a&gt; to add a new JavaScript expansion to pull in the jQuery libraries. Use it like so:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; = javascript_include_tag &lt;span class=&quot;sy&quot;&gt;:jquery&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2&gt;git&lt;/h2&gt;
-&lt;p&gt;We love &lt;code&gt;git&lt;/code&gt;, so the application has a git repo initialized with all the initial changes staged.&lt;/p&gt;
-&lt;h2&gt;Wrap Up&lt;/h2&gt;
-&lt;p&gt;After the application has been generated, there are a few clean up commands to run:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;  % cd my_app
-  % gem install bundler
-  % bundle install
-  % bundle lock
-  % script/rails generate rspec:install&lt;/code&gt;&lt;/pre&gt;</content>
   </entry>
   
 </feed>
