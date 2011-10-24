@@ -71,11 +71,11 @@ sys     0m0.512s&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Or invoked with individual specs with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;% rspec spec/models/publish_spec.rb
 % ruby -Ispec spec/models/publish_spec.rb&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And a &lt;strong&gt;Fast Spec&lt;/strong&gt; suite that can be invoked as a while with:&lt;/p&gt;
+&lt;p&gt;And a &lt;strong&gt;Fast Spec&lt;/strong&gt; suite that can be invoked as a whole with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;% rake fast&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Or invoked with individual specs with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;% rspec -Ifast_specs fast_specs/models/publish_spec.rb&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In order to use the &lt;strong&gt;Fast Spec&lt;/strong&gt; suite, we put our &lt;em&gt;fast&lt;/em&gt; specs under &lt;code&gt;fast_specs&lt;/code&gt; much like we do with normal &lt;strong&gt;RSpec&lt;/strong&gt; specs. For example, the spec for the &lt;code&gt;Publish&lt;/code&gt; model would be located at &lt;code&gt;fast_specs/modesl/publish_spec.rb&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In order to use the &lt;strong&gt;Fast Spec&lt;/strong&gt; suite, we put our &lt;em&gt;fast&lt;/em&gt; specs under &lt;code&gt;fast_specs&lt;/code&gt; much like we do with normal &lt;strong&gt;RSpec&lt;/strong&gt; specs. For example, the spec for the &lt;code&gt;Publish&lt;/code&gt; model would be located at &lt;code&gt;fast_specs/models/publish_spec.rb&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;At the top of our simple spec, with no changes to the implementation or the contents of the &lt;code&gt;describe&lt;/code&gt; block, we require the &lt;code&gt;fast_spec_helper&lt;/code&gt;, and the &lt;code&gt;Publish&lt;/code&gt; model:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fast_spec_helper&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
