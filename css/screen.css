@@ -22,7 +22,15 @@ body {
   text-align: center;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+  font-size: 150%;
+}
+
+h2, h3 {
+  font-size: 125%;
+}
+
+h4, h5, h6 {
   font-size: 100%;
 }
 
@@ -95,6 +103,10 @@ ul.posts {
   margin-bottom: 2em;
 }
 
+  .site .title {
+    font-size: 125%;
+  }
+
   .site .title a {
     color: #a00;
     text-decoration: none;
@@ -164,7 +176,7 @@ ul.posts {
 
 .update {
   background: #DDD;
-  padding: 1em;
+  padding: 2em 1em;
 }
 
 blockquote {
@@ -192,6 +204,7 @@ blockquote {
   }
 
   #post .title {
+    font-size: 150%;
     margin: auto;
   }
   /* standard */
@@ -206,6 +219,14 @@ blockquote {
   #post .update {
     margin-top: 2em;
     margin-bottom: 2em;
+  }
+
+  #post .update h1,h2,h3,h4,h5,h6,h7 {
+    margin: 0 0 1em;
+  }
+
+  #post .update p:last-child {
+    margin-bottom: 0;
   }
 
 .postlist {
