@@ -4,7 +4,7 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2012-03-25T22:29:14-07:00</updated>
+  <updated>2012-03-25T23:35:15-07:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
@@ -64,6 +64,8 @@
 &lt;/div&gt;
 
 &lt;p&gt;Note that we do not care what the type of &lt;code&gt;might_be_initialized_already&lt;/code&gt; is, we can use the incredibly useful definition of &lt;em&gt;truthy&lt;/em&gt; and &lt;em&gt;falsey&lt;/em&gt; to evaluate the conditional without coercion or other type-based manipulations.&lt;/p&gt;
+&lt;h3&gt;What is a predicate?&lt;/h3&gt;
+&lt;p&gt;Ruby has, among its many affordances for developers (and the second one at play in this drama), the optional method name suffixes &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;At this point, you might be thinking, &amp;#8220;&lt;em&gt;Hey what about &lt;code&gt;=&lt;/code&gt;, it is also a suffix!&lt;/em&gt;&amp;#8221; and you would be almost right. &lt;code&gt;=&lt;/code&gt; is a suffix, but unlike &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt; it actually means something to Ruby, namely that expressions like our earlier example:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;might_be_initialized_already ||= {}
@@ -71,8 +73,7 @@
 &lt;/div&gt;
 
 &lt;p&gt;are understood correctly. &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt; mean nothing to Ruby, they exist to make our code just a bit more pleasant to read. &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt; are affordances that we use by convention. There is no requirement to use them, yet we do so all the time. And yes, &lt;code&gt;=&lt;/code&gt; is another one of those affordances for the developer.&lt;/p&gt;
-&lt;h3&gt;What is a predicate?&lt;/h3&gt;
-&lt;p&gt;Ruby has, among its many affordances for developers (and the second one at play in this drama), the optional method name suffixes &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt;. The &lt;code&gt;!&lt;/code&gt; suffix indicates that the method modifies the receiver, for example:&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;!&lt;/code&gt; suffix indicates that the method modifies the receiver, for example:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
   &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;reset!&lt;/span&gt;
 &lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;# reset everything back to its initial state&lt;/span&gt;

@@ -66,6 +66,10 @@ end
 
 Note that we do not care what the type of @might_be_initialized_already@ is, we can use the incredibly useful definition of _truthy_ and _falsey_ to evaluate the conditional without coercion or other type-based manipulations.
 
+h3. What is a predicate?
+
+Ruby has, among its many affordances for developers (and the second one at play in this drama), the optional method name suffixes @!@ and @?@.
+
 At this point, you might be thinking, "_Hey what about @=@, it is also a suffix!_" and you would be almost right. @=@ is a suffix, but unlike @!@ and @?@ it actually means something to Ruby, namely that expressions like our earlier example:
 
 <notextile>
@@ -76,9 +80,7 @@ might_be_initialized_already ||= {}
 
 are understood correctly. @!@ and @?@ mean nothing to Ruby, they exist to make our code just a bit more pleasant to read. @!@ and @?@ are affordances that we use by convention. There is no requirement to use them, yet we do so all the time. And yes, @=@ is another one of those affordances for the developer.
 
-h3. What is a predicate?
-
-Ruby has, among its many affordances for developers (and the second one at play in this drama), the optional method name suffixes @!@ and @?@. The @!@ suffix indicates that the method modifies the receiver, for example:
+The @!@ suffix indicates that the method modifies the receiver, for example:
 
 <notextile>
 <coderay:ruby>
