@@ -46,7 +46,7 @@
         </abbr>
       </div>
       <div class='content'>
-        <p>I am not at <a href="http://en.oreilly.com/rails2009">RailsConf</a> but I have been following the tweets of my coworkers, so I heard about <a href="http://rspec.info">RSpec</a>&#8216;s new <code>stub_chain</code> method.  Since I prefer <a href="http://mocha.rubyforge.org">Mocha</a>&#8217;s syntax to that of the built-in RSpec stubbing framework, I created a monkey patch to add <code>stub_chain</code> to Mocha:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">module</span> <span class="cl">StubChainMocha</span>&#x000A;<span class="no"> 2</span>   <span class="r">module</span> <span class="cl">Object</span>&#x000A;<span class="no"> 3</span>     <span class="r">def</span> <span class="fu">stub_chain</span>(*methods)&#x000A;<span class="no"> 4</span>       <span class="r">while</span> methods.length &gt; <span class="i">1</span> <span class="r">do</span>&#x000A;<span class="no"> 5</span>         stubs(methods.shift).returns(<span class="pc">self</span>)&#x000A;<span class="no"> 6</span>       <span class="r">end</span>&#x000A;<span class="no"> 7</span>       stubs(methods.shift)&#x000A;<span class="no"> 8</span>     <span class="r">end</span>&#x000A;<span class="no"> 9</span>   <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span>&#x000A;<span class="no">11</span> &#x000A;<span class="no">12</span> <span class="co">Object</span>.send(<span class="sy">:include</span>, <span class="co">StubChainMocha</span>::<span class="co">Object</span>)</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Copy that into <code>spec/stub_chain_mocha.rb</code> and then require it from <code>spec_helper.rb</code>.</p>
+        <p>I am not at <a href="http://en.oreilly.com/rails2009">RailsConf</a> but I have been following the tweets of my coworkers, so I heard about <a href="http://rspec.info">RSpec</a>&#8216;s new <code>stub_chain</code> method.  Since I prefer <a href="http://mocha.rubyforge.org">Mocha</a>&#8217;s syntax to that of the built-in RSpec stubbing framework, I created a monkey patch to add <code>stub_chain</code> to Mocha:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"> <a href="#n1" name="n1">1</a></span><span class="keyword">module</span> <span class="class">StubChainMocha</span>&#x000A;<span class="line-numbers"> <a href="#n2" name="n2">2</a></span>  <span class="keyword">module</span> <span class="class">Object</span>&#x000A;<span class="line-numbers"> <a href="#n3" name="n3">3</a></span>    <span class="keyword">def</span> <span class="function">stub_chain</span>(*methods)&#x000A;<span class="line-numbers"> <a href="#n4" name="n4">4</a></span>      <span class="keyword">while</span> methods.length &gt; <span class="integer">1</span> <span class="keyword">do</span>&#x000A;<span class="line-numbers"> <a href="#n5" name="n5">5</a></span>        stubs(methods.shift).returns(<span class="predefined-constant">self</span>)&#x000A;<span class="line-numbers"> <a href="#n6" name="n6">6</a></span>      <span class="keyword">end</span>&#x000A;<span class="line-numbers"> <a href="#n7" name="n7">7</a></span>      stubs(methods.shift)&#x000A;<span class="line-numbers"> <a href="#n8" name="n8">8</a></span>    <span class="keyword">end</span>&#x000A;<span class="line-numbers"> <a href="#n9" name="n9">9</a></span>  <span class="keyword">end</span>&#x000A;<span class="line-numbers"><strong><a href="#n10" name="n10">10</a></strong></span><span class="keyword">end</span>&#x000A;<span class="line-numbers"><a href="#n11" name="n11">11</a></span>&#x000A;<span class="line-numbers"><a href="#n12" name="n12">12</a></span><span class="constant">Object</span>.send(<span class="symbol">:include</span>, <span class="constant">StubChainMocha</span>::<span class="constant">Object</span>)&#x000A;</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Copy that into <code>spec/stub_chain_mocha.rb</code> and then require it from <code>spec_helper.rb</code>.</p>
       </div>
       <div class='comments'>
         <div id='disqus_thread'></div>
@@ -80,9 +80,9 @@
         <p>
           Les Hill
           <br />
-          Developer @ <a href="http://pictureofhealth.com/">Picture of Health</a>
+          Developer @ <a href="http://carezone.com/">CareZone</a>
           <br />
-          les (at) picutreofhealth (dot) com
+          les (at) carezone (dot) com
         </p>
       </div>
       <div class='rss'>
@@ -101,7 +101,7 @@
       </p>
       <div class='copyright'>
         <p>
-          Les Hill &copy; 2008&ndash;2011
+          Les Hill &copy; 2008&ndash;2012
         </p>
       </div>
     </div>

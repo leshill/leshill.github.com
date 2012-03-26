@@ -46,7 +46,7 @@
         </abbr>
       </div>
       <div class='content'>
-        <p>I have been using <a href="http://hoptoadapp.com/">Hoptoad</a> to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple <code>include HoptoadNotifier::Catcher</code> in your <code>application.rb</code>, easy!</p>&#x000A;<p>However, I also wanted <strong>Hoptoad</strong> to track any exception which occurred in a cron job that was running with <code>script/runner</code>.  Again, a snap with <strong>Hoptoad</strong>, take a look:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">class</span> <span class="cl">CronJob</span>&#x000A;<span class="no">2</span>   <span class="r">def</span> <span class="pc">self</span>.<span class="fu">process</span>&#x000A;<span class="no">3</span>     <span class="c"># do stuff</span>&#x000A;<span class="no">4</span>   <span class="r">rescue</span> =&gt; ex&#x000A;<span class="no">5</span>     <span class="co">HoptoadNotifier</span>.notify(ex)&#x000A;<span class="no">6</span>   <span class="r">end</span>&#x000A;<span class="no">7</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;
+        <p>I have been using <a href="http://hoptoadapp.com/">Hoptoad</a> to track exceptions in my Rails apps for a while now.  The standard setup tracks exceptions in your controllers with a simple <code>include HoptoadNotifier::Catcher</code> in your <code>application.rb</code>, easy!</p>&#x000A;<p>However, I also wanted <strong>Hoptoad</strong> to track any exception which occurred in a cron job that was running with <code>script/runner</code>.  Again, a snap with <strong>Hoptoad</strong>, take a look:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="keyword">class</span> <span class="class">CronJob</span>&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  <span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">process</span>&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span>    <span class="comment"># do stuff</span>&#x000A;<span class="line-numbers"><a href="#n4" name="n4">4</a></span>  <span class="keyword">rescue</span> =&gt; ex&#x000A;<span class="line-numbers"><a href="#n5" name="n5">5</a></span>    <span class="constant">HoptoadNotifier</span>.notify(ex)&#x000A;<span class="line-numbers"><a href="#n6" name="n6">6</a></span>  <span class="keyword">end</span>&#x000A;<span class="line-numbers"><a href="#n7" name="n7">7</a></span><span class="keyword">end</span>&#x000A;</pre></div>&#x000A;</div>&#x000A;
       </div>
       <div class='comments'>
         <div id='disqus_thread'></div>
@@ -80,9 +80,9 @@
         <p>
           Les Hill
           <br />
-          Developer @ <a href="http://pictureofhealth.com/">Picture of Health</a>
+          Developer @ <a href="http://carezone.com/">CareZone</a>
           <br />
-          les (at) picutreofhealth (dot) com
+          les (at) carezone (dot) com
         </p>
       </div>
       <div class='rss'>
@@ -101,7 +101,7 @@
       </p>
       <div class='copyright'>
         <p>
-          Les Hill &copy; 2008&ndash;2011
+          Les Hill &copy; 2008&ndash;2012
         </p>
       </div>
     </div>

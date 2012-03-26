@@ -46,7 +46,7 @@
         </abbr>
       </div>
       <div class='content'>
-        <p>Easily generate a Rails 3 application with RSpec, Factory Girl, Haml, and jQuery in one line:</p>&#x000A;<pre><code>% rails new my_app -J -T -m \&#x000A;    http://github.com/leshill/rails3-app/raw/master/app.rb</code></pre>&#x000A;<h2>rvm</h2>&#x000A;<p>We love <code>rvm</code>, so the application has an <code>.rvmrc</code> generated to specify a gemset.</p>&#x000A;<h2>Generators</h2>&#x000A;<p>This also gives you the Factory Girl and Haml Rails 3 generators &mdash; the generators for RSpec are in the RSpec gem &mdash; so that your factories and views are generated using Factory Girl and Haml, and that all your generated tests are specs. These generators are from the <strong>rails3_generators</strong> gem, we pulled them out to avoid all the other dependencies included in that gem.</p>&#x000A;<h2>JavaScript Includes</h2>&#x000A;<p>Since the Rails helper <code>javascript_include_tag :defaults</code> is looking for Prototype, we used <a href="http://flow.handle.it/past/2010/2/9/jquery_in_rails">this</a> to add a new JavaScript expansion to pull in the jQuery libraries. Use it like so:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> = javascript_include_tag <span class="sy">:jquery</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<h2>git</h2>&#x000A;<p>We love <code>git</code>, so the application has a git repo initialized with all the initial changes staged.</p>&#x000A;<h2>Wrap Up</h2>&#x000A;<p>After the application has been generated, there are a few clean up commands to run:</p>&#x000A;<pre><code>  % cd my_app&#x000A;  % gem install bundler&#x000A;  % bundle install&#x000A;  % bundle lock&#x000A;  % script/rails generate rspec:install</code></pre>
+        <p>Easily generate a Rails 3 application with RSpec, Factory Girl, Haml, and jQuery in one line:</p>&#x000A;<pre><code>% rails new my_app -J -T -m \&#x000A;    http://github.com/leshill/rails3-app/raw/master/app.rb</code></pre>&#x000A;<h2>rvm</h2>&#x000A;<p>We love <code>rvm</code>, so the application has an <code>.rvmrc</code> generated to specify a gemset.</p>&#x000A;<h2>Generators</h2>&#x000A;<p>This also gives you the Factory Girl and Haml Rails 3 generators &mdash; the generators for RSpec are in the RSpec gem &mdash; so that your factories and views are generated using Factory Girl and Haml, and that all your generated tests are specs. These generators are from the <strong>rails3_generators</strong> gem, we pulled them out to avoid all the other dependencies included in that gem.</p>&#x000A;<h2>JavaScript Includes</h2>&#x000A;<p>Since the Rails helper <code>javascript_include_tag :defaults</code> is looking for Prototype, we used <a href="http://flow.handle.it/past/2010/2/9/jquery_in_rails">this</a> to add a new JavaScript expansion to pull in the jQuery libraries. Use it like so:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>= javascript_include_tag <span class="symbol">:jquery</span>&#x000A;</pre></div>&#x000A;</div>&#x000A;&#x000A;<h2>git</h2>&#x000A;<p>We love <code>git</code>, so the application has a git repo initialized with all the initial changes staged.</p>&#x000A;<h2>Wrap Up</h2>&#x000A;<p>After the application has been generated, there are a few clean up commands to run:</p>&#x000A;<pre><code>  % cd my_app&#x000A;  % gem install bundler&#x000A;  % bundle install&#x000A;  % bundle lock&#x000A;  % script/rails generate rspec:install</code></pre>
       </div>
       <div class='comments'>
         <div id='disqus_thread'></div>
@@ -80,9 +80,9 @@
         <p>
           Les Hill
           <br />
-          Developer @ <a href="http://pictureofhealth.com/">Picture of Health</a>
+          Developer @ <a href="http://carezone.com/">CareZone</a>
           <br />
-          les (at) picutreofhealth (dot) com
+          les (at) carezone (dot) com
         </p>
       </div>
       <div class='rss'>
@@ -101,7 +101,7 @@
       </p>
       <div class='copyright'>
         <p>
-          Les Hill &copy; 2008&ndash;2011
+          Les Hill &copy; 2008&ndash;2012
         </p>
       </div>
     </div>

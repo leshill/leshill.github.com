@@ -46,7 +46,7 @@
         </abbr>
       </div>
       <div class='content'>
-        <p>As of this post, I am using publishing <strong>Wonderland</strong> with <a href="http://webby.rubyforge.org">Webby</a> .</p>&#x000A;<p>Some of the things I like about <strong>Webby</strong>:</p>&#x000A;<ul>&#x000A;	<li>desktop based &#8212; updates are made on my laptop, giving me a wider choice of tools for writing this blog <sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup><sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup></li>&#x000A;	<li>static pages &#8212; the blog site is served from <strong>Apache</strong> as pure html files, there is no requirement to run a blogging server <sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup></li>&#x000A;	<li>extensible &#8212; <strong>Webby</strong> can be extended both with rake tasks and Ruby code<sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup></li>&#x000A;</ul>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Yes, this explains why I have not written a post recently.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> This post was edited with MacVim.</p>&#x000A;<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> I know, old school, some <a href="http://www.nedbatchelder.com">folks</a> have been publishing this way for a long time.</p>&#x000A;<p class="footnote" id="fn4"><a href="#fnr4"><sup>4</sup></a> Easy! A one-liner <a href="http://gist.github.com">gist</a> filter.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">Webby</span>::<span class="co">Filters</span>.register <span class="sy">:gist</span> { |input| input.gsub(<span class="rx"><span class="dl">/</span><span class="k">gist(</span><span class="ch">\d</span><span class="k">+)</span><span class="ch">\.</span><span class="dl">/</span></span>) { |s| <span class="s"><span class="dl">&quot;</span><span class="k">&lt;script src='http://gist.github.com/</span><span class="il"><span class="idl">#{</span><span class="gv">$1</span><span class="idl">}</span></span><span class="k">.js'&gt;&lt;/script&gt;</span><span class="dl">&quot;</span></span> } }</pre></div>&#x000A;</div>&#x000A;
+        <p>As of this post, I am using publishing <strong>Wonderland</strong> with <a href="http://webby.rubyforge.org">Webby</a> .</p>&#x000A;<p>Some of the things I like about <strong>Webby</strong>:</p>&#x000A;<ul>&#x000A;	<li>desktop based &#8212; updates are made on my laptop, giving me a wider choice of tools for writing this blog <sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup><sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup></li>&#x000A;	<li>static pages &#8212; the blog site is served from <strong>Apache</strong> as pure html files, there is no requirement to run a blogging server <sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup></li>&#x000A;	<li>extensible &#8212; <strong>Webby</strong> can be extended both with rake tasks and Ruby code<sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup></li>&#x000A;</ul>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Yes, this explains why I have not written a post recently.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> This post was edited with MacVim.</p>&#x000A;<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> I know, old school, some <a href="http://www.nedbatchelder.com">folks</a> have been publishing this way for a long time.</p>&#x000A;<p class="footnote" id="fn4"><a href="#fnr4"><sup>4</sup></a> Easy! A one-liner <a href="http://gist.github.com">gist</a> filter.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="constant">Webby</span>::<span class="constant">Filters</span>.register <span class="symbol">:gist</span> { |input| input.gsub(<span class="regexp"><span class="delimiter">/</span><span class="content">gist(</span><span class="char">\d</span><span class="content">+)</span><span class="char">\.</span><span class="delimiter">/</span></span>) { |s| <span class="string"><span class="delimiter">&quot;</span><span class="content">&lt;script src='http://gist.github.com/</span><span class="inline"><span class="inline-delimiter">#{</span><span class="global-variable">$1</span><span class="inline-delimiter">}</span></span><span class="content">.js'&gt;&lt;/script&gt;</span><span class="delimiter">&quot;</span></span> } }&#x000A;</pre></div>&#x000A;</div>&#x000A;
       </div>
       <div class='comments'>
         <div id='disqus_thread'></div>
@@ -80,9 +80,9 @@
         <p>
           Les Hill
           <br />
-          Developer @ <a href="http://pictureofhealth.com/">Picture of Health</a>
+          Developer @ <a href="http://carezone.com/">CareZone</a>
           <br />
-          les (at) picutreofhealth (dot) com
+          les (at) carezone (dot) com
         </p>
       </div>
       <div class='rss'>
@@ -101,7 +101,7 @@
       </p>
       <div class='copyright'>
         <p>
-          Les Hill &copy; 2008&ndash;2011
+          Les Hill &copy; 2008&ndash;2012
         </p>
       </div>
     </div>
