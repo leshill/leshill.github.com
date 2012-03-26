@@ -110,7 +110,7 @@ bq. Predicates typically return one of the Boolean values true or false, but thi
 
 h2. The drama
 
-The pull request in question reverted year-old Rails code, changing it to return @true@ or @false@ instead of just return a _truthy_ or _falsey_ value. The instigation of the request was that originally the @xml_http_request?@ method returned @true@ or @false@ and existing code had used the predicate as a RHS. When the value constraint was removed, all the code using the predicate as a RHS caused errors (the values were no longer @true@ and @false@).
+The pull request in question reverted year-old Rails code, changing it to return @true@ or @false@ instead of just returning a _truthy_ or _falsey_ value. The instigation of the request was that originally the @xml_http_request?@ method returned @true@ or @false@ and existing code had used the predicate as a RHS. When the value constraint was removed, all the code using the predicate as a RHS caused errors (the values were no longer @true@ and @false@).
 
 h2. My opinion
 
@@ -134,7 +134,7 @@ If we accept that the predicate method constrains its return value, then accepti
 
 If we accept that the predicate method does not constrain its return value, then accepting that the predicate method is usable anywhere does not make sense. In this case using a predicate as a RHS fails miserably, as you get whatever happens to be returned when determining its _truthyness_.
 
-This is really the cause of the dust-up in Rails core. Whatever the original intentions were, at one point the predicate method in question returned @true@ or @false@. Depending on a predicate method to return a @true@ or @false@ for use in a RHS is not really good Ruby practice. There can be no guarantee that the values are more than _truthy_ or _falsey_.
+This is really the cause of the dust-up in Rails core. Whatever the original intentions were, at one point the predicate method in question returned @true@ or @false@. Depending on a predicate method to return a @true@ or @false@ for use in a RHS is not really good Ruby practice. There is no guarantee that the values are anything other than _truthy_ or _falsey_, which is to say, anything at all.
 
 fn1. The Pickaxe book.
 
