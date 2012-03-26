@@ -74,7 +74,7 @@ At this point, you might be thinking, "_Hey what about @=@, it is also a suffix!
 
 <notextile>
 <coderay:ruby>
-might_be_initialized_already ||= {}
+self.properties ||= {}
 </coderay>
 </notextile>
 
