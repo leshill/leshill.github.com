@@ -4,12 +4,117 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2011-10-23T23:43:40-07:00</updated>
+  <updated>2012-03-25T22:20:34-07:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>A Question of Truth</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2012/03/25/a-question-of-truth.html" />
+    
+    <id>tag:blog.leshill.org,2012-03-25:1332709513</id>
+    
+    <published>2012-03-25T14:05:13-07:00</published>
+    <updated>2012-03-25T14:05:13-07:00</updated>
+    <content type="html">&lt;p&gt;Yesterday, a simple pull request to Rails &lt;a href=&quot;https://github.com/rails/rails/pull/5329&quot;&gt;core&lt;/a&gt; &lt;a href=&quot;https://github.com/rails/rails/commit/0aa66f04e4b4698718023cacb18612e04a4c5eb1&quot;&gt;dramatically&lt;/a&gt; &lt;a href=&quot;https://github.com/rails/rails/pull/5572&quot;&gt;exploded&lt;/a&gt; over the issue of what a predicate should return.&lt;/p&gt;
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+&lt;p&gt;This tweet pretty much sums it up:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For what it&amp;#8217;s worth I&amp;#8217;d consider any ruby code that relies on true/false singletons from predicates to be in error.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;mdash; &lt;a href=&quot;https://twitter.com/#!/avdi/status/183376469957943296&quot;&gt;@avdi&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Background&lt;/h2&gt;
+&lt;p&gt;To really appreciate the dicussion, we need to know two things about Ruby.&lt;/p&gt;
+&lt;h3&gt;What is true?&lt;/h3&gt;
+&lt;p&gt;Ruby, like many programming languages, has a specific understanding of &lt;em&gt;true&lt;/em&gt; or &lt;em&gt;false&lt;/em&gt; that goes beyond expressing the concept in a boolean type. Ruby understands the concept of whether a value is &lt;em&gt;true&lt;/em&gt; or &lt;em&gt;false&lt;/em&gt;, and therefore any expression requiring a boolean value (for example, using the boolean logic operators), without needing an explicit set of boolean values. Ruby does have the keywords &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt;, sometimes called the &lt;em&gt;true singleton&lt;/em&gt; and the &lt;em&gt;false singleton&lt;/em&gt; since the values are shared in the Ruby VM, which are Ruby&amp;#8217;s only notion of anything like a boolean type.&lt;/p&gt;
+&lt;p&gt;Instead, in Ruby, when a boolean value is required in boolean logic expressions (or conditionals), Ruby is really only concered with the &lt;em&gt;truthyness&lt;/em&gt; of the value.  Ruby evaluates a value as either &lt;em&gt;truthy&lt;/em&gt; or &lt;em&gt;falsey&lt;/em&gt; with a simple rule.&lt;/p&gt;
+&lt;p&gt;All of the following are &lt;em&gt;falsey&lt;/em&gt; values.&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;&lt;code&gt;false&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;nil&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And anything else is a &lt;em&gt;truthy&lt;/em&gt; value:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;&lt;code&gt;true&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;-1&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;0&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;0.0&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;&quot;&quot;&lt;/code&gt; &amp;mdash; an empty string&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;&quot;hi&quot;&lt;/code&gt; &amp;mdash; a non-empty string&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;[]&lt;/code&gt; &amp;mdash; an empty array&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;{a: 1}&lt;/code&gt; &amp;mdash; a non-empty hash&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;Object.new&lt;/code&gt; &amp;mdash; any object&lt;/li&gt;
+	&lt;li&gt;&lt;em&gt;You get the idea&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is one of Ruby&amp;#8217;s many affordances for developers (and not the only one at play in this drama). It allows us to write concise and expressive code like this:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;might_be_initialized_already ||= {}
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To be very clear about what this is doing, lets rewrite it naively:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;unless&lt;/span&gt; might_be_initialized_already
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  might_be_initialized_already = {}
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Note that we do not care what the type of &lt;code&gt;might_be_initialized_already&lt;/code&gt; is, we can use the incredibly useful definition of &lt;em&gt;truthy&lt;/em&gt; and &lt;em&gt;falsey&lt;/em&gt; to evaluate the conditional without coercion or other type-based manipulations.&lt;/p&gt;
+&lt;p&gt;At this point, you might be thinking, &amp;#8220;&lt;em&gt;Hey what about &lt;code&gt;=&lt;/code&gt;, it is also a suffix!&lt;/em&gt;&amp;#8221; and you would be almost right. &lt;code&gt;=&lt;/code&gt; is a suffix, but unlike &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt; it actually means something to Ruby, namely that expressions like our earlier example:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;might_be_initialized_already ||= {}
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;are understood correctly. &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt; mean nothing to Ruby, they exist to make our code just a bit more pleasant to read. &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt; are affordances that we use by convention. There is no requirement to use them, yet we do so all the time. And yes, &lt;code&gt;=&lt;/code&gt; is another one of those affordances for the developer.&lt;/p&gt;
+&lt;h3&gt;What is a predicate?&lt;/h3&gt;
+&lt;p&gt;Ruby has, among its many affordances for developers (and the second one at play in this drama), the optional method name suffixes &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt;. The &lt;code&gt;!&lt;/code&gt; suffix indicates that the method modifies the receiver, for example:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;reset!&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;# reset everything back to its initial state&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The convention for &lt;code&gt;!&lt;/code&gt; is summed up in &lt;strong&gt;Programming Ruby&lt;/strong&gt; by Thomas&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Methods that are “dangerous,” or modify the receiver, may be named with a trailing !.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The &lt;code&gt;?&lt;/code&gt; suffix indicates that the method is a predicate, returning a &lt;em&gt;truthy&lt;/em&gt; or &lt;em&gt;falsey&lt;/em&gt; value. For example:&lt;/p&gt;
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;reset! &lt;span class=&quot;keyword&quot;&gt;unless&lt;/span&gt; valid?
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The convention for &lt;code&gt;?&lt;/code&gt; is also summed up in &lt;strong&gt;Programming Ruby&lt;/strong&gt; by Thomas:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Methods that act as queries are often named with a trailing ?, such as &lt;code&gt;instance_of?&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The astute reader will have noted that &lt;em&gt;by definition&lt;/em&gt; &lt;strong&gt;every method in ruby returns a &lt;em&gt;truthy&lt;/em&gt; or &lt;em&gt;falsey&lt;/em&gt; value&lt;/strong&gt;. And in &lt;strong&gt;The Ruby Programming Language&lt;/strong&gt; by Flannagan and Matz (yes, that Matz), it is noted as part of the convention for &lt;code&gt;?&lt;/code&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Predicates typically return one of the Boolean values true or false, but this is not required, as any value other than false or nil works like true when a Boolean value is required. (The Numeric method nonzero?, for example, returns nil if the number it is invoked on is zero, and just returns the number otherwise.)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;The drama&lt;/h2&gt;
+&lt;p&gt;The pull request in question reverted year-old Rails code, changing it to return &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; instead of just return a &lt;em&gt;truthy&lt;/em&gt; or &lt;em&gt;falsey&lt;/em&gt; value. The instigation of the request was that originally the &lt;code&gt;xml_http_request?&lt;/code&gt; method returned &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; and existing code had used the predicate as a RHS. When the value constraint was removed, all the code using the predicate as a RHS caused errors (the values were no longer &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt;).&lt;/p&gt;
+&lt;h2&gt;My opinion&lt;/h2&gt;
+&lt;p&gt;Since a predicate method is only a method with a &amp;#8216;?&amp;#8217; appended to the name, the convention around its use covers two questions, the obvious one:&lt;/p&gt;
+&lt;h3&gt;What values does the predicate method return?&lt;/h3&gt;
+&lt;p&gt;We might say that the convention is that the predicate method constrains its return value to &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Or we might say that the convention is that the predicate method does not constrain its value.&lt;/p&gt;
+&lt;p&gt;Given the explicit endorsement, the second is clearly the convention. This also matches the experience of the Ruby community to date.&lt;/p&gt;
+&lt;p&gt;As an aside, following the precedent of &lt;code&gt;=&lt;/code&gt;, one can easily imagine a modified Ruby that would make predicate methods returning only &lt;code&gt;true&lt;/code&gt; and &lt;code&gt;false&lt;/code&gt; more than just a convention and simply the way Ruby works.&lt;sup class=&quot;footnote&quot; id=&quot;fnr2&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;And the not so obvious one:&lt;/p&gt;
+&lt;h3&gt;When do you use the predicate method?&lt;/h3&gt;
+&lt;p&gt;If we accept that the predicate method constrains its return value, then accepting that the predicate method is usable anywhere makes sense. In this case using a predicate as a RHS is perfect when you want to get a &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; value.&lt;/p&gt;
+&lt;p&gt;If we accept that the predicate method does not constrain its return value, then accepting that the predicate method is usable anywhere does not make sense. In this case using a predicate as a RHS fails miserably, as you get whatever happens to be returned when determining its &lt;em&gt;truthyness&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;This is really the cause of the dust-up in Rails core. Whatever the original intentions were, at one point the predicate method in question returned &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;. Depending on a predicate method to return a &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; for use in a RHS is not really good Ruby practice. There can be no guarantee that the values are more than &lt;em&gt;truthy&lt;/em&gt; or &lt;em&gt;falsey&lt;/em&gt;.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; The Pickaxe book.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;a href=&quot;#fnr2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; Just in case someone misreads that sentence, Ruby does not work this way.&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Fast Specs!</title>
@@ -47,18 +152,20 @@ sys     0m0.512s&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;An eternity.&lt;/p&gt;
 &lt;p&gt;Let&amp;#8217;s take a look at the admittedly ridiculous and contrived spec:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; it &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;publishes the item to the syndicate&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   syndicate = double()
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;   syndicate.should_receive(&lt;span class=&quot;sy&quot;&gt;:publish&lt;/span&gt;).with(item)
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   item.publish_to(syndicate)
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;it &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;publishes the item to the syndicate&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  syndicate = double()
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;  syndicate.should_receive(&lt;span class=&quot;symbol&quot;&gt;:publish&lt;/span&gt;).with(item)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;  item.publish_to(syndicate)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Maybe there is a &lt;code&gt;sleep&lt;/code&gt; hiding inside &lt;code&gt;#publish_to&lt;/code&gt;?&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;publish_to&lt;/span&gt;(syndicate)
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   syndicate.publish(&lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;publish_to&lt;/span&gt;(syndicate)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  syndicate.publish(&lt;span class=&quot;predefined-constant&quot;&gt;self&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Nope.&lt;/p&gt;
@@ -78,9 +185,10 @@ sys     0m0.512s&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In order to use the &lt;strong&gt;Fast Spec&lt;/strong&gt; suite, we put our &lt;em&gt;fast&lt;/em&gt; specs under &lt;code&gt;fast_specs&lt;/code&gt; much like we do with normal &lt;strong&gt;RSpec&lt;/strong&gt; specs. For example, the spec for the &lt;code&gt;Publish&lt;/code&gt; model would be located at &lt;code&gt;fast_specs/models/publish_spec.rb&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;At the top of our simple spec, with no changes to the implementation or the contents of the &lt;code&gt;describe&lt;/code&gt; block, we require the &lt;code&gt;fast_spec_helper&lt;/code&gt;, and the &lt;code&gt;Publish&lt;/code&gt; model:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fast_spec_helper&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; app_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app/models/publish&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;fast_spec_helper&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;app_require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;app/models/publish&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;&lt;code&gt;fast_spec_helper&lt;/code&gt; adds a tiny bit of sugar by providing &lt;code&gt;app_require&lt;/code&gt; which just wraps loading files from your app.&lt;/p&gt;
@@ -101,30 +209,33 @@ sys     0m0.512s&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;Give me some support&lt;/h2&gt;
 &lt;p&gt;Sometimes our code has some coupling to other parts of the system, and in those cases, we can just require the parts that we need during our spec. For example, if our &lt;code&gt;Post&lt;/code&gt; depends on &lt;code&gt;Publish&lt;/code&gt; our requires would look like:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fast_spec_helper&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; app_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app/models/publish&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; app_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app/models/post&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;fast_spec_helper&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;app_require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;app/models/publish&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;app_require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;app/models/post&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Not all specs are written completely with mocks (although more should be), and sometimes we need additional setup. For example, lets say that we are moving an existing &lt;em&gt;classic&lt;/em&gt; TDD model spec (again, completely contrived) for our &lt;code&gt;Post&lt;/code&gt; that looks like this:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; it &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;creates a post&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   expect &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Post&lt;/span&gt;.create(&lt;span class=&quot;sy&quot;&gt;title:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;a title&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;body:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;some body text&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;.to change(&lt;span class=&quot;co&quot;&gt;Post&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;:count&lt;/span&gt;).from(&lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;).to(&lt;span class=&quot;i&quot;&gt;1&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;it &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;creates a post&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  expect &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;constant&quot;&gt;Post&lt;/span&gt;.create(title: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;a title&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, body: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;some body text&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;.to change(&lt;span class=&quot;constant&quot;&gt;Post&lt;/span&gt;, &lt;span class=&quot;symbol&quot;&gt;:count&lt;/span&gt;).from(&lt;span class=&quot;integer&quot;&gt;0&lt;/span&gt;).to(&lt;span class=&quot;integer&quot;&gt;1&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;This spec requires accessing the database and ensuring some sort of &lt;em&gt;transactional fixture&lt;/em&gt; support. We can write these support files, place them in them in &lt;code&gt;fast_specs/support&lt;/code&gt; and then require them using another tiny bit of sugar with &lt;code&gt;support_require&lt;/code&gt; to load our support files:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fast_spec_helper&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; support_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; support_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;database_cleaner&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt; app_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app/models/publish&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; app_require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;app/models/post&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;fast_spec_helper&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;support_require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;support_require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;database_cleaner&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;app_require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;app/models/publish&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n7&quot; name=&quot;n7&quot;&gt;7&lt;/a&gt;&lt;/span&gt;app_require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;app/models/post&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Timing this spec (which is using a transaction on the database) yields:&lt;/p&gt;
@@ -205,33 +316,34 @@ rvm use default@your_gem&lt;/code&gt;&lt;/pre&gt;
 &lt;/ul&gt;
 &lt;p&gt;Our generated gemspec has placeholder metadata, a good starting manifest, and no dependencies.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# -*- encoding: utf-8 -*-&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;gv&quot;&gt;$:&lt;/span&gt;.push &lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;../lib&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;pc&quot;&gt;__FILE__&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;your_gem/version&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Gem&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Specification&lt;/span&gt;.new &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |s|
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Metadata&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;   s.name        = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;your_gem&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;   s.version     = &lt;span class=&quot;co&quot;&gt;YourGem&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;VERSION&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   s.authors     = [&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Your Name&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   s.email       = [&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;your_name@example.com&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;   s.homepage    = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   s.summary     = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;%q{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;TODO: Write a gem summary&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   s.description = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;%q{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;TODO: Write a gem description&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;   s.rubyforge_project = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;your_gem&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Manifest&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;   s.files         = &lt;span class=&quot;sh&quot;&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;git ls-files&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;/span&gt;.split(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt;   s.test_files    = &lt;span class=&quot;sh&quot;&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;git ls-files -- {test,spec,features}/*&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;/span&gt;.split(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;   s.executables   = &lt;span class=&quot;sh&quot;&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;git ls-files -- bin/*&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;`&lt;/span&gt;&lt;/span&gt;.split(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;).map{ |f| &lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.basename(f) }
-&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;   s.require_paths = [&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lib&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# Dependencies&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# specify any dependencies here; for example:&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;25&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# s.add_development_dependency &amp;quot;rspec&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;26&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# s.add_runtime_dependency &amp;quot;rest-client&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;27&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# -*- encoding: utf-8 -*-&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;global-variable&quot;&gt;$:&lt;/span&gt;.push &lt;span class=&quot;constant&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;../lib&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;predefined-constant&quot;&gt;__FILE__&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;your_gem/version&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;constant&quot;&gt;Gem&lt;/span&gt;::&lt;span class=&quot;constant&quot;&gt;Specification&lt;/span&gt;.new &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |s|
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;# Metadata&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n7&quot; name=&quot;n7&quot;&gt;7&lt;/a&gt;&lt;/span&gt;  s.name        = &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;your_gem&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n8&quot; name=&quot;n8&quot;&gt;8&lt;/a&gt;&lt;/span&gt;  s.version     = &lt;span class=&quot;constant&quot;&gt;YourGem&lt;/span&gt;::&lt;span class=&quot;constant&quot;&gt;VERSION&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n9&quot; name=&quot;n9&quot;&gt;9&lt;/a&gt;&lt;/span&gt;  s.authors     = [&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;Your Name&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n10&quot; name=&quot;n10&quot;&gt;10&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;  s.email       = [&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;your_name@example.com&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n11&quot; name=&quot;n11&quot;&gt;11&lt;/a&gt;&lt;/span&gt;  s.homepage    = &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n12&quot; name=&quot;n12&quot;&gt;12&lt;/a&gt;&lt;/span&gt;  s.summary     = &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;%q{&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;TODO: Write a gem summary&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n13&quot; name=&quot;n13&quot;&gt;13&lt;/a&gt;&lt;/span&gt;  s.description = &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;%q{&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;TODO: Write a gem description&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n14&quot; name=&quot;n14&quot;&gt;14&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n15&quot; name=&quot;n15&quot;&gt;15&lt;/a&gt;&lt;/span&gt;  s.rubyforge_project = &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;your_gem&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n16&quot; name=&quot;n16&quot;&gt;16&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n17&quot; name=&quot;n17&quot;&gt;17&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;# Manifest&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n18&quot; name=&quot;n18&quot;&gt;18&lt;/a&gt;&lt;/span&gt;  s.files         = &lt;span class=&quot;shell&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;git ls-files&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;`&lt;/span&gt;&lt;/span&gt;.split(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;char&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n19&quot; name=&quot;n19&quot;&gt;19&lt;/a&gt;&lt;/span&gt;  s.test_files    = &lt;span class=&quot;shell&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;git ls-files -- {test,spec,features}/*&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;`&lt;/span&gt;&lt;/span&gt;.split(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;char&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n20&quot; name=&quot;n20&quot;&gt;20&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;  s.executables   = &lt;span class=&quot;shell&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;git ls-files -- bin/*&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;`&lt;/span&gt;&lt;/span&gt;.split(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;char&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;).map{ |f| &lt;span class=&quot;constant&quot;&gt;File&lt;/span&gt;.basename(f) }
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n21&quot; name=&quot;n21&quot;&gt;21&lt;/a&gt;&lt;/span&gt;  s.require_paths = [&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;lib&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n22&quot; name=&quot;n22&quot;&gt;22&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n23&quot; name=&quot;n23&quot;&gt;23&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;# Dependencies&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n24&quot; name=&quot;n24&quot;&gt;24&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;# specify any dependencies here; for example:&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n25&quot; name=&quot;n25&quot;&gt;25&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;# s.add_development_dependency &amp;quot;rspec&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n26&quot; name=&quot;n26&quot;&gt;26&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;# s.add_runtime_dependency &amp;quot;rest-client&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n27&quot; name=&quot;n27&quot;&gt;27&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Edit the metadata to include your name, email, and what the gem is about. Unless you are doing something off the reservation, there should be no need to mess with the manifest.&lt;/p&gt;
@@ -288,61 +400,63 @@ Successfully registered gem: your_gem (0.0.1)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;If you are interested in the heresy, skip to the bottom.&lt;/p&gt;
 &lt;p&gt;Here is a simple sign up form for a Rails app. We want to validate that the user has entered an email address and filled in the password. Additionally, we would like to know if the email entered is available, so we will use AJAX to call down to the server to check availability dynamically.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;ta&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;accept-charset&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;UTF-8&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;action&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;validate&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new_user&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;method&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;style&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;margin:0;padding:0;display:inline&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;ta&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;utf8&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;✓&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;     &lt;span class=&quot;ta&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;authenticity_token&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;dkjfhioeutgdkjdkfj&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     &lt;span class=&quot;ta&quot;&gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;for&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user_email&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;Your email&lt;span class=&quot;ta&quot;&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;     &lt;span class=&quot;ta&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;text required email&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user_email&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user[email]&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;size&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;     &lt;span class=&quot;ta&quot;&gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;for&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user_password&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;Choose a password&lt;span class=&quot;ta&quot;&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;     &lt;span class=&quot;ta&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;autocomplete&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;off&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;text required&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user_password&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user[password]&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;size&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;buttons&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;     &lt;span class=&quot;ta&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;submit&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;an&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Get started&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;ta&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;   &lt;span class=&quot;ta&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;ta&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;accept-charset&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;UTF-8&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;action&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;validate&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;new_user&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;method&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;style&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;margin:0;padding:0;display:inline&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;utf8&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;✓&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;authenticity_token&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;dkjfhioeutgdkjdkfj&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n7&quot; name=&quot;n7&quot;&gt;7&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;for&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user_email&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;gt;&lt;/span&gt;Your email&lt;span class=&quot;tag&quot;&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n8&quot; name=&quot;n8&quot;&gt;8&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;text required email&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user_email&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user[email]&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;size&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n9&quot; name=&quot;n9&quot;&gt;9&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n10&quot; name=&quot;n10&quot;&gt;10&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n11&quot; name=&quot;n11&quot;&gt;11&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;for&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user_password&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;gt;&lt;/span&gt;Choose a password&lt;span class=&quot;tag&quot;&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n12&quot; name=&quot;n12&quot;&gt;12&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;autocomplete&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;off&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;text required&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user_password&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user[password]&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;size&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n13&quot; name=&quot;n13&quot;&gt;13&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n14&quot; name=&quot;n14&quot;&gt;14&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;buttons&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n15&quot; name=&quot;n15&quot;&gt;15&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;commit&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;submit&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;attribute-name&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;Get started&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n16&quot; name=&quot;n16&quot;&gt;16&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;tag&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n17&quot; name=&quot;n17&quot;&gt;17&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;As a starting point, this is how we might use Validation with jQuery to validate our form.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;pd&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;#new_user&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;).validate({
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;ke&quot;&gt;rules&lt;/span&gt;: {
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;ke&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user[email]&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;: {
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;       &lt;span class=&quot;ke&quot;&gt;required&lt;/span&gt;: &lt;span class=&quot;pc&quot;&gt;true&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;       &lt;span class=&quot;ke&quot;&gt;email&lt;/span&gt;: &lt;span class=&quot;pc&quot;&gt;true&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;       &lt;span class=&quot;ke&quot;&gt;remote&lt;/span&gt;: &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/users/email_available&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     },
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;     &lt;span class=&quot;ke&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user[password]&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;: {
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;       &lt;span class=&quot;ke&quot;&gt;required&lt;/span&gt;: &lt;span class=&quot;pc&quot;&gt;true&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;       &lt;span class=&quot;ke&quot;&gt;minlength&lt;/span&gt;: &lt;span class=&quot;i&quot;&gt;6&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;     }
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;   },
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;   &lt;span class=&quot;ke&quot;&gt;messages&lt;/span&gt;: {
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;     &lt;span class=&quot;ke&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user[email]&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;: {
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;       &lt;span class=&quot;ke&quot;&gt;remote&lt;/span&gt;: &lt;span class=&quot;pd&quot;&gt;$&lt;/span&gt;.format(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;{0} has already been taken&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;     }
-&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;   },
-&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt;   &lt;span class=&quot;fu&quot;&gt;submitHandler&lt;/span&gt;: &lt;span class=&quot;kw&quot;&gt;function&lt;/span&gt;(form) {
-&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt;     &lt;span class=&quot;kw&quot;&gt;var&lt;/span&gt; form = &lt;span class=&quot;pd&quot;&gt;$&lt;/span&gt;(form);
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;     &lt;span class=&quot;kw&quot;&gt;var&lt;/span&gt; form_data = form.formParams()
-&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;     &lt;span class=&quot;pd&quot;&gt;$&lt;/span&gt;.ajax({
-&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt;       &lt;span class=&quot;ke&quot;&gt;url&lt;/span&gt;: form.attr(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;),
-&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt;       &lt;span class=&quot;ke&quot;&gt;dataType&lt;/span&gt;: &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt;       &lt;span class=&quot;ke&quot;&gt;type&lt;/span&gt;: &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;POST&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt;25&lt;/span&gt;       &lt;span class=&quot;ke&quot;&gt;data&lt;/span&gt;: form_data,
-&lt;span class=&quot;no&quot;&gt;26&lt;/span&gt;       &lt;span class=&quot;fu&quot;&gt;success&lt;/span&gt;: &lt;span class=&quot;kw&quot;&gt;function&lt;/span&gt; (data, textStatus, xhr) {
-&lt;span class=&quot;no&quot;&gt;27&lt;/span&gt;         &lt;span class=&quot;c&quot;&gt;// code for cleaning up form and showing response here...&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;28&lt;/span&gt;       },
-&lt;span class=&quot;no&quot;&gt;29&lt;/span&gt;       &lt;span class=&quot;fu&quot;&gt;error&lt;/span&gt;: &lt;span class=&quot;kw&quot;&gt;function&lt;/span&gt; (xhr, textStatus, errorThrown) {
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;30&lt;/strong&gt;&lt;/span&gt;         &lt;span class=&quot;c&quot;&gt;// code for showing errors here...&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;31&lt;/span&gt;       }
-&lt;span class=&quot;no&quot;&gt;32&lt;/span&gt;     });
-&lt;span class=&quot;no&quot;&gt;33&lt;/span&gt;   }
-&lt;span class=&quot;no&quot;&gt;34&lt;/span&gt; });&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;predefined&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;#new_user&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;).validate({
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;key&quot;&gt;rules&lt;/span&gt;: {
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;key&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user[email]&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;: {
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;key&quot;&gt;required&lt;/span&gt;: &lt;span class=&quot;predefined-constant&quot;&gt;true&lt;/span&gt;,
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;key&quot;&gt;email&lt;/span&gt;: &lt;span class=&quot;predefined-constant&quot;&gt;true&lt;/span&gt;,
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;key&quot;&gt;remote&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;/users/email_available&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n7&quot; name=&quot;n7&quot;&gt;7&lt;/a&gt;&lt;/span&gt;    },
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n8&quot; name=&quot;n8&quot;&gt;8&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;key&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user[password]&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;: {
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n9&quot; name=&quot;n9&quot;&gt;9&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;key&quot;&gt;required&lt;/span&gt;: &lt;span class=&quot;predefined-constant&quot;&gt;true&lt;/span&gt;,
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n10&quot; name=&quot;n10&quot;&gt;10&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;      &lt;span class=&quot;key&quot;&gt;minlength&lt;/span&gt;: &lt;span class=&quot;integer&quot;&gt;6&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n11&quot; name=&quot;n11&quot;&gt;11&lt;/a&gt;&lt;/span&gt;    }
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n12&quot; name=&quot;n12&quot;&gt;12&lt;/a&gt;&lt;/span&gt;  },
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n13&quot; name=&quot;n13&quot;&gt;13&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;key&quot;&gt;messages&lt;/span&gt;: {
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n14&quot; name=&quot;n14&quot;&gt;14&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;key&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user[email]&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;: {
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n15&quot; name=&quot;n15&quot;&gt;15&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;key&quot;&gt;remote&lt;/span&gt;: &lt;span class=&quot;predefined&quot;&gt;$&lt;/span&gt;.format(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;{0} has already been taken&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n16&quot; name=&quot;n16&quot;&gt;16&lt;/a&gt;&lt;/span&gt;    }
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n17&quot; name=&quot;n17&quot;&gt;17&lt;/a&gt;&lt;/span&gt;  },
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n18&quot; name=&quot;n18&quot;&gt;18&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;function&quot;&gt;submitHandler&lt;/span&gt;: &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(form) {
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n19&quot; name=&quot;n19&quot;&gt;19&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; form = &lt;span class=&quot;predefined&quot;&gt;$&lt;/span&gt;(form);
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n20&quot; name=&quot;n20&quot;&gt;20&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; form_data = form.formParams()
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n21&quot; name=&quot;n21&quot;&gt;21&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;predefined&quot;&gt;$&lt;/span&gt;.ajax({
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n22&quot; name=&quot;n22&quot;&gt;22&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;key&quot;&gt;url&lt;/span&gt;: form.attr(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;),
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n23&quot; name=&quot;n23&quot;&gt;23&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;key&quot;&gt;dataType&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;,
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n24&quot; name=&quot;n24&quot;&gt;24&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;key&quot;&gt;type&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;POST&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;,
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n25&quot; name=&quot;n25&quot;&gt;25&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;key&quot;&gt;data&lt;/span&gt;: form_data,
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n26&quot; name=&quot;n26&quot;&gt;26&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;function&quot;&gt;success&lt;/span&gt;: &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (data, textStatus, xhr) {
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n27&quot; name=&quot;n27&quot;&gt;27&lt;/a&gt;&lt;/span&gt;        &lt;span class=&quot;comment&quot;&gt;// code for cleaning up form and showing response here...&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n28&quot; name=&quot;n28&quot;&gt;28&lt;/a&gt;&lt;/span&gt;      },
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n29&quot; name=&quot;n29&quot;&gt;29&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;function&quot;&gt;error&lt;/span&gt;: &lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (xhr, textStatus, errorThrown) {
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n30&quot; name=&quot;n30&quot;&gt;30&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;        &lt;span class=&quot;comment&quot;&gt;// code for showing errors here...&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n31&quot; name=&quot;n31&quot;&gt;31&lt;/a&gt;&lt;/span&gt;      }
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n32&quot; name=&quot;n32&quot;&gt;32&lt;/a&gt;&lt;/span&gt;    });
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n33&quot; name=&quot;n33&quot;&gt;33&lt;/a&gt;&lt;/span&gt;  }
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n34&quot; name=&quot;n34&quot;&gt;34&lt;/a&gt;&lt;/span&gt;});
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;If you have not used the Validation plugin before, it is a simple declarative way to validate forms. You specify the rules which apply to your form&amp;#8217;s input elements and they are checked as the user enters data and on submit. All the usual validations are provided by the plugin, including &lt;code&gt;remote&lt;/code&gt; which will make an Ajax call to your server to check the input. Messages for failed validations can be customized. And there are quite a few options available to change the behavior of the plugin.&lt;/p&gt;
@@ -350,51 +464,52 @@ Successfully registered gem: your_gem (0.0.1)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We will create a basic &lt;code&gt;FormView&lt;/code&gt; class to handle both create and edit, using a templated form. That is the extent of our brief for this blog post, a much more complete class is left as an exercise for the reader.&lt;/p&gt;
 &lt;p&gt;Oh and we are using &lt;a href=&quot;http://jashkenas.github.com/coffee-script/&quot;&gt;CoffeeScript&lt;/a&gt;.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;FormView&lt;/span&gt; extends &lt;span class=&quot;co&quot;&gt;Backbone&lt;/span&gt;.&lt;span class=&quot;co&quot;&gt;View&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;initialize:&lt;/span&gt; -&amp;gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@template&lt;/span&gt; = _.template(&lt;span class=&quot;er&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;iv&quot;&gt;@templateSelector&lt;/span&gt;).html())
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;     &lt;span class=&quot;iv&quot;&gt;@validationOptions&lt;/span&gt; = &lt;span class=&quot;iv&quot;&gt;@options&lt;/span&gt;.validationOptions
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;fetchParams:&lt;/span&gt; (form) -&amp;gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     rawdata = &lt;span class=&quot;er&quot;&gt;$&lt;/span&gt;(form).serialize()
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;     data = &lt;span class=&quot;gv&quot;&gt;$.&lt;/span&gt;deparam(rawdata)
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;     data[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;render:&lt;/span&gt; -&amp;gt;
-&lt;span class=&quot;no&quot;&gt;12&lt;/span&gt;     template_values = &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;iv&quot;&gt;@model&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;iv&quot;&gt;@model&lt;/span&gt;.toJSON() &lt;span class=&quot;r&quot;&gt;else&lt;/span&gt; {}
-&lt;span class=&quot;no&quot;&gt;13&lt;/span&gt;     &lt;span class=&quot;er&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;iv&quot;&gt;@el&lt;/span&gt;).html(&lt;span class=&quot;iv&quot;&gt;@template&lt;/span&gt;(template_values))
-&lt;span class=&quot;no&quot;&gt;14&lt;/span&gt;     opts = { &lt;span class=&quot;sy&quot;&gt;submitHandler:&lt;/span&gt; &lt;span class=&quot;iv&quot;&gt;@submit&lt;/span&gt; }
-&lt;span class=&quot;no&quot;&gt;15&lt;/span&gt;     opts = _.extend(opts, &lt;span class=&quot;iv&quot;&gt;@validationOptions&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;16&lt;/span&gt;     &lt;span class=&quot;er&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;iv&quot;&gt;@el&lt;/span&gt;).find(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;).validate(opts)
-&lt;span class=&quot;no&quot;&gt;17&lt;/span&gt;     this
-&lt;span class=&quot;no&quot;&gt;18&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;19&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;submit:&lt;/span&gt; (form) =&amp;gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;iv&quot;&gt;@model&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;21&lt;/span&gt;       &lt;span class=&quot;iv&quot;&gt;@model&lt;/span&gt;.save(fetchParams(form))
-&lt;span class=&quot;no&quot;&gt;22&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;else&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;23&lt;/span&gt;       &lt;span class=&quot;iv&quot;&gt;@collection&lt;/span&gt;.create(fetchParams(form))
-&lt;span class=&quot;no&quot;&gt;24&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;25&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;User&lt;/span&gt; extends &lt;span class=&quot;co&quot;&gt;Backbone&lt;/span&gt;.&lt;span class=&quot;co&quot;&gt;Model&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;26&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;27&lt;/span&gt; users = new &lt;span class=&quot;co&quot;&gt;Collection&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;28&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;model:&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;User&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;29&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;url:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/users&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;30&lt;/strong&gt;&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;31&lt;/span&gt; view = new &lt;span class=&quot;co&quot;&gt;FormView&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;32&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;collection:&lt;/span&gt; users
-&lt;span class=&quot;no&quot;&gt;33&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;el:&lt;/span&gt; &lt;span class=&quot;er&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;#signup_form&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;34&lt;/span&gt;   &lt;span class=&quot;sy&quot;&gt;templateSelector:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;#new_user_form&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;35&lt;/span&gt;   validationOptions:
-&lt;span class=&quot;no&quot;&gt;36&lt;/span&gt;     rules:
-&lt;span class=&quot;no&quot;&gt;37&lt;/span&gt;       &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user[email]&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;:
-&lt;span class=&quot;no&quot;&gt;38&lt;/span&gt;         &lt;span class=&quot;sy&quot;&gt;remote:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;/users/email_available&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;39&lt;/span&gt;       &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user[password]&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;:
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;40&lt;/strong&gt;&lt;/span&gt;         &lt;span class=&quot;sy&quot;&gt;minlength:&lt;/span&gt; &lt;span class=&quot;i&quot;&gt;6&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;41&lt;/span&gt;     messages:
-&lt;span class=&quot;no&quot;&gt;42&lt;/span&gt;       &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;user[email]&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;:
-&lt;span class=&quot;no&quot;&gt;43&lt;/span&gt;         &lt;span class=&quot;sy&quot;&gt;remote:&lt;/span&gt; &lt;span class=&quot;gv&quot;&gt;$.&lt;/span&gt;format(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;{0} has already been taken&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;44&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;45&lt;/span&gt; view.render()&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;FormView&lt;/span&gt; extends &lt;span class=&quot;constant&quot;&gt;Backbone&lt;/span&gt;.View
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  initialize: -&amp;gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;instance-variable&quot;&gt;@template&lt;/span&gt; = _.template(&lt;span class=&quot;error&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;instance-variable&quot;&gt;@templateSelector&lt;/span&gt;).html())
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;instance-variable&quot;&gt;@validationOptions&lt;/span&gt; = &lt;span class=&quot;instance-variable&quot;&gt;@options&lt;/span&gt;.validationOptions
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;  fetchParams: (form) -&amp;gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n7&quot; name=&quot;n7&quot;&gt;7&lt;/a&gt;&lt;/span&gt;    rawdata = &lt;span class=&quot;error&quot;&gt;$&lt;/span&gt;(form).serialize()
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n8&quot; name=&quot;n8&quot;&gt;8&lt;/a&gt;&lt;/span&gt;    data = &lt;span class=&quot;global-variable&quot;&gt;$.&lt;/span&gt;deparam(rawdata)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n9&quot; name=&quot;n9&quot;&gt;9&lt;/a&gt;&lt;/span&gt;    data[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n10&quot; name=&quot;n10&quot;&gt;10&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n11&quot; name=&quot;n11&quot;&gt;11&lt;/a&gt;&lt;/span&gt;  render: -&amp;gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n12&quot; name=&quot;n12&quot;&gt;12&lt;/a&gt;&lt;/span&gt;    template_values = &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;instance-variable&quot;&gt;@model&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;instance-variable&quot;&gt;@model&lt;/span&gt;.toJSON() &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; {}
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n13&quot; name=&quot;n13&quot;&gt;13&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;error&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;instance-variable&quot;&gt;@el&lt;/span&gt;).html(&lt;span class=&quot;instance-variable&quot;&gt;@template&lt;/span&gt;(template_values))
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n14&quot; name=&quot;n14&quot;&gt;14&lt;/a&gt;&lt;/span&gt;    opts = { submitHandler: &lt;span class=&quot;instance-variable&quot;&gt;@submit&lt;/span&gt; }
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n15&quot; name=&quot;n15&quot;&gt;15&lt;/a&gt;&lt;/span&gt;    opts = _.extend(opts, &lt;span class=&quot;instance-variable&quot;&gt;@validationOptions&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n16&quot; name=&quot;n16&quot;&gt;16&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;error&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;instance-variable&quot;&gt;@el&lt;/span&gt;).find(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;).validate(opts)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n17&quot; name=&quot;n17&quot;&gt;17&lt;/a&gt;&lt;/span&gt;    this
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n18&quot; name=&quot;n18&quot;&gt;18&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n19&quot; name=&quot;n19&quot;&gt;19&lt;/a&gt;&lt;/span&gt;  submit: (form) =&amp;gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n20&quot; name=&quot;n20&quot;&gt;20&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;instance-variable&quot;&gt;@model&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n21&quot; name=&quot;n21&quot;&gt;21&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;instance-variable&quot;&gt;@model&lt;/span&gt;.save(fetchParams(form))
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n22&quot; name=&quot;n22&quot;&gt;22&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n23&quot; name=&quot;n23&quot;&gt;23&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;instance-variable&quot;&gt;@collection&lt;/span&gt;.create(fetchParams(form))
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n24&quot; name=&quot;n24&quot;&gt;24&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n25&quot; name=&quot;n25&quot;&gt;25&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;User&lt;/span&gt; extends &lt;span class=&quot;constant&quot;&gt;Backbone&lt;/span&gt;.Model
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n26&quot; name=&quot;n26&quot;&gt;26&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n27&quot; name=&quot;n27&quot;&gt;27&lt;/a&gt;&lt;/span&gt;users = new &lt;span class=&quot;constant&quot;&gt;Collection&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n28&quot; name=&quot;n28&quot;&gt;28&lt;/a&gt;&lt;/span&gt;  model: &lt;span class=&quot;constant&quot;&gt;User&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n29&quot; name=&quot;n29&quot;&gt;29&lt;/a&gt;&lt;/span&gt;  url: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;/users&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n30&quot; name=&quot;n30&quot;&gt;30&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n31&quot; name=&quot;n31&quot;&gt;31&lt;/a&gt;&lt;/span&gt;view = new &lt;span class=&quot;constant&quot;&gt;FormView&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n32&quot; name=&quot;n32&quot;&gt;32&lt;/a&gt;&lt;/span&gt;  collection: users
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n33&quot; name=&quot;n33&quot;&gt;33&lt;/a&gt;&lt;/span&gt;  el: &lt;span class=&quot;error&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;#signup_form&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n34&quot; name=&quot;n34&quot;&gt;34&lt;/a&gt;&lt;/span&gt;  templateSelector: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;#new_user_form&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n35&quot; name=&quot;n35&quot;&gt;35&lt;/a&gt;&lt;/span&gt;  validationOptions:
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n36&quot; name=&quot;n36&quot;&gt;36&lt;/a&gt;&lt;/span&gt;    rules:
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n37&quot; name=&quot;n37&quot;&gt;37&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user[email]&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;:
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n38&quot; name=&quot;n38&quot;&gt;38&lt;/a&gt;&lt;/span&gt;        remote: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;/users/email_available&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n39&quot; name=&quot;n39&quot;&gt;39&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user[password]&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;:
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n40&quot; name=&quot;n40&quot;&gt;40&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;        minlength: &lt;span class=&quot;integer&quot;&gt;6&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n41&quot; name=&quot;n41&quot;&gt;41&lt;/a&gt;&lt;/span&gt;    messages:
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n42&quot; name=&quot;n42&quot;&gt;42&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;user[email]&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;:
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n43&quot; name=&quot;n43&quot;&gt;43&lt;/a&gt;&lt;/span&gt;        remote: &lt;span class=&quot;global-variable&quot;&gt;$.&lt;/span&gt;format(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;{0} has already been taken&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n44&quot; name=&quot;n44&quot;&gt;44&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n45&quot; name=&quot;n45&quot;&gt;45&lt;/a&gt;&lt;/span&gt;view.render()
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;The &lt;code&gt;FormView&lt;/code&gt; class can handle either creating a new model or editing an existing model. When creating a new object pass in the &lt;code&gt;collection&lt;/code&gt; as an option, and when editing an existing model pass in the &lt;code&gt;model&lt;/code&gt; as an option. You need to specify the &lt;code&gt;el&lt;/code&gt; where the &lt;code&gt;FormView&lt;/code&gt; will render the form, and the &lt;code&gt;templateSelector&lt;/code&gt; that will identify the &lt;a href=&quot;http://documentcloud.github.com/underscore/#template&quot;&gt;Underscore.js template&lt;/a&gt;. And of course you need to specify the validation rules, messages, and options for the Validation plugin, but &lt;strong&gt;not&lt;/strong&gt; a &lt;code&gt;submitHandler&lt;/code&gt;.&lt;/p&gt;
@@ -437,153 +552,157 @@ Successfully registered gem: your_gem (0.0.1)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;% heroku addons:add redistogo:nano&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To use &lt;code&gt;resque&lt;/code&gt;, add the gem.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; gem &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;gem &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Make your class(es) work with &lt;code&gt;resque&lt;/code&gt;, and then extend the class(es) with &lt;code&gt;HerokuAutoScaler::AutoScaling&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;MyStuff&lt;/span&gt; &amp;lt; &lt;span class=&quot;co&quot;&gt;ActiveRecord&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Base&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   extend &lt;span class=&quot;co&quot;&gt;HerokuAutoScaler&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;AutoScaling&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;queue&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;sy&quot;&gt;:my_queue&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.&lt;span class=&quot;fu&quot;&gt;perform&lt;/span&gt;(*args)
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;     &lt;span class=&quot;c&quot;&gt;# work done here&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;MyStuff&lt;/span&gt; &amp;lt; &lt;span class=&quot;constant&quot;&gt;ActiveRecord&lt;/span&gt;::&lt;span class=&quot;constant&quot;&gt;Base&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  extend &lt;span class=&quot;constant&quot;&gt;HerokuAutoScaler&lt;/span&gt;::&lt;span class=&quot;constant&quot;&gt;AutoScaling&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;predefined-constant&quot;&gt;self&lt;/span&gt;.&lt;span class=&quot;function&quot;&gt;queue&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;symbol&quot;&gt;:my_queue&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n7&quot; name=&quot;n7&quot;&gt;7&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n8&quot; name=&quot;n8&quot;&gt;8&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;predefined-constant&quot;&gt;self&lt;/span&gt;.&lt;span class=&quot;function&quot;&gt;perform&lt;/span&gt;(*args)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n9&quot; name=&quot;n9&quot;&gt;9&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;comment&quot;&gt;# work done here&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n10&quot; name=&quot;n10&quot;&gt;10&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n11&quot; name=&quot;n11&quot;&gt;11&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;&lt;code&gt;HerokuResqueAutoscale&lt;/code&gt; should be somewhere in your load path (&lt;code&gt;app/models&lt;/code&gt; works.)&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;  1&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Based on the ideas from: http://blog.darkhax.com/2010/07/30/auto-scale-your-resque-workers-on-heroku&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;  2&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;heroku&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;  3&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;  4&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Scale workers on Heroku automatically as your Resque queue grows.&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;  5&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Mixin the +AutoScaling+ module into your models to get the behavior.&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;  6&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;  7&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#   class MyModel &amp;lt; ActiveRecord::Base&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;  8&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#     extend HerokuAutoScaler::AutoScaling&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;  9&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#   end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; &lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 11&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# And configure in an initializer +config/initializers/heroku_workers.rb+:&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 12&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 13&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#   HerokuAutoScaler.configure do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 14&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#     scale_by {|pending| }&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 15&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#   end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 16&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 17&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# The default scaling is non-linear:&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 18&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# * 1 job =&amp;gt; 1 worker&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 19&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# * 15 jobs =&amp;gt; 2 workers&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; &lt;strong&gt;20&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# * 25 jobs =&amp;gt; 3 workers&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 21&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# * 40 jobs =&amp;gt; 4 workers&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 22&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# * 60+ jobs =&amp;gt; 5 workers&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 23&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;HerokuAutoScaler&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 24&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;AutoScaling&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 25&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;after_perform_scale_down&lt;/span&gt;(*args)
-&lt;span class=&quot;no&quot;&gt; 26&lt;/span&gt;       &lt;span class=&quot;co&quot;&gt;HerokuAutoScaler&lt;/span&gt;.scale_down!
-&lt;span class=&quot;no&quot;&gt; 27&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 28&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 29&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;after_enqueue_scale_up&lt;/span&gt;(*args)
-&lt;span class=&quot;no&quot;&gt; &lt;strong&gt;30&lt;/strong&gt;&lt;/span&gt;       &lt;span class=&quot;co&quot;&gt;HerokuAutoScaler&lt;/span&gt;.scale_up!
-&lt;span class=&quot;no&quot;&gt; 31&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 32&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 33&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;on_failure&lt;/span&gt;(e, *args)
-&lt;span class=&quot;no&quot;&gt; 34&lt;/span&gt;       &lt;span class=&quot;co&quot;&gt;Rails&lt;/span&gt;.logger.info(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Resque Exception for [&lt;/span&gt;&lt;span class=&quot;il&quot;&gt;&lt;span class=&quot;idl&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.to_s&lt;span class=&quot;idl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;il&quot;&gt;&lt;span class=&quot;idl&quot;&gt;#{&lt;/span&gt;args.join(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)&lt;span class=&quot;idl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;] : &lt;/span&gt;&lt;span class=&quot;il&quot;&gt;&lt;span class=&quot;idl&quot;&gt;#{&lt;/span&gt;e.to_s&lt;span class=&quot;idl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt; 35&lt;/span&gt;       &lt;span class=&quot;co&quot;&gt;HerokuAutoScaler&lt;/span&gt;.scale_down!
-&lt;span class=&quot;no&quot;&gt; 36&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 37&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 38&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 39&lt;/span&gt;   extend &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; &lt;strong&gt;40&lt;/strong&gt;&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 41&lt;/span&gt;   attr_accessor &lt;span class=&quot;sy&quot;&gt;:ignore_scaling&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 42&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 43&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;clear_resque&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 44&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Resque&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Worker&lt;/span&gt;.all.each {|w| w.unregister_worker}
-&lt;span class=&quot;no&quot;&gt; 45&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 46&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 47&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;configure&lt;/span&gt;(&amp;amp;block)
-&lt;span class=&quot;no&quot;&gt; 48&lt;/span&gt;     instance_eval(&amp;amp;block) &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; block_given?
-&lt;span class=&quot;no&quot;&gt; 49&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; &lt;strong&gt;50&lt;/strong&gt;&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 51&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;scale_by&lt;/span&gt;(&amp;amp;block)
-&lt;span class=&quot;no&quot;&gt; 52&lt;/span&gt;     &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.scaling_block = block
-&lt;span class=&quot;no&quot;&gt; 53&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 54&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 55&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;scale_down!&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 56&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Rails&lt;/span&gt;.logger.info &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Scale down j:&lt;/span&gt;&lt;span class=&quot;il&quot;&gt;&lt;span class=&quot;idl&quot;&gt;#{&lt;/span&gt;job_count&lt;span class=&quot;idl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt; w:&lt;/span&gt;&lt;span class=&quot;il&quot;&gt;&lt;span class=&quot;idl&quot;&gt;#{&lt;/span&gt;resque_workers&lt;span class=&quot;idl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 57&lt;/span&gt;     &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.heroku_workers = &lt;span class=&quot;i&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; job_count == &lt;span class=&quot;i&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; resque_workers == &lt;span class=&quot;i&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 58&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 59&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; &lt;strong&gt;60&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;scale_up!&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 61&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; ignore_scaling
-&lt;span class=&quot;no&quot;&gt; 62&lt;/span&gt;     pending = job_count
-&lt;span class=&quot;no&quot;&gt; 63&lt;/span&gt;     &lt;span class=&quot;pc&quot;&gt;self&lt;/span&gt;.heroku_workers = workers_for(pending) &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; pending &amp;gt; &lt;span class=&quot;i&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 64&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 65&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 66&lt;/span&gt;   private
-&lt;span class=&quot;no&quot;&gt; 67&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 68&lt;/span&gt;   attr_accessor &lt;span class=&quot;sy&quot;&gt;:scaling_block&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 69&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; &lt;strong&gt;70&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;heroku&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 71&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;HEROKU_USER&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;] &amp;amp;&amp;amp; &lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;HEROKU_PASSWORD&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;] &amp;amp;&amp;amp; &lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;HEROKU_APP&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt; 72&lt;/span&gt;       &lt;span class=&quot;iv&quot;&gt;@heroku&lt;/span&gt; ||= &lt;span class=&quot;co&quot;&gt;Heroku&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Client&lt;/span&gt;.new(&lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;HEROKU_USER&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;], &lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;HEROKU_PASSWORD&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;])
-&lt;span class=&quot;no&quot;&gt; 73&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;else&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 74&lt;/span&gt;       &lt;span class=&quot;pc&quot;&gt;false&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 75&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 76&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 77&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 78&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;heroku_workers=&lt;/span&gt;(qty)
-&lt;span class=&quot;no&quot;&gt; 79&lt;/span&gt;     heroku.set_workers(&lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;HEROKU_APP&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;], qty) &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; heroku
-&lt;span class=&quot;no&quot;&gt; &lt;strong&gt;80&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 81&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 82&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;job_count&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 83&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Resque&lt;/span&gt;.info[&lt;span class=&quot;sy&quot;&gt;:pending&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt; 84&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 85&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 86&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;resque_workers&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 87&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Resque&lt;/span&gt;.info[&lt;span class=&quot;sy&quot;&gt;:working&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt; 88&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 89&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; &lt;strong&gt;90&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;workers_for&lt;/span&gt;(pending_jobs)
-&lt;span class=&quot;no&quot;&gt; 91&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; scaling_block
-&lt;span class=&quot;no&quot;&gt; 92&lt;/span&gt;       scaling_block.call(pending_jobs)
-&lt;span class=&quot;no&quot;&gt; 93&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;else&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 94&lt;/span&gt;       [
-&lt;span class=&quot;no&quot;&gt; 95&lt;/span&gt;         { &lt;span class=&quot;sy&quot;&gt;:workers&lt;/span&gt; =&amp;gt; &lt;span class=&quot;i&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;c&quot;&gt;# This many workers&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 96&lt;/span&gt;           &lt;span class=&quot;sy&quot;&gt;:job_count&lt;/span&gt; =&amp;gt; &lt;span class=&quot;i&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# For this many jobs or more, until the next level&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 97&lt;/span&gt;       },
-&lt;span class=&quot;no&quot;&gt; 98&lt;/span&gt;         { &lt;span class=&quot;sy&quot;&gt;:workers&lt;/span&gt; =&amp;gt; &lt;span class=&quot;i&quot;&gt;2&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt; 99&lt;/span&gt;           &lt;span class=&quot;sy&quot;&gt;:job_count&lt;/span&gt; =&amp;gt; &lt;span class=&quot;i&quot;&gt;15&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;100&lt;/strong&gt;&lt;/span&gt;       },
-&lt;span class=&quot;no&quot;&gt;101&lt;/span&gt;         { &lt;span class=&quot;sy&quot;&gt;:workers&lt;/span&gt; =&amp;gt; &lt;span class=&quot;i&quot;&gt;3&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt;102&lt;/span&gt;           &lt;span class=&quot;sy&quot;&gt;:job_count&lt;/span&gt; =&amp;gt; &lt;span class=&quot;i&quot;&gt;25&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;103&lt;/span&gt;       },
-&lt;span class=&quot;no&quot;&gt;104&lt;/span&gt;         { &lt;span class=&quot;sy&quot;&gt;:workers&lt;/span&gt; =&amp;gt; &lt;span class=&quot;i&quot;&gt;4&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt;105&lt;/span&gt;           &lt;span class=&quot;sy&quot;&gt;:job_count&lt;/span&gt; =&amp;gt; &lt;span class=&quot;i&quot;&gt;40&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;106&lt;/span&gt;       },
-&lt;span class=&quot;no&quot;&gt;107&lt;/span&gt;         { &lt;span class=&quot;sy&quot;&gt;:workers&lt;/span&gt; =&amp;gt; &lt;span class=&quot;i&quot;&gt;5&lt;/span&gt;,
-&lt;span class=&quot;no&quot;&gt;108&lt;/span&gt;           &lt;span class=&quot;sy&quot;&gt;:job_count&lt;/span&gt; =&amp;gt; &lt;span class=&quot;i&quot;&gt;60&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;109&lt;/span&gt;       }
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;110&lt;/strong&gt;&lt;/span&gt;       ].reverse_each &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |scale_info|
-&lt;span class=&quot;no&quot;&gt;111&lt;/span&gt;         &lt;span class=&quot;c&quot;&gt;# Run backwards so it gets set to the highest value first&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;112&lt;/span&gt;         &lt;span class=&quot;c&quot;&gt;# Otherwise if there were 70 jobs, it would get set to 1, then 2, then 3, etc&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;113&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;114&lt;/span&gt;         &lt;span class=&quot;c&quot;&gt;# If we have a job count greater than or equal to the job limit for this scale info&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;115&lt;/span&gt;         &lt;span class=&quot;r&quot;&gt;if&lt;/span&gt; pending_jobs &amp;gt;= scale_info[&lt;span class=&quot;sy&quot;&gt;:job_count&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt;116&lt;/span&gt;           &lt;span class=&quot;r&quot;&gt;return&lt;/span&gt; scale_info[&lt;span class=&quot;sy&quot;&gt;:workers&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt;117&lt;/span&gt;         &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;118&lt;/span&gt;       &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;119&lt;/span&gt;     &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;120&lt;/strong&gt;&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;121&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;  &lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# Based on the ideas from: http://blog.darkhax.com/2010/07/30/auto-scale-your-resque-workers-on-heroku&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;  &lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;heroku&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;  &lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;  &lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# Scale workers on Heroku automatically as your Resque queue grows.&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;  &lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# Mixin the +AutoScaling+ module into your models to get the behavior.&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;  &lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;  &lt;a href=&quot;#n7&quot; name=&quot;n7&quot;&gt;7&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;#   class MyModel &amp;lt; ActiveRecord::Base&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;  &lt;a href=&quot;#n8&quot; name=&quot;n8&quot;&gt;8&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;#     extend HerokuAutoScaler::AutoScaling&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;  &lt;a href=&quot;#n9&quot; name=&quot;n9&quot;&gt;9&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;#   end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;strong&gt;&lt;a href=&quot;#n10&quot; name=&quot;n10&quot;&gt;10&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n11&quot; name=&quot;n11&quot;&gt;11&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# And configure in an initializer +config/initializers/heroku_workers.rb+:&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n12&quot; name=&quot;n12&quot;&gt;12&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n13&quot; name=&quot;n13&quot;&gt;13&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;#   HerokuAutoScaler.configure do&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n14&quot; name=&quot;n14&quot;&gt;14&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;#     scale_by {|pending| }&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n15&quot; name=&quot;n15&quot;&gt;15&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;#   end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n16&quot; name=&quot;n16&quot;&gt;16&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n17&quot; name=&quot;n17&quot;&gt;17&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# The default scaling is non-linear:&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n18&quot; name=&quot;n18&quot;&gt;18&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# * 1 job =&amp;gt; 1 worker&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n19&quot; name=&quot;n19&quot;&gt;19&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# * 15 jobs =&amp;gt; 2 workers&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;strong&gt;&lt;a href=&quot;#n20&quot; name=&quot;n20&quot;&gt;20&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# * 25 jobs =&amp;gt; 3 workers&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n21&quot; name=&quot;n21&quot;&gt;21&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# * 40 jobs =&amp;gt; 4 workers&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n22&quot; name=&quot;n22&quot;&gt;22&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# * 60+ jobs =&amp;gt; 5 workers&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n23&quot; name=&quot;n23&quot;&gt;23&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;HerokuAutoScaler&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n24&quot; name=&quot;n24&quot;&gt;24&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;AutoScaling&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n25&quot; name=&quot;n25&quot;&gt;25&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;after_perform_scale_down&lt;/span&gt;(*args)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n26&quot; name=&quot;n26&quot;&gt;26&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;constant&quot;&gt;HerokuAutoScaler&lt;/span&gt;.scale_down!
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n27&quot; name=&quot;n27&quot;&gt;27&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n28&quot; name=&quot;n28&quot;&gt;28&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n29&quot; name=&quot;n29&quot;&gt;29&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;after_enqueue_scale_up&lt;/span&gt;(*args)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;strong&gt;&lt;a href=&quot;#n30&quot; name=&quot;n30&quot;&gt;30&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;      &lt;span class=&quot;constant&quot;&gt;HerokuAutoScaler&lt;/span&gt;.scale_up!
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n31&quot; name=&quot;n31&quot;&gt;31&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n32&quot; name=&quot;n32&quot;&gt;32&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n33&quot; name=&quot;n33&quot;&gt;33&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;on_failure&lt;/span&gt;(e, *args)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n34&quot; name=&quot;n34&quot;&gt;34&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;constant&quot;&gt;Rails&lt;/span&gt;.logger.info(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;Resque Exception for [&lt;/span&gt;&lt;span class=&quot;inline&quot;&gt;&lt;span class=&quot;inline-delimiter&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;predefined-constant&quot;&gt;self&lt;/span&gt;.to_s&lt;span class=&quot;inline-delimiter&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;inline&quot;&gt;&lt;span class=&quot;inline-delimiter&quot;&gt;#{&lt;/span&gt;args.join(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;, &lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)&lt;span class=&quot;inline-delimiter&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;] : &lt;/span&gt;&lt;span class=&quot;inline&quot;&gt;&lt;span class=&quot;inline-delimiter&quot;&gt;#{&lt;/span&gt;e.to_s&lt;span class=&quot;inline-delimiter&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n35&quot; name=&quot;n35&quot;&gt;35&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;constant&quot;&gt;HerokuAutoScaler&lt;/span&gt;.scale_down!
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n36&quot; name=&quot;n36&quot;&gt;36&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n37&quot; name=&quot;n37&quot;&gt;37&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n38&quot; name=&quot;n38&quot;&gt;38&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n39&quot; name=&quot;n39&quot;&gt;39&lt;/a&gt;&lt;/span&gt;  extend &lt;span class=&quot;predefined-constant&quot;&gt;self&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;strong&gt;&lt;a href=&quot;#n40&quot; name=&quot;n40&quot;&gt;40&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n41&quot; name=&quot;n41&quot;&gt;41&lt;/a&gt;&lt;/span&gt;  attr_accessor &lt;span class=&quot;symbol&quot;&gt;:ignore_scaling&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n42&quot; name=&quot;n42&quot;&gt;42&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n43&quot; name=&quot;n43&quot;&gt;43&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;clear_resque&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n44&quot; name=&quot;n44&quot;&gt;44&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;constant&quot;&gt;Resque&lt;/span&gt;::&lt;span class=&quot;constant&quot;&gt;Worker&lt;/span&gt;.all.each {|w| w.unregister_worker}
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n45&quot; name=&quot;n45&quot;&gt;45&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n46&quot; name=&quot;n46&quot;&gt;46&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n47&quot; name=&quot;n47&quot;&gt;47&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;configure&lt;/span&gt;(&amp;amp;block)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n48&quot; name=&quot;n48&quot;&gt;48&lt;/a&gt;&lt;/span&gt;    instance_eval(&amp;amp;block) &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; block_given?
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n49&quot; name=&quot;n49&quot;&gt;49&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;strong&gt;&lt;a href=&quot;#n50&quot; name=&quot;n50&quot;&gt;50&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n51&quot; name=&quot;n51&quot;&gt;51&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;scale_by&lt;/span&gt;(&amp;amp;block)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n52&quot; name=&quot;n52&quot;&gt;52&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;predefined-constant&quot;&gt;self&lt;/span&gt;.scaling_block = block
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n53&quot; name=&quot;n53&quot;&gt;53&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n54&quot; name=&quot;n54&quot;&gt;54&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n55&quot; name=&quot;n55&quot;&gt;55&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;scale_down!&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n56&quot; name=&quot;n56&quot;&gt;56&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;constant&quot;&gt;Rails&lt;/span&gt;.logger.info &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;Scale down j:&lt;/span&gt;&lt;span class=&quot;inline&quot;&gt;&lt;span class=&quot;inline-delimiter&quot;&gt;#{&lt;/span&gt;job_count&lt;span class=&quot;inline-delimiter&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt; w:&lt;/span&gt;&lt;span class=&quot;inline&quot;&gt;&lt;span class=&quot;inline-delimiter&quot;&gt;#{&lt;/span&gt;resque_workers&lt;span class=&quot;inline-delimiter&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n57&quot; name=&quot;n57&quot;&gt;57&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;predefined-constant&quot;&gt;self&lt;/span&gt;.heroku_workers = &lt;span class=&quot;integer&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; job_count == &lt;span class=&quot;integer&quot;&gt;0&lt;/span&gt; &amp;amp;&amp;amp; resque_workers == &lt;span class=&quot;integer&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n58&quot; name=&quot;n58&quot;&gt;58&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n59&quot; name=&quot;n59&quot;&gt;59&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;strong&gt;&lt;a href=&quot;#n60&quot; name=&quot;n60&quot;&gt;60&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;scale_up!&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n61&quot; name=&quot;n61&quot;&gt;61&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ignore_scaling
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n62&quot; name=&quot;n62&quot;&gt;62&lt;/a&gt;&lt;/span&gt;    pending = job_count
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n63&quot; name=&quot;n63&quot;&gt;63&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;predefined-constant&quot;&gt;self&lt;/span&gt;.heroku_workers = workers_for(pending) &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; pending &amp;gt; &lt;span class=&quot;integer&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n64&quot; name=&quot;n64&quot;&gt;64&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n65&quot; name=&quot;n65&quot;&gt;65&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n66&quot; name=&quot;n66&quot;&gt;66&lt;/a&gt;&lt;/span&gt;  private
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n67&quot; name=&quot;n67&quot;&gt;67&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n68&quot; name=&quot;n68&quot;&gt;68&lt;/a&gt;&lt;/span&gt;  attr_accessor &lt;span class=&quot;symbol&quot;&gt;:scaling_block&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n69&quot; name=&quot;n69&quot;&gt;69&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;strong&gt;&lt;a href=&quot;#n70&quot; name=&quot;n70&quot;&gt;70&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;heroku&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n71&quot; name=&quot;n71&quot;&gt;71&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;HEROKU_USER&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;] &amp;amp;&amp;amp; &lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;HEROKU_PASSWORD&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;] &amp;amp;&amp;amp; &lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;HEROKU_APP&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n72&quot; name=&quot;n72&quot;&gt;72&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;instance-variable&quot;&gt;@heroku&lt;/span&gt; ||= &lt;span class=&quot;constant&quot;&gt;Heroku&lt;/span&gt;::&lt;span class=&quot;constant&quot;&gt;Client&lt;/span&gt;.new(&lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;HEROKU_USER&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;], &lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;HEROKU_PASSWORD&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;])
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n73&quot; name=&quot;n73&quot;&gt;73&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n74&quot; name=&quot;n74&quot;&gt;74&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;predefined-constant&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n75&quot; name=&quot;n75&quot;&gt;75&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n76&quot; name=&quot;n76&quot;&gt;76&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n77&quot; name=&quot;n77&quot;&gt;77&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n78&quot; name=&quot;n78&quot;&gt;78&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;heroku_workers=&lt;/span&gt;(qty)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n79&quot; name=&quot;n79&quot;&gt;79&lt;/a&gt;&lt;/span&gt;    heroku.set_workers(&lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;HEROKU_APP&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;], qty) &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; heroku
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;strong&gt;&lt;a href=&quot;#n80&quot; name=&quot;n80&quot;&gt;80&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n81&quot; name=&quot;n81&quot;&gt;81&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n82&quot; name=&quot;n82&quot;&gt;82&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;job_count&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n83&quot; name=&quot;n83&quot;&gt;83&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;constant&quot;&gt;Resque&lt;/span&gt;.info[&lt;span class=&quot;symbol&quot;&gt;:pending&lt;/span&gt;]
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n84&quot; name=&quot;n84&quot;&gt;84&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n85&quot; name=&quot;n85&quot;&gt;85&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n86&quot; name=&quot;n86&quot;&gt;86&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;resque_workers&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n87&quot; name=&quot;n87&quot;&gt;87&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;constant&quot;&gt;Resque&lt;/span&gt;.info[&lt;span class=&quot;symbol&quot;&gt;:working&lt;/span&gt;]
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n88&quot; name=&quot;n88&quot;&gt;88&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n89&quot; name=&quot;n89&quot;&gt;89&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;strong&gt;&lt;a href=&quot;#n90&quot; name=&quot;n90&quot;&gt;90&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;workers_for&lt;/span&gt;(pending_jobs)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n91&quot; name=&quot;n91&quot;&gt;91&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; scaling_block
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n92&quot; name=&quot;n92&quot;&gt;92&lt;/a&gt;&lt;/span&gt;      scaling_block.call(pending_jobs)
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n93&quot; name=&quot;n93&quot;&gt;93&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n94&quot; name=&quot;n94&quot;&gt;94&lt;/a&gt;&lt;/span&gt;      [
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n95&quot; name=&quot;n95&quot;&gt;95&lt;/a&gt;&lt;/span&gt;        { &lt;span class=&quot;symbol&quot;&gt;:workers&lt;/span&gt; =&amp;gt; &lt;span class=&quot;integer&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;comment&quot;&gt;# This many workers&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n96&quot; name=&quot;n96&quot;&gt;96&lt;/a&gt;&lt;/span&gt;          &lt;span class=&quot;symbol&quot;&gt;:job_count&lt;/span&gt; =&amp;gt; &lt;span class=&quot;integer&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;# For this many jobs or more, until the next level&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n97&quot; name=&quot;n97&quot;&gt;97&lt;/a&gt;&lt;/span&gt;      },
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n98&quot; name=&quot;n98&quot;&gt;98&lt;/a&gt;&lt;/span&gt;        { &lt;span class=&quot;symbol&quot;&gt;:workers&lt;/span&gt; =&amp;gt; &lt;span class=&quot;integer&quot;&gt;2&lt;/span&gt;,
+&lt;span class=&quot;line-numbers&quot;&gt; &lt;a href=&quot;#n99&quot; name=&quot;n99&quot;&gt;99&lt;/a&gt;&lt;/span&gt;          &lt;span class=&quot;symbol&quot;&gt;:job_count&lt;/span&gt; =&amp;gt; &lt;span class=&quot;integer&quot;&gt;15&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n100&quot; name=&quot;n100&quot;&gt;100&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;      },
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n101&quot; name=&quot;n101&quot;&gt;101&lt;/a&gt;&lt;/span&gt;        { &lt;span class=&quot;symbol&quot;&gt;:workers&lt;/span&gt; =&amp;gt; &lt;span class=&quot;integer&quot;&gt;3&lt;/span&gt;,
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n102&quot; name=&quot;n102&quot;&gt;102&lt;/a&gt;&lt;/span&gt;          &lt;span class=&quot;symbol&quot;&gt;:job_count&lt;/span&gt; =&amp;gt; &lt;span class=&quot;integer&quot;&gt;25&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n103&quot; name=&quot;n103&quot;&gt;103&lt;/a&gt;&lt;/span&gt;      },
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n104&quot; name=&quot;n104&quot;&gt;104&lt;/a&gt;&lt;/span&gt;        { &lt;span class=&quot;symbol&quot;&gt;:workers&lt;/span&gt; =&amp;gt; &lt;span class=&quot;integer&quot;&gt;4&lt;/span&gt;,
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n105&quot; name=&quot;n105&quot;&gt;105&lt;/a&gt;&lt;/span&gt;          &lt;span class=&quot;symbol&quot;&gt;:job_count&lt;/span&gt; =&amp;gt; &lt;span class=&quot;integer&quot;&gt;40&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n106&quot; name=&quot;n106&quot;&gt;106&lt;/a&gt;&lt;/span&gt;      },
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n107&quot; name=&quot;n107&quot;&gt;107&lt;/a&gt;&lt;/span&gt;        { &lt;span class=&quot;symbol&quot;&gt;:workers&lt;/span&gt; =&amp;gt; &lt;span class=&quot;integer&quot;&gt;5&lt;/span&gt;,
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n108&quot; name=&quot;n108&quot;&gt;108&lt;/a&gt;&lt;/span&gt;          &lt;span class=&quot;symbol&quot;&gt;:job_count&lt;/span&gt; =&amp;gt; &lt;span class=&quot;integer&quot;&gt;60&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n109&quot; name=&quot;n109&quot;&gt;109&lt;/a&gt;&lt;/span&gt;      }
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n110&quot; name=&quot;n110&quot;&gt;110&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;      ].reverse_each &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt; |scale_info|
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n111&quot; name=&quot;n111&quot;&gt;111&lt;/a&gt;&lt;/span&gt;        &lt;span class=&quot;comment&quot;&gt;# Run backwards so it gets set to the highest value first&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n112&quot; name=&quot;n112&quot;&gt;112&lt;/a&gt;&lt;/span&gt;        &lt;span class=&quot;comment&quot;&gt;# Otherwise if there were 70 jobs, it would get set to 1, then 2, then 3, etc&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n113&quot; name=&quot;n113&quot;&gt;113&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n114&quot; name=&quot;n114&quot;&gt;114&lt;/a&gt;&lt;/span&gt;        &lt;span class=&quot;comment&quot;&gt;# If we have a job count greater than or equal to the job limit for this scale info&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n115&quot; name=&quot;n115&quot;&gt;115&lt;/a&gt;&lt;/span&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; pending_jobs &amp;gt;= scale_info[&lt;span class=&quot;symbol&quot;&gt;:job_count&lt;/span&gt;]
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n116&quot; name=&quot;n116&quot;&gt;116&lt;/a&gt;&lt;/span&gt;          &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; scale_info[&lt;span class=&quot;symbol&quot;&gt;:workers&lt;/span&gt;]
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n117&quot; name=&quot;n117&quot;&gt;117&lt;/a&gt;&lt;/span&gt;        &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n118&quot; name=&quot;n118&quot;&gt;118&lt;/a&gt;&lt;/span&gt;      &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n119&quot; name=&quot;n119&quot;&gt;119&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;strong&gt;&lt;a href=&quot;#n120&quot; name=&quot;n120&quot;&gt;120&lt;/a&gt;&lt;/strong&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n121&quot; name=&quot;n121&quot;&gt;121&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Scaling works by calling into the &lt;code&gt;heroku&lt;/code&gt; gem and issuing commands to your Heroku application; you need to have the &lt;code&gt;heroku&lt;/code&gt; gem and your Heroku credentials available. Add the &lt;code&gt;heroku&lt;/code&gt; gem.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# needs to be in your deployment environment, not just dev!&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; gem &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;heroku&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;comment&quot;&gt;# needs to be in your deployment environment, not just dev!&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;gem &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;heroku&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;You need to add three &lt;em&gt;config&lt;/em&gt; variables to Heroku to allow your workers to auto-scale. Check out my previous Heroku &lt;a href=&quot;http://blog.leshill.org/blog/2010/11/02/heroku-environment-variables.html&quot;&gt;blog post&lt;/a&gt; for a neat way to manage your &lt;em&gt;config&lt;/em&gt; variables. Set the &lt;em&gt;config&lt;/em&gt; variables.&lt;/p&gt;
@@ -592,31 +711,35 @@ HEROKU_USER = your_user
 HEROKU_PASSWORD = your_password&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Add this task file to &lt;code&gt;lib/tasks/resque.task&lt;/code&gt; to run as many normal &lt;code&gt;resque&lt;/code&gt; workers as needed.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque/tasks&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; task &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque:setup&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;sy&quot;&gt;:environment&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;QUEUE&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;] = &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; desc &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;Alias for resque:work (To run workers on Heroku)&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;8&lt;/span&gt; task &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;jobs:work&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque:work&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque/tasks&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;task &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque:setup&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;symbol&quot;&gt;:environment&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;QUEUE&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;] = &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n7&quot; name=&quot;n7&quot;&gt;7&lt;/a&gt;&lt;/span&gt;desc &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;Alias for resque:work (To run workers on Heroku)&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n8&quot; name=&quot;n8&quot;&gt;8&lt;/a&gt;&lt;/span&gt;task &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;jobs:work&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque:work&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Finally, we also need to make sure &lt;code&gt;resque&lt;/code&gt; does not get a stale db connection&lt;sup class=&quot;footnote&quot; id=&quot;fnr3&quot;&gt;&lt;a href=&quot;#fn3&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;, add this to &lt;code&gt;config/initializers/resque.rb&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Resque&lt;/span&gt;.after_fork = &lt;span class=&quot;co&quot;&gt;Proc&lt;/span&gt;.new { &lt;span class=&quot;co&quot;&gt;ActiveRecord&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Base&lt;/span&gt;.establish_connection }&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;constant&quot;&gt;Resque&lt;/span&gt;.after_fork = &lt;span class=&quot;constant&quot;&gt;Proc&lt;/span&gt;.new { &lt;span class=&quot;constant&quot;&gt;ActiveRecord&lt;/span&gt;::&lt;span class=&quot;constant&quot;&gt;Base&lt;/span&gt;.establish_connection }
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Deploy, and watch your workers scale as needed!&lt;sup class=&quot;footnote&quot; id=&quot;fnr4&quot;&gt;&lt;a href=&quot;#fn4&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;h2&gt;Resque Scheduler&lt;/h2&gt;
 &lt;p&gt;Out of the box, &lt;code&gt;resque-scheduler&lt;/code&gt; will not work with our auto-scaling code because it is broken. Specifically, it does not invoke hooks (like &lt;code&gt;after_enqueue&lt;/code&gt;!) when adding jobs to the &lt;code&gt;resque&lt;/code&gt; queues. &lt;a href=&quot;https://twitter.com/l4rk&quot;&gt;@l4rk&lt;/a&gt; and I have submitted a patch that has been pulled in but does not look like it has been released as a gem yet. Thankfully, &lt;code&gt;bundler&lt;/code&gt; lets us specify the github repo directly.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; gem &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque-scheduler&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;require:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque_scheduler&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;sy&quot;&gt;git:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;git://github.com/bvandenbos/resque-scheduler&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;gem &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque-scheduler&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, require: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque_scheduler&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, git: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;git://github.com/bvandenbos/resque-scheduler&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;If you are using a schedule file, load it in an initializer &lt;code&gt;config/initializers/scheduler.rb&lt;/code&gt;&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Resque&lt;/span&gt;.schedule = &lt;span class=&quot;co&quot;&gt;YAML&lt;/span&gt;.load_file(&lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.join(&lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.dirname(&lt;span class=&quot;pc&quot;&gt;__FILE__&lt;/span&gt;), &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;../resque_schedule.yml&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;))&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;constant&quot;&gt;Resque&lt;/span&gt;.schedule = &lt;span class=&quot;constant&quot;&gt;YAML&lt;/span&gt;.load_file(&lt;span class=&quot;constant&quot;&gt;File&lt;/span&gt;.join(&lt;span class=&quot;constant&quot;&gt;File&lt;/span&gt;.dirname(&lt;span class=&quot;predefined-constant&quot;&gt;__FILE__&lt;/span&gt;), &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;../resque_schedule.yml&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;))
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;h2&gt;Using &lt;code&gt;resque-scheduler&lt;/code&gt; on the &lt;code&gt;Bamboo&lt;/code&gt; stack&lt;/h2&gt;
@@ -631,35 +754,39 @@ HEROKU_PASSWORD = your_password&lt;/code&gt;&lt;/pre&gt;
 	&lt;li&gt;use the following task file&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque/tasks&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque_scheduler/tasks&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; task &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque:setup&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;sy&quot;&gt;:environment&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; task &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque:scheduler_setup&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;sy&quot;&gt;:environment&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; task &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;jobs:work&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque:scheduler&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque/tasks&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque_scheduler/tasks&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;task &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque:setup&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;symbol&quot;&gt;:environment&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;task &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque:scheduler_setup&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;symbol&quot;&gt;:environment&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n7&quot; name=&quot;n7&quot;&gt;7&lt;/a&gt;&lt;/span&gt;task &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;jobs:work&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque:scheduler&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;h2&gt;Using the &lt;code&gt;Cedar&lt;/code&gt; stack on Heroku&lt;/h2&gt;
 &lt;p&gt;The &lt;code&gt;Cedar&lt;/code&gt; stack on Heroku solves this problem by allowing you to define as many types of worker as you want using the &lt;a href=&quot;http://blog.heroku.com/archives/2011/6/20/the_new_heroku_1_process_model_procfile/&quot;&gt;Procfile&lt;/a&gt; which is new to &lt;code&gt;Cedar&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Add this to your &lt;code&gt;Procfile&lt;/code&gt;&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;sy&quot;&gt;worker:&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;QUEUE&lt;/span&gt;=* bundle exec rake resque&lt;span class=&quot;sy&quot;&gt;:work&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;sy&quot;&gt;scheduler:&lt;/span&gt; bundle exec rake resque&lt;span class=&quot;sy&quot;&gt;:scheduler&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;worker: &lt;span class=&quot;constant&quot;&gt;QUEUE&lt;/span&gt;=* bundle exec rake resque&lt;span class=&quot;symbol&quot;&gt;:work&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;scheduler: bundle exec rake resque&lt;span class=&quot;symbol&quot;&gt;:scheduler&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Change your task file.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque/tasks&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque_scheduler/tasks&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; task &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque:setup&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;sy&quot;&gt;:environment&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; task &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;resque:scheduler_setup&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;sy&quot;&gt;:environment&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque/tasks&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque_scheduler/tasks&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;task &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque:setup&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;symbol&quot;&gt;:environment&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;task &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;resque:scheduler_setup&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;symbol&quot;&gt;:environment&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;And run one scheduler worker.&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; heroku scale scheduler=&lt;span class=&quot;i&quot;&gt;1&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;heroku scale scheduler=&lt;span class=&quot;integer&quot;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;h2&gt;Deploy!&lt;/h2&gt;
@@ -718,9 +845,10 @@ ineffective at delivering clean and valuable code.&lt;/p&gt;</content>
 &lt;p&gt;Heroku applications cannot use local storage in the same way. There is no directory available to store your applications configuration files locally; and you do not want them in source control&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
 &lt;p&gt;Heroku instead provides each application with user defined config variables that are available in the your application&amp;#8217;s &lt;code&gt;ENV&lt;/code&gt; hash. If, for example, you are configuring &lt;code&gt;omniauth&lt;/code&gt; with Twitter support, you might have this code in &lt;strong&gt;config/initializers/omniauth.rb&lt;/strong&gt;:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Rails&lt;/span&gt;.application.config.middleware.use &lt;span class=&quot;co&quot;&gt;OmniAuth&lt;/span&gt;::&lt;span class=&quot;co&quot;&gt;Builder&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   provider &lt;span class=&quot;sy&quot;&gt;:twitter&lt;/span&gt;, &lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;TWITTER_KEY&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;], &lt;span class=&quot;co&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;TWITTER_SECRET&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;constant&quot;&gt;Rails&lt;/span&gt;.application.config.middleware.use &lt;span class=&quot;constant&quot;&gt;OmniAuth&lt;/span&gt;::&lt;span class=&quot;constant&quot;&gt;Builder&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  provider &lt;span class=&quot;symbol&quot;&gt;:twitter&lt;/span&gt;, &lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;TWITTER_KEY&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;], &lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;TWITTER_SECRET&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Your app will read the configuration from the &lt;code&gt;ENV&lt;/code&gt; hash. You use the &lt;code&gt;heroku&lt;/code&gt; command to set the config variables:&lt;/p&gt;
@@ -758,11 +886,12 @@ production:
 &lt;p&gt;To load our YAML settings file at runtime, we have to modify &lt;code&gt;config/application.rb&lt;/code&gt; and add a new file: &lt;code&gt;config/heroku_env.rb&lt;/code&gt; (all files are on &lt;a href=&quot;http://github.com/leshill/heroku-thor&quot;&gt;github&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;We make the following modification to the top of  &lt;code&gt;config/application.rb&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; require &lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;../boot&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;pc&quot;&gt;__FILE__&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; require &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;rails&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt; load(&lt;span class=&quot;co&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;../heroku_env.rb&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;pc&quot;&gt;__FILE__&lt;/span&gt;))&lt;/pre&gt;&lt;/div&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;constant&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;../boot&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;predefined-constant&quot;&gt;__FILE__&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;rails&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;load(&lt;span class=&quot;constant&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;../heroku_env.rb&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;predefined-constant&quot;&gt;__FILE__&lt;/span&gt;))
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Our app is now reading our YAML file and populating the application&amp;#8217;s &lt;code&gt;ENV&lt;/code&gt; hash based our settings file when we run locally.&lt;/p&gt;
@@ -845,61 +974,6 @@ rvm gemset use makes_coffee
 &lt;p class=&quot;footnote&quot; id=&quot;fn3&quot;&gt;&lt;a href=&quot;#fnr3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; Yea, I am using &lt;code&gt;bundler&lt;/code&gt; and &lt;code&gt;rvm&lt;/code&gt;. You should be too.&lt;sup class=&quot;footnote&quot; id=&quot;fnr5&quot;&gt;&lt;a href=&quot;#fn5&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn4&quot;&gt;&lt;a href=&quot;#fnr4&quot;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt; Yea, the &lt;code&gt;rvmrc&lt;/code&gt; step should not need to be there :) Oh and there may need to be more done, like setting up a database. Put it in the &lt;code&gt;README&lt;/code&gt;.&lt;/p&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn5&quot;&gt;&lt;a href=&quot;#fnr5&quot;&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt; Or your gem has a development setup in the &lt;code&gt;README&lt;/code&gt; or wiki, like &lt;a href=&quot;http://github.com/rspec/rspec-dev&quot;&gt;RSpec&lt;/a&gt;.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>resque_spec for RSpec and Cucumber</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/06/13/resque-spec-for-rspec-and-cucumber.html" />
-    
-    <id>tag:blog.leshill.org,2010-06-13:1276467017</id>
-    
-    <published>2010-06-13T15:10:17-07:00</published>
-    <updated>2010-06-13T15:10:17-07:00</updated>
-    <content type="html">&lt;p&gt;&lt;code&gt;resque_spec&lt;/code&gt; is a simple RSpec and Cucumber matcher for &lt;a href=&quot;http://github.com/defunkt/resque&quot;&gt;Resque&lt;/a&gt; , loosely based on &lt;a href=&quot;http://github.com/justinweiss/resque_unit&quot;&gt;resque_unit&lt;/a&gt; .&lt;/p&gt;
-&lt;p&gt;Install it as a gem:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% gem install resque_spec&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Given this scenario&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; Given a person
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt; When I recalculate
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; Then the person has calculate queued&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;And I write this spec using the &lt;code&gt;resque_spec&lt;/code&gt; matcher&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt; 1&lt;/span&gt; describe &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;#recalculate&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 2&lt;/span&gt;   before &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 3&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;ResqueSpec&lt;/span&gt;.reset!
-&lt;span class=&quot;no&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 5&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt; 6&lt;/span&gt;   it &lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;adds person.calculate to the Person queue&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt; 7&lt;/span&gt;     person.recalculate
-&lt;span class=&quot;no&quot;&gt; 8&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Person&lt;/span&gt;.should have_queued(person.id, &lt;span class=&quot;sy&quot;&gt;:calculate&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt; 9&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;&lt;strong&gt;10&lt;/strong&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;(And I take note of the &lt;code&gt;before&lt;/code&gt; block that is calling &lt;code&gt;reset!&lt;/code&gt; for every spec)&lt;/p&gt;
-&lt;p&gt;And I might write this as a Cucumber step&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;co&quot;&gt;Then&lt;/span&gt; &lt;span class=&quot;rx&quot;&gt;&lt;span class=&quot;dl&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;the (&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\w&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;?) has (&lt;/span&gt;&lt;span class=&quot;ch&quot;&gt;\w&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;?) queued&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;/&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;do&lt;/span&gt; |thing, method|
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   thing_obj = instance_variable_get(&lt;span class=&quot;s&quot;&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;il&quot;&gt;&lt;span class=&quot;idl&quot;&gt;#{&lt;/span&gt;thing&lt;span class=&quot;idl&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt;   thing_obj.class.should have_queued(thing_obj.id, method.to_sym)
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Then I write some code to make it pass:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;no&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;cl&quot;&gt;Person&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;iv&quot;&gt;@queue&lt;/span&gt; = &lt;span class=&quot;sy&quot;&gt;:people&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;3&lt;/span&gt; 
-&lt;span class=&quot;no&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;fu&quot;&gt;recalculate&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;5&lt;/span&gt;     &lt;span class=&quot;co&quot;&gt;Resque&lt;/span&gt;.enqueue(&lt;span class=&quot;co&quot;&gt;Person&lt;/span&gt;, id, &lt;span class=&quot;sy&quot;&gt;:calculate&lt;/span&gt;)
-&lt;span class=&quot;no&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;r&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The source is up on &lt;a href=&quot;http://github.com/leshill/resque_spec&quot;&gt;github&lt;/a&gt; .&lt;/p&gt;</content>
   </entry>
   
 </feed>

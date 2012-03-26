@@ -1,0 +1,141 @@
+---
+title:      'A Question of Truth'
+author: Les Hill
+created_at: 2012-03-25 14:05:13.371289 -07:00
+layout: blog_post
+blog_post:  true
+filter:
+  - textile
+  - coderay
+---
+Yesterday, a simple pull request to Rails "core":https://github.com/rails/rails/pull/5329 "dramatically":https://github.com/rails/rails/commit/0aa66f04e4b4698718023cacb18612e04a4c5eb1 "exploded":https://github.com/rails/rails/pull/5572 over the issue of what a predicate should return.
+
+h2. TL;DR
+
+This tweet pretty much sums it up:
+
+bq. For what it's worth I'd consider any ruby code that relies on true/false singletons from predicates to be in error.
+
+&mdash; "@avdi":https://twitter.com/#!/avdi/status/183376469957943296
+
+h2. Background
+
+To really appreciate the dicussion, we need to know two things about Ruby.
+
+h3. What is true?
+
+Ruby, like many programming languages, has a specific understanding of _true_ or _false_ that goes beyond expressing the concept in a boolean type. Ruby understands the concept of whether a value is _true_ or _false_, and therefore any expression requiring a boolean value (for example, using the boolean logic operators), without needing an explicit set of boolean values. Ruby does have the keywords @true@ and @false@, sometimes called the _true singleton_ and the _false singleton_ since the values are shared in the Ruby VM, which are Ruby's only notion of anything like a boolean type.
+
+Instead, in Ruby, when a boolean value is required in boolean logic expressions (or conditionals), Ruby is really only concered with the _truthyness_ of the value.  Ruby evaluates a value as either _truthy_ or _falsey_ with a simple rule.
+
+All of the following are _falsey_ values.
+
+* @false@
+* @nil@
+
+And anything else is a _truthy_ value:
+
+* @true@
+* @-1@
+* @0@
+* @0.0@
+* @""@ &mdash; an empty string
+* @"hi"@ &mdash; a non-empty string
+* @[]@ &mdash; an empty array
+* @{a: 1}@ &mdash; a non-empty hash
+* @Object.new@ &mdash; any object
+* _You get the idea_
+
+This is one of Ruby's many affordances for developers (and not the only one at play in this drama). It allows us to write concise and expressive code like this:
+
+<notextile>
+<coderay:ruby>
+might_be_initialized_already ||= {}
+</coderay>
+</notextile>
+
+To be very clear about what this is doing, lets rewrite it naively:
+
+<notextile>
+<coderay:ruby>
+unless might_be_initialized_already
+  might_be_initialized_already = {}
+end
+</coderay>
+</notextile>
+
+Note that we do not care what the type of @might_be_initialized_already@ is, we can use the incredibly useful definition of _truthy_ and _falsey_ to evaluate the conditional without coercion or other type-based manipulations.
+
+At this point, you might be thinking, "_Hey what about @=@, it is also a suffix!_" and you would be almost right. @=@ is a suffix, but unlike @!@ and @?@ it actually means something to Ruby, namely that expressions like our earlier example:
+
+<notextile>
+<coderay:ruby>
+might_be_initialized_already ||= {}
+</coderay>
+</notextile>
+
+are understood correctly. @!@ and @?@ mean nothing to Ruby, they exist to make our code just a bit more pleasant to read. @!@ and @?@ are affordances that we use by convention. There is no requirement to use them, yet we do so all the time. And yes, @=@ is another one of those affordances for the developer.
+
+h3. What is a predicate?
+
+Ruby has, among its many affordances for developers (and the second one at play in this drama), the optional method name suffixes @!@ and @?@. The @!@ suffix indicates that the method modifies the receiver, for example:
+
+<notextile>
+<coderay:ruby>
+def reset!
+  # reset everything back to its initial state
+end
+</coderay>
+</notextile>
+
+The convention for @!@ is summed up in *Programming Ruby* by Thomas[1]:
+
+bq. Methods that are “dangerous,” or modify the receiver, may be named with a trailing !.
+
+The @?@ suffix indicates that the method is a predicate, returning a _truthy_ or _falsey_ value. For example:
+
+<notextile>
+<coderay:ruby>
+reset! unless valid?
+</coderay>
+</notextile>
+
+The convention for @?@ is also summed up in *Programming Ruby* by Thomas:
+
+bq. Methods that act as queries are often named with a trailing ?, such as @instance_of?@.
+
+The astute reader will have noted that _by definition_ *every method in ruby returns a _truthy_ or _falsey_ value*. And in *The Ruby Programming Language* by Flannagan and Matz (yes, that Matz), it is noted as part of the convention for @?@:
+
+bq. Predicates typically return one of the Boolean values true or false, but this is not required, as any value other than false or nil works like true when a Boolean value is required. (The Numeric method nonzero?, for example, returns nil if the number it is invoked on is zero, and just returns the number otherwise.)
+
+h2. The drama
+
+The pull request in question reverted year-old Rails code, changing it to return @true@ or @false@ instead of just return a _truthy_ or _falsey_ value. The instigation of the request was that originally the @xml_http_request?@ method returned @true@ or @false@ and existing code had used the predicate as a RHS. When the value constraint was removed, all the code using the predicate as a RHS caused errors (the values were no longer @true@ and @false@).
+
+h2. My opinion
+
+Since a predicate method is only a method with a '?' appended to the name, the convention around its use covers two questions, the obvious one:
+
+h3. What values does the predicate method return?
+
+We might say that the convention is that the predicate method constrains its return value to @true@ and @false@.
+
+Or we might say that the convention is that the predicate method does not constrain its value.
+
+Given the explicit endorsement, the second is clearly the convention. This also matches the experience of the Ruby community to date.
+
+As an aside, following the precedent of @=@, one can easily imagine a modified Ruby that would make predicate methods returning only @true@ and @false@ more than just a convention and simply the way Ruby works.[2]
+
+And the not so obvious one:
+
+h3. When do you use the predicate method?
+
+If we accept that the predicate method constrains its return value, then accepting that the predicate method is usable anywhere makes sense. In this case using a predicate as a RHS is perfect when you want to get a @true@ or @false@ value.
+
+If we accept that the predicate method does not constrain its return value, then accepting that the predicate method is usable anywhere does not make sense. In this case using a predicate as a RHS fails miserably, as you get whatever happens to be returned when determining its _truthyness_.
+
+This is really the cause of the dust-up in Rails core. Whatever the original intentions were, at one point the predicate method in question returned @true@ or @false@. Depending on a predicate method to return a @true@ or @false@ for use in a RHS is not really good Ruby practice. There can be no guarantee that the values are more than _truthy_ or _falsey_.
+
+fn1. The Pickaxe book.
+
+fn2. Just in case someone misreads that sentence, Ruby does not work this way.
