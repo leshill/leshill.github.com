@@ -68,7 +68,7 @@
 &lt;p&gt;Ruby has, among its many affordances for developers (and the second one at play in this drama), the optional method name suffixes &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;At this point, you might be thinking, &amp;#8220;&lt;em&gt;Hey what about &lt;code&gt;=&lt;/code&gt;, it is also a suffix!&lt;/em&gt;&amp;#8221; and you would be almost right. &lt;code&gt;=&lt;/code&gt; is a suffix, but unlike &lt;code&gt;!&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt; it actually means something to Ruby, namely that expressions like our earlier example:&lt;/p&gt;
 &lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;might_be_initialized_already ||= {}
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;predefined-constant&quot;&gt;self&lt;/span&gt;.properties ||= {}
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 
