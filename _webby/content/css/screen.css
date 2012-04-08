@@ -229,6 +229,10 @@ blockquote {
     margin-bottom: 0;
   }
 
+  #post #fn1 {
+    border-top: solid 1px black;
+  }
+
 .postlist {
   margin: 2em 0;
 }
