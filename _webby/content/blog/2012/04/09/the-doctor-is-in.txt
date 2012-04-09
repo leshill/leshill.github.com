@@ -19,7 +19,7 @@ h1. The Doctor's specialty
 
 Refactoring your specs. Specs directly affect the shape of your code.  Well-written specs lead to well-written code. Spending time to refactor your specs pays off dividends immediately in any code base. Unfortunately the last thing on just about everyone's list is refactoring the specs. Until the suite is just so painful to work with that something has to be done.
 
-Refactoring your code. When you are shipping code[1], there is a gap that occurs between the code you write and ship *now* versus the code you could have refactored and shipped *later*[2]. The code is clean, tested, and working but there just happens to be an idiom that everyone uses, or a pattern that can be applied, or a known better (but not more correct) algorithm, or just additional refactoring that has only been enabled by the previous refactors. The shipping tension cuts off those additional refinements[3], even those that are trivial in hindsight -- looking at them later makes you wonder why you just did not make it in the first place.
+Refactoring your code. When you are shipping code[1], there is a gap that occurs between the code you write and ship *now* versus the code you could have refactored and shipped *later*[2]. The code is clean, tested, and working but there just happens to be an idiom that everyone uses, or a pattern that can be applied, or a known better (but not more correct) algorithm, or just additional refactoring that has only been enabled by the previous refactors. The shipping tension cuts off those additional refinements[3], even those that are trivial in hindsight -- looking at them later makes you wonder why you just did not make the change in the first place.
 
 h1. The testimonial
 
