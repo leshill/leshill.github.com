@@ -35,7 +35,7 @@ I quickly offered a "spike":http://git.io/42FOsw showing how to restructure the 
 
 h1. How much is it?
 
-It's free! (So save your 25¢.)
+It's free!
 
 Seeing a random (and statistically meaningless :) sample of real world code is research for my next talk: *Be Happier, Write Better Code*. Real world code is code written under commercial stresses, from the intentional: _Lean Startup!_ to the unintentional: _Conway's Law_.
 
@@ -67,7 +67,7 @@ Here are the rules:
 * Have all of this ready to work with on your machine.
 * You drive the whole time on your codebase and your machine.
 
-To get started, sign into "PrivatelyApp.com":https://www.privatelyapp.com with your Twitter account and start a private conversation with *@leshill*. In private and more than 140 characters tell me how I can help you.
+To get started, sign into "PrivatelyApp.com":https://www.privatelyapp.com with your Twitter account and start a private conversation with *@leshill*. In private and in more than 140 characters tell me how I can help you.
 
 If we come to an agreement, we will pick a 30 minute time slot. I am leaning towards time slots in the evenings (6 to 11 p.m.) on either Monday April 23, or Tuesday April 24.
 

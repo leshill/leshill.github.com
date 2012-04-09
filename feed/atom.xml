@@ -4,12 +4,71 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2012-03-25T23:35:15-07:00</updated>
+  <updated>2012-04-09T12:43:50-07:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>The Doctor Is In</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2012/04/09/the-doctor-is-in.html" />
+    
+    <id>tag:blog.leshill.org,2012-04-09:1333955734</id>
+    
+    <published>2012-04-09T00:15:34-07:00</published>
+    <updated>2012-04-09T00:15:34-07:00</updated>
+    <content type="html">&lt;h1&gt;Advice from the Doctor, 25¢&lt;/h1&gt;
+&lt;p&gt;Would you like someone to help you refactor some of your code? If you are going to be at &lt;a href=&quot;http://railsconf2012.com/&quot;&gt;RailsConf&lt;/a&gt;, then I am happy to pair with you for 30 minutes doing just that.&lt;/p&gt;
+&lt;p&gt;We will pair on your machine, on your Ruby/Rails codebase with an existing RSpec/Cucumber test suite. We will refactor code in either your specs or your app. Being a refactor, there should be little to no domain expertise required.&lt;/p&gt;
+&lt;h1&gt;The Doctor&amp;#8217;s specialty&lt;/h1&gt;
+&lt;p&gt;Refactoring your specs. Specs directly affect the shape of your code.  Well-written specs lead to well-written code. Spending time to refactor your specs pays off dividends immediately in any code base. Unfortunately the last thing on just about everyone&amp;#8217;s list is refactoring the specs. Until the suite is just so painful to work with that something has to be done.&lt;/p&gt;
+&lt;p&gt;Refactoring your code. When you are shipping code&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, there is a gap that occurs between the code you write and ship &lt;strong&gt;now&lt;/strong&gt; versus the code you could have refactored and shipped &lt;strong&gt;later&lt;/strong&gt;&lt;sup class=&quot;footnote&quot; id=&quot;fnr2&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;. The code is clean, tested, and working but there just happens to be an idiom that everyone uses, or a pattern that can be applied, or a known better (but not more correct) algorithm, or just additional refactoring that has only been enabled by the previous refactors. The shipping tension cuts off those additional refinements&lt;sup class=&quot;footnote&quot; id=&quot;fnr3&quot;&gt;&lt;a href=&quot;#fn3&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;, even those that are trivial in hindsight &amp;#8212; looking at them later makes you wonder why you just did not make the change in the first place.&lt;/p&gt;
+&lt;h1&gt;The testimonial&lt;/h1&gt;
+&lt;p&gt;In response to this tweet from Steve Klabnik (@steveklabnik):&lt;/p&gt;
+&lt;blockquote class=&quot;twitter-tweet tw-align-center&quot;&gt;&lt;p&gt;Thoughts on improving this spec? &lt;a href=&quot;https://t.co/L73V6vbE&quot; title=&quot;https://github.com/JumpstartLab/donors_choose/blob/master/spec/donors_choose_spec.rb&quot;&gt;github.com/JumpstartLab/d…&lt;/a&gt; Feels awkward. /cc @&lt;a href=&quot;https://twitter.com/garybernhardt&quot;&gt;garybernhardt&lt;/a&gt; @&lt;a href=&quot;https://twitter.com/avdi&quot;&gt;avdi&lt;/a&gt; @&lt;a href=&quot;https://twitter.com/gregmoeck&quot;&gt;gregmoeck&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;mdash; Steve Klabnik (@steveklabnik) &lt;a href=&quot;https://twitter.com/steveklabnik/status/169512925839630337&quot; data-datetime=&quot;2012-02-14T20:06:45+00:00&quot;&gt;February 14, 2012&lt;/a&gt;&lt;/blockquote&gt;&lt;br /&gt;
+&lt;script src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;I quickly offered a &lt;a href=&quot;http://git.io/42FOsw&quot;&gt;spike&lt;/a&gt; showing how to restructure the code:&lt;/p&gt;
+&lt;blockquote class=&quot;twitter-tweet tw-align-center&quot; data-in-reply-to=&quot;169512925839630337&quot;&gt;&lt;p&gt;@&lt;a href=&quot;https://twitter.com/steveklabnik&quot;&gt;steveklabnik&lt;/a&gt; FWIW, I agree with @&lt;a href=&quot;https://twitter.com/garybernhardt&quot;&gt;garybernhardt&lt;/a&gt;, the examples are awkward &amp;#8211; they test too much, try an impl like: &lt;a href=&quot;http://t.co/4JjHmLn8&quot; title=&quot;http://git.io/42FOsw&quot;&gt;git.io/42FOsw&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;mdash; Les Hill (@leshill) &lt;a href=&quot;https://twitter.com/leshill/status/169521240699174913&quot; data-datetime=&quot;2012-02-14T20:39:47+00:00&quot;&gt;February 14, 2012&lt;/a&gt;&lt;/blockquote&gt;&lt;br /&gt;
+&lt;script src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;h1&gt;How much is it?&lt;/h1&gt;
+&lt;p&gt;It&amp;#8217;s free!&lt;/p&gt;
+&lt;p&gt;Seeing a random (and statistically meaningless :) sample of real world code is research for my next talk: &lt;strong&gt;Be Happier, Write Better Code&lt;/strong&gt;. Real world code is code written under commercial stresses, from the intentional: &lt;em&gt;Lean Startup!&lt;/em&gt; to the unintentional: &lt;em&gt;Conway&amp;#8217;s Law&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;The goal is to see what real world code looks like.&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;What kind of shape it is in.&lt;/li&gt;
+	&lt;li&gt;What the style is.&lt;/li&gt;
+	&lt;li&gt;What idioms are used.&lt;/li&gt;
+	&lt;li&gt;What idioms are not used.&lt;/li&gt;
+	&lt;li&gt;What patterns are used.&lt;/li&gt;
+	&lt;li&gt;What is missing.&lt;/li&gt;
+	&lt;li&gt;What the testing philosphy is.&lt;/li&gt;
+	&lt;li&gt;What is overwrought and over-engineered.&lt;/li&gt;
+	&lt;li&gt;What do the commits look like.&lt;/li&gt;
+	&lt;li&gt;What happens in bug-fixes.&lt;/li&gt;
+	&lt;li&gt;The list goes on.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;At no point are you giving anyone else access to your code&lt;sup class=&quot;footnote&quot; id=&quot;fnr4&quot;&gt;&lt;a href=&quot;#fn4&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;. No identifying information will be used for the talk. Only you and I will be examining the code (there is no audience participation.)&lt;/p&gt;
+&lt;h1&gt;Call now!&lt;/h1&gt;
+&lt;p&gt;Here are the rules:&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;A Ruby/Rails codebase.&lt;/li&gt;
+	&lt;li&gt;An existing RSpec/Cucumber test suite.&lt;/li&gt;
+	&lt;li&gt;One problem that you would like to refactor, either in your code or in your specs.&lt;/li&gt;
+	&lt;li&gt;You understand that there is a time limit of 30 minutes.&lt;/li&gt;
+	&lt;li&gt;The problem is not domain-related (there are only 30 minutes available.)&lt;/li&gt;
+	&lt;li&gt;Have all of this ready to work with on your machine.&lt;/li&gt;
+	&lt;li&gt;You drive the whole time on your codebase and your machine.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To get started, sign into &lt;a href=&quot;https://www.privatelyapp.com&quot;&gt;PrivatelyApp.com&lt;/a&gt; with your Twitter account and start a private conversation with &lt;strong&gt;@leshill&lt;/strong&gt;. In private and in more than 140 characters tell me how I can help you.&lt;/p&gt;
+&lt;p&gt;If we come to an agreement, we will pick a 30 minute time slot. I am leaning towards time slots in the evenings (6 to 11 p.m.) on either Monday April 23, or Tuesday April 24.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; &lt;strong&gt;Code&lt;/strong&gt; that is &lt;em&gt;clean&lt;/em&gt;, &lt;em&gt;tested&lt;/em&gt;, and &lt;em&gt;working&lt;/em&gt; &amp;#8212; sloppy, untested code that just happens to work is at best an experiment.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;a href=&quot;#fnr2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; Let&amp;#8217;s call this gap &lt;strong&gt;Working Code Wins&lt;/strong&gt;. An observation that a (ideally deliberate :) shipping trade-off was made. Another post perhaps?&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn3&quot;&gt;&lt;a href=&quot;#fnr3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; &lt;strong&gt;Technical Debt&lt;/strong&gt; is a related concept. Originally, &lt;strong&gt;Technical Debt&lt;/strong&gt; meant coding your existing but incomplete understanding, and then modifying the code with the insight and understanding gained from experience; paying down the debt of your incomplete understanding. Now &lt;strong&gt;Technical Debt&lt;/strong&gt; has been abused and diluted to mean anything undesirable in a codebase.&lt;/p&gt;
+&lt;p&gt;A more useful definition is deliberately choosing deficient designs or algorithms to acheive short-term goals. For example, implementing a simplistic and unscalable algorithm instead of a robust, complex, and scalable algorithm because you have 5 users and not 1 million users. If, by happy chance, you start up the hockey stick, you will have to pay that &lt;strong&gt;Technical Debt&lt;/strong&gt; off. The debt comes in two forms: you implement the more complex algorithm anyway, and the implementation may turn out to be more difficult in the existing codebase than if it had been implemented up front.&lt;/p&gt;
+&lt;p class=&quot;footnote&quot; id=&quot;fn4&quot;&gt;&lt;a href=&quot;#fnr4&quot;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt; The code never leaves your machine and you are the only person touching it.&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>A Question of Truth</title>
@@ -944,37 +1003,6 @@ Restarting app...done.&lt;/code&gt;&lt;/pre&gt;
 Mislav Marohnić &lt;a href=&quot;http://mislav.uniqpath.com/2010/09/cuking-it-right/&quot;&gt;You&amp;#8217;re cuking it right&lt;/a&gt;&lt;br /&gt;
 Bodaniel Jeanes &lt;a href=&quot;http://bjeanes.com/2010/09/19/selector-free-cucumber-scenarios&quot;&gt;Selector-Free Cucumber Scenarios&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Thanks guys!&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Releasing A Gem? Read This Post!</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/07/19/releasing-a-gem-read-this-post.html" />
-    
-    <id>tag:blog.leshill.org,2010-07-18:1279512275</id>
-    
-    <published>2010-07-18T21:04:35-07:00</published>
-    <updated>2010-07-18T21:04:35-07:00</updated>
-    <content type="html">&lt;p&gt;One of the great things about the Ruby community is that we are very happy to release our code; to contribute back to the community. &lt;a href=&quot;http://rubygems.org&quot;&gt;RubyGems&lt;/a&gt; and &lt;a href=&quot;http://github.com&quot;&gt;github&lt;/a&gt; make it ridiculously easy.&lt;/p&gt;
-&lt;p&gt;Another great thing about the Ruby community is that we also like to help out. Maybe, someone wants to fix a bug, or perhaps sees an opportunity for a new feature, or just wants to help make the code better.&lt;/p&gt;
-&lt;p&gt;Lately, for whatever reason&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, I have been running across well-used gems that passively discourage contributions because their development environment setup is disastrous&lt;sup class=&quot;footnote&quot; id=&quot;fnr2&quot;&gt;&lt;a href=&quot;#fn2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;Anyone should be able to contribute to your gem after doing this&lt;sup class=&quot;footnote&quot; id=&quot;fnr3&quot;&gt;&lt;a href=&quot;#fn3&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% git clone http://github.com/leshill/makes_coffee.git
-% cd makes_coffee
-% cat &amp;gt; .rvmrc
-rvm_gemset_create_on_use_flag=1
-rvm gemset use makes_coffee
-^D
-% cd .
-% gem install bundler
-% bundle install
-% rake
-...All specs pass...&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;That is all&lt;sup class=&quot;footnote&quot; id=&quot;fnr4&quot;&gt;&lt;a href=&quot;#fn4&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; it should take to get a development environment up and running for your gem.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; We are using &lt;em&gt;Rails 3&lt;/em&gt;.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn2&quot;&gt;&lt;a href=&quot;#fnr2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; It is disastrous if I have to repeatedly run &lt;code&gt;rake&lt;/code&gt; and look at stack traces for me to discern exactly what needs to be done to get a working development environment.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn3&quot;&gt;&lt;a href=&quot;#fnr3&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; Yea, I am using &lt;code&gt;bundler&lt;/code&gt; and &lt;code&gt;rvm&lt;/code&gt;. You should be too.&lt;sup class=&quot;footnote&quot; id=&quot;fnr5&quot;&gt;&lt;a href=&quot;#fn5&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn4&quot;&gt;&lt;a href=&quot;#fnr4&quot;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt; Yea, the &lt;code&gt;rvmrc&lt;/code&gt; step should not need to be there :) Oh and there may need to be more done, like setting up a database. Put it in the &lt;code&gt;README&lt;/code&gt;.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn5&quot;&gt;&lt;a href=&quot;#fnr5&quot;&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt; Or your gem has a development setup in the &lt;code&gt;README&lt;/code&gt; or wiki, like &lt;a href=&quot;http://github.com/rspec/rspec-dev&quot;&gt;RSpec&lt;/a&gt;.&lt;/p&gt;</content>
   </entry>
   
 </feed>
