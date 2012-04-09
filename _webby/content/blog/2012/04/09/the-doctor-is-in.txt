@@ -9,11 +9,9 @@ filter:
   - coderay
 ---
 
-h1. Advice from the Doctor 25¢
+h1. Advice from the Doctor, 25¢
 
-Would you like someone to help you refactor some of your code?
-
-If you are going to be at ["RailsConf":http://railsconf2012.com/], then I am happy to pair with you for 30 minutes refactoring your code.
+Would you like someone to help you refactor some of your code? If you are going to be at ["RailsConf":http://railsconf2012.com/], then I am happy to pair with you for 30 minutes doing just that.
 
 We will pair on your machine, on your Ruby/Rails codebase with an existing RSpec/Cucumber test suite. We will refactor code in either your specs or your app. Being a refactor, there should be little to no domain expertise required.
 
@@ -21,50 +19,64 @@ h1. The Doctor's specialty
 
 Refactoring your specs. Specs directly affect the shape of your code.  Well-written specs lead to well-written code. Spending time to refactor your specs pays off dividends immediately in any code base. Unfortunately the last thing on just about everyone's list is refactoring the specs. Until the suite is just so painful to work with that something has to be done.
 
-Refactoring your code. When you are shipping code[1], there is a gap that occurs between the code you write and _ship now_ versus the code you could have refactored and _shipped later_[2]. The working code is tested and clean, but there just happens to be an idiom that everyone uses, or a pattern to implement, or a known better (but not more correct) algorithm, or just additional refactoring that has only been enabled by the previous refactors. The shipping tension cuts off those additional refinements, even those that are trivial in hindsight -- looking at them later makes you wonder why you just did not make it in the first place[3].
+Refactoring your code. When you are shipping code[1], there is a gap that occurs between the code you write and _ship now_ versus the code you could have refactored and _shipped later_[2]. The code is clean, tested, and working but there just happens to be an idiom that everyone uses, or a pattern that can be applied, or a known better (but not more correct) algorithm, or just additional refactoring that has only been enabled by the previous refactors. The shipping tension cuts off those additional refinements[3], even those that are trivial in hindsight -- looking at them later makes you wonder why you just did not make it in the first place.
 
-h2. The testimonial
+h1. The testimonial
 
 In response to this tweet from Steve Klabnik (@steveklabnik):
 
 <blockquote class="twitter-tweet tw-align-center"><p>Thoughts on improving this spec? <a href="https://t.co/L73V6vbE" title="https://github.com/JumpstartLab/donors_choose/blob/master/spec/donors_choose_spec.rb">github.com/JumpstartLab/d…</a> Feels awkward. /cc @<a href="https://twitter.com/garybernhardt">garybernhardt</a> @<a href="https://twitter.com/avdi">avdi</a> @<a href="https://twitter.com/gregmoeck">gregmoeck</a></p>&mdash; Steve Klabnik (@steveklabnik) <a href="https://twitter.com/steveklabnik/status/169512925839630337" data-datetime="2012-02-14T20:06:45+00:00">February 14, 2012</a></blockquote>
 <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-I quickly offered a "spike":http://git.io/42FOsw showing how to restructure the code[3]:
+I quickly offered a "spike":http://git.io/42FOsw showing how to restructure the code:
 
 <blockquote class="twitter-tweet tw-align-center" data-in-reply-to="169512925839630337"><p>@<a href="https://twitter.com/steveklabnik">steveklabnik</a> FWIW, I agree with @<a href="https://twitter.com/garybernhardt">garybernhardt</a>, the examples are awkward - they test too much, try an impl like: <a href="http://t.co/4JjHmLn8" title="http://git.io/42FOsw">git.io/42FOsw</a></p>&mdash; Les Hill (@leshill) <a href="https://twitter.com/leshill/status/169521240699174913" data-datetime="2012-02-14T20:39:47+00:00">February 14, 2012</a></blockquote>
 <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 h1. How much is it?
 
-I am doing research for my next talk: *Be Happier, Write Better Code* and I am hoping to see a random (and statistically meaningless :) sample of real world code. 
+It's free! (So save your 25¢.)
 
-By real world code, I mean code written under commercial stresses, from the intentional: _Lean Startup!_ to the unintentional: _Conway's Law_.
+Seeing a random (and statistically meaningless :) sample of real world code is research for my next talk: *Be Happier, Write Better Code*. Real world code is code written under commercial stresses, from the intentional: _Lean Startup!_ to the unintentional: _Conway's Law_.
 
-I do not want to have any access to the code[4] and no identifying information at all will be used.
+The goal is to see what real world code looks like.
 
-I want to see what the code looks like. What kind of shape it is in. What the style is. What the idioms in use are. What patterns are used. What is missing. What the testing philosphy is. What is overwrought and over-engineered.
+* What kind of shape it is in.
+* What the style is.
+* What idioms are used.
+* What idioms are not used.
+* What patterns are used.
+* What is missing.
+* What the testing philosphy is.
+* What is overwrought and over-engineered.
+* What do the commits look like.
+* What happens in bug-fixes.
+* The list goes on.
+
+At no point are you giving anyone else access to your code[4]. No identifying information will be used for the talk. Only you and I will be examining the code (there is no audience participation.)
 
 h1. Call now!
 
-Here are the ground rules:
+Here are the rules:
 
 * A Ruby/Rails codebase.
 * An existing RSpec/Cucumber test suite.
-* At least one problem that you would like to refactor, either in your code or in your specs.
+* One problem that you would like to refactor, either in your code or in your specs.
+* You understand that there is a time limit of 30 minutes.
+* The problem is not domain-related (there are only 30 minutes available.)
 * Have all of this ready to work with on your machine.
 * You drive the whole time on your codebase and your machine.
-* You understand that there is a time limit of 30 minutes.
 
-To get started, sign into "PrivatelyApp.com":https://www.privatelyapp.com with your Twitter account and start a private conversation with *@leshill*. In private and more than 140 tell me how I can help you.
+To get started, sign into "PrivatelyApp.com":https://www.privatelyapp.com with your Twitter account and start a private conversation with *@leshill*. In private and more than 140 characters tell me how I can help you.
 
-Then we will pick a 30 minute time slot. I am leaning towards the evenings (6 to 11 p.m.) on either Monday April 23, or Tuesday April 24.
+If we come to an agreement, we will pick a 30 minute time slot. I am leaning towards time slots in the evenings (6 to 11 p.m.) on either Monday April 23, or Tuesday April 24.
 
-fn1. To be clear, by *code*, I mean _tested_, _working_, and _clean_ code -- untested, sloppy code that just happens to work is at best an experiment.
+fn1. *Code* that is _clean_, _tested_, and _working_ -- sloppy, untested code that just happens to work is at best an experiment.
 
-fn2. *Technical Debt* is a related concept. Originally, *Technical Debt* meant coding your existing but incomplete understanding, and then modifying the code with the insight and understanding gained from experience; paying down the debt of your incomplete understanding. Now *Technical Debt* has been abused and diluted to mean anything undesirable in a codebase.
+fn2. Let's call this gap *Working Code Wins*. An observation that a (ideally deliberate :) shipping trade-off was made. Another post perhaps?
+
+fn3. *Technical Debt* is a related concept. Originally, *Technical Debt* meant coding your existing but incomplete understanding, and then modifying the code with the insight and understanding gained from experience; paying down the debt of your incomplete understanding. Now *Technical Debt* has been abused and diluted to mean anything undesirable in a codebase.
+
 A more useful definition is deliberately choosing deficient designs or algorithms to acheive short-term goals. For example, implementing a simplistic and unscalable algorithm instead of a robust, complex, and scalable algorithm because you have 5 users and not 1 million users. If, by happy chance, you start up the hockey stick, you will have to pay that *Technical Debt* off. The debt comes in two forms: you implement the more complex algorithm anyway, and the implementation may turn out to be more difficult in the existing codebase than if it had been implemented up front.
-
-fn3. I call this gap *Working Code Wins*. An observation that a (ideally deliberate :) shipping trade-off was made. Another post perhaps?
 
 fn4. The code never leaves your machine and you are the only person touching it.
