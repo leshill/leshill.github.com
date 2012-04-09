@@ -73,7 +73,7 @@ If we come to an agreement, we will pick a 30 minute time slot. I am leaning tow
 
 fn1. *Code* that is _clean_, _tested_, and _working_ -- sloppy, untested code that just happens to work is at best an experiment.
 
-fn2. Let's call this gap *Working Code Wins*. An observation that a (ideally deliberate :) shipping trade-off was made. Another post perhaps?
+fn2. Let's call this gap *Working Code Wins*. An observation that a shipping trade-off was made. Another post perhaps?
 
 fn3. *Technical Debt* is a related concept. Originally, *Technical Debt* meant coding your existing but incomplete understanding, and then modifying the code with the insight and understanding gained from experience; paying down the debt of your incomplete understanding. Now *Technical Debt* has been abused and diluted to mean anything undesirable in a codebase.
 
