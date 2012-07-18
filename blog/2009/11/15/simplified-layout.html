@@ -5,7 +5,10 @@
   <title>
     Les Hill &mdash; Simplified Layout
   </title>
-  <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/normalize.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/960.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/text.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/blog.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script>
   <script src='/javascript/application.js' type='text/javascript'></script>
@@ -26,28 +29,43 @@
   </script>
 </head>
 <body>
-  <div class='site'>
-    <div class='title'>
-      <a href="/">Les Hill</a>
-      <a href="http://github.com/leshill/" class="extra">github</a>
-      <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-      <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-      <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-      <a href="/archives.html" class="extra">archives</a>
+  <div class='container_12'>
+    <header class='clearfix'>
+      <div class='box grid-12 clearfix'>
+        <div class='home prefix_1 grid_3'>
+          <h2>
+            <a href="/">Les Hill</a>
+          </h2>
+        </div>
+        <div class='links grid_7'>
+          <h2>
+            <a href="http://github.com/leshill/" class="extra">github</a>
+            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+            <a href="/archives.html" class="extra">archives</a>
+          </h2>
+        </div>
+      </div>
+    </header>
+    <div class='clearfix' id='title'>
+      <div class='prefix_1 grid_10 suffix_1'>
+        <a href='/blog/2009/11/15/simplified-layout.html'>
+          <div class='meta' title='Sun Nov 15 18:41:47 -0800 2009'>
+            November 15, 2009
+            &raquo;
+          </div>
+          <h1>
+            “Simplified Layout”
+          </h1>
+        </a>
+      </div>
     </div>
-    <div id='post'>
-      <div class='title'>
-        <a href="/blog/2009/11/15/simplified-layout.html">Simplified Layout</a>
-      </div>
-      <div class='meta'>
-        <abbr class='published' title='Sun Nov 15 21:41:47 -0500 2009'>
-          Posted November 15, 2009
-        </abbr>
-      </div>
-      <div class='content'>
-        <p>Spurred on by the recent blog revamps of some fellow rocketeers, I have done the same and adopted a simple and direct layout. As is often the case, the restyling was really an opportunity to refactor and rethink.</p>&#x000A;<p>The most important refactoring was to break the myth of the <strong>fold</strong> with the blog archives. Previously, I was using <a href="http://webby.rubyforge.org">Webby</a>&#8216;s year and month index pages as the organization for the archives. Now the archives are on a single page as a reverse-chronological list that extends beneath the <strong>fold</strong>. The conventional wisdom on the <strong>fold</strong> is &#8217;do not make your users scroll&#8217;.  And it is wrong.  Research has show that users do scroll<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>. Scrolling down a reverse-chronological list of posts does not make the user think &#8212; the only organizing principle simpler than a reverse-chronological list is just an unorderd list. And that would not have been helpful.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> And it has for a long time! Here is <a href="http://www.useit.com/alertbox/9712a.html">Jakob Nielsen</a>&#8217;s take in 1997!</p>
-      </div>
-      <div class='comments'>
+    <div class='prefix_1 grid_10' id='post'>
+      <p>Spurred on by the recent blog revamps of some fellow rocketeers, I have done the same and adopted a simple and direct layout. As is often the case, the restyling was really an opportunity to refactor and rethink.</p>&#x000A;<p>The most important refactoring was to break the myth of the <strong>fold</strong> with the blog archives. Previously, I was using <a href="http://webby.rubyforge.org">Webby</a>&#8216;s year and month index pages as the organization for the archives. Now the archives are on a single page as a reverse-chronological list that extends beneath the <strong>fold</strong>. The conventional wisdom on the <strong>fold</strong> is &#8217;do not make your users scroll&#8217;.  And it is wrong.  Research has show that users do scroll<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>. Scrolling down a reverse-chronological list of posts does not make the user think &#8212; the only organizing principle simpler than a reverse-chronological list is just an unorderd list. And that would not have been helpful.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> And it has for a long time! Here is <a href="http://www.useit.com/alertbox/9712a.html">Jakob Nielsen</a>&#8217;s take in 1997!</p>
+    </div>
+    <div class='clearfix' id='comments'>
+      <div class='prefix_1 grid_10 suffix_1'>
         <div id='disqus_thread'></div>
         <script type='text/javascript'>
           var disqus_shortname = 'leshill';
@@ -74,34 +92,21 @@
         </a>
       </div>
     </div>
-    <div class='footer'>
-      <div class='contact'>
-        <p>
-          Les Hill
-          <br />
-          Developer @ <a href="http://carezone.com/">CareZone</a>
-          <br />
-          les (at) carezone (dot) com
-        </p>
+    <div class='clearfix' id='footer'>
+      <div class='prefix_1 grid_8' id='contact'>
+        Les Hill
+        <br />
+        Developer @ <a href="http://carezone.com/">CareZone.com</a>
+        <br />
+        les (at) carezone (dot) com
       </div>
-      <div class='rss'>
+      <div class='grid_2' id='rss'>
         <a href='http://feeds2.feedburner.com/leshill'>
           <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
         </a>
       </div>
-    </div>
-    <div class='colophon'>
-      <p>
-        Thanks to <a href="http://tom.preston-werner.com/">Tom Preston-Werner</a>
-        for the CSS layout, <a href="http://webby.rubyforge.org/">Webby</a> for
-        the blog renderer, and
-        <a href="http://github.com/blog/272-github-pages">GitHub Pages</a> for
-        the blog hosting.
-      </p>
-      <div class='copyright'>
-        <p>
-          Les Hill &copy; 2008&ndash;2012
-        </p>
+      <div class='grid_12' id='copyright'>
+        Les Hill &copy; 2008&ndash;2012
       </div>
     </div>
     <script type='text/javascript'>

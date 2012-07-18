@@ -5,7 +5,10 @@
   <title>
     Les Hill &mdash; Most Bugs Fall to the Second Pair of Eyes
   </title>
-  <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/normalize.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/960.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/text.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/blog.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script>
   <script src='/javascript/application.js' type='text/javascript'></script>
@@ -26,28 +29,43 @@
   </script>
 </head>
 <body>
-  <div class='site'>
-    <div class='title'>
-      <a href="/">Les Hill</a>
-      <a href="http://github.com/leshill/" class="extra">github</a>
-      <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-      <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-      <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-      <a href="/archives.html" class="extra">archives</a>
+  <div class='container_12'>
+    <header class='clearfix'>
+      <div class='box grid-12 clearfix'>
+        <div class='home prefix_1 grid_3'>
+          <h2>
+            <a href="/">Les Hill</a>
+          </h2>
+        </div>
+        <div class='links grid_7'>
+          <h2>
+            <a href="http://github.com/leshill/" class="extra">github</a>
+            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+            <a href="/archives.html" class="extra">archives</a>
+          </h2>
+        </div>
+      </div>
+    </header>
+    <div class='clearfix' id='title'>
+      <div class='prefix_1 grid_10 suffix_1'>
+        <a href='/blog/2009/02/20/most-bugs-fall-to-the-second-pair-of-eyes.html'>
+          <div class='meta' title='Fri Feb 20 18:23:58 -0800 2009'>
+            February 20, 2009
+            &raquo;
+          </div>
+          <h1>
+            “Most Bugs Fall to the Second Pair of Eyes”
+          </h1>
+        </a>
+      </div>
     </div>
-    <div id='post'>
-      <div class='title'>
-        <a href="/blog/2009/02/20/most-bugs-fall-to-the-second-pair-of-eyes.html">Most Bugs Fall to the Second Pair of Eyes</a>
-      </div>
-      <div class='meta'>
-        <abbr class='published' title='Fri Feb 20 21:23:58 -0500 2009'>
-          Posted February 20, 2009
-        </abbr>
-      </div>
-      <div class='content'>
-        <p>While recently discussing if a power law applies to bugs at the ongoing seminar I sentimentally call <em>work</em>, I noted a corollary to <strong>Linus&#8217;s Law</strong>.</p>&#x000A;<p><a href="http://en.wikipedia.org/wiki/Linus&#39;s_Law">Linus&#8217;s Law</a> states:</p>&#x000A;<blockquote>&#x000A;<p>Given enough eyeballs, all bugs are shallow</p>&#x000A;</blockquote>&#x000A;<p>The corollary is:</p>&#x000A;<blockquote>&#x000A;<p>Most bugs fall to the second pair of eyes</p>&#x000A;</blockquote>&#x000A;<p>That is, just having one other developer look at a bug will likely resolve it.  Of course, developer&#8217;s who are <a href="http://en.wikipedia.org/wiki/Pair_programming">pair programming</a> already know this and are ahead of the game.</p>&#x000A;<p>On a related note, pretty much every developer has been in the following situation.  You are called over by a collegue to look over a bug, often accompanied by the statement, &#8216;This should work.&#8217;  You give a cursory examination and you resolve the problem with a quick change, often one that is <em>obvious</em> (after you pointed it out!)</p>&#x000A;<p>If you come away from that experience thinking &#8216;Fresh pair of eyes&#8217; or some such, good for you, you passed the test.</p>&#x000A;<p>If you come away from that experience thinking &#8216;I am so awesome!&#8217; or some such, not so good for you, you are probably not even competent.</p><!-- #hashrocket -->
-      </div>
-      <div class='comments'>
+    <div class='prefix_1 grid_10' id='post'>
+      <p>While recently discussing if a power law applies to bugs at the ongoing seminar I sentimentally call <em>work</em>, I noted a corollary to <strong>Linus&#8217;s Law</strong>.</p>&#x000A;<p><a href="http://en.wikipedia.org/wiki/Linus&#39;s_Law">Linus&#8217;s Law</a> states:</p>&#x000A;<blockquote>&#x000A;<p>Given enough eyeballs, all bugs are shallow</p>&#x000A;</blockquote>&#x000A;<p>The corollary is:</p>&#x000A;<blockquote>&#x000A;<p>Most bugs fall to the second pair of eyes</p>&#x000A;</blockquote>&#x000A;<p>That is, just having one other developer look at a bug will likely resolve it.  Of course, developer&#8217;s who are <a href="http://en.wikipedia.org/wiki/Pair_programming">pair programming</a> already know this and are ahead of the game.</p>&#x000A;<p>On a related note, pretty much every developer has been in the following situation.  You are called over by a collegue to look over a bug, often accompanied by the statement, &#8216;This should work.&#8217;  You give a cursory examination and you resolve the problem with a quick change, often one that is <em>obvious</em> (after you pointed it out!)</p>&#x000A;<p>If you come away from that experience thinking &#8216;Fresh pair of eyes&#8217; or some such, good for you, you passed the test.</p>&#x000A;<p>If you come away from that experience thinking &#8216;I am so awesome!&#8217; or some such, not so good for you, you are probably not even competent.</p><!-- #hashrocket -->
+    </div>
+    <div class='clearfix' id='comments'>
+      <div class='prefix_1 grid_10 suffix_1'>
         <div id='disqus_thread'></div>
         <script type='text/javascript'>
           var disqus_shortname = 'leshill';
@@ -74,34 +92,21 @@
         </a>
       </div>
     </div>
-    <div class='footer'>
-      <div class='contact'>
-        <p>
-          Les Hill
-          <br />
-          Developer @ <a href="http://carezone.com/">CareZone</a>
-          <br />
-          les (at) carezone (dot) com
-        </p>
+    <div class='clearfix' id='footer'>
+      <div class='prefix_1 grid_8' id='contact'>
+        Les Hill
+        <br />
+        Developer @ <a href="http://carezone.com/">CareZone.com</a>
+        <br />
+        les (at) carezone (dot) com
       </div>
-      <div class='rss'>
+      <div class='grid_2' id='rss'>
         <a href='http://feeds2.feedburner.com/leshill'>
           <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
         </a>
       </div>
-    </div>
-    <div class='colophon'>
-      <p>
-        Thanks to <a href="http://tom.preston-werner.com/">Tom Preston-Werner</a>
-        for the CSS layout, <a href="http://webby.rubyforge.org/">Webby</a> for
-        the blog renderer, and
-        <a href="http://github.com/blog/272-github-pages">GitHub Pages</a> for
-        the blog hosting.
-      </p>
-      <div class='copyright'>
-        <p>
-          Les Hill &copy; 2008&ndash;2012
-        </p>
+      <div class='grid_12' id='copyright'>
+        Les Hill &copy; 2008&ndash;2012
       </div>
     </div>
     <script type='text/javascript'>

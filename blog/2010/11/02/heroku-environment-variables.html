@@ -5,7 +5,10 @@
   <title>
     Les Hill &mdash; Heroku Environment Variables
   </title>
-  <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/normalize.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/960.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/text.css' media='screen, projection' rel='stylesheet' type='text/css' />
+  <link href='/css/blog.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <link href='/css/coderay.css' media='screen, projection' rel='stylesheet' type='text/css' />
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script>
   <script src='/javascript/application.js' type='text/javascript'></script>
@@ -26,28 +29,43 @@
   </script>
 </head>
 <body>
-  <div class='site'>
-    <div class='title'>
-      <a href="/">Les Hill</a>
-      <a href="http://github.com/leshill/" class="extra">github</a>
-      <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-      <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-      <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-      <a href="/archives.html" class="extra">archives</a>
+  <div class='container_12'>
+    <header class='clearfix'>
+      <div class='box grid-12 clearfix'>
+        <div class='home prefix_1 grid_3'>
+          <h2>
+            <a href="/">Les Hill</a>
+          </h2>
+        </div>
+        <div class='links grid_7'>
+          <h2>
+            <a href="http://github.com/leshill/" class="extra">github</a>
+            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+            <a href="/archives.html" class="extra">archives</a>
+          </h2>
+        </div>
+      </div>
+    </header>
+    <div class='clearfix' id='title'>
+      <div class='prefix_1 grid_10 suffix_1'>
+        <a href='/blog/2010/11/02/heroku-environment-variables.html'>
+          <div class='meta' title='Mon Nov 01 21:09:26 -0700 2010'>
+            November 01, 2010
+            &raquo;
+          </div>
+          <h1>
+            “Heroku Environment Variables”
+          </h1>
+        </a>
+      </div>
     </div>
-    <div id='post'>
-      <div class='title'>
-        <a href="/blog/2010/11/02/heroku-environment-variables.html">Heroku Environment Variables</a>
-      </div>
-      <div class='meta'>
-        <abbr class='published' title='Tue Nov 02 00:09:26 -0400 2010'>
-          Posted November 02, 2010
-        </abbr>
-      </div>
-      <div class='content'>
-        <h1>Also Known As: Config Vars</h1>&#x000A;<p>Deploying an app to <a href="http://heroku.com">Heroku</a> is awesome. Really. If you have not yet done so, it is worth spending the few minutes to setup a simple Rails app and deploy to Heroku.</p>&#x000A;<p>Awesome! Unless you have a lot of local configuration (perhaps your app talks to many external systems and has lots of settings). Then it becomes a bit less awesome, but we can fix that!</p>&#x000A;<p>Heroku handles local configuration with something Heroku calls <em>config variables</em>. They are effectively environment variables, but I will follow Heroku&#8217;s lead and call them <em>config variables</em>.</p>&#x000A;<h2>Local configurations before Heroku</h2>&#x000A;<p>Before <a href="http://heroku.com">Heroku</a>, the issue of how to keep local configurations, like database settings (including passwords) and API tokens, was resolved by having a file that was not checked into source control, but that was avaiable in all environments.</p>&#x000A;<p>An example we are all familiar with is Capistrano. One (or more) YAML (usually) files are setup locally on each host: your local development box, the staging server, the production server.  On the deployment hosts (i.e. staging, production) these files are located in the Capistrano shared directory and symlinked during the deploy so that the application can read them to load any configurations.</p>&#x000A;<h2>Local configurations with Heroku</h2>&#x000A;<p>Heroku applications cannot use local storage in the same way. There is no directory available to store your applications configuration files locally; and you do not want them in source control<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>.</p>&#x000A;<p>Heroku instead provides each application with user defined config variables that are available in the your application&#8217;s <code>ENV</code> hash. If, for example, you are configuring <code>omniauth</code> with Twitter support, you might have this code in <strong>config/initializers/omniauth.rb</strong>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="constant">Rails</span>.application.config.middleware.use <span class="constant">OmniAuth</span>::<span class="constant">Builder</span> <span class="keyword">do</span>&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  provider <span class="symbol">:twitter</span>, <span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">'</span><span class="content">TWITTER_KEY</span><span class="delimiter">'</span></span>], <span class="predefined-constant">ENV</span>[<span class="string"><span class="delimiter">'</span><span class="content">TWITTER_SECRET</span><span class="delimiter">'</span></span>]&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span><span class="keyword">end</span>&#x000A;</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Your app will read the configuration from the <code>ENV</code> hash. You use the <code>heroku</code> command to set the config variables:</p>&#x000A;<pre><code>heroku config:add TWITTER_KEY=key TWITTER_SECRET=secret --app myapp</code></pre>&#x000A;<p>This quickly becomes painful if you have to do this many times on many Heroku applications. After googling around for a bit, I found one article by <a href="http://tammersaleh.com/posts/managing-heroku-environment-variables-for-local-development">Tammer Saleh</a> that provided a bit of inspiration.</p>&#x000A;<h1>Managing Heroku config variables using a local YAML file</h1>&#x000A;<p>We can make things better by using a local file on your development machine to manage all the settings in one place.</p>&#x000A;<p>Lets save our configuration to <code>config/heroku.yml</code> which looks like this:</p>&#x000A;<pre><code>apps:&#x000A;  staging: myapp-staging&#x000A;  production: myapp&#x000A;development: &amp;defaults&#x000A;  admins: 'joe sue'&#x000A;  domain_url: http://localhost:3000&#x000A;  twitter_key: key&#x000A;  twitter_secret: secret&#x000A;test:&#x000A;  &lt;&lt;: *defaults&#x000A;staging:&#x000A;  bundle_without: development:test&#x000A;  admins: 'joe sue'&#x000A;  domain_url: http://myapp-staging.heroku.com&#x000A;  twitter_key: key&#x000A;  twitter_secret: secret&#x000A;production:&#x000A;  bundle_without: development:test&#x000A;  admins: 'joe sue'&#x000A;  domain_url: http://myapp.heroku.com&#x000A;  twitter_key: key&#x000A;  twitter_secret: secret</code></pre>&#x000A;<p>The file should seem familiar; it is organized very much like the Rails <code>database.yml</code> file.</p>&#x000A;<p>The <code>apps</code> key defines a mapping from an environment name like <code>staging</code> to a Heroku application like <code>myapp-staging</code>.</p>&#x000A;<p>Each environment key has its own settings. Note that <code>development</code> and <code>test</code> are not named under the <code>apps</code> key as they local and are not deployed to Heroku.</p>&#x000A;<p>This file <strong>is not checked in</strong> and should be added to your <code>.gitignore</code>.</p>&#x000A;<p>To load our YAML settings file at runtime, we have to modify <code>config/application.rb</code> and add a new file: <code>config/heroku_env.rb</code> (all files are on <a href="http://github.com/leshill/heroku-thor">github</a>).</p>&#x000A;<p>We make the following modification to the top of  <code>config/application.rb</code>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>require <span class="constant">File</span>.expand_path(<span class="string"><span class="delimiter">'</span><span class="content">../boot</span><span class="delimiter">'</span></span>, <span class="predefined-constant">__FILE__</span>)&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span>require <span class="string"><span class="delimiter">&quot;</span><span class="content">rails</span><span class="delimiter">&quot;</span></span>&#x000A;<span class="line-numbers"><a href="#n4" name="n4">4</a></span>&#x000A;<span class="line-numbers"><a href="#n5" name="n5">5</a></span>load(<span class="constant">File</span>.expand_path(<span class="string"><span class="delimiter">'</span><span class="content">../heroku_env.rb</span><span class="delimiter">'</span></span>, <span class="predefined-constant">__FILE__</span>))&#x000A;</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Our app is now reading our YAML file and populating the application&#8217;s <code>ENV</code> hash based our settings file when we run locally.</p>&#x000A;<p>To set the config variables on Heroku, we copy <code>heroku.thor</code> (yes, <a href="http://github.com/leshill/heroku-thor">github</a>) to our <code>lib/tasks</code> directory.</p>&#x000A;<p>It defines two tasks for each of your Heroku apps: <code>config</code> to set the config variables from the settings files, and <code>rack_env</code> to set the <code>RACK_ENV</code> config variable.</p>&#x000A;<p>We use <code>thor deploy:staging:config</code> to setup our config variables on our Heroku staging application.</p>&#x000A;<pre><code>% thor deploy:staging:config&#x000A;heroku config:add ADMINS='joe sue' DOMAIN_URL='http://myappp-staging.heroku.com' TWITTER_KEY='key' TWITTER_SECRET='secret' --app myapp-staging&#x000A;Adding config vars:&#x000A;  ADMINS         =&gt; joe sue&#x000A;  DOMAIN_URL     =&gt; http://myapp-staging.heroku.com&#x000A;  TWITTER_KEY    =&gt; key&#x000A;  TWITTER_SECRET =&gt; secret&#x000A;Restarting app...done.</code></pre>&#x000A;<p>And your app is now configured.</p>&#x000A;<h2>Better?</h2>&#x000A;<p>I have found this approach to managing my Heroku apps useful. One way it can be improved is by extending the <code>thor</code> file to include common Heroku commands such as deploys (and you could use <code>invoke</code> to chain together the deploy and configuration settings).</p>&#x000A;<p>Still, I am not pleased. Mostly this is because I have not packaged this up nicely. The need for locally modified files makes this a candidate for a Rails generator, something I may do if I get the time.</p>&#x000A;<p>For now the raw source is up on <a href="http://github.com/leshill/heroku-thor">github</a>.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Really.</p>
-      </div>
-      <div class='comments'>
+    <div class='prefix_1 grid_10' id='post'>
+      <h1>Also Known As: Config Vars</h1>&#x000A;<p>Deploying an app to <a href="http://heroku.com">Heroku</a> is awesome. Really. If you have not yet done so, it is worth spending the few minutes to setup a simple Rails app and deploy to Heroku.</p>&#x000A;<p>Awesome! Unless you have a lot of local configuration (perhaps your app talks to many external systems and has lots of settings). Then it becomes a bit less awesome, but we can fix that!</p>&#x000A;<p>Heroku handles local configuration with something Heroku calls <em>config variables</em>. They are effectively environment variables, but I will follow Heroku&#8217;s lead and call them <em>config variables</em>.</p>&#x000A;<h2>Local configurations before Heroku</h2>&#x000A;<p>Before <a href="http://heroku.com">Heroku</a>, the issue of how to keep local configurations, like database settings (including passwords) and API tokens, was resolved by having a file that was not checked into source control, but that was avaiable in all environments.</p>&#x000A;<p>An example we are all familiar with is Capistrano. One (or more) YAML (usually) files are setup locally on each host: your local development box, the staging server, the production server.  On the deployment hosts (i.e. staging, production) these files are located in the Capistrano shared directory and symlinked during the deploy so that the application can read them to load any configurations.</p>&#x000A;<h2>Local configurations with Heroku</h2>&#x000A;<p>Heroku applications cannot use local storage in the same way. There is no directory available to store your applications configuration files locally; and you do not want them in source control<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>.</p>&#x000A;<p>Heroku instead provides each application with user defined config variables that are available in the your application&#8217;s <code>ENV</code> hash. If, for example, you are configuring <code>omniauth</code> with Twitter support, you might have this code in <strong>config/initializers/omniauth.rb</strong>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">Rails</span>.application.config.middleware.use <span class="co">OmniAuth</span>::<span class="co">Builder</span> <span class="r">do</span>&#x000A;<span class="no">2</span>   provider <span class="sy">:twitter</span>, <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">TWITTER_KEY</span><span class="dl">'</span></span>], <span class="co">ENV</span>[<span class="s"><span class="dl">'</span><span class="k">TWITTER_SECRET</span><span class="dl">'</span></span>]&#x000A;<span class="no">3</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Your app will read the configuration from the <code>ENV</code> hash. You use the <code>heroku</code> command to set the config variables:</p>&#x000A;<pre><code>heroku config:add TWITTER_KEY=key TWITTER_SECRET=secret --app myapp</code></pre>&#x000A;<p>This quickly becomes painful if you have to do this many times on many Heroku applications. After googling around for a bit, I found one article by <a href="http://tammersaleh.com/posts/managing-heroku-environment-variables-for-local-development">Tammer Saleh</a> that provided a bit of inspiration.</p>&#x000A;<h1>Managing Heroku config variables using a local YAML file</h1>&#x000A;<p>We can make things better by using a local file on your development machine to manage all the settings in one place.</p>&#x000A;<p>Lets save our configuration to <code>config/heroku.yml</code> which looks like this:</p>&#x000A;<pre><code>apps:&#x000A;  staging: myapp-staging&#x000A;  production: myapp&#x000A;development: &amp;defaults&#x000A;  admins: 'joe sue'&#x000A;  domain_url: http://localhost:3000&#x000A;  twitter_key: key&#x000A;  twitter_secret: secret&#x000A;test:&#x000A;  &lt;&lt;: *defaults&#x000A;staging:&#x000A;  bundle_without: development:test&#x000A;  admins: 'joe sue'&#x000A;  domain_url: http://myapp-staging.heroku.com&#x000A;  twitter_key: key&#x000A;  twitter_secret: secret&#x000A;production:&#x000A;  bundle_without: development:test&#x000A;  admins: 'joe sue'&#x000A;  domain_url: http://myapp.heroku.com&#x000A;  twitter_key: key&#x000A;  twitter_secret: secret</code></pre>&#x000A;<p>The file should seem familiar; it is organized very much like the Rails <code>database.yml</code> file.</p>&#x000A;<p>The <code>apps</code> key defines a mapping from an environment name like <code>staging</code> to a Heroku application like <code>myapp-staging</code>.</p>&#x000A;<p>Each environment key has its own settings. Note that <code>development</code> and <code>test</code> are not named under the <code>apps</code> key as they local and are not deployed to Heroku.</p>&#x000A;<p>This file <strong>is not checked in</strong> and should be added to your <code>.gitignore</code>.</p>&#x000A;<p>To load our YAML settings file at runtime, we have to modify <code>config/application.rb</code> and add a new file: <code>config/heroku_env.rb</code> (all files are on <a href="http://github.com/leshill/heroku-thor">github</a>).</p>&#x000A;<p>We make the following modification to the top of  <code>config/application.rb</code>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> require <span class="co">File</span>.expand_path(<span class="s"><span class="dl">'</span><span class="k">../boot</span><span class="dl">'</span></span>, <span class="pc">__FILE__</span>)&#x000A;<span class="no">2</span> &#x000A;<span class="no">3</span> require <span class="s"><span class="dl">&quot;</span><span class="k">rails</span><span class="dl">&quot;</span></span>&#x000A;<span class="no">4</span> &#x000A;<span class="no">5</span> load(<span class="co">File</span>.expand_path(<span class="s"><span class="dl">'</span><span class="k">../heroku_env.rb</span><span class="dl">'</span></span>, <span class="pc">__FILE__</span>))</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Our app is now reading our YAML file and populating the application&#8217;s <code>ENV</code> hash based our settings file when we run locally.</p>&#x000A;<p>To set the config variables on Heroku, we copy <code>heroku.thor</code> (yes, <a href="http://github.com/leshill/heroku-thor">github</a>) to our <code>lib/tasks</code> directory.</p>&#x000A;<p>It defines two tasks for each of your Heroku apps: <code>config</code> to set the config variables from the settings files, and <code>rack_env</code> to set the <code>RACK_ENV</code> config variable.</p>&#x000A;<p>We use <code>thor deploy:staging:config</code> to setup our config variables on our Heroku staging application.</p>&#x000A;<pre><code>% thor deploy:staging:config&#x000A;heroku config:add ADMINS='joe sue' DOMAIN_URL='http://myappp-staging.heroku.com' TWITTER_KEY='key' TWITTER_SECRET='secret' --app myapp-staging&#x000A;Adding config vars:&#x000A;  ADMINS         =&gt; joe sue&#x000A;  DOMAIN_URL     =&gt; http://myapp-staging.heroku.com&#x000A;  TWITTER_KEY    =&gt; key&#x000A;  TWITTER_SECRET =&gt; secret&#x000A;Restarting app...done.</code></pre>&#x000A;<p>And your app is now configured.</p>&#x000A;<h2>Better?</h2>&#x000A;<p>I have found this approach to managing my Heroku apps useful. One way it can be improved is by extending the <code>thor</code> file to include common Heroku commands such as deploys (and you could use <code>invoke</code> to chain together the deploy and configuration settings).</p>&#x000A;<p>Still, I am not pleased. Mostly this is because I have not packaged this up nicely. The need for locally modified files makes this a candidate for a Rails generator, something I may do if I get the time.</p>&#x000A;<p>For now the raw source is up on <a href="http://github.com/leshill/heroku-thor">github</a>.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Really.</p>
+    </div>
+    <div class='clearfix' id='comments'>
+      <div class='prefix_1 grid_10 suffix_1'>
         <div id='disqus_thread'></div>
         <script type='text/javascript'>
           var disqus_shortname = 'leshill';
@@ -74,34 +92,21 @@
         </a>
       </div>
     </div>
-    <div class='footer'>
-      <div class='contact'>
-        <p>
-          Les Hill
-          <br />
-          Developer @ <a href="http://carezone.com/">CareZone</a>
-          <br />
-          les (at) carezone (dot) com
-        </p>
+    <div class='clearfix' id='footer'>
+      <div class='prefix_1 grid_8' id='contact'>
+        Les Hill
+        <br />
+        Developer @ <a href="http://carezone.com/">CareZone.com</a>
+        <br />
+        les (at) carezone (dot) com
       </div>
-      <div class='rss'>
+      <div class='grid_2' id='rss'>
         <a href='http://feeds2.feedburner.com/leshill'>
           <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
         </a>
       </div>
-    </div>
-    <div class='colophon'>
-      <p>
-        Thanks to <a href="http://tom.preston-werner.com/">Tom Preston-Werner</a>
-        for the CSS layout, <a href="http://webby.rubyforge.org/">Webby</a> for
-        the blog renderer, and
-        <a href="http://github.com/blog/272-github-pages">GitHub Pages</a> for
-        the blog hosting.
-      </p>
-      <div class='copyright'>
-        <p>
-          Les Hill &copy; 2008&ndash;2012
-        </p>
+      <div class='grid_12' id='copyright'>
+        Les Hill &copy; 2008&ndash;2012
       </div>
     </div>
     <script type='text/javascript'>
