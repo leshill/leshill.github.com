@@ -130,8 +130,9 @@ header .links .extra {
 #post > h3:first-child,
 #post > h4:first-child,
 #post > h5:first-child,
-#post > h6:first-child {
-  margin-top: 1em;
+#post > h6:first-child,
+#post > p:first-child {
+  margin-top: 25px;
 }
 
 #post ul {
