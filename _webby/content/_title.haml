@@ -1,0 +1,11 @@
+---
+filter: haml
+---
+#title.clearfix
+  .prefix_1.grid_10.suffix_1
+    %a{:href => post.url}
+      .meta{ :title => post.created_at.to_s }
+        = post.created_at.strftime('%B %d, %Y')
+        &raquo;
+      %h1
+        “#{post.title}”

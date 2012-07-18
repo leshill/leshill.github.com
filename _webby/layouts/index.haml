@@ -5,7 +5,9 @@ filter:
 ---
 = render :partial => '/head'
 %body
-  .site
-    = render :partial => '/header'
-    = @content
-    = render :partial => '/footer'
+  .container_12
+    #{@content}
+  -# .site
+  -#   = render :partial => '/header'
+  -#   = @content
+  -#   = render :partial => '/footer'

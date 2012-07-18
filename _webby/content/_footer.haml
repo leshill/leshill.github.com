@@ -1,27 +1,18 @@
 ---
 filter: haml
 ---
-.footer
-  .contact
-    %p
-      Les Hill
-      %br
-      Developer @ #{link_to 'CareZone', "http://carezone.com/" }
-      %br
-      les (at) carezone (dot) com
-  .rss
+#footer.clearfix
+  #contact.prefix_1.grid_8
+    Les Hill
+    %br
+    Developer @ #{link_to 'CareZone.com', "http://carezone.com/" }
+    %br
+    les (at) carezone (dot) com
+  #rss.grid_2
     %a{ :href => "http://feeds2.feedburner.com/leshill" }
       %img{ :src => "/images/feed-icon-28x28.png", :alt => "Subscribe to RSS Feed" }
-.colophon
-  %p
-    Thanks to #{link_to 'Tom Preston-Werner', 'http://tom.preston-werner.com/'}
-    for the CSS layout, #{link_to 'Webby', 'http://webby.rubyforge.org/'} for
-    the blog renderer, and
-    #{link_to 'GitHub Pages', 'http://github.com/blog/272-github-pages'} for
-    the blog hosting.
-  .copyright
-    %p
-      == Les Hill &copy; 2008&ndash;#{Date.today.year}
+  #copyright.grid_12
+    Les Hill &copy; 2008&ndash;#{Date.today.year}
 :javascript
   (function() {
     var links = document.getElementsByTagName('a');

@@ -7,4 +7,21 @@ filter:
   - haml
 ---
 - posts =  @pages.find :all, :in_directory => 'blog', :recursive => true, :sort_by => "created_at", :reverse => true, :blog_post => true
-= render :partial => '/archives', :locals => {:posts => posts}
+= render :partial => '/header'
+#archives.clearfix
+  .prefix_1.grid_10.suffix_1
+    %a{:href => '/archives.html'}
+      %h1
+        Archives
+#archive_list.clearfix
+  .prefix_1.grid_10
+    %ul
+      - posts.each do |post|
+        %li
+          %a{:href => post.url}
+            .meta{:title => post.created_at.to_s}
+              = post.created_at.strftime('%d %b %Y')
+              &raquo;
+            %h2
+              “#{post.title}”
+= render :partial => '/footer'

@@ -1,10 +1,15 @@
 ---
 filter: haml
 ---
-.title
-  = link_to 'Les Hill', '/'
-  = link_to 'github', "http://github.com/leshill/", :attrs => {:class => 'extra'}
-  = link_to 'twitter', "http://twitter.com/leshill/", :attrs => {:class => 'extra'}
-  = link_to 'facebook', "http://facebook.com/leshill/", :attrs => {:class => 'extra'}
-  = link_to 'linked in', "http://www.linkedin.com/in/leshill/", :attrs => {:class => 'extra'}
-  = link_to 'archives', '/archives.html', :attrs => {:class => 'extra'}
+%header.clearfix
+  .box.grid-12.clearfix
+    .home.prefix_1.grid_3
+      %h2
+        = link_to 'Les Hill', '/'
+    .links.grid_7
+      %h2
+        = link_to 'github', "http://github.com/leshill/", :attrs => {:class => 'extra'}
+        = link_to 'twitter', "http://twitter.com/leshill/", :attrs => {:class => 'extra'}
+        = link_to 'facebook', "http://facebook.com/leshill/", :attrs => {:class => 'extra'}
+        = link_to 'linked in', "http://www.linkedin.com/in/leshill/", :attrs => {:class => 'extra'}
+        = link_to 'archives', '/archives.html', :attrs => {:class => 'extra'}

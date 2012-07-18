@@ -1,0 +1,205 @@
+a {
+  color: red;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #999 !important;
+  text-decoration: none;
+}
+
+#archive_list ul {
+  margin: 2em 0;
+  list-style-type: none;
+  padding: 0
+}
+
+#archive_list h2 {
+  font-size: 2.5em;
+  margin-top: 0;
+}
+
+#archive_list li {
+  margin: 0;
+}
+
+#archive_list .meta {
+  font-size: 1.5em;
+  font-style: italic;
+}
+
+#archives, #title {
+  background-color: #eee;
+}
+
+#archives h1 {
+  margin-top: 20px;
+}
+
+#archives h1,
+#title h1 {
+  font-size: 5em;
+  letter-spacing: -1px;
+  line-height: 1em;
+  margin-bottom: 30px;
+}
+
+#archive_list a,
+#archives a,
+#title a {
+  color: #222;
+}
+
+body {
+  background-color: #333;
+}
+
+.container_12 {
+  background-color: white;
+}
+
+#copyright {
+  margin-top: 3em;
+  text-align: center;
+}
+
+#footer {
+  color: #666;
+  font-size: 1.5em;
+  background-color: #eee;
+}
+
+#contact {
+  margin-top: 30px;
+}
+
+#rss {
+  margin-top: 30px;
+  text-align: right;
+}
+
+header {
+  background: url(/images/les_hill_windy_city_wide.jpg) no-repeat;
+  background-size: 100%;
+}
+
+header .box {
+  background-color: rgba(0,0,0,0.4);
+  margin-top: 219px;
+}
+
+header .home h2 {
+  font-size: 3em;
+}
+
+header h2 {
+  line-height: 46px;
+  margin: 0;
+  padding: 10px 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+header h2 a {
+  color: white;
+}
+
+header .links {
+  text-align: right;
+}
+
+header .links .extra {
+  font-size: 80%;
+  margin-left: 20px;
+}
+
+#post {
+  font-size: 20px;
+}
+
+#post h1,
+#post h2,
+#post h3,
+#post h4,
+#post h5,
+#post h6 {
+  margin: 2em 0 1em;
+}
+
+#post > h1:first-child,
+#post > h2:first-child,
+#post > h3:first-child,
+#post > h4:first-child,
+#post > h5:first-child,
+#post > h6:first-child {
+  margin-top: 1em;
+}
+
+#post ul {
+  list-style-position: inside;
+  margin: 1em 0 1em 1.5em;
+  padding: 0
+}
+
+#post ul li {
+  margin-left: 0;
+}
+
+#post .update {
+  background: #DDD;
+  padding: 2em 1em;
+}
+
+#post blockquote {
+  border-left: 1px solid #888;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 80%
+  margin: 2em 2em 2em 1em;
+  padding: 0px 0.75em 0px 1.25em;
+}
+
+#post pre {
+  font-size: 16px;
+  border: 1px solid #ddd;
+  background-color: #eef;
+  padding: .4em;
+  overflow: auto;
+}
+
+#post .update {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+#post .update h1,
+#post .update h2,
+#post .update h3,
+#post .update h4,
+#post .update h5,
+#post .update h6 {
+  margin: 0 0 1em;
+}
+
+#post .update p:last-child {
+  margin-bottom: 0;
+}
+
+#post #fn1 {
+  border-top: solid 1px black;
+  margin-top: 2em;
+}
+
+#post .twitter-tweet + br {
+  display: none;
+}
+
+#title h1 {
+  margin-top: 0;
+  text-indent: -.5em;
+}
+
+#title .meta {
+  font-size: 1em;
+  font-style: italic;
+  margin-bottom: .5em;
+  margin-top: 20px;
+}

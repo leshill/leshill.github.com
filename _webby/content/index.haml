@@ -7,8 +7,9 @@ filter:
   - haml
 ---
 - posts =  @pages.find :all, :in_directory => 'blog', :recursive => true, :sort_by => "created_at", :reverse => true, :blog_post => true
-= render :partial => '/post', :locals => {:post => posts.shift}
-= render :partial => '/archives', :locals => {:posts => posts[0, 10]}
-- if posts.size > 10
-  .title
-    &raquo; #{link_to 'More Blog Posts', '/archives.html'}
+- first_post = posts.shift
+= render :partial => '/header'
+= render :partial => '/title', :locals => {:post => first_post}
+= render :partial => '/post', :locals => {:post => first_post}
+= render :partial => '/comments', :locals => {:post => first_post}
+= render :partial => '/footer'

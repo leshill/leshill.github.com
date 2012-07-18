@@ -3,67 +3,11 @@ extension: html
 filter:
   - haml
 ---
-!!!
-%head
-  %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "content-type" }/
-  %meta{ :name => "author", :content => "#{@page.author}" }/
-  %title
-    == Les Hill &mdash; #{@page.title}
-
-  %link{ :href => "/css/screen.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css" }/
-  %link{ :href => "/css/coderay.css", :rel => "stylesheet", :media => "screen, projection", :type => "text/css" }/
-
-  %script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"}
-  %script{ :type => "text/javascript", :src => "/javascript/application.js"}
-
-  %link{ :href => "http://feeds2.feedburner.com/leshill", :title => "RSS feed", :rel => "alternate", :type => "application/atom+xml" }/
-
-  :javascript
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-
-  :javascript
-    try {
-      var pageTracker = _gat._getTracker("UA-15974459-1");
-      pageTracker._trackPageview();
-    } catch(err) {}
-
+= render :partial => '/head'
 %body
-  .site
-    .title
-      = link_to 'Les Hill', '/'
-      = link_to 'github', "http://github.com/leshill/", :attrs => {:class => 'extra'}
-      = link_to 'twitter', "http://twitter.com/leshill/", :attrs => {:class => 'extra'}
-      = link_to 'facebook', "http://facebook.com/leshill/", :attrs => {:class => 'extra'}
-      = link_to 'linked in', "http://www.linkedin.com/in/leshill/", :attrs => {:class => 'extra'}
-      = link_to 'archives', '/archives.html', :attrs => {:class => 'extra'}
-    #post
-      .title
-        = link_to @page.title, @page.url
-      .meta
-        %abbr.published{ :title => @page.created_at.to_s }
-          Posted #{@page.created_at.strftime('%B %d, %Y')}
-      .content
-        :preserve
-          #{@content}
-      .comments
-        #disqus_thread
-        %script(type="text/javascript")
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '#{@page.url}';
-          var disqus_url = 'http://blog.leshill.org#{@page.url}';
-          /* * * DON'T EDIT BELOW THIS LINE * * */
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        %noscript
-          Please enable JavaScript to view the
-          %a(href="http://disqus.com/?ref_noscript")
-            comments powered by Disqus.
-        %a.dsq-brlink{ :href => "http://disqus.com" }
-          blog comments powered by
-          %span.logo-disqus
-            Disqus
+  .container_12
+    = render :partial => '/header'
+    = render :partial => '/title', :locals => {:post => @page}
+    = render :partial => '/post', :locals => {:post => nil}
+    = render :partial => '/comments', :locals => {:post => @page}
     = render :partial => '/footer'
