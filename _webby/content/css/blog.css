@@ -79,13 +79,13 @@ body {
 }
 
 header {
-  background: url(/images/les_hill_windy_city_wide.jpg) no-repeat;
+  background: url(/images/cannon-beach-wide.jpg) no-repeat;
   background-size: 100%;
 }
 
 header .box {
   background-color: rgba(0,0,0,0.4);
-  margin-top: 219px;
+  margin-top: 308px;
 }
 
 header .home h2 {
