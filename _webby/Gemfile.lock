@@ -16,6 +16,7 @@ GEM
       little-plugger (>= 1.1.2)
     loquacious (1.7.0)
     rake (0.8.7)
+    rdiscount (1.6.8)
     rspec (2.0.1)
       rspec-core (~> 2.0.1)
       rspec-expectations (~> 2.0.1)
@@ -44,5 +45,6 @@ DEPENDENCIES
   coderay
   haml
   logging (>= 1.5.0)
+  rdiscount
   sass
   webby
