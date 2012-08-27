@@ -3,5 +3,6 @@ source :gemcutter
 gem 'coderay'
 gem 'haml'
 gem 'RedCloth'
+gem 'sass'
 gem 'webby'
 gem 'logging', '>= 1.5.0'
