@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2010/04/26/binary-search-tdd-and-you.html'>
-          <div class='meta' title='Mon Apr 26 20:02:38 -0700 2010'>
-            April 26, 2010
-            &raquo;
-          </div>
-          <h1>
-            “Binary Search, TDD, and You”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2010/04/26/binary-search-tdd-and-you.html'>
+      <div class='meta' title='Mon Apr 26 20:02:38 -0700 2010'>
+        April 26, 2010
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “Binary Search, TDD, and You”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <p>A bit late to the party, I took a programming challenge from <a href="http://reprog.wordpress.com/2010/04/19/are-you-one-of-the-10-percent/">Mike Taylor</a> :</p>&#x000A;<blockquote>&#x000A;<p>Are you one of the 10% of programmers who can write a binary search?</p>&#x000A;</blockquote>&#x000A;<p>The <strong>10%</strong> is a reference to an essay by Jon Bentley, who found that only<br />&#x000A;<strong>10%</strong> of the programmers asked could write a binary search correctly given a<br />&#x000A;description of the algorithm. The challenge from Mike was to write it without<br />&#x000A;any <strong>TESTING</strong> whatsoever.</p>&#x000A;<p>Here is my answer in Ruby:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="r">def</span> <span class="fu">binary_search</span>(value, array, start, finish = array.length - <span class="i">1</span>)&#x000A;<span class="no"> 2</span>   <span class="r">return</span> <span class="i">-1</span> <span class="r">if</span> finish &lt; start&#x000A;<span class="no"> 3</span>   mid = (start + finish)/<span class="i">2</span>&#x000A;<span class="no"> 4</span>   <span class="r">if</span> array[mid] == value&#x000A;<span class="no"> 5</span>     mid&#x000A;<span class="no"> 6</span>   <span class="r">elsif</span> array[mid] &lt; value&#x000A;<span class="no"> 7</span>     binary_search(value, array, mid + <span class="i">1</span>, finish)&#x000A;<span class="no"> 8</span>   <span class="r">else</span>&#x000A;<span class="no"> 9</span>     binary_search(value, array, start, mid - <span class="i">1</span>)&#x000A;<span class="no"><strong>10</strong></span>   <span class="r">end</span>&#x000A;<span class="no">11</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Pretty standard. This was about 1/2 an hour from start to finish; mostly due to<br />&#x000A;not being able to run the code<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> and obsessing over whether I had handled all<br />&#x000A;the edge cases, which is related to my motivation for taking the challenge.</p>&#x000A;<p>Aside from being a fun exercise, the comments Mike received led him to write<br />&#x000A;two more blog posts!</p>&#x000A;<p>The third in the series, <a href="http://reprog.wordpress.com/2010/04/23/testing-is-not-a-substitute-for-thinking-binary-search-part-3/" title="binary<br />&#x000A;search part<br />&#x000A;3">Testing is not a substitute for thinking</a><br />&#x000A;has some interesting and keen observations. I agree with most of them.</p>&#x000A;<p>However, the conclusion is absolutely, categorically wrong.</p>&#x000A;<blockquote>&#x000A;<p>Bearing in mind that binary search is in fact a pretty<br />&#x000A;simple algorithm, it’s likely true that you could have<br />&#x000A;bashed your way through to a working implementation after<br />&#x000A;a few iterations of coding and testing.  But –</p>&#x000A;<p>Your code would be less clear</p>&#x000A;<p>You wouldn’t understand clearly why it works</p>&#x000A;<p>You would find it harder to extend or modify in future</p>&#x000A;</blockquote>&#x000A;<p>Inflammatory stuff. And totally <strong>wrong</strong>.</p>&#x000A;<p>A few paragraphs earlier, Mike lays out why he thinks this:</p>&#x000A;<blockquote>&#x000A;<p>By using skills that are not often thought about<br />&#x000A;in these days of test-driven kool-ade, reflexive<br />&#x000A;application of design patterns and automatic refactoring<br />&#x000A;tools.  Once more, let me be clear that all these things<br />&#x000A;are good so far as they go — really, I agree with you,<br />&#x000A;they are! — but they are no substitute for actually<br />&#x000A;thinking, and thinking is what’s needed for hard problems.</p>&#x000A;</blockquote>&#x000A;<p>Indeed thinking is what is needed for hard problems. What Mike has failed to<br />&#x000A;acknowledge is that TDD is not a tool for writing code, TDD is a tool for<br />&#x000A;thinking clearly.</p>&#x000A;<p>As an example of this, in the spirit of Mike&#8217;s challenge, I expressly wrote the<br />&#x000A;binary search code without test-driving it. However, instead of writing the<br />&#x000A;code directly from the description, I turned the description into a set of<br />&#x000A;constraints. As each of those constraints became clear, I wrote code. And in<br />&#x000A;the end I had a working binary search<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup>.</p>&#x000A;<p>So, am I saying Mike is an idiot? Absolutely not! After hearing more and more<br />&#x000A;critiques (both thoughtful and thoughtless) of TDD, I am coming around to the<br />&#x000A;conclusion that there is a problem. The problem is most people learn TDD<br />&#x000A;from a book or a blog or even from a vague description and some positive can-do<br />&#x000A;attitude (Commendable!  Really!)</p>&#x000A;<p>What has become apparent is that this will not work for most developers. What<br />&#x000A;does work is deliberate study and mentoring, ideally by pairing.  A mentor who<br />&#x000A;is showing you more than just the syntactic mechanics of writing test code and<br />&#x000A;having it invoke the code under test. Someone who is explaining how tests are a<br />&#x000A;tool for understanding and solving the problem.</p>&#x000A;<p>Folks interested in Software Craftsmanship have realized this truth about all<br />&#x000A;aspects of software development: you learn better from a mentor and from<br />&#x000A;deliberate practice.</p>&#x000A;<p>TDD is no exception.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Sort-of, according to Mike&#8217;s rules I could have shaken out syntax errors<br />&#x000A;by running the code; in the case of Ruby, that felt like cheating, so I just<br />&#x000A;stared at it.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> After the fact, I threw in a test scaffold to verify that it does work,<br />&#x000A;and that it is log(2)N.</p>
-    </div>
+  <p>A bit late to the party, I took a programming challenge from <a href="http://reprog.wordpress.com/2010/04/19/are-you-one-of-the-10-percent/">Mike Taylor</a> :</p>&#x000A;<blockquote>&#x000A;<p>Are you one of the 10% of programmers who can write a binary search?</p>&#x000A;</blockquote>&#x000A;<p>The <strong>10%</strong> is a reference to an essay by Jon Bentley, who found that only<br />&#x000A;<strong>10%</strong> of the programmers asked could write a binary search correctly given a<br />&#x000A;description of the algorithm. The challenge from Mike was to write it without<br />&#x000A;any <strong>TESTING</strong> whatsoever.</p>&#x000A;<p>Here is my answer in Ruby:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"> <a href="#n1" name="n1">1</a></span><span class="keyword">def</span> <span class="function">binary_search</span>(value, array, start, finish = array.length - <span class="integer">1</span>)&#x000A;<span class="line-numbers"> <a href="#n2" name="n2">2</a></span>  <span class="keyword">return</span> <span class="integer">-1</span> <span class="keyword">if</span> finish &lt; start&#x000A;<span class="line-numbers"> <a href="#n3" name="n3">3</a></span>  mid = (start + finish)/<span class="integer">2</span>&#x000A;<span class="line-numbers"> <a href="#n4" name="n4">4</a></span>  <span class="keyword">if</span> array[mid] == value&#x000A;<span class="line-numbers"> <a href="#n5" name="n5">5</a></span>    mid&#x000A;<span class="line-numbers"> <a href="#n6" name="n6">6</a></span>  <span class="keyword">elsif</span> array[mid] &lt; value&#x000A;<span class="line-numbers"> <a href="#n7" name="n7">7</a></span>    binary_search(value, array, mid + <span class="integer">1</span>, finish)&#x000A;<span class="line-numbers"> <a href="#n8" name="n8">8</a></span>  <span class="keyword">else</span>&#x000A;<span class="line-numbers"> <a href="#n9" name="n9">9</a></span>    binary_search(value, array, start, mid - <span class="integer">1</span>)&#x000A;<span class="line-numbers"><strong><a href="#n10" name="n10">10</a></strong></span>  <span class="keyword">end</span>&#x000A;<span class="line-numbers"><a href="#n11" name="n11">11</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Pretty standard. This was about 1/2 an hour from start to finish; mostly due to<br />&#x000A;not being able to run the code<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> and obsessing over whether I had handled all<br />&#x000A;the edge cases, which is related to my motivation for taking the challenge.</p>&#x000A;<p>Aside from being a fun exercise, the comments Mike received led him to write<br />&#x000A;two more blog posts!</p>&#x000A;<p>The third in the series, <a href="http://reprog.wordpress.com/2010/04/23/testing-is-not-a-substitute-for-thinking-binary-search-part-3/" title="binary<br />&#x000A;search part<br />&#x000A;3">Testing is not a substitute for thinking</a><br />&#x000A;has some interesting and keen observations. I agree with most of them.</p>&#x000A;<p>However, the conclusion is absolutely, categorically wrong.</p>&#x000A;<blockquote>&#x000A;<p>Bearing in mind that binary search is in fact a pretty<br />&#x000A;simple algorithm, it’s likely true that you could have<br />&#x000A;bashed your way through to a working implementation after<br />&#x000A;a few iterations of coding and testing.  But –</p>&#x000A;<p>Your code would be less clear</p>&#x000A;<p>You wouldn’t understand clearly why it works</p>&#x000A;<p>You would find it harder to extend or modify in future</p>&#x000A;</blockquote>&#x000A;<p>Inflammatory stuff. And totally <strong>wrong</strong>.</p>&#x000A;<p>A few paragraphs earlier, Mike lays out why he thinks this:</p>&#x000A;<blockquote>&#x000A;<p>By using skills that are not often thought about<br />&#x000A;in these days of test-driven kool-ade, reflexive<br />&#x000A;application of design patterns and automatic refactoring<br />&#x000A;tools.  Once more, let me be clear that all these things<br />&#x000A;are good so far as they go — really, I agree with you,<br />&#x000A;they are! — but they are no substitute for actually<br />&#x000A;thinking, and thinking is what’s needed for hard problems.</p>&#x000A;</blockquote>&#x000A;<p>Indeed thinking is what is needed for hard problems. What Mike has failed to<br />&#x000A;acknowledge is that TDD is not a tool for writing code, TDD is a tool for<br />&#x000A;thinking clearly.</p>&#x000A;<p>As an example of this, in the spirit of Mike&#8217;s challenge, I expressly wrote the<br />&#x000A;binary search code without test-driving it. However, instead of writing the<br />&#x000A;code directly from the description, I turned the description into a set of<br />&#x000A;constraints. As each of those constraints became clear, I wrote code. And in<br />&#x000A;the end I had a working binary search<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup>.</p>&#x000A;<p>So, am I saying Mike is an idiot? Absolutely not! After hearing more and more<br />&#x000A;critiques (both thoughtful and thoughtless) of TDD, I am coming around to the<br />&#x000A;conclusion that there is a problem. The problem is most people learn TDD<br />&#x000A;from a book or a blog or even from a vague description and some positive can-do<br />&#x000A;attitude (Commendable!  Really!)</p>&#x000A;<p>What has become apparent is that this will not work for most developers. What<br />&#x000A;does work is deliberate study and mentoring, ideally by pairing.  A mentor who<br />&#x000A;is showing you more than just the syntactic mechanics of writing test code and<br />&#x000A;having it invoke the code under test. Someone who is explaining how tests are a<br />&#x000A;tool for understanding and solving the problem.</p>&#x000A;<p>Folks interested in Software Craftsmanship have realized this truth about all<br />&#x000A;aspects of software development: you learn better from a mentor and from<br />&#x000A;deliberate practice.</p>&#x000A;<p>TDD is no exception.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Sort-of, according to Mike&#8217;s rules I could have shaken out syntax errors<br />&#x000A;by running the code; in the case of Ruby, that felt like cheating, so I just<br />&#x000A;stared at it.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> After the fact, I threw in a test scaffold to verify that it does work,<br />&#x000A;and that it is log(2)N.</p>
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2010/04/26/binary-search-tdd-and-you.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2010/04/26/binary-search-tdd-and-you.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2010/04/26/binary-search-tdd-and-you.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2010/04/26/binary-search-tdd-and-you.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

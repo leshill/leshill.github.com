@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2010/05/08/rails-3-rspec-factory-girl-haml-and-jquery.html'>
-          <div class='meta' title='Sat May 08 20:56:10 -0700 2010'>
-            May 08, 2010
-            &raquo;
-          </div>
-          <h1>
-            “Rails 3, RSpec, Factory Girl, Haml, and jQuery”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2010/05/08/rails-3-rspec-factory-girl-haml-and-jquery.html'>
+      <div class='meta' title='Sat May 08 20:56:10 -0700 2010'>
+        May 08, 2010
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “Rails 3, RSpec, Factory Girl, Haml, and jQuery”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <p>Easily generate a Rails 3 application with RSpec, Factory Girl, Haml, and jQuery in one line:</p>&#x000A;<pre><code>% rails new my_app -J -T -m \&#x000A;    http://github.com/leshill/rails3-app/raw/master/app.rb</code></pre>&#x000A;<h2>rvm</h2>&#x000A;<p>We love <code>rvm</code>, so the application has an <code>.rvmrc</code> generated to specify a gemset.</p>&#x000A;<h2>Generators</h2>&#x000A;<p>This also gives you the Factory Girl and Haml Rails 3 generators &mdash; the generators for RSpec are in the RSpec gem &mdash; so that your factories and views are generated using Factory Girl and Haml, and that all your generated tests are specs. These generators are from the <strong>rails3_generators</strong> gem, we pulled them out to avoid all the other dependencies included in that gem.</p>&#x000A;<h2>JavaScript Includes</h2>&#x000A;<p>Since the Rails helper <code>javascript_include_tag :defaults</code> is looking for Prototype, we used <a href="http://flow.handle.it/past/2010/2/9/jquery_in_rails">this</a> to add a new JavaScript expansion to pull in the jQuery libraries. Use it like so:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> = javascript_include_tag <span class="sy">:jquery</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<h2>git</h2>&#x000A;<p>We love <code>git</code>, so the application has a git repo initialized with all the initial changes staged.</p>&#x000A;<h2>Wrap Up</h2>&#x000A;<p>After the application has been generated, there are a few clean up commands to run:</p>&#x000A;<pre><code>  % cd my_app&#x000A;  % gem install bundler&#x000A;  % bundle install&#x000A;  % bundle lock&#x000A;  % script/rails generate rspec:install</code></pre>
-    </div>
+  <p>Easily generate a Rails 3 application with RSpec, Factory Girl, Haml, and jQuery in one line:</p>&#x000A;<pre><code>% rails new my_app -J -T -m \&#x000A;    http://github.com/leshill/rails3-app/raw/master/app.rb</code></pre>&#x000A;<h2>rvm</h2>&#x000A;<p>We love <code>rvm</code>, so the application has an <code>.rvmrc</code> generated to specify a gemset.</p>&#x000A;<h2>Generators</h2>&#x000A;<p>This also gives you the Factory Girl and Haml Rails 3 generators &mdash; the generators for RSpec are in the RSpec gem &mdash; so that your factories and views are generated using Factory Girl and Haml, and that all your generated tests are specs. These generators are from the <strong>rails3_generators</strong> gem, we pulled them out to avoid all the other dependencies included in that gem.</p>&#x000A;<h2>JavaScript Includes</h2>&#x000A;<p>Since the Rails helper <code>javascript_include_tag :defaults</code> is looking for Prototype, we used <a href="http://flow.handle.it/past/2010/2/9/jquery_in_rails">this</a> to add a new JavaScript expansion to pull in the jQuery libraries. Use it like so:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>= javascript_include_tag <span class="symbol">:jquery</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<h2>git</h2>&#x000A;<p>We love <code>git</code>, so the application has a git repo initialized with all the initial changes staged.</p>&#x000A;<h2>Wrap Up</h2>&#x000A;<p>After the application has been generated, there are a few clean up commands to run:</p>&#x000A;<pre><code>  % cd my_app&#x000A;  % gem install bundler&#x000A;  % bundle install&#x000A;  % bundle lock&#x000A;  % script/rails generate rspec:install</code></pre>
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2010/05/08/rails-3-rspec-factory-girl-haml-and-jquery.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2010/05/08/rails-3-rspec-factory-girl-haml-and-jquery.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2010/05/08/rails-3-rspec-factory-girl-haml-and-jquery.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2010/05/08/rails-3-rspec-factory-girl-haml-and-jquery.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

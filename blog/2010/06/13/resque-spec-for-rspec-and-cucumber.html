@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2010/06/13/resque-spec-for-rspec-and-cucumber.html'>
-          <div class='meta' title='Sun Jun 13 15:10:17 -0700 2010'>
-            June 13, 2010
-            &raquo;
-          </div>
-          <h1>
-            “resque_spec for RSpec and Cucumber”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2010/06/13/resque-spec-for-rspec-and-cucumber.html'>
+      <div class='meta' title='Sun Jun 13 15:10:17 -0700 2010'>
+        June 13, 2010
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “resque_spec for RSpec and Cucumber”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <p><code>resque_spec</code> is a simple RSpec and Cucumber matcher for <a href="http://github.com/defunkt/resque">Resque</a> , loosely based on <a href="http://github.com/justinweiss/resque_unit">resque_unit</a> .</p>&#x000A;<p>Install it as a gem:</p>&#x000A;<pre><code>% gem install resque_spec</code></pre>&#x000A;<p>Given this scenario</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> Given a person&#x000A;<span class="no">2</span> When I recalculate&#x000A;<span class="no">3</span> Then the person has calculate queued</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>And I write this spec using the <code>resque_spec</code> matcher</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> describe <span class="s"><span class="dl">&quot;</span><span class="k">#recalculate</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no"> 2</span>   before <span class="r">do</span>&#x000A;<span class="no"> 3</span>     <span class="co">ResqueSpec</span>.reset!&#x000A;<span class="no"> 4</span>   <span class="r">end</span>&#x000A;<span class="no"> 5</span> &#x000A;<span class="no"> 6</span>   it <span class="s"><span class="dl">&quot;</span><span class="k">adds person.calculate to the Person queue</span><span class="dl">&quot;</span></span> <span class="r">do</span>&#x000A;<span class="no"> 7</span>     person.recalculate&#x000A;<span class="no"> 8</span>     <span class="co">Person</span>.should have_queued(person.id, <span class="sy">:calculate</span>)&#x000A;<span class="no"> 9</span>   <span class="r">end</span>&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>(And I take note of the <code>before</code> block that is calling <code>reset!</code> for every spec)</p>&#x000A;<p>And I might write this as a Cucumber step</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">Then</span> <span class="rx"><span class="dl">/</span><span class="k">the (</span><span class="ch">\w</span><span class="k">?) has (</span><span class="ch">\w</span><span class="k">?) queued</span><span class="dl">/</span></span> <span class="r">do</span> |thing, method|&#x000A;<span class="no">2</span>   thing_obj = instance_variable_get(<span class="s"><span class="dl">&quot;</span><span class="k">@</span><span class="il"><span class="idl">#{</span>thing<span class="idl">}</span></span><span class="dl">&quot;</span></span>)&#x000A;<span class="no">3</span>   thing_obj.class.should have_queued(thing_obj.id, method.to_sym)&#x000A;<span class="no">4</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Then I write some code to make it pass:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">class</span> <span class="cl">Person</span>&#x000A;<span class="no">2</span>   <span class="iv">@queue</span> = <span class="sy">:people</span>&#x000A;<span class="no">3</span> &#x000A;<span class="no">4</span>   <span class="r">def</span> <span class="fu">recalculate</span>&#x000A;<span class="no">5</span>     <span class="co">Resque</span>.enqueue(<span class="co">Person</span>, id, <span class="sy">:calculate</span>)&#x000A;<span class="no">6</span>   <span class="r">end</span>&#x000A;<span class="no">7</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>The source is up on <a href="http://github.com/leshill/resque_spec">github</a> .</p>
-    </div>
+  <p><code>resque_spec</code> is a simple RSpec and Cucumber matcher for <a href="http://github.com/defunkt/resque">Resque</a> , loosely based on <a href="http://github.com/justinweiss/resque_unit">resque_unit</a> .</p>&#x000A;<p>Install it as a gem:</p>&#x000A;<pre><code>% gem install resque_spec</code></pre>&#x000A;<p>Given this scenario</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>Given a person&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>When I recalculate&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span>Then the person has calculate queued</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>And I write this spec using the <code>resque_spec</code> matcher</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"> <a href="#n1" name="n1">1</a></span>describe <span class="string"><span class="delimiter">&quot;</span><span class="content">#recalculate</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>&#x000A;<span class="line-numbers"> <a href="#n2" name="n2">2</a></span>  before <span class="keyword">do</span>&#x000A;<span class="line-numbers"> <a href="#n3" name="n3">3</a></span>    <span class="constant">ResqueSpec</span>.reset!&#x000A;<span class="line-numbers"> <a href="#n4" name="n4">4</a></span>  <span class="keyword">end</span>&#x000A;<span class="line-numbers"> <a href="#n5" name="n5">5</a></span>&#x000A;<span class="line-numbers"> <a href="#n6" name="n6">6</a></span>  it <span class="string"><span class="delimiter">&quot;</span><span class="content">adds person.calculate to the Person queue</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>&#x000A;<span class="line-numbers"> <a href="#n7" name="n7">7</a></span>    person.recalculate&#x000A;<span class="line-numbers"> <a href="#n8" name="n8">8</a></span>    <span class="constant">Person</span>.should have_queued(person.id, <span class="symbol">:calculate</span>)&#x000A;<span class="line-numbers"> <a href="#n9" name="n9">9</a></span>  <span class="keyword">end</span>&#x000A;<span class="line-numbers"><strong><a href="#n10" name="n10">10</a></strong></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>(And I take note of the <code>before</code> block that is calling <code>reset!</code> for every spec)</p>&#x000A;<p>And I might write this as a Cucumber step</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="constant">Then</span> <span class="regexp"><span class="delimiter">/</span><span class="content">the (</span><span class="char">\w</span><span class="content">?) has (</span><span class="char">\w</span><span class="content">?) queued</span><span class="delimiter">/</span></span> <span class="keyword">do</span> |thing, method|&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  thing_obj = instance_variable_get(<span class="string"><span class="delimiter">&quot;</span><span class="content">@</span><span class="inline"><span class="inline-delimiter">#{</span>thing<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>)&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span>  thing_obj.class.should have_queued(thing_obj.id, method.to_sym)&#x000A;<span class="line-numbers"><a href="#n4" name="n4">4</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Then I write some code to make it pass:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="keyword">class</span> <span class="class">Person</span>&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  <span class="instance-variable">@queue</span> = <span class="symbol">:people</span>&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span>&#x000A;<span class="line-numbers"><a href="#n4" name="n4">4</a></span>  <span class="keyword">def</span> <span class="function">recalculate</span>&#x000A;<span class="line-numbers"><a href="#n5" name="n5">5</a></span>    <span class="constant">Resque</span>.enqueue(<span class="constant">Person</span>, id, <span class="symbol">:calculate</span>)&#x000A;<span class="line-numbers"><a href="#n6" name="n6">6</a></span>  <span class="keyword">end</span>&#x000A;<span class="line-numbers"><a href="#n7" name="n7">7</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>The source is up on <a href="http://github.com/leshill/resque_spec">github</a> .</p>
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2010/06/13/resque-spec-for-rspec-and-cucumber.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2010/06/13/resque-spec-for-rspec-and-cucumber.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2010/06/13/resque-spec-for-rspec-and-cucumber.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2010/06/13/resque-spec-for-rspec-and-cucumber.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

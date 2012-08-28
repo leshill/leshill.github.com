@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2009/07/01/bouncy-bots.html'>
-          <div class='meta' title='Wed Jul 01 07:08:30 -0700 2009'>
-            July 01, 2009
-            &raquo;
-          </div>
-          <h1>
-            “Bouncy Bots!”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2009/07/01/bouncy-bots.html'>
+      <div class='meta' title='Wed Jul 01 07:08:30 -0700 2009'>
+        July 01, 2009
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “Bouncy Bots!”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <h3>A simple negative captcha for Rails.</h3>&#x000A;<p>A negative captcha flips the normal captcha on its head, rather than asking humans identify themselves, we trick the bots into identifying themselves.  We do this by placing honey pots in a form that are invisible to a human, but visible to a bot.  When the bot submits the form, we look for the honey pot entries and discard the form submission if we find any.</p>&#x000A;<p>The source is MIT licensed and available on <a href="http://github.com/leshill/bouncy_bots/tree/master">github</a>.</p>&#x000A;<h3>Installing Bouncy Bots!</h3>&#x000A;<p>Bouncy Bots! is available as a gem from github.  Install the gem with the following command:</p>&#x000A;<pre><code>% sudo gem install --source http://gems.github.com/ leshill-bouncy_bots</code></pre>&#x000A;<p>After you have the gem installed, add a <code>config.gem</code> line to your <code>environment.rb</code> file:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> config.gem <span class="s"><span class="dl">'</span><span class="k">leshill-bouncy_bots</span><span class="dl">'</span></span>, <span class="sy">:lib</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">bouncy_bots</span><span class="dl">'</span></span>, <span class="sy">:version</span> =&gt; <span class="fl">0.1</span>.<span class="i">0</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<h3>Using Bouncy Bots!</h3>&#x000A;<h4>Controllers</h4>&#x000A;<p>Use the <code>bounce_bots</code> macro in your controllers to detect and bounce bots.  The macro takes two parameters, the honey pot field name and the redirect path or url.  For example, to check for the field <code>:blog_url</code> and redirect bots to the <code>pages_path</code> :</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> bounce_bots <span class="sy">:blog_url</span>, <span class="sy">:pages_path</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>You can also pass the standard controller filter options such as <code>:only</code> or <code>:except</code> :</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> bounce_bots <span class="sy">:blog_url</span>, <span class="sy">:pages_path</span>, <span class="sy">:only</span> =&gt; [<span class="sy">:create</span>, <span class="sy">:update</span>]</pre></div>&#x000A;</div>&#x000A;&#x000A;<h4>Views</h4>&#x000A;<p>In your form views, add the honey pot field.  If you are using <code>form_tag</code>, you can use any form element, for example (using <a href="http://haml.hamptoncatlin.com/">haml</a>):</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> = text_field_tag <span class="sy">:blog_url</span>, <span class="pc">nil</span>, <span class="sy">:class</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">long_required</span><span class="dl">'</span></span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>In your stylesheet, add a rule to &#8216;hide&#8217; the field:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="ty">input</span><span class="cl">.long_required</span> { <span class="ke">display</span>:<span class="vl">none</span>; }</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>If you use <code>form_for</code>, there are two helpers to simplify making the honey pot.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> = f.bounce_label <span class="s"><span class="dl">'</span><span class="k">Blog Url</span><span class="dl">'</span></span>, <span class="sy">:class</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">long_required</span><span class="dl">'</span></span>&#x000A;<span class="no">2</span> %br&#x000A;<span class="no">3</span> = f.bounce_field <span class="sy">:class</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">long_required</span><span class="dl">'</span></span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>And that&#8217;s it.</p>
-    </div>
+  <h3>A simple negative captcha for Rails.</h3>&#x000A;<p>A negative captcha flips the normal captcha on its head, rather than asking humans identify themselves, we trick the bots into identifying themselves.  We do this by placing honey pots in a form that are invisible to a human, but visible to a bot.  When the bot submits the form, we look for the honey pot entries and discard the form submission if we find any.</p>&#x000A;<p>The source is MIT licensed and available on <a href="http://github.com/leshill/bouncy_bots/tree/master">github</a>.</p>&#x000A;<h3>Installing Bouncy Bots!</h3>&#x000A;<p>Bouncy Bots! is available as a gem from github.  Install the gem with the following command:</p>&#x000A;<pre><code>% sudo gem install --source http://gems.github.com/ leshill-bouncy_bots</code></pre>&#x000A;<p>After you have the gem installed, add a <code>config.gem</code> line to your <code>environment.rb</code> file:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>config.gem <span class="string"><span class="delimiter">'</span><span class="content">leshill-bouncy_bots</span><span class="delimiter">'</span></span>, <span class="symbol">:lib</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">bouncy_bots</span><span class="delimiter">'</span></span>, <span class="symbol">:version</span> =&gt; <span class="float">0.1</span>.<span class="error">0</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<h3>Using Bouncy Bots!</h3>&#x000A;<h4>Controllers</h4>&#x000A;<p>Use the <code>bounce_bots</code> macro in your controllers to detect and bounce bots.  The macro takes two parameters, the honey pot field name and the redirect path or url.  For example, to check for the field <code>:blog_url</code> and redirect bots to the <code>pages_path</code> :</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>bounce_bots <span class="symbol">:blog_url</span>, <span class="symbol">:pages_path</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>You can also pass the standard controller filter options such as <code>:only</code> or <code>:except</code> :</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>bounce_bots <span class="symbol">:blog_url</span>, <span class="symbol">:pages_path</span>, <span class="symbol">:only</span> =&gt; [<span class="symbol">:create</span>, <span class="symbol">:update</span>]</pre></div>&#x000A;</div>&#x000A;&#x000A;<h4>Views</h4>&#x000A;<p>In your form views, add the honey pot field.  If you are using <code>form_tag</code>, you can use any form element, for example (using <a href="http://haml.hamptoncatlin.com/">haml</a>):</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>= text_field_tag <span class="symbol">:blog_url</span>, <span class="predefined-constant">nil</span>, <span class="symbol">:class</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">long_required</span><span class="delimiter">'</span></span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>In your stylesheet, add a rule to &#8216;hide&#8217; the field:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="type">input</span><span class="class">.long_required</span> { <span class="key">display</span>:<span class="value">none</span>; }</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>If you use <code>form_for</code>, there are two helpers to simplify making the honey pot.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>= f.bounce_label <span class="string"><span class="delimiter">'</span><span class="content">Blog Url</span><span class="delimiter">'</span></span>, <span class="symbol">:class</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">long_required</span><span class="delimiter">'</span></span>&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>%br&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span>= f.bounce_field <span class="symbol">:class</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">long_required</span><span class="delimiter">'</span></span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>And that&#8217;s it.</p>
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2009/07/01/bouncy-bots.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2009/07/01/bouncy-bots.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2009/07/01/bouncy-bots.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2009/07/01/bouncy-bots.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

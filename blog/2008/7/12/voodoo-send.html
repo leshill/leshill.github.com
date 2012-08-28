@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2008/7/12/voodoo-send.html'>
-          <div class='meta' title='Fri Jul 11 21:33:10 -0700 2008'>
-            July 11, 2008
-            &raquo;
-          </div>
-          <h1>
-            “Voodoo send”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2008/7/12/voodoo-send.html'>
+      <div class='meta' title='Fri Jul 11 21:33:10 -0700 2008'>
+        July 11, 2008
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “Voodoo send”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <p>Recently when looking through some plugin&#8217;s code, we found the following line:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="pc">self</span>.send(<span class="sy">:include</span>, <span class="co">Foo</span>)</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>This <em>seems</em> to be an acceptable variant of the commonly used</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">ActiveRecord</span>::<span class="co">Base</span>.send(<span class="sy">:include</span>, <span class="co">Foo</span>)</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>As you may have surmised, it is not an acceptable variant.  This is a <a href="http://en.wikipedia.org/wiki/Voodoo_programming">Voodoo programming</a> smell, as it indicates a misunderstanding of exactly what the semantics of <code>send</code> are.  There is also a clearer, more intention revealing, and identical<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> alternative <code>include Foo</code> or with the omitted parenthesis <code>include(Foo)</code> .</p>&#x000A;<p>This of course, leads us to why <code>ActiveRecord::Base.send(:include, Foo)</code> is acceptable.  The <code>include</code> method is private, so the most elegant way to invoke it on <em>another</em> object is by using <code>send</code>; this is possible because <code>send</code> ignores access control allowing us to invoke <code>include</code> directly.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> <em>Almost</em>, the difference is that <code>send</code> is in the call stack.</p>
-    </div>
+  <p>Recently when looking through some plugin&#8217;s code, we found the following line:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="predefined-constant">self</span>.send(<span class="symbol">:include</span>, <span class="constant">Foo</span>)</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>This <em>seems</em> to be an acceptable variant of the commonly used</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="constant">ActiveRecord</span>::<span class="constant">Base</span>.send(<span class="symbol">:include</span>, <span class="constant">Foo</span>)</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>As you may have surmised, it is not an acceptable variant.  This is a <a href="http://en.wikipedia.org/wiki/Voodoo_programming">Voodoo programming</a> smell, as it indicates a misunderstanding of exactly what the semantics of <code>send</code> are.  There is also a clearer, more intention revealing, and identical<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup> alternative <code>include Foo</code> or with the omitted parenthesis <code>include(Foo)</code> .</p>&#x000A;<p>This of course, leads us to why <code>ActiveRecord::Base.send(:include, Foo)</code> is acceptable.  The <code>include</code> method is private, so the most elegant way to invoke it on <em>another</em> object is by using <code>send</code>; this is possible because <code>send</code> ignores access control allowing us to invoke <code>include</code> directly.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> <em>Almost</em>, the difference is that <code>send</code> is in the call stack.</p>
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2008/7/12/voodoo-send.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2008/7/12/voodoo-send.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2008/7/12/voodoo-send.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2008/7/12/voodoo-send.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

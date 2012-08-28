@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
-    <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2012/04/09/the-doctor-is-in.html'>
-          <div class='meta' title='Mon Apr 09 00:15:34 -0700 2012'>
-            April 09, 2012
-            &raquo;
-          </div>
-          <h1>
-            “The Doctor Is In”
-          </h1>
-        </a>
-      </div>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
     </div>
-    <div class='prefix_1 grid_10' id='post'>
-      <h1>Advice from the Doctor, 25¢</h1>&#x000A;<p>Would you like someone to help you refactor some of your code? If you are going to be at <a href="http://railsconf2012.com/">RailsConf</a>, then I am happy to pair with you for 30 minutes doing just that.</p>&#x000A;<p>We will pair on your machine, on your Ruby/Rails codebase with an existing RSpec/Cucumber test suite. We will refactor code in either your specs or your app. Being a refactor, there should be little to no domain expertise required.</p>&#x000A;<h1>The Doctor&#8217;s specialty</h1>&#x000A;<p>Refactoring your specs. Specs directly affect the shape of your code.  Well-written specs lead to well-written code. Spending time to refactor your specs pays off dividends immediately in any code base. Unfortunately the last thing on just about everyone&#8217;s list is refactoring the specs. Until the suite is just so painful to work with that something has to be done.</p>&#x000A;<p>Refactoring your code. When you are shipping code<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, there is a gap that occurs between the code you write and ship <strong>now</strong> versus the code you could have refactored and shipped <strong>later</strong><sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup>. The code is clean, tested, and working but there just happens to be an idiom that everyone uses, or a pattern that can be applied, or a known better (but not more correct) algorithm, or just additional refactoring that has only been enabled by the previous refactors. The shipping tension cuts off those additional refinements<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup>, even those that are trivial in hindsight &#8212; looking at them later makes you wonder why you just did not make the change in the first place.</p>&#x000A;<h1>The testimonial</h1>&#x000A;<p>In response to this tweet from Steve Klabnik (@steveklabnik):</p>&#x000A;<blockquote class="twitter-tweet tw-align-center"><p>Thoughts on improving this spec? <a href="https://t.co/L73V6vbE" title="https://github.com/JumpstartLab/donors_choose/blob/master/spec/donors_choose_spec.rb">github.com/JumpstartLab/d…</a> Feels awkward. /cc @<a href="https://twitter.com/garybernhardt">garybernhardt</a> @<a href="https://twitter.com/avdi">avdi</a> @<a href="https://twitter.com/gregmoeck">gregmoeck</a></p><p>&mdash; Steve Klabnik (@steveklabnik) <a href="https://twitter.com/steveklabnik/status/169512925839630337" data-datetime="2012-02-14T20:06:45+00:00">February 14, 2012</a></blockquote><br />&#x000A;<script src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>&#x000A;<p>I quickly offered a <a href="http://git.io/42FOsw">spike</a> showing how to restructure the code:</p>&#x000A;<blockquote class="twitter-tweet tw-align-center" data-in-reply-to="169512925839630337"><p>@<a href="https://twitter.com/steveklabnik">steveklabnik</a> FWIW, I agree with @<a href="https://twitter.com/garybernhardt">garybernhardt</a>, the examples are awkward &#8211; they test too much, try an impl like: <a href="http://t.co/4JjHmLn8" title="http://git.io/42FOsw">git.io/42FOsw</a></p><p>&mdash; Les Hill (@leshill) <a href="https://twitter.com/leshill/status/169521240699174913" data-datetime="2012-02-14T20:39:47+00:00">February 14, 2012</a></blockquote><br />&#x000A;<script src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>&#x000A;<h1>How much is it?</h1>&#x000A;<p>It&#8217;s free!</p>&#x000A;<p>Seeing a random (and statistically meaningless :) sample of real world code is research for my next talk: <strong>Be Happier, Write Better Code</strong>. Real world code is code written under commercial stresses, from the intentional: <em>Lean Startup!</em> to the unintentional: <em>Conway&#8217;s Law</em>.</p>&#x000A;<p>The goal is to see what real world code looks like.</p>&#x000A;<ul>&#x000A;	<li>What kind of shape it is in.</li>&#x000A;	<li>What the style is.</li>&#x000A;	<li>What idioms are used.</li>&#x000A;	<li>What idioms are not used.</li>&#x000A;	<li>What patterns are used.</li>&#x000A;	<li>What is missing.</li>&#x000A;	<li>What the testing philosphy is.</li>&#x000A;	<li>What is overwrought and over-engineered.</li>&#x000A;	<li>What do the commits look like.</li>&#x000A;	<li>What happens in bug-fixes.</li>&#x000A;	<li>The list goes on.</li>&#x000A;</ul>&#x000A;<p>At no point are you giving anyone else access to your code<sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup>. No identifying information will be used for the talk. Only you and I will be examining the code (there is no audience participation.)</p>&#x000A;<h1>Call now!</h1>&#x000A;<p>Here are the rules:</p>&#x000A;<ul>&#x000A;	<li>A Ruby/Rails codebase.</li>&#x000A;	<li>An existing RSpec/Cucumber test suite.</li>&#x000A;	<li>One problem that you would like to refactor, either in your code or in your specs.</li>&#x000A;	<li>You understand that there is a time limit of 30 minutes.</li>&#x000A;	<li>The problem is not domain-related (there are only 30 minutes available.)</li>&#x000A;	<li>Have all of this ready to work with on your machine.</li>&#x000A;	<li>You drive the whole time on your codebase and your machine.</li>&#x000A;</ul>&#x000A;<p>To get started, sign into <a href="https://www.privatelyapp.com">PrivatelyApp.com</a> with your Twitter account and start a private conversation with <strong>@leshill</strong>. In private and in more than 140 characters tell me how I can help you.</p>&#x000A;<p>If we come to an agreement, we will pick a 30 minute time slot. I am leaning towards time slots in the evenings (6 to 11 p.m.) on either Monday April 23, or Tuesday April 24.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> <strong>Code</strong> that is <em>clean</em>, <em>tested</em>, and <em>working</em> &#8212; sloppy, untested code that just happens to work is at best an experiment.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Let&#8217;s call this gap <strong>Working Code Wins</strong>. An observation that a shipping trade-off was made. Another post perhaps?</p>&#x000A;<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> <strong>Technical Debt</strong> is a related concept. Originally, <strong>Technical Debt</strong> meant coding your existing but incomplete understanding, and then modifying the code with the insight and understanding gained from experience; paying down the debt of your incomplete understanding. Now <strong>Technical Debt</strong> has been abused and diluted to mean anything undesirable in a codebase.</p>&#x000A;<p>A more useful definition is deliberately choosing deficient designs or algorithms to acheive short-term goals. For example, implementing a simplistic and unscalable algorithm instead of a robust, complex, and scalable algorithm because you have 5 users and not 1 million users. If, by happy chance, you start up the hockey stick, you will have to pay that <strong>Technical Debt</strong> off. The debt comes in two forms: you implement the more complex algorithm anyway, and the implementation may turn out to be more difficult in the existing codebase than if it had been implemented up front.</p>&#x000A;<p class="footnote" id="fn4"><a href="#fnr4"><sup>4</sup></a> The code never leaves your machine and you are the only person touching it.</p>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
     </div>
-    <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2012/04/09/the-doctor-is-in.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2012/04/09/the-doctor-is-in.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
+  </div>
+</header>
+<div class='clearfix' id='title'>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2012/04/09/the-doctor-is-in.html'>
+      <div class='meta' title='Mon Apr 09 00:15:34 -0700 2012'>
+        April 09, 2012
+        &raquo;
       </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+      <h1>
+        “The Doctor Is In”
+      </h1>
+    </a>
+  </div>
+</div>
+<div class='prefix_1 grid_10' id='post'>
+  <h1>Advice from the Doctor, 25¢</h1>&#x000A;<p>Would you like someone to help you refactor some of your code? If you are going to be at <a href="http://railsconf2012.com/">RailsConf</a>, then I am happy to pair with you for 30 minutes doing just that.</p>&#x000A;<p>We will pair on your machine, on your Ruby/Rails codebase with an existing RSpec/Cucumber test suite. We will refactor code in either your specs or your app. Being a refactor, there should be little to no domain expertise required.</p>&#x000A;<h1>The Doctor&#8217;s specialty</h1>&#x000A;<p>Refactoring your specs. Specs directly affect the shape of your code.  Well-written specs lead to well-written code. Spending time to refactor your specs pays off dividends immediately in any code base. Unfortunately the last thing on just about everyone&#8217;s list is refactoring the specs. Until the suite is just so painful to work with that something has to be done.</p>&#x000A;<p>Refactoring your code. When you are shipping code<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, there is a gap that occurs between the code you write and ship <strong>now</strong> versus the code you could have refactored and shipped <strong>later</strong><sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup>. The code is clean, tested, and working but there just happens to be an idiom that everyone uses, or a pattern that can be applied, or a known better (but not more correct) algorithm, or just additional refactoring that has only been enabled by the previous refactors. The shipping tension cuts off those additional refinements<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup>, even those that are trivial in hindsight &#8212; looking at them later makes you wonder why you just did not make the change in the first place.</p>&#x000A;<h1>The testimonial</h1>&#x000A;<p>In response to this tweet from Steve Klabnik (@steveklabnik):</p>&#x000A;<blockquote class="twitter-tweet tw-align-center"><p>Thoughts on improving this spec? <a href="https://t.co/L73V6vbE" title="https://github.com/JumpstartLab/donors_choose/blob/master/spec/donors_choose_spec.rb">github.com/JumpstartLab/d…</a> Feels awkward. /cc @<a href="https://twitter.com/garybernhardt">garybernhardt</a> @<a href="https://twitter.com/avdi">avdi</a> @<a href="https://twitter.com/gregmoeck">gregmoeck</a></p><p>&mdash; Steve Klabnik (@steveklabnik) <a href="https://twitter.com/steveklabnik/status/169512925839630337" data-datetime="2012-02-14T20:06:45+00:00">February 14, 2012</a></blockquote><br />&#x000A;<script src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>&#x000A;<p>I quickly offered a <a href="http://git.io/42FOsw">spike</a> showing how to restructure the code:</p>&#x000A;<blockquote class="twitter-tweet tw-align-center" data-in-reply-to="169512925839630337"><p>@<a href="https://twitter.com/steveklabnik">steveklabnik</a> FWIW, I agree with @<a href="https://twitter.com/garybernhardt">garybernhardt</a>, the examples are awkward &#8211; they test too much, try an impl like: <a href="http://t.co/4JjHmLn8" title="http://git.io/42FOsw">git.io/42FOsw</a></p><p>&mdash; Les Hill (@leshill) <a href="https://twitter.com/leshill/status/169521240699174913" data-datetime="2012-02-14T20:39:47+00:00">February 14, 2012</a></blockquote><br />&#x000A;<script src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>&#x000A;<h1>How much is it?</h1>&#x000A;<p>It&#8217;s free!</p>&#x000A;<p>Seeing a random (and statistically meaningless :) sample of real world code is research for my next talk: <strong>Be Happier, Write Better Code</strong>. Real world code is code written under commercial stresses, from the intentional: <em>Lean Startup!</em> to the unintentional: <em>Conway&#8217;s Law</em>.</p>&#x000A;<p>The goal is to see what real world code looks like.</p>&#x000A;<ul>&#x000A;	<li>What kind of shape it is in.</li>&#x000A;	<li>What the style is.</li>&#x000A;	<li>What idioms are used.</li>&#x000A;	<li>What idioms are not used.</li>&#x000A;	<li>What patterns are used.</li>&#x000A;	<li>What is missing.</li>&#x000A;	<li>What the testing philosphy is.</li>&#x000A;	<li>What is overwrought and over-engineered.</li>&#x000A;	<li>What do the commits look like.</li>&#x000A;	<li>What happens in bug-fixes.</li>&#x000A;	<li>The list goes on.</li>&#x000A;</ul>&#x000A;<p>At no point are you giving anyone else access to your code<sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup>. No identifying information will be used for the talk. Only you and I will be examining the code (there is no audience participation.)</p>&#x000A;<h1>Call now!</h1>&#x000A;<p>Here are the rules:</p>&#x000A;<ul>&#x000A;	<li>A Ruby/Rails codebase.</li>&#x000A;	<li>An existing RSpec/Cucumber test suite.</li>&#x000A;	<li>One problem that you would like to refactor, either in your code or in your specs.</li>&#x000A;	<li>You understand that there is a time limit of 30 minutes.</li>&#x000A;	<li>The problem is not domain-related (there are only 30 minutes available.)</li>&#x000A;	<li>Have all of this ready to work with on your machine.</li>&#x000A;	<li>You drive the whole time on your codebase and your machine.</li>&#x000A;</ul>&#x000A;<p>To get started, sign into <a href="https://www.privatelyapp.com">PrivatelyApp.com</a> with your Twitter account and start a private conversation with <strong>@leshill</strong>. In private and in more than 140 characters tell me how I can help you.</p>&#x000A;<p>If we come to an agreement, we will pick a 30 minute time slot. I am leaning towards time slots in the evenings (6 to 11 p.m.) on either Monday April 23, or Tuesday April 24.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> <strong>Code</strong> that is <em>clean</em>, <em>tested</em>, and <em>working</em> &#8212; sloppy, untested code that just happens to work is at best an experiment.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Let&#8217;s call this gap <strong>Working Code Wins</strong>. An observation that a shipping trade-off was made. Another post perhaps?</p>&#x000A;<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> <strong>Technical Debt</strong> is a related concept. Originally, <strong>Technical Debt</strong> meant coding your existing but incomplete understanding, and then modifying the code with the insight and understanding gained from experience; paying down the debt of your incomplete understanding. Now <strong>Technical Debt</strong> has been abused and diluted to mean anything undesirable in a codebase.</p>&#x000A;<p>A more useful definition is deliberately choosing deficient designs or algorithms to acheive short-term goals. For example, implementing a simplistic and unscalable algorithm instead of a robust, complex, and scalable algorithm because you have 5 users and not 1 million users. If, by happy chance, you start up the hockey stick, you will have to pay that <strong>Technical Debt</strong> off. The debt comes in two forms: you implement the more complex algorithm anyway, and the implementation may turn out to be more difficult in the existing codebase than if it had been implemented up front.</p>&#x000A;<p class="footnote" id="fn4"><a href="#fnr4"><sup>4</sup></a> The code never leaves your machine and you are the only person touching it.</p>
+</div>
+<div class='clearfix' id='comments'>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2012/04/09/the-doctor-is-in.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2012/04/09/the-doctor-is-in.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+<div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

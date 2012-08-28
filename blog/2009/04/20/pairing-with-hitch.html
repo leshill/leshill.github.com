@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2009/04/20/pairing-with-hitch.html'>
-          <div class='meta' title='Mon Apr 20 13:18:52 -0700 2009'>
-            April 20, 2009
-            &raquo;
-          </div>
-          <h1>
-            “Pairing With Hitch”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2009/04/20/pairing-with-hitch.html'>
+      <div class='meta' title='Mon Apr 20 13:18:52 -0700 2009'>
+        April 20, 2009
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “Pairing With Hitch”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <p>Pair programming does present some unique problems, one that we encountered at <a href="http://www.hashrocket.com">Hashrocket</a> was commit attribution: a commit message would be identified with one member of the pair only.  This is not exactly tragic, but from the perspective of a passioniate developer, having commit credit (and accountability) is a critical and visible part of the ethos.</p>&#x000A;<p><a href="http://tpope.net">Tim Pope</a> had the brilliant idea of using a group email address with tags (such as <em>group+you@example.com</em>) to identify the commits a pair made to git.  A little <em>bash script fu</em> lead to a nifty command line utility that let us track pairs with our git commits.  With that script as a starting point, <a href="http://blog.therubymug.com">Ro Samour</a> wrote a pure ruby implementation: <code>hitch</code></p>&#x000A;<p><code>hitch</code> will modify your git configuration to reflect who you are pairing with. Here is a <code>hitch</code> commit message using <code>git log --pretty=full</code>:</p>&#x000A;<pre><code>commit e518dd0637e7d1d77d3bd79a645e5d0bc93eae2d&#x000A;Author: Les Hill and Rogelio Samour &lt;bleep+bleep+bleep@hashrocket.com&gt;&#x000A;Commit: Les Hill and Rogelio Samour &lt;bleep+bleep+bleep@hashrocket.com&gt;</code></pre>&#x000A;Adding show note icon&#x000A;<p>This is a commit message from <code>hitch</code> on github:</p>&#x000A;<p><img src="/images/github_commit.png" title="Github hitch commit message" alt="Github hitch commit message" /></p>&#x000A;<p><code>hitch</code> is open source and is <a href="http://github.com/therubymug/hitch/tree/master">available</a> from github.</p>&#x000A;<h2>Getting started</h2>&#x000A;<p>You will need to install the <code>hitch</code> gem from github<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>:</p>&#x000A;<pre><code>% sudo gem install therubymug-hitch</code></pre>&#x000A;<p>You will need a group email account with a service such as <a href="http://mail.google.com">GMail</a> that allows email tags<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> (as an example, <code>news</code> is a tag in this email address <em>yourname+news@example.com</em> which is considered to be the same email address as <em>yourname@example.com</em>):</p>&#x000A;<p>You really want a <a href="http://gravatar.com">Gravatar</a> for your group email account so that the commits show the custom gravatar along with your commit messages.  For every pair, register a new gravatar and associate it with a tagged email address of the form:</p>&#x000A;<pre><code>dev+github_user_1+github_user_2@example.com</code></pre>&#x000A;<p>The github usernames should appear in the local part of the address in alphabetical order after the group address local part, each github username seperated by a <code>+</code>.</p>&#x000A;<p>Initialize <code>hitch</code> by running <code>hitchrc</code> and giving it your name, github username, and group email address when prompted:</p>&#x000A;<pre><code>% hitchrc</code></pre>&#x000A;<h2>Using <code>hitch</code></h2>&#x000A;<p>To pair with another developer whose github username is <code>pair</code>:</p>&#x000A;<pre><code>% hitch pair</code></pre>&#x000A;<p><code>hitch</code> will prompt you if it does not recognize github username of your pair and save it for later use.</p>&#x000A;<p>To unpair and code solo:</p>&#x000A;<pre><code>% unhitch</code></pre>&#x000A;<p>To see who you are currently paired with:</p>&#x000A;<pre><code>% hitch</code></pre>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Add <code>github.com</code> to your gem sources with <code>gem sources -a http://gems.github.com/</code></p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Read about email tags on <a href="http://en.wikipedia.org/wiki/E-mail_address#Sub-addressing">Wikipedia</a></p><!-- #hashrocket -->
-    </div>
+  <p>Pair programming does present some unique problems, one that we encountered at <a href="http://www.hashrocket.com">Hashrocket</a> was commit attribution: a commit message would be identified with one member of the pair only.  This is not exactly tragic, but from the perspective of a passioniate developer, having commit credit (and accountability) is a critical and visible part of the ethos.</p>&#x000A;<p><a href="http://tpope.net">Tim Pope</a> had the brilliant idea of using a group email address with tags (such as <em>group+you@example.com</em>) to identify the commits a pair made to git.  A little <em>bash script fu</em> lead to a nifty command line utility that let us track pairs with our git commits.  With that script as a starting point, <a href="http://blog.therubymug.com">Ro Samour</a> wrote a pure ruby implementation: <code>hitch</code></p>&#x000A;<p><code>hitch</code> will modify your git configuration to reflect who you are pairing with. Here is a <code>hitch</code> commit message using <code>git log --pretty=full</code>:</p>&#x000A;<pre><code>commit e518dd0637e7d1d77d3bd79a645e5d0bc93eae2d&#x000A;Author: Les Hill and Rogelio Samour &lt;bleep+bleep+bleep@hashrocket.com&gt;&#x000A;Commit: Les Hill and Rogelio Samour &lt;bleep+bleep+bleep@hashrocket.com&gt;</code></pre>&#x000A;Adding show note icon&#x000A;<p>This is a commit message from <code>hitch</code> on github:</p>&#x000A;<p><img src="/images/github_commit.png" title="Github hitch commit message" alt="Github hitch commit message" /></p>&#x000A;<p><code>hitch</code> is open source and is <a href="http://github.com/therubymug/hitch/tree/master">available</a> from github.</p>&#x000A;<h2>Getting started</h2>&#x000A;<p>You will need to install the <code>hitch</code> gem from github<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>:</p>&#x000A;<pre><code>% sudo gem install therubymug-hitch</code></pre>&#x000A;<p>You will need a group email account with a service such as <a href="http://mail.google.com">GMail</a> that allows email tags<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> (as an example, <code>news</code> is a tag in this email address <em>yourname+news@example.com</em> which is considered to be the same email address as <em>yourname@example.com</em>):</p>&#x000A;<p>You really want a <a href="http://gravatar.com">Gravatar</a> for your group email account so that the commits show the custom gravatar along with your commit messages.  For every pair, register a new gravatar and associate it with a tagged email address of the form:</p>&#x000A;<pre><code>dev+github_user_1+github_user_2@example.com</code></pre>&#x000A;<p>The github usernames should appear in the local part of the address in alphabetical order after the group address local part, each github username seperated by a <code>+</code>.</p>&#x000A;<p>Initialize <code>hitch</code> by running <code>hitchrc</code> and giving it your name, github username, and group email address when prompted:</p>&#x000A;<pre><code>% hitchrc</code></pre>&#x000A;<h2>Using <code>hitch</code></h2>&#x000A;<p>To pair with another developer whose github username is <code>pair</code>:</p>&#x000A;<pre><code>% hitch pair</code></pre>&#x000A;<p><code>hitch</code> will prompt you if it does not recognize github username of your pair and save it for later use.</p>&#x000A;<p>To unpair and code solo:</p>&#x000A;<pre><code>% unhitch</code></pre>&#x000A;<p>To see who you are currently paired with:</p>&#x000A;<pre><code>% hitch</code></pre>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Add <code>github.com</code> to your gem sources with <code>gem sources -a http://gems.github.com/</code></p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Read about email tags on <a href="http://en.wikipedia.org/wiki/E-mail_address#Sub-addressing">Wikipedia</a></p><!-- #hashrocket -->
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2009/04/20/pairing-with-hitch.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2009/04/20/pairing-with-hitch.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2009/04/20/pairing-with-hitch.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2009/04/20/pairing-with-hitch.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

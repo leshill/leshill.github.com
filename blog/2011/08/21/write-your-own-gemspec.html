@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2011/08/21/write-your-own-gemspec.html'>
-          <div class='meta' title='Sun Aug 21 17:13:02 -0700 2011'>
-            August 21, 2011
-            &raquo;
-          </div>
-          <h1>
-            “Write Your Own Gemspec”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2011/08/21/write-your-own-gemspec.html'>
+      <div class='meta' title='Sun Aug 21 17:13:02 -0700 2011'>
+        August 21, 2011
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “Write Your Own Gemspec”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <p>This blog post was inspired by <a href="http://twiiter.com/garybernhardt">@garybernhardt</a>&#8217;s <a href="http://twitter.com/#!/garybernhardt/status/104716358092201985">tweet</a></p>&#x000A;<blockquote>&#x000A;<p>Coming in a few minutes: my first actual Ruby gem. If I can figure out how to publish it.</p>&#x000A;</blockquote>&#x000A;<p>In the distant past, I would have suggested to Gary that he use <a href="http://rubygems.org/gems/jeweler">Jeweler</a> when starting a new Ruby Gem. Then one day I was deep in a conversation with Durran Jordan (<a href="http://twitter.com/modetojoy">@modetojoy</a>) about some minutae of MongoDB and Mongoid when the topic of starting a new gem came up. Durran&#8217;s reaction was stated with his usual aplomb:</p>&#x000A;<blockquote>&#x000A;<p>Jeweller? Hoe? F*#!k that noise. Write your own gemspec and be done.</p>&#x000A;</blockquote>&#x000A;<p>When Durran says something, it is worth listening to. I went back and ripped out Jeweler. The world did not end. I published my gem. I even found I had a bunch of unnecessary baggage. Getting rid of Jeweler actually improved my understanding of the gem publishing process.</p>&#x000A;<h2>How to publish your gem</h2>&#x000A;<p>Publishing a gem is basically a three step process:</p>&#x000A;<ul>&#x000A;	<li>Gem layout and Gemspec generation</li>&#x000A;	<li>First push</li>&#x000A;	<li>Subsequent pushes</li>&#x000A;</ul>&#x000A;<p>Well, except for the <em>zeroth</em> step: deciding on a gem name. It is well worth spending a little time googling and taking a look at existing <a href="http://rubygems.org">RubyGems.org</a> before choosing your name.</p>&#x000A;<h2>Gem layout and Gemspec generation</h2>&#x000A;<p>The hard way to do this is to find another gem and copy its gemspec and layout.</p>&#x000A;<p>Or we can cheat.</p>&#x000A;<p><strong>Bundler</strong> will generate a gemspec and a layout for you<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>. And since we are cheating already, lets use use <strong>rvm</strong> as well, shall we?<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup>. You can follow along with this not-yet-released gem <a href="http://github.com/leshill/handlebars_assets">handlebars_assets</a><sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup>. Here is what we are going to do:</p>&#x000A;<ul>&#x000A;	<li>Create a gemset for <em>your_gem</em></li>&#x000A;	<li>Install bundler</li>&#x000A;	<li>Create the gem layout</li>&#x000A;	<li>Create the <code>.rvmrc</code></li>&#x000A;	<li>Remove <code>Gemfile.lock</code> from <code>.gitignore</code></li>&#x000A;	<li>Make the initial commit</li>&#x000A;	<li>Edit the gemspec as needed</li>&#x000A;	<li>Install all your dependencies</li>&#x000A;	<li>Commit your changes</li>&#x000A;</ul>&#x000A;<p>Easy!</p>&#x000A;<pre><code>% rvm gemset create your_gem&#x000A;% rvm gemset use your_gem&#x000A;% gem install bundler&#x000A;% bundle gem your_gem&#x000A;% cd your_gem&#x000A;% cat &gt; .rvmrc&#x000A;rvm use default@your_gem</code></pre>&#x000A;<p>Edit <code>.gitignore</code> to remove Gemfile.lock from the list of ignores.</p>&#x000A;<pre><code>% git add .&#x000A;% git commit -m 'Initial commit'</code></pre>&#x000A;<p>We now need to edit our generated <a href="http://docs.rubygems.org/read/chapter/20">gemspec</a>. There are three basic parts to the gemspec:</p>&#x000A;<ul>&#x000A;	<li>Metadata</li>&#x000A;	<li>Manifest</li>&#x000A;	<li>Dependencies</li>&#x000A;</ul>&#x000A;<p>Our generated gemspec has placeholder metadata, a good starting manifest, and no dependencies.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="c"># -*- encoding: utf-8 -*-</span>&#x000A;<span class="no"> 2</span> <span class="gv">$:</span>.push <span class="co">File</span>.expand_path(<span class="s"><span class="dl">&quot;</span><span class="k">../lib</span><span class="dl">&quot;</span></span>, <span class="pc">__FILE__</span>)&#x000A;<span class="no"> 3</span> require <span class="s"><span class="dl">&quot;</span><span class="k">your_gem/version</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"> 4</span> &#x000A;<span class="no"> 5</span> <span class="co">Gem</span>::<span class="co">Specification</span>.new <span class="r">do</span> |s|&#x000A;<span class="no"> 6</span>   <span class="c"># Metadata</span>&#x000A;<span class="no"> 7</span>   s.name        = <span class="s"><span class="dl">&quot;</span><span class="k">your_gem</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"> 8</span>   s.version     = <span class="co">YourGem</span>::<span class="co">VERSION</span>&#x000A;<span class="no"> 9</span>   s.authors     = [<span class="s"><span class="dl">&quot;</span><span class="k">Your Name</span><span class="dl">&quot;</span></span>]&#x000A;<span class="no"><strong>10</strong></span>   s.email       = [<span class="s"><span class="dl">&quot;</span><span class="k">your_name@example.com</span><span class="dl">&quot;</span></span>]&#x000A;<span class="no">11</span>   s.homepage    = <span class="s"><span class="dl">&quot;</span><span class="dl">&quot;</span></span>&#x000A;<span class="no">12</span>   s.summary     = <span class="s"><span class="dl">%q{</span><span class="k">TODO: Write a gem summary</span><span class="dl">}</span></span>&#x000A;<span class="no">13</span>   s.description = <span class="s"><span class="dl">%q{</span><span class="k">TODO: Write a gem description</span><span class="dl">}</span></span>&#x000A;<span class="no">14</span> &#x000A;<span class="no">15</span>   s.rubyforge_project = <span class="s"><span class="dl">&quot;</span><span class="k">your_gem</span><span class="dl">&quot;</span></span>&#x000A;<span class="no">16</span> &#x000A;<span class="no">17</span>   <span class="c"># Manifest</span>&#x000A;<span class="no">18</span>   s.files         = <span class="sh"><span class="dl">`</span><span class="k">git ls-files</span><span class="dl">`</span></span>.split(<span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="dl">&quot;</span></span>)&#x000A;<span class="no">19</span>   s.test_files    = <span class="sh"><span class="dl">`</span><span class="k">git ls-files -- {test,spec,features}/*</span><span class="dl">`</span></span>.split(<span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="dl">&quot;</span></span>)&#x000A;<span class="no"><strong>20</strong></span>   s.executables   = <span class="sh"><span class="dl">`</span><span class="k">git ls-files -- bin/*</span><span class="dl">`</span></span>.split(<span class="s"><span class="dl">&quot;</span><span class="ch">\n</span><span class="dl">&quot;</span></span>).map{ |f| <span class="co">File</span>.basename(f) }&#x000A;<span class="no">21</span>   s.require_paths = [<span class="s"><span class="dl">&quot;</span><span class="k">lib</span><span class="dl">&quot;</span></span>]&#x000A;<span class="no">22</span> &#x000A;<span class="no">23</span>   <span class="c"># Dependencies</span>&#x000A;<span class="no">24</span>   <span class="c"># specify any dependencies here; for example:</span>&#x000A;<span class="no">25</span>   <span class="c"># s.add_development_dependency &quot;rspec&quot;</span>&#x000A;<span class="no">26</span>   <span class="c"># s.add_runtime_dependency &quot;rest-client&quot;</span>&#x000A;<span class="no">27</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Edit the metadata to include your name, email, and what the gem is about. Unless you are doing something off the reservation, there should be no need to mess with the manifest.</p>&#x000A;<p>The gemspec allows you to specify both runtime and development dependencies. Runtime dependencies are what the users of your gem will need installed with the gem. Development dependencies are used by developers working on your gem, for example gems used for testing only such as RSpec and Cucumber. Add the dependencies you know. You can change the dependency list later easily. <strong>Important!</strong> Do not  edit the <code>Gemfile</code>, bundler knows how to read the gemspec.</p>&#x000A;<pre><code>% bundle&#x000A;% git commit -a</code></pre>&#x000A;<p>Now comes the hard part, actually writing your gem.</p>&#x000A;<h2>First push</h2>&#x000A;<p>After you have written you gem&#8217;s initial code, you will want to push it out for people to use. There are two things to know about this process:</p>&#x000A;<ul>&#x000A;	<li>You need a <a href="http://rubygems.org">RubyGems.org</a> account</li>&#x000A;	<li>It is ridiculously easy</li>&#x000A;</ul>&#x000A;<p>Once you have your RubyGems account, lets build and push the gem using the <code>gem</code> command. When you push, you will be asked to log into RubyGems one time. After that, your credentials will be saved for future use.</p>&#x000A;<pre><code>% gem build your_gem.gemspec&#x000A;% gem push your_gem-0.0.1.gem&#x000A;Enter your RubyGems.org credentials.&#x000A;Don't have an account yet? Create one at http://rubygems.org/sign_up&#x000A;   Email:   your_name@example.com&#x000A;Password:&#x000A;Pushing gem to https://rubygems.org...&#x000A;Signed in.&#x000A;Pushing gem to https://rubygems.org...&#x000A;Successfully registered gem: your_gem (0.0.1)</code></pre>&#x000A;<p>Congratulations on publishing your gem!</p>&#x000A;<h2>Subsequent pushes</h2>&#x000A;<p>On subsequent pushes you will need to manage your version number. There are also two things to know about this process:</p>&#x000A;<ul>&#x000A;	<li>The version number is in <code>lib/your_gem/version.rb</code></li>&#x000A;	<li>It is ridiculously easy</li>&#x000A;</ul>&#x000A;<p>Update (but do not commit) your version number in <code>lib/your_gem/version.rb</code>. If you have any other outstanding changes, commit those first &mdash; we want our version number commit to be atomic and we are going to tag it. Now do this:</p>&#x000A;<pre><code>% bundle&#x000A;% git commit -am 'v0.0.2'&#x000A;% git tag 'v0.0.2'&#x000A;% gem build your_gem.gemspec&#x000A;% gem push your_gem-0.0.2.gem</code></pre>&#x000A;<p>Running bundle before the commit updates the version numbers in the Gemfile.lock file. Your git history will look nice and clean with your spiffy new atomic version commits!</p>&#x000A;<p>Durran was right: just write the gemspec and be done.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Not using Bundler? Do it the hard way. Better yet, use Bundler.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Not using <code>rvm</code>? Why not? At least tell me you are using <code>rbenv</code>?</p>&#x000A;<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> This repo is currently (8/22/11) missing the <code>README.md</code>, you should have one.</p>
-    </div>
+  <p>This blog post was inspired by <a href="http://twiiter.com/garybernhardt">@garybernhardt</a>&#8217;s <a href="http://twitter.com/#!/garybernhardt/status/104716358092201985">tweet</a></p>&#x000A;<blockquote>&#x000A;<p>Coming in a few minutes: my first actual Ruby gem. If I can figure out how to publish it.</p>&#x000A;</blockquote>&#x000A;<p>In the distant past, I would have suggested to Gary that he use <a href="http://rubygems.org/gems/jeweler">Jeweler</a> when starting a new Ruby Gem. Then one day I was deep in a conversation with Durran Jordan (<a href="http://twitter.com/modetojoy">@modetojoy</a>) about some minutae of MongoDB and Mongoid when the topic of starting a new gem came up. Durran&#8217;s reaction was stated with his usual aplomb:</p>&#x000A;<blockquote>&#x000A;<p>Jeweller? Hoe? F*#!k that noise. Write your own gemspec and be done.</p>&#x000A;</blockquote>&#x000A;<p>When Durran says something, it is worth listening to. I went back and ripped out Jeweler. The world did not end. I published my gem. I even found I had a bunch of unnecessary baggage. Getting rid of Jeweler actually improved my understanding of the gem publishing process.</p>&#x000A;<h2>How to publish your gem</h2>&#x000A;<p>Publishing a gem is basically a three step process:</p>&#x000A;<ul>&#x000A;	<li>Gem layout and Gemspec generation</li>&#x000A;	<li>First push</li>&#x000A;	<li>Subsequent pushes</li>&#x000A;</ul>&#x000A;<p>Well, except for the <em>zeroth</em> step: deciding on a gem name. It is well worth spending a little time googling and taking a look at existing <a href="http://rubygems.org">RubyGems.org</a> before choosing your name.</p>&#x000A;<h2>Gem layout and Gemspec generation</h2>&#x000A;<p>The hard way to do this is to find another gem and copy its gemspec and layout.</p>&#x000A;<p>Or we can cheat.</p>&#x000A;<p><strong>Bundler</strong> will generate a gemspec and a layout for you<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>. And since we are cheating already, lets use use <strong>rvm</strong> as well, shall we?<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup>. You can follow along with this not-yet-released gem <a href="http://github.com/leshill/handlebars_assets">handlebars_assets</a><sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup>. Here is what we are going to do:</p>&#x000A;<ul>&#x000A;	<li>Create a gemset for <em>your_gem</em></li>&#x000A;	<li>Install bundler</li>&#x000A;	<li>Create the gem layout</li>&#x000A;	<li>Create the <code>.rvmrc</code></li>&#x000A;	<li>Remove <code>Gemfile.lock</code> from <code>.gitignore</code></li>&#x000A;	<li>Make the initial commit</li>&#x000A;	<li>Edit the gemspec as needed</li>&#x000A;	<li>Install all your dependencies</li>&#x000A;	<li>Commit your changes</li>&#x000A;</ul>&#x000A;<p>Easy!</p>&#x000A;<pre><code>% rvm gemset create your_gem&#x000A;% rvm gemset use your_gem&#x000A;% gem install bundler&#x000A;% bundle gem your_gem&#x000A;% cd your_gem&#x000A;% cat &gt; .rvmrc&#x000A;rvm use default@your_gem</code></pre>&#x000A;<p>Edit <code>.gitignore</code> to remove Gemfile.lock from the list of ignores.</p>&#x000A;<pre><code>% git add .&#x000A;% git commit -m 'Initial commit'</code></pre>&#x000A;<p>We now need to edit our generated <a href="http://docs.rubygems.org/read/chapter/20">gemspec</a>. There are three basic parts to the gemspec:</p>&#x000A;<ul>&#x000A;	<li>Metadata</li>&#x000A;	<li>Manifest</li>&#x000A;	<li>Dependencies</li>&#x000A;</ul>&#x000A;<p>Our generated gemspec has placeholder metadata, a good starting manifest, and no dependencies.</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"> <a href="#n1" name="n1">1</a></span><span class="comment"># -*- encoding: utf-8 -*-</span>&#x000A;<span class="line-numbers"> <a href="#n2" name="n2">2</a></span><span class="global-variable">$:</span>.push <span class="constant">File</span>.expand_path(<span class="string"><span class="delimiter">&quot;</span><span class="content">../lib</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">__FILE__</span>)&#x000A;<span class="line-numbers"> <a href="#n3" name="n3">3</a></span>require <span class="string"><span class="delimiter">&quot;</span><span class="content">your_gem/version</span><span class="delimiter">&quot;</span></span>&#x000A;<span class="line-numbers"> <a href="#n4" name="n4">4</a></span>&#x000A;<span class="line-numbers"> <a href="#n5" name="n5">5</a></span><span class="constant">Gem</span>::<span class="constant">Specification</span>.new <span class="keyword">do</span> |s|&#x000A;<span class="line-numbers"> <a href="#n6" name="n6">6</a></span>  <span class="comment"># Metadata</span>&#x000A;<span class="line-numbers"> <a href="#n7" name="n7">7</a></span>  s.name        = <span class="string"><span class="delimiter">&quot;</span><span class="content">your_gem</span><span class="delimiter">&quot;</span></span>&#x000A;<span class="line-numbers"> <a href="#n8" name="n8">8</a></span>  s.version     = <span class="constant">YourGem</span>::<span class="constant">VERSION</span>&#x000A;<span class="line-numbers"> <a href="#n9" name="n9">9</a></span>  s.authors     = [<span class="string"><span class="delimiter">&quot;</span><span class="content">Your Name</span><span class="delimiter">&quot;</span></span>]&#x000A;<span class="line-numbers"><strong><a href="#n10" name="n10">10</a></strong></span>  s.email       = [<span class="string"><span class="delimiter">&quot;</span><span class="content">your_name@example.com</span><span class="delimiter">&quot;</span></span>]&#x000A;<span class="line-numbers"><a href="#n11" name="n11">11</a></span>  s.homepage    = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>&#x000A;<span class="line-numbers"><a href="#n12" name="n12">12</a></span>  s.summary     = <span class="string"><span class="delimiter">%q{</span><span class="content">TODO: Write a gem summary</span><span class="delimiter">}</span></span>&#x000A;<span class="line-numbers"><a href="#n13" name="n13">13</a></span>  s.description = <span class="string"><span class="delimiter">%q{</span><span class="content">TODO: Write a gem description</span><span class="delimiter">}</span></span>&#x000A;<span class="line-numbers"><a href="#n14" name="n14">14</a></span>&#x000A;<span class="line-numbers"><a href="#n15" name="n15">15</a></span>  s.rubyforge_project = <span class="string"><span class="delimiter">&quot;</span><span class="content">your_gem</span><span class="delimiter">&quot;</span></span>&#x000A;<span class="line-numbers"><a href="#n16" name="n16">16</a></span>&#x000A;<span class="line-numbers"><a href="#n17" name="n17">17</a></span>  <span class="comment"># Manifest</span>&#x000A;<span class="line-numbers"><a href="#n18" name="n18">18</a></span>  s.files         = <span class="shell"><span class="delimiter">`</span><span class="content">git ls-files</span><span class="delimiter">`</span></span>.split(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>)&#x000A;<span class="line-numbers"><a href="#n19" name="n19">19</a></span>  s.test_files    = <span class="shell"><span class="delimiter">`</span><span class="content">git ls-files -- {test,spec,features}/*</span><span class="delimiter">`</span></span>.split(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>)&#x000A;<span class="line-numbers"><strong><a href="#n20" name="n20">20</a></strong></span>  s.executables   = <span class="shell"><span class="delimiter">`</span><span class="content">git ls-files -- bin/*</span><span class="delimiter">`</span></span>.split(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>).map{ |f| <span class="constant">File</span>.basename(f) }&#x000A;<span class="line-numbers"><a href="#n21" name="n21">21</a></span>  s.require_paths = [<span class="string"><span class="delimiter">&quot;</span><span class="content">lib</span><span class="delimiter">&quot;</span></span>]&#x000A;<span class="line-numbers"><a href="#n22" name="n22">22</a></span>&#x000A;<span class="line-numbers"><a href="#n23" name="n23">23</a></span>  <span class="comment"># Dependencies</span>&#x000A;<span class="line-numbers"><a href="#n24" name="n24">24</a></span>  <span class="comment"># specify any dependencies here; for example:</span>&#x000A;<span class="line-numbers"><a href="#n25" name="n25">25</a></span>  <span class="comment"># s.add_development_dependency &quot;rspec&quot;</span>&#x000A;<span class="line-numbers"><a href="#n26" name="n26">26</a></span>  <span class="comment"># s.add_runtime_dependency &quot;rest-client&quot;</span>&#x000A;<span class="line-numbers"><a href="#n27" name="n27">27</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Edit the metadata to include your name, email, and what the gem is about. Unless you are doing something off the reservation, there should be no need to mess with the manifest.</p>&#x000A;<p>The gemspec allows you to specify both runtime and development dependencies. Runtime dependencies are what the users of your gem will need installed with the gem. Development dependencies are used by developers working on your gem, for example gems used for testing only such as RSpec and Cucumber. Add the dependencies you know. You can change the dependency list later easily. <strong>Important!</strong> Do not  edit the <code>Gemfile</code>, bundler knows how to read the gemspec.</p>&#x000A;<pre><code>% bundle&#x000A;% git commit -a</code></pre>&#x000A;<p>Now comes the hard part, actually writing your gem.</p>&#x000A;<h2>First push</h2>&#x000A;<p>After you have written you gem&#8217;s initial code, you will want to push it out for people to use. There are two things to know about this process:</p>&#x000A;<ul>&#x000A;	<li>You need a <a href="http://rubygems.org">RubyGems.org</a> account</li>&#x000A;	<li>It is ridiculously easy</li>&#x000A;</ul>&#x000A;<p>Once you have your RubyGems account, lets build and push the gem using the <code>gem</code> command. When you push, you will be asked to log into RubyGems one time. After that, your credentials will be saved for future use.</p>&#x000A;<pre><code>% gem build your_gem.gemspec&#x000A;% gem push your_gem-0.0.1.gem&#x000A;Enter your RubyGems.org credentials.&#x000A;Don't have an account yet? Create one at http://rubygems.org/sign_up&#x000A;   Email:   your_name@example.com&#x000A;Password:&#x000A;Pushing gem to https://rubygems.org...&#x000A;Signed in.&#x000A;Pushing gem to https://rubygems.org...&#x000A;Successfully registered gem: your_gem (0.0.1)</code></pre>&#x000A;<p>Congratulations on publishing your gem!</p>&#x000A;<h2>Subsequent pushes</h2>&#x000A;<p>On subsequent pushes you will need to manage your version number. There are also two things to know about this process:</p>&#x000A;<ul>&#x000A;	<li>The version number is in <code>lib/your_gem/version.rb</code></li>&#x000A;	<li>It is ridiculously easy</li>&#x000A;</ul>&#x000A;<p>Update (but do not commit) your version number in <code>lib/your_gem/version.rb</code>. If you have any other outstanding changes, commit those first &mdash; we want our version number commit to be atomic and we are going to tag it. Now do this:</p>&#x000A;<pre><code>% bundle&#x000A;% git commit -am 'v0.0.2'&#x000A;% git tag 'v0.0.2'&#x000A;% gem build your_gem.gemspec&#x000A;% gem push your_gem-0.0.2.gem</code></pre>&#x000A;<p>Running bundle before the commit updates the version numbers in the Gemfile.lock file. Your git history will look nice and clean with your spiffy new atomic version commits!</p>&#x000A;<p>Durran was right: just write the gemspec and be done.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Not using Bundler? Do it the hard way. Better yet, use Bundler.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Not using <code>rvm</code>? Why not? At least tell me you are using <code>rbenv</code>?</p>&#x000A;<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> This repo is currently (8/22/11) missing the <code>README.md</code>, you should have one.</p>
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2011/08/21/write-your-own-gemspec.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2011/08/21/write-your-own-gemspec.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2011/08/21/write-your-own-gemspec.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2011/08/21/write-your-own-gemspec.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

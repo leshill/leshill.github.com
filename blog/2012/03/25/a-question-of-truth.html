@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2012/03/25/a-question-of-truth.html'>
-          <div class='meta' title='Sun Mar 25 14:05:13 -0700 2012'>
-            March 25, 2012
-            &raquo;
-          </div>
-          <h1>
-            “A Question of Truth”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2012/03/25/a-question-of-truth.html'>
+      <div class='meta' title='Sun Mar 25 14:05:13 -0700 2012'>
+        March 25, 2012
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “A Question of Truth”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <p>Yesterday, a simple pull request to Rails <a href="https://github.com/rails/rails/pull/5329">core</a> <a href="https://github.com/rails/rails/commit/0aa66f04e4b4698718023cacb18612e04a4c5eb1">dramatically</a> <a href="https://github.com/rails/rails/pull/5572">exploded</a> over the issue of what a predicate should return.</p>&#x000A;<h2>TL;DR</h2>&#x000A;<p>This tweet pretty much sums it up:</p>&#x000A;<blockquote>&#x000A;<p>For what it&#8217;s worth I&#8217;d consider any ruby code that relies on true/false singletons from predicates to be in error.</p>&#x000A;</blockquote>&#x000A;<p>&mdash; <a href="https://twitter.com/#!/avdi/status/183376469957943296">@avdi</a></p>&#x000A;<h2>Background</h2>&#x000A;<p>To really appreciate the dicussion, we need to know two things about Ruby.</p>&#x000A;<h3>What is true?</h3>&#x000A;<p>Ruby, like many programming languages, has a specific understanding of <em>true</em> or <em>false</em> that goes beyond expressing the concept in a boolean type. Ruby understands the concept of whether a value is <em>true</em> or <em>false</em>, and therefore any expression requiring a boolean value (for example, using the boolean logic operators), without needing an explicit set of boolean values. Ruby does have the keywords <code>true</code> and <code>false</code>, sometimes called the <em>true singleton</em> and the <em>false singleton</em> since the values are shared in the Ruby VM, which are Ruby&#8217;s only notion of anything like a boolean type.</p>&#x000A;<p>Instead, in Ruby, when a boolean value is required in boolean logic expressions (or conditionals), Ruby is really only concered with the <em>truthyness</em> of the value.  Ruby evaluates a value as either <em>truthy</em> or <em>falsey</em> with a simple rule.</p>&#x000A;<p>All of the following are <em>falsey</em> values.</p>&#x000A;<ul>&#x000A;	<li><code>false</code></li>&#x000A;	<li><code>nil</code></li>&#x000A;</ul>&#x000A;<p>And anything else is a <em>truthy</em> value:</p>&#x000A;<ul>&#x000A;	<li><code>true</code></li>&#x000A;	<li><code>-1</code></li>&#x000A;	<li><code>0</code></li>&#x000A;	<li><code>0.0</code></li>&#x000A;	<li><code>""</code> &mdash; an empty string</li>&#x000A;	<li><code>"hi"</code> &mdash; a non-empty string</li>&#x000A;	<li><code>[]</code> &mdash; an empty array</li>&#x000A;	<li><code>{a: 1}</code> &mdash; a non-empty hash</li>&#x000A;	<li><code>Object.new</code> &mdash; any object</li>&#x000A;	<li><em>You get the idea</em></li>&#x000A;</ul>&#x000A;<p>This is one of Ruby&#8217;s many affordances for developers (and not the only one at play in this drama). It allows us to write concise and expressive code like this:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> might_be_initialized_already ||= {}</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>To be very clear about what this is doing, lets rewrite it naively:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">unless</span> might_be_initialized_already&#x000A;<span class="no">2</span>   might_be_initialized_already = {}&#x000A;<span class="no">3</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Note that we do not care what the type of <code>might_be_initialized_already</code> is, we can use the incredibly useful definition of <em>truthy</em> and <em>falsey</em> to evaluate the conditional without coercion or other type-based manipulations.</p>&#x000A;<h3>What is a predicate?</h3>&#x000A;<p>Ruby has, among its many affordances for developers (and the second one at play in this drama), the optional method name suffixes <code>!</code> and <code>?</code>.</p>&#x000A;<p>At this point, you might be thinking, &#8220;<em>Hey what about <code>=</code>, it is also a suffix!</em>&#8221; and you would be almost right. <code>=</code> is a suffix, but unlike <code>!</code> and <code>?</code> it actually means something to Ruby, namely that expressions like our earlier example:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="pc">self</span>.properties ||= {}</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>are understood correctly. <code>!</code> and <code>?</code> mean nothing to Ruby, they exist to make our code just a bit more pleasant to read. <code>!</code> and <code>?</code> are affordances that we use by convention. There is no requirement to use them, yet we do so all the time. And yes, <code>=</code> is another one of those affordances for the developer.</p>&#x000A;<p>The <code>!</code> suffix indicates that the method modifies the receiver, for example:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">def</span> <span class="fu">reset!</span>&#x000A;<span class="no">2</span>   <span class="c"># reset everything back to its initial state</span>&#x000A;<span class="no">3</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>The convention for <code>!</code> is summed up in <strong>Programming Ruby</strong> by Thomas<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>:</p>&#x000A;<blockquote>&#x000A;<p>Methods that are “dangerous,” or modify the receiver, may be named with a trailing !.</p>&#x000A;</blockquote>&#x000A;<p>The <code>?</code> suffix indicates that the method is a predicate, returning a <em>truthy</em> or <em>falsey</em> value. For example:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> reset! <span class="r">unless</span> valid?</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>The convention for <code>?</code> is also summed up in <strong>Programming Ruby</strong> by Thomas:</p>&#x000A;<blockquote>&#x000A;<p>Methods that act as queries are often named with a trailing ?, such as <code>instance_of?</code>.</p>&#x000A;</blockquote>&#x000A;<p>The astute reader will have noted that <em>by definition</em> <strong>every method in ruby returns a <em>truthy</em> or <em>falsey</em> value</strong>. And in <strong>The Ruby Programming Language</strong> by Flannagan and Matz (yes, that Matz), it is noted as part of the convention for <code>?</code>:</p>&#x000A;<blockquote>&#x000A;<p>Predicates typically return one of the Boolean values true or false, but this is not required, as any value other than false or nil works like true when a Boolean value is required. (The Numeric method nonzero?, for example, returns nil if the number it is invoked on is zero, and just returns the number otherwise.)</p>&#x000A;</blockquote>&#x000A;<h2>The drama</h2>&#x000A;<p>The pull request in question reverted year-old Rails code, changing it to return <code>true</code> or <code>false</code> instead of just returning a <em>truthy</em> or <em>falsey</em> value. The instigation of the request was that originally the <code>xml_http_request?</code> method returned <code>true</code> or <code>false</code> and existing code had used the predicate as a RHS. When the value constraint was removed, all the code using the predicate as a RHS caused errors (the values were no longer <code>true</code> and <code>false</code>).</p>&#x000A;<h2>My opinion</h2>&#x000A;<p>Since a predicate method is only a method with a &#8216;?&#8217; appended to the name, the convention around its use covers two questions, the obvious one:</p>&#x000A;<h3>What values does the predicate method return?</h3>&#x000A;<p>We might say that the convention is that the predicate method constrains its return value to <code>true</code> and <code>false</code>.</p>&#x000A;<p>Or we might say that the convention is that the predicate method does not constrain its value.</p>&#x000A;<p>Given the explicit endorsement, the second is clearly the convention. This also matches the experience of the Ruby community to date.</p>&#x000A;<p>As an aside, following the precedent of <code>=</code>, one can easily imagine a modified Ruby that would make predicate methods returning only <code>true</code> and <code>false</code> more than just a convention and simply the way Ruby works.<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup></p>&#x000A;<p>And the not so obvious one:</p>&#x000A;<h3>When do you use the predicate method?</h3>&#x000A;<p>If we accept that the predicate method constrains its return value, then accepting that the predicate method is usable anywhere makes sense. In this case using a predicate as a RHS is perfect when you want to get a <code>true</code> or <code>false</code> value.</p>&#x000A;<p>If we accept that the predicate method does not constrain its return value, then accepting that the predicate method is usable anywhere does not make sense. In this case using a predicate as a RHS fails miserably, as you get whatever happens to be returned when determining its <em>truthyness</em>.</p>&#x000A;<p>This is really the cause of the dust-up in Rails core. Whatever the original intentions were, at one point the predicate method in question returned <code>true</code> or <code>false</code>. Depending on a predicate method to return a <code>true</code> or <code>false</code> for use in a RHS is not really good Ruby practice. There is no guarantee that the values are anything other than <em>truthy</em> or <em>falsey</em>, which is to say, anything at all.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> The Pickaxe book.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Just in case someone misreads that sentence, Ruby does not work this way.</p>
-    </div>
+  <p>Yesterday, a simple pull request to Rails <a href="https://github.com/rails/rails/pull/5329">core</a> <a href="https://github.com/rails/rails/commit/0aa66f04e4b4698718023cacb18612e04a4c5eb1">dramatically</a> <a href="https://github.com/rails/rails/pull/5572">exploded</a> over the issue of what a predicate should return.</p>&#x000A;<h2>TL;DR</h2>&#x000A;<p>This tweet pretty much sums it up:</p>&#x000A;<blockquote>&#x000A;<p>For what it&#8217;s worth I&#8217;d consider any ruby code that relies on true/false singletons from predicates to be in error.</p>&#x000A;</blockquote>&#x000A;<p>&mdash; <a href="https://twitter.com/#!/avdi/status/183376469957943296">@avdi</a></p>&#x000A;<h2>Background</h2>&#x000A;<p>To really appreciate the dicussion, we need to know two things about Ruby.</p>&#x000A;<h3>What is true?</h3>&#x000A;<p>Ruby, like many programming languages, has a specific understanding of <em>true</em> or <em>false</em> that goes beyond expressing the concept in a boolean type. Ruby understands the concept of whether a value is <em>true</em> or <em>false</em>, and therefore any expression requiring a boolean value (for example, using the boolean logic operators), without needing an explicit set of boolean values. Ruby does have the keywords <code>true</code> and <code>false</code>, sometimes called the <em>true singleton</em> and the <em>false singleton</em> since the values are shared in the Ruby VM, which are Ruby&#8217;s only notion of anything like a boolean type.</p>&#x000A;<p>Instead, in Ruby, when a boolean value is required in boolean logic expressions (or conditionals), Ruby is really only concered with the <em>truthyness</em> of the value.  Ruby evaluates a value as either <em>truthy</em> or <em>falsey</em> with a simple rule.</p>&#x000A;<p>All of the following are <em>falsey</em> values.</p>&#x000A;<ul>&#x000A;	<li><code>false</code></li>&#x000A;	<li><code>nil</code></li>&#x000A;</ul>&#x000A;<p>And anything else is a <em>truthy</em> value:</p>&#x000A;<ul>&#x000A;	<li><code>true</code></li>&#x000A;	<li><code>-1</code></li>&#x000A;	<li><code>0</code></li>&#x000A;	<li><code>0.0</code></li>&#x000A;	<li><code>""</code> &mdash; an empty string</li>&#x000A;	<li><code>"hi"</code> &mdash; a non-empty string</li>&#x000A;	<li><code>[]</code> &mdash; an empty array</li>&#x000A;	<li><code>{a: 1}</code> &mdash; a non-empty hash</li>&#x000A;	<li><code>Object.new</code> &mdash; any object</li>&#x000A;	<li><em>You get the idea</em></li>&#x000A;</ul>&#x000A;<p>This is one of Ruby&#8217;s many affordances for developers (and not the only one at play in this drama). It allows us to write concise and expressive code like this:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>might_be_initialized_already ||= {}</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>To be very clear about what this is doing, lets rewrite it naively:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="keyword">unless</span> might_be_initialized_already&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  might_be_initialized_already = {}&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>Note that we do not care what the type of <code>might_be_initialized_already</code> is, we can use the incredibly useful definition of <em>truthy</em> and <em>falsey</em> to evaluate the conditional without coercion or other type-based manipulations.</p>&#x000A;<h3>What is a predicate?</h3>&#x000A;<p>Ruby has, among its many affordances for developers (and the second one at play in this drama), the optional method name suffixes <code>!</code> and <code>?</code>.</p>&#x000A;<p>At this point, you might be thinking, &#8220;<em>Hey what about <code>=</code>, it is also a suffix!</em>&#8221; and you would be almost right. <code>=</code> is a suffix, but unlike <code>!</code> and <code>?</code> it actually means something to Ruby, namely that expressions like our earlier example:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="predefined-constant">self</span>.properties ||= {}</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>are understood correctly. <code>!</code> and <code>?</code> mean nothing to Ruby, they exist to make our code just a bit more pleasant to read. <code>!</code> and <code>?</code> are affordances that we use by convention. There is no requirement to use them, yet we do so all the time. And yes, <code>=</code> is another one of those affordances for the developer.</p>&#x000A;<p>The <code>!</code> suffix indicates that the method modifies the receiver, for example:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="keyword">def</span> <span class="function">reset!</span>&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  <span class="comment"># reset everything back to its initial state</span>&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>The convention for <code>!</code> is summed up in <strong>Programming Ruby</strong> by Thomas<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>:</p>&#x000A;<blockquote>&#x000A;<p>Methods that are “dangerous,” or modify the receiver, may be named with a trailing !.</p>&#x000A;</blockquote>&#x000A;<p>The <code>?</code> suffix indicates that the method is a predicate, returning a <em>truthy</em> or <em>falsey</em> value. For example:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>reset! <span class="keyword">unless</span> valid?</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>The convention for <code>?</code> is also summed up in <strong>Programming Ruby</strong> by Thomas:</p>&#x000A;<blockquote>&#x000A;<p>Methods that act as queries are often named with a trailing ?, such as <code>instance_of?</code>.</p>&#x000A;</blockquote>&#x000A;<p>The astute reader will have noted that <em>by definition</em> <strong>every method in ruby returns a <em>truthy</em> or <em>falsey</em> value</strong>. And in <strong>The Ruby Programming Language</strong> by Flannagan and Matz (yes, that Matz), it is noted as part of the convention for <code>?</code>:</p>&#x000A;<blockquote>&#x000A;<p>Predicates typically return one of the Boolean values true or false, but this is not required, as any value other than false or nil works like true when a Boolean value is required. (The Numeric method nonzero?, for example, returns nil if the number it is invoked on is zero, and just returns the number otherwise.)</p>&#x000A;</blockquote>&#x000A;<h2>The drama</h2>&#x000A;<p>The pull request in question reverted year-old Rails code, changing it to return <code>true</code> or <code>false</code> instead of just returning a <em>truthy</em> or <em>falsey</em> value. The instigation of the request was that originally the <code>xml_http_request?</code> method returned <code>true</code> or <code>false</code> and existing code had used the predicate as a RHS. When the value constraint was removed, all the code using the predicate as a RHS caused errors (the values were no longer <code>true</code> and <code>false</code>).</p>&#x000A;<h2>My opinion</h2>&#x000A;<p>Since a predicate method is only a method with a &#8216;?&#8217; appended to the name, the convention around its use covers two questions, the obvious one:</p>&#x000A;<h3>What values does the predicate method return?</h3>&#x000A;<p>We might say that the convention is that the predicate method constrains its return value to <code>true</code> and <code>false</code>.</p>&#x000A;<p>Or we might say that the convention is that the predicate method does not constrain its value.</p>&#x000A;<p>Given the explicit endorsement, the second is clearly the convention. This also matches the experience of the Ruby community to date.</p>&#x000A;<p>As an aside, following the precedent of <code>=</code>, one can easily imagine a modified Ruby that would make predicate methods returning only <code>true</code> and <code>false</code> more than just a convention and simply the way Ruby works.<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup></p>&#x000A;<p>And the not so obvious one:</p>&#x000A;<h3>When do you use the predicate method?</h3>&#x000A;<p>If we accept that the predicate method constrains its return value, then accepting that the predicate method is usable anywhere makes sense. In this case using a predicate as a RHS is perfect when you want to get a <code>true</code> or <code>false</code> value.</p>&#x000A;<p>If we accept that the predicate method does not constrain its return value, then accepting that the predicate method is usable anywhere does not make sense. In this case using a predicate as a RHS fails miserably, as you get whatever happens to be returned when determining its <em>truthyness</em>.</p>&#x000A;<p>This is really the cause of the dust-up in Rails core. Whatever the original intentions were, at one point the predicate method in question returned <code>true</code> or <code>false</code>. Depending on a predicate method to return a <code>true</code> or <code>false</code> for use in a RHS is not really good Ruby practice. There is no guarantee that the values are anything other than <em>truthy</em> or <em>falsey</em>, which is to say, anything at all.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> The Pickaxe book.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Just in case someone misreads that sentence, Ruby does not work this way.</p>
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2012/03/25/a-question-of-truth.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2012/03/25/a-question-of-truth.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2012/03/25/a-question-of-truth.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2012/03/25/a-question-of-truth.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

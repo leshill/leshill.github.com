@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2009/06/10/default-options-with-ruby.html'>
-          <div class='meta' title='Wed Jun 10 16:34:47 -0700 2009'>
-            June 10, 2009
-            &raquo;
-          </div>
-          <h1>
-            “Default Options With Ruby”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2009/06/10/default-options-with-ruby.html'>
+      <div class='meta' title='Wed Jun 10 16:34:47 -0700 2009'>
+        June 10, 2009
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “Default Options With Ruby”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <h3>Ruby and the argument collecting hash syntax</h3>&#x000A;<p>Unlike other languages, ruby does not support keyword parameters.  As an alternative, we use ruby&#8217;s syntactic shorthand to pass a hash as the final argument to a method using the <code>key =&gt; value</code> syntax:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> some_method(first_arg, <span class="sy">:key1</span> =&gt; value1, <span class="sy">:key2</span> =&gt; value2)</pre></div>&#x000A;</div>&#x000A;&#x000A;<p><code>some_method</code> will receive a hash as its second argument with the specified key/value pairs.  Unlike regular arguments, there is no way to provide default values for the individual key/value pairs (you can provide a default for the hash argument though):</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">def</span> <span class="fu">some_method</span>(thing, options = {})&#x000A;<span class="no">2</span>   <span class="c">#...</span>&#x000A;<span class="no">3</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>There are a few ruby idioms for providing default options to an option hash, one of the most common is available in rails, using the core extension <code>Hash#reverse_merge</code> from <code>ActiveSupport</code><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">def</span> <span class="fu">some_method</span>(thing, options = {})&#x000A;<span class="no">2</span>   options.reverse_merge!({<span class="sy">:key1</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">default</span><span class="dl">'</span></span>})&#x000A;<span class="no">3</span>   <span class="c">#...</span>&#x000A;<span class="no">4</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>If you do not have access to <code>ActiveSupport</code>, you can use ruby&#8217;s <code>Hash#merge</code><sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> as an alternative:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">def</span> <span class="fu">some_method</span>(thing, options = {})&#x000A;<span class="no">2</span>   options = {<span class="sy">:key1</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">default</span><span class="dl">'</span></span>}.merge(options)&#x000A;<span class="no">3</span>   <span class="c">#...</span>&#x000A;<span class="no">4</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>If that seems like too much code to be typing all the time, you can open up <code>Hash</code> and add a method.  Careful!  This is simple enough to get wrong.  Here is some code<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup> from a very useful rails plugin:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">def</span> <span class="fu">default!</span>(defaults = {})&#x000A;<span class="no">2</span>   defaults.each <span class="r">do</span> |key, value|&#x000A;<span class="no">3</span>     <span class="pc">self</span>[key] = value <span class="r">if</span> <span class="pc">self</span>[key].nil?&#x000A;<span class="no">4</span>   <span class="r">end</span>&#x000A;<span class="no">5</span>   <span class="pc">self</span>&#x000A;<span class="no">6</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>This code works until you want to set a default value to <code>nil</code>.  This can be fixed by replacing the conditional on line three with <code>unless has_key?(key)</code>.  Or you can simply rewrite this in terms of <code>Hash#merge</code><sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="r">def</span> <span class="fu">default!</span>(defaults = {})&#x000A;<span class="no">2</span>   replace(defaults.merge(<span class="pc">self</span>))&#x000A;<span class="no">3</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Which builds on ruby&#8217;s <code>Hash#merge</code>.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Or merge-bang (<code>merge!</code>).</p>&#x000A;<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> Slightly modified for readability.</p>&#x000A;<p class="footnote" id="fn4"><a href="#fnr4"><sup>4</sup></a> <code>ActiveSupport</code> does something similar.</p>
-    </div>
+  <h3>Ruby and the argument collecting hash syntax</h3>&#x000A;<p>Unlike other languages, ruby does not support keyword parameters.  As an alternative, we use ruby&#8217;s syntactic shorthand to pass a hash as the final argument to a method using the <code>key =&gt; value</code> syntax:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span>some_method(first_arg, <span class="symbol">:key1</span> =&gt; value1, <span class="symbol">:key2</span> =&gt; value2)</pre></div>&#x000A;</div>&#x000A;&#x000A;<p><code>some_method</code> will receive a hash as its second argument with the specified key/value pairs.  Unlike regular arguments, there is no way to provide default values for the individual key/value pairs (you can provide a default for the hash argument though):</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="keyword">def</span> <span class="function">some_method</span>(thing, options = {})&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  <span class="comment">#...</span>&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>There are a few ruby idioms for providing default options to an option hash, one of the most common is available in rails, using the core extension <code>Hash#reverse_merge</code> from <code>ActiveSupport</code><sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="keyword">def</span> <span class="function">some_method</span>(thing, options = {})&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  options.reverse_merge!({<span class="symbol">:key1</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">default</span><span class="delimiter">'</span></span>})&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span>  <span class="comment">#...</span>&#x000A;<span class="line-numbers"><a href="#n4" name="n4">4</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>If you do not have access to <code>ActiveSupport</code>, you can use ruby&#8217;s <code>Hash#merge</code><sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup> as an alternative:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="keyword">def</span> <span class="function">some_method</span>(thing, options = {})&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  options = {<span class="symbol">:key1</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">default</span><span class="delimiter">'</span></span>}.merge(options)&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span>  <span class="comment">#...</span>&#x000A;<span class="line-numbers"><a href="#n4" name="n4">4</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>If that seems like too much code to be typing all the time, you can open up <code>Hash</code> and add a method.  Careful!  This is simple enough to get wrong.  Here is some code<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup> from a very useful rails plugin:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="keyword">def</span> <span class="function">default!</span>(defaults = {})&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  defaults.each <span class="keyword">do</span> |key, value|&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span>    <span class="predefined-constant">self</span>[key] = value <span class="keyword">if</span> <span class="predefined-constant">self</span>[key].nil?&#x000A;<span class="line-numbers"><a href="#n4" name="n4">4</a></span>  <span class="keyword">end</span>&#x000A;<span class="line-numbers"><a href="#n5" name="n5">5</a></span>  <span class="predefined-constant">self</span>&#x000A;<span class="line-numbers"><a href="#n6" name="n6">6</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p>This code works until you want to set a default value to <code>nil</code>.  This can be fixed by replacing the conditional on line three with <code>unless has_key?(key)</code>.  Or you can simply rewrite this in terms of <code>Hash#merge</code><sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup>:</p>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="keyword">def</span> <span class="function">default!</span>(defaults = {})&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>  replace(defaults.merge(<span class="predefined-constant">self</span>))&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Which builds on ruby&#8217;s <code>Hash#merge</code>.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> Or merge-bang (<code>merge!</code>).</p>&#x000A;<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> Slightly modified for readability.</p>&#x000A;<p class="footnote" id="fn4"><a href="#fnr4"><sup>4</sup></a> <code>ActiveSupport</code> does something similar.</p>
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2009/06/10/default-options-with-ruby.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2009/06/10/default-options-with-ruby.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2009/06/10/default-options-with-ruby.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2009/06/10/default-options-with-ruby.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

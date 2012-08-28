@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2010/07/19/releasing-a-gem-read-this-post.html'>
-          <div class='meta' title='Sun Jul 18 21:04:35 -0700 2010'>
-            July 18, 2010
-            &raquo;
-          </div>
-          <h1>
-            “Releasing A Gem? Read This Post!”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2010/07/19/releasing-a-gem-read-this-post.html'>
+      <div class='meta' title='Sun Jul 18 21:04:35 -0700 2010'>
+        July 18, 2010
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “Releasing A Gem? Read This Post!”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <p>One of the great things about the Ruby community is that we are very happy to release our code; to contribute back to the community. <a href="http://rubygems.org">RubyGems</a> and <a href="http://github.com">github</a> make it ridiculously easy.</p>&#x000A;<p>Another great thing about the Ruby community is that we also like to help out. Maybe, someone wants to fix a bug, or perhaps sees an opportunity for a new feature, or just wants to help make the code better.</p>&#x000A;<p>Lately, for whatever reason<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, I have been running across well-used gems that passively discourage contributions because their development environment setup is disastrous<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup>.</p>&#x000A;<p>Anyone should be able to contribute to your gem after doing this<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup>:</p>&#x000A;<pre><code>% git clone http://github.com/leshill/makes_coffee.git&#x000A;% cd makes_coffee&#x000A;% cat &gt; .rvmrc&#x000A;rvm_gemset_create_on_use_flag=1&#x000A;rvm gemset use makes_coffee&#x000A;^D&#x000A;% cd .&#x000A;% gem install bundler&#x000A;% bundle install&#x000A;% rake&#x000A;...All specs pass...</code></pre>&#x000A;<p>That is all<sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup> it should take to get a development environment up and running for your gem.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> We are using <em>Rails 3</em>.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> It is disastrous if I have to repeatedly run <code>rake</code> and look at stack traces for me to discern exactly what needs to be done to get a working development environment.</p>&#x000A;<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> Yea, I am using <code>bundler</code> and <code>rvm</code>. You should be too.<sup class="footnote" id="fnr5"><a href="#fn5">5</a></sup></p>&#x000A;<p class="footnote" id="fn4"><a href="#fnr4"><sup>4</sup></a> Yea, the <code>rvmrc</code> step should not need to be there :) Oh and there may need to be more done, like setting up a database. Put it in the <code>README</code>.</p>&#x000A;<p class="footnote" id="fn5"><a href="#fnr5"><sup>5</sup></a> Or your gem has a development setup in the <code>README</code> or wiki, like <a href="http://github.com/rspec/rspec-dev">RSpec</a>.</p>
-    </div>
+  <p>One of the great things about the Ruby community is that we are very happy to release our code; to contribute back to the community. <a href="http://rubygems.org">RubyGems</a> and <a href="http://github.com">github</a> make it ridiculously easy.</p>&#x000A;<p>Another great thing about the Ruby community is that we also like to help out. Maybe, someone wants to fix a bug, or perhaps sees an opportunity for a new feature, or just wants to help make the code better.</p>&#x000A;<p>Lately, for whatever reason<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup>, I have been running across well-used gems that passively discourage contributions because their development environment setup is disastrous<sup class="footnote" id="fnr2"><a href="#fn2">2</a></sup>.</p>&#x000A;<p>Anyone should be able to contribute to your gem after doing this<sup class="footnote" id="fnr3"><a href="#fn3">3</a></sup>:</p>&#x000A;<pre><code>% git clone http://github.com/leshill/makes_coffee.git&#x000A;% cd makes_coffee&#x000A;% cat &gt; .rvmrc&#x000A;rvm_gemset_create_on_use_flag=1&#x000A;rvm gemset use makes_coffee&#x000A;^D&#x000A;% cd .&#x000A;% gem install bundler&#x000A;% bundle install&#x000A;% rake&#x000A;...All specs pass...</code></pre>&#x000A;<p>That is all<sup class="footnote" id="fnr4"><a href="#fn4">4</a></sup> it should take to get a development environment up and running for your gem.</p>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> We are using <em>Rails 3</em>.</p>&#x000A;<p class="footnote" id="fn2"><a href="#fnr2"><sup>2</sup></a> It is disastrous if I have to repeatedly run <code>rake</code> and look at stack traces for me to discern exactly what needs to be done to get a working development environment.</p>&#x000A;<p class="footnote" id="fn3"><a href="#fnr3"><sup>3</sup></a> Yea, I am using <code>bundler</code> and <code>rvm</code>. You should be too.<sup class="footnote" id="fnr5"><a href="#fn5">5</a></sup></p>&#x000A;<p class="footnote" id="fn4"><a href="#fnr4"><sup>4</sup></a> Yea, the <code>rvmrc</code> step should not need to be there :) Oh and there may need to be more done, like setting up a database. Put it in the <code>README</code>.</p>&#x000A;<p class="footnote" id="fn5"><a href="#fnr5"><sup>5</sup></a> Or your gem has a development setup in the <code>README</code> or wiki, like <a href="http://github.com/rspec/rspec-dev">RSpec</a>.</p>
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2010/07/19/releasing-a-gem-read-this-post.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2010/07/19/releasing-a-gem-read-this-post.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2010/07/19/releasing-a-gem-read-this-post.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2010/07/19/releasing-a-gem-read-this-post.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>

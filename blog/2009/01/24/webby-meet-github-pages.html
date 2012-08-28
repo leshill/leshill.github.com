@@ -31,97 +31,97 @@
 <body>
   <div class='container_12'>
     <header class='clearfix'>
-      <div class='box grid-12 clearfix'>
-        <div class='home prefix_1 grid_3'>
-          <h2>
-            <a href="/">Les Hill</a>
-          </h2>
-        </div>
-        <div class='links grid_7'>
-          <h2>
-            <a href="http://github.com/leshill/" class="extra">github</a>
-            <a href="http://twitter.com/leshill/" class="extra">twitter</a>
-            <a href="http://facebook.com/leshill/" class="extra">facebook</a>
-            <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
-            <a href="/archives.html" class="extra">archives</a>
-          </h2>
-        </div>
-      </div>
-    </header>
+  <div class='box grid-12 clearfix'>
+    <div class='home prefix_1 grid_3'>
+      <h2>
+        <a href="/">Les Hill</a>
+      </h2>
+    </div>
+    <div class='links grid_7'>
+      <h2>
+        <a href="http://github.com/leshill/" class="extra">github</a>
+        <a href="http://twitter.com/leshill/" class="extra">twitter</a>
+        <a href="http://facebook.com/leshill/" class="extra">facebook</a>
+        <a href="http://www.linkedin.com/in/leshill/" class="extra">linked in</a>
+        <a href="/archives.html" class="extra">archives</a>
+      </h2>
+    </div>
+  </div>
+</header>
     <div class='clearfix' id='title'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <a href='/blog/2009/01/24/webby-meet-github-pages.html'>
-          <div class='meta' title='Sat Jan 24 09:54:15 -0800 2009'>
-            January 24, 2009
-            &raquo;
-          </div>
-          <h1>
-            “Webby, Meet GitHub Pages”
-          </h1>
-        </a>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <a href='/blog/2009/01/24/webby-meet-github-pages.html'>
+      <div class='meta' title='Sat Jan 24 09:54:15 -0800 2009'>
+        January 24, 2009
+        &raquo;
       </div>
-    </div>
+      <h1>
+        “Webby, Meet GitHub Pages”
+      </h1>
+    </a>
+  </div>
+</div>
     <div class='prefix_1 grid_10' id='post'>
-      <p>As of this post, this blog is now hosted by GitHub&#8217;s recently announced <a href="http://github.com/blog/272-github-pagesi">GitHub Pages</a>, still <a href="http://webby.rubyforge.org">Webby</a> powered, now with extra <em>git</em> goodness.</p>&#x000A;<p><strong>GitHub Pages</strong> generates a static site from a GitHub hosted repo, using <a href="http://github.com/mojombo/jekyll">Jekyll</a> to generate the files.  <strong>Jekyll</strong> understands two special directories <code>_posts</code> and <code>_layouts</code>, copying any other files and directories in the root of the repo that do not begin with an <code>_</code> directly to the static site.</p>&#x000A;<p><strong>Webby</strong> generates a static site from set of source files (<code>content</code>, <code>layouts</code>, etc), placing the results in the <code>output_dir</code> (defaults to <code>output</code> but can be changed.)</p>&#x000A;<p>To make <strong>Webby</strong> and <strong>GitHub Pages</strong> co-exist, I restructured my repo and made the following changes to my existing <strong>Webby</strong> site:</p>&#x000A;<ul>&#x000A;	<li>The root of the repo is the <code>output_dir</code> for <strong>Webby</strong></li>&#x000A;	<li>The <strong>Webby</strong> site (source files) are in a subdirectory name <code>_webby</code></li>&#x000A;	<li>The <code>webby</code> command line tool should be run from within the <code>_webby</code> directory, not the root of the repo</li>&#x000A;	<li>The <strong>Webby</strong> <code>clobber</code> target is overridden to ignore the <code>_webby</code> directory</li>&#x000A;	<li><code>Sitefile</code></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no">1</span> <span class="co">SITE</span>.output_dir = <span class="s"><span class="dl">'</span><span class="k">..</span><span class="dl">'</span></span>&#x000A;<span class="no">2</span> &#x000A;<span class="no">3</span> task <span class="sy">:default</span> =&gt; <span class="sy">:clean_build</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<ul>&#x000A;	<li><code>lib/override.rb</code> Rake monkey patch to allow overriding tasks found <a href="http://www.taknado.com/2007/7/30/overriding-rake-tasks">here</a></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="c"># From http://www.taknado.com/2007/7/30/overriding-rake-tasks</span>&#x000A;<span class="no"> 2</span> <span class="co">Rake</span>::<span class="co">TaskManager</span>.class_eval <span class="r">do</span>&#x000A;<span class="no"> 3</span>   <span class="r">def</span> <span class="fu">remove_task</span>(task_name)&#x000A;<span class="no"> 4</span>     <span class="iv">@tasks</span>.delete(task_name.to_s)&#x000A;<span class="no"> 5</span>   <span class="r">end</span>&#x000A;<span class="no"> 6</span> <span class="r">end</span>&#x000A;<span class="no"> 7</span> &#x000A;<span class="no"> 8</span> <span class="r">def</span> <span class="fu">remove_task</span>(task_name)&#x000A;<span class="no"> 9</span>   <span class="co">Rake</span>.application.remove_task(task_name)&#x000A;<span class="no"><strong>10</strong></span> <span class="r">end</span>&#x000A;<span class="no">11</span> &#x000A;<span class="no">12</span> <span class="r">def</span> <span class="fu">override_task</span>(args, &amp;block)&#x000A;<span class="no">13</span>   name, deps = <span class="co">Rake</span>.application.resolve_args([args])  &#x000A;<span class="no">14</span>   remove_task <span class="co">Rake</span>.application[name].name&#x000A;<span class="no">15</span>   task(args, &amp;block)&#x000A;<span class="no">16</span> <span class="r">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<ul>&#x000A;	<li><code>tasks/github_pages.rake</code> redefines <code>clobber</code>  to ignore the <code>_webby</code> directory and the new (default) <code>clean_build</code> task allows for file deletions<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="no"> 1</span> <span class="c"># We only want to remove the generated files</span>&#x000A;<span class="no"> 2</span> desc <span class="s"><span class="dl">&quot;</span><span class="k">Delete the website</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"> 3</span> override_task <span class="sy">:clobber</span> <span class="r">do</span> |t|&#x000A;<span class="no"> 4</span>   <span class="co">Dir</span>.chdir(<span class="co">Webby</span>.site.output_dir) <span class="r">do</span>&#x000A;<span class="no"> 5</span>     <span class="co">Dir</span>[<span class="s"><span class="dl">'</span><span class="k">*</span><span class="dl">'</span></span>].entries.reject {|entry| entry == <span class="s"><span class="dl">'</span><span class="k">_webby</span><span class="dl">'</span></span>}.each {|entry| rm_rf entry}&#x000A;<span class="no"> 6</span>   <span class="r">end</span>&#x000A;<span class="no"> 7</span> <span class="r">end</span>&#x000A;<span class="no"> 8</span> &#x000A;<span class="no"> 9</span> desc <span class="s"><span class="dl">&quot;</span><span class="k">Clobber, then build the website</span><span class="dl">&quot;</span></span>&#x000A;<span class="no"><strong>10</strong></span> task <span class="sy">:clean_build</span> =&gt; [<span class="sy">:clobber</span>, <span class="sy">:build</span>]</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>The new workflow for adding a post to the new site is:</p>&#x000A;<ol>&#x000A;	<li>Change directory to <code>_webby</code></li>&#x000A;	<li>Generate a new blog post</li>&#x000A;	<li>Run <code>webby autobuild</code></li>&#x000A;	<li>Edit until completed</li>&#x000A;	<li>Commit all changes locally (<code>git add .</code> from the root)</li>&#x000A;	<li>Push the changes</li>&#x000A;</ol>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Webby does not know if you have deleted a source file, by forcing the entire site to be rebuilt, the deletion is reflected in the generated static files.</p>
-    </div>
+  <p>As of this post, this blog is now hosted by GitHub&#8217;s recently announced <a href="http://github.com/blog/272-github-pagesi">GitHub Pages</a>, still <a href="http://webby.rubyforge.org">Webby</a> powered, now with extra <em>git</em> goodness.</p>&#x000A;<p><strong>GitHub Pages</strong> generates a static site from a GitHub hosted repo, using <a href="http://github.com/mojombo/jekyll">Jekyll</a> to generate the files.  <strong>Jekyll</strong> understands two special directories <code>_posts</code> and <code>_layouts</code>, copying any other files and directories in the root of the repo that do not begin with an <code>_</code> directly to the static site.</p>&#x000A;<p><strong>Webby</strong> generates a static site from set of source files (<code>content</code>, <code>layouts</code>, etc), placing the results in the <code>output_dir</code> (defaults to <code>output</code> but can be changed.)</p>&#x000A;<p>To make <strong>Webby</strong> and <strong>GitHub Pages</strong> co-exist, I restructured my repo and made the following changes to my existing <strong>Webby</strong> site:</p>&#x000A;<ul>&#x000A;	<li>The root of the repo is the <code>output_dir</code> for <strong>Webby</strong></li>&#x000A;	<li>The <strong>Webby</strong> site (source files) are in a subdirectory name <code>_webby</code></li>&#x000A;	<li>The <code>webby</code> command line tool should be run from within the <code>_webby</code> directory, not the root of the repo</li>&#x000A;	<li>The <strong>Webby</strong> <code>clobber</code> target is overridden to ignore the <code>_webby</code> directory</li>&#x000A;	<li><code>Sitefile</code></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"><a href="#n1" name="n1">1</a></span><span class="constant">SITE</span>.output_dir = <span class="string"><span class="delimiter">'</span><span class="content">..</span><span class="delimiter">'</span></span>&#x000A;<span class="line-numbers"><a href="#n2" name="n2">2</a></span>&#x000A;<span class="line-numbers"><a href="#n3" name="n3">3</a></span>task <span class="symbol">:default</span> =&gt; <span class="symbol">:clean_build</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<ul>&#x000A;	<li><code>lib/override.rb</code> Rake monkey patch to allow overriding tasks found <a href="http://www.taknado.com/2007/7/30/overriding-rake-tasks">here</a></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"> <a href="#n1" name="n1">1</a></span><span class="comment"># From http://www.taknado.com/2007/7/30/overriding-rake-tasks</span>&#x000A;<span class="line-numbers"> <a href="#n2" name="n2">2</a></span><span class="constant">Rake</span>::<span class="constant">TaskManager</span>.class_eval <span class="keyword">do</span>&#x000A;<span class="line-numbers"> <a href="#n3" name="n3">3</a></span>  <span class="keyword">def</span> <span class="function">remove_task</span>(task_name)&#x000A;<span class="line-numbers"> <a href="#n4" name="n4">4</a></span>    <span class="instance-variable">@tasks</span>.delete(task_name.to_s)&#x000A;<span class="line-numbers"> <a href="#n5" name="n5">5</a></span>  <span class="keyword">end</span>&#x000A;<span class="line-numbers"> <a href="#n6" name="n6">6</a></span><span class="keyword">end</span>&#x000A;<span class="line-numbers"> <a href="#n7" name="n7">7</a></span>&#x000A;<span class="line-numbers"> <a href="#n8" name="n8">8</a></span><span class="keyword">def</span> <span class="function">remove_task</span>(task_name)&#x000A;<span class="line-numbers"> <a href="#n9" name="n9">9</a></span>  <span class="constant">Rake</span>.application.remove_task(task_name)&#x000A;<span class="line-numbers"><strong><a href="#n10" name="n10">10</a></strong></span><span class="keyword">end</span>&#x000A;<span class="line-numbers"><a href="#n11" name="n11">11</a></span>&#x000A;<span class="line-numbers"><a href="#n12" name="n12">12</a></span><span class="keyword">def</span> <span class="function">override_task</span>(args, &amp;block)&#x000A;<span class="line-numbers"><a href="#n13" name="n13">13</a></span>  name, deps = <span class="constant">Rake</span>.application.resolve_args([args])  &#x000A;<span class="line-numbers"><a href="#n14" name="n14">14</a></span>  remove_task <span class="constant">Rake</span>.application[name].name&#x000A;<span class="line-numbers"><a href="#n15" name="n15">15</a></span>  task(args, &amp;block)&#x000A;<span class="line-numbers"><a href="#n16" name="n16">16</a></span><span class="keyword">end</span></pre></div>&#x000A;</div>&#x000A;&#x000A;<ul>&#x000A;	<li><code>tasks/github_pages.rake</code> redefines <code>clobber</code>  to ignore the <code>_webby</code> directory and the new (default) <code>clean_build</code> task allows for file deletions<sup class="footnote" id="fnr1"><a href="#fn1">1</a></sup></li>&#x000A;</ul>&#x000A;<div class="CodeRay">&#x000A;  <div class="code"><pre><span class="line-numbers"> <a href="#n1" name="n1">1</a></span><span class="comment"># We only want to remove the generated files</span>&#x000A;<span class="line-numbers"> <a href="#n2" name="n2">2</a></span>desc <span class="string"><span class="delimiter">&quot;</span><span class="content">Delete the website</span><span class="delimiter">&quot;</span></span>&#x000A;<span class="line-numbers"> <a href="#n3" name="n3">3</a></span>override_task <span class="symbol">:clobber</span> <span class="keyword">do</span> |t|&#x000A;<span class="line-numbers"> <a href="#n4" name="n4">4</a></span>  <span class="constant">Dir</span>.chdir(<span class="constant">Webby</span>.site.output_dir) <span class="keyword">do</span>&#x000A;<span class="line-numbers"> <a href="#n5" name="n5">5</a></span>    <span class="constant">Dir</span>[<span class="string"><span class="delimiter">'</span><span class="content">*</span><span class="delimiter">'</span></span>].entries.reject {|entry| entry == <span class="string"><span class="delimiter">'</span><span class="content">_webby</span><span class="delimiter">'</span></span>}.each {|entry| rm_rf entry}&#x000A;<span class="line-numbers"> <a href="#n6" name="n6">6</a></span>  <span class="keyword">end</span>&#x000A;<span class="line-numbers"> <a href="#n7" name="n7">7</a></span><span class="keyword">end</span>&#x000A;<span class="line-numbers"> <a href="#n8" name="n8">8</a></span>&#x000A;<span class="line-numbers"> <a href="#n9" name="n9">9</a></span>desc <span class="string"><span class="delimiter">&quot;</span><span class="content">Clobber, then build the website</span><span class="delimiter">&quot;</span></span>&#x000A;<span class="line-numbers"><strong><a href="#n10" name="n10">10</a></strong></span>task <span class="symbol">:clean_build</span> =&gt; [<span class="symbol">:clobber</span>, <span class="symbol">:build</span>]</pre></div>&#x000A;</div>&#x000A;&#x000A;<p>The new workflow for adding a post to the new site is:</p>&#x000A;<ol>&#x000A;	<li>Change directory to <code>_webby</code></li>&#x000A;	<li>Generate a new blog post</li>&#x000A;	<li>Run <code>webby autobuild</code></li>&#x000A;	<li>Edit until completed</li>&#x000A;	<li>Commit all changes locally (<code>git add .</code> from the root)</li>&#x000A;	<li>Push the changes</li>&#x000A;</ol>&#x000A;<p class="footnote" id="fn1"><a href="#fnr1"><sup>1</sup></a> Webby does not know if you have deleted a source file, by forcing the entire site to be rebuilt, the deletion is reflected in the generated static files.</p>
+</div>
     <div class='clearfix' id='comments'>
-      <div class='prefix_1 grid_10 suffix_1'>
-        <div id='disqus_thread'></div>
-        <script type='text/javascript'>
-          var disqus_shortname = 'leshill';
-          var disqus_identifier = '/blog/2009/01/24/webby-meet-github-pages.html';
-          var disqus_url = 'http://blog.leshill.org/blog/2009/01/24/webby-meet-github-pages.html';
-          <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
-          (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-        </script>
-        <noscript>
-          Please enable JavaScript to view the
-          <a href='http://disqus.com/?ref_noscript'>
-            comments powered by Disqus.
-          </a>
-        </noscript>
-        <a class='dsq-brlink' href='http://disqus.com'>
-          blog comments powered by
-          <span class='logo-disqus'>
-            Disqus
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class='clearfix' id='footer'>
-      <div class='prefix_1 grid_8' id='contact'>
-        Les Hill
-        <br />
-        Developer @ <a href="http://carezone.com/">CareZone.com</a>
-        <br />
-        les (at) carezone (dot) com
-      </div>
-      <div class='grid_2' id='rss'>
-        <a href='http://feeds2.feedburner.com/leshill'>
-          <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
-        </a>
-      </div>
-      <div class='grid_12' id='copyright'>
-        Les Hill &copy; 2008&ndash;2012
-      </div>
-    </div>
+  <div class='prefix_1 grid_10 suffix_1'>
+    <div id='disqus_thread'></div>
     <script type='text/javascript'>
-      //<![CDATA[
-        (function() {
-          var links = document.getElementsByTagName('a');
-          var query = '?';
-          for(var i = 0; i < links.length; i++) {
-            if(links[i].href.indexOf('#disqus_thread') >= 0) {
-              query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
-            }
-          }
-          document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
-        })();
-      //]]>
+      var disqus_shortname = 'leshill';
+      var disqus_identifier = '/blog/2009/01/24/webby-meet-github-pages.html';
+      var disqus_url = 'http://blog.leshill.org/blog/2009/01/24/webby-meet-github-pages.html';
+      <!-- * * * DON'T EDIT BELOW THIS LINE * * */ -->
+      (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
     </script>
+    <noscript>
+      Please enable JavaScript to view the
+      <a href='http://disqus.com/?ref_noscript'>
+        comments powered by Disqus.
+      </a>
+    </noscript>
+    <a class='dsq-brlink' href='http://disqus.com'>
+      blog comments powered by
+      <span class='logo-disqus'>
+        Disqus
+      </span>
+    </a>
+  </div>
+</div>
+    <div class='clearfix' id='footer'>
+  <div class='prefix_1 grid_8' id='contact'>
+    Les Hill
+    <br />
+    Developer @ <a href="http://carezone.com/">CareZone.com</a>
+    <br />
+    les (at) carezone (dot) com
+  </div>
+  <div class='grid_2' id='rss'>
+    <a href='http://feeds2.feedburner.com/leshill'>
+      <img alt='Subscribe to RSS Feed' src='/images/feed-icon-28x28.png' />
+    </a>
+  </div>
+  <div class='grid_12' id='copyright'>
+    Les Hill &copy; 2008&ndash;2012
+  </div>
+</div>
+<script type='text/javascript'>
+  //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+        if(links[i].href.indexOf('#disqus_thread') >= 0) {
+          query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&amp;';
+        }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/leshill/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+  //]]>
+</script>
   </div>
 </body>
