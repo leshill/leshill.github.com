@@ -4,12 +4,357 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2012-08-27T23:48:20-07:00</updated>
+  <updated>2012-09-04T00:02:14-07:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Backbone.js and Rails (Part 1 of 2)</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2012/09/04/backbone-js-and-rails.html" />
+    
+    <id>tag:blog.leshill.org,2012-09-04:1346742027</id>
+    
+    <published>2012-09-04T00:00:27-07:00</published>
+    <updated>2012-09-04T00:00:27-07:00</updated>
+    <content type="html">&lt;h2&gt;“Down Mexico Way”&lt;/h2&gt;
+
+&lt;p&gt;Earlier this summer I had the opportunity to speak at a fantastic regional conference,
+&lt;a href=&quot;http://magmarails.com&quot;&gt;Magma Rails&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The location is not what you might expect, being an off-the-beaten-path part of
+&lt;a href=&quot;http://en.wikipedia.org/wiki/Colima&quot;&gt;Mexico&lt;/a&gt;. There are no crowds of American
+and European &lt;em&gt;touristas&lt;/em&gt; &amp;mdash; well none outside of the crowd of non-Mexican
+rubyists.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, you are deep in Mexico, midway along the Pacific coast, with
+nice beaches and lovely mountains. The &lt;a href=&quot;http://www.crowdint.com/&quot;&gt;sponsors&lt;/a&gt;,
+Mexican rubyists, and people in general are genial and engaging, making us
+&lt;em&gt;touristas&lt;/em&gt; feel right at home.&lt;/p&gt;
+
+&lt;p&gt;The original talk topic was going to be &lt;strong&gt;Cucumber&lt;/strong&gt;, instead I opted&lt;sup class='footnote' id='fnr1'&gt;&lt;a href='#fn1'&gt;1&lt;/a&gt;&lt;/sup&gt; for
+talk titled &lt;a href=&quot;http://blog.leshill.org/backbone_and_rails_magma&quot;&gt;Getting started with Backbone and Rails, 25 things you need to
+know&lt;/a&gt; (&lt;a href=&quot;https://github.com/leshill/backbone_and_rails_magma&quot;&gt;ShowOff
+slides&lt;/a&gt;). The talk has a
+fair bit of code, drawn from a working example. The example app was going to be
+released after the conference…&lt;/p&gt;
+
+&lt;p&gt;…and, long story short, that never&lt;sup class='footnote' id='fnr2'&gt;&lt;a href='#fn2'&gt;2&lt;/a&gt;&lt;/sup&gt; happened…&lt;/p&gt;
+
+&lt;p&gt;…until now!&lt;/p&gt;
+
+&lt;h3&gt;An example app&lt;/h3&gt;
+
+&lt;p&gt;The app is incomplete, lacking tests, and written for clarity not conciseness.
+All of the JavaScript code is written in
+&lt;a href=&quot;http://coffeescript.org/&quot;&gt;CoffeeScript&lt;/a&gt;&lt;sup class='footnote' id='fnr3'&gt;&lt;a href='#fn3'&gt;3&lt;/a&gt;&lt;/sup&gt;. The Rails code is mostly
+scaffolding. You can find the source on
+&lt;a href=&quot;https://github.com/leshill/backbone_and_rails_example&quot;&gt;github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Over roughly 22 commits, the app is transformed into a one-page Backbone app
+that:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;shows a list of movies&lt;/li&gt;
+&lt;li&gt;allows drilling into a specific movie&lt;/li&gt;
+&lt;li&gt;can add a new movie&lt;/li&gt;
+&lt;li&gt;can deleted an existing movie&lt;/li&gt;
+&lt;li&gt;sorts the list of movies&lt;/li&gt;
+&lt;li&gt;allows deep links directly to a specific movie&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;The app demonstrates how to structure a Backbone app for use with the asset
+pipeline, how to write views, handle forms, and interact with models, and how
+to fit Backbone in with Rails.&lt;/p&gt;
+
+&lt;h2&gt;In depth&lt;/h2&gt;
+
+&lt;p&gt;Let's explore two areas that are cross-cutting to all apps: rendering views and using routers and
+controllers.&lt;/p&gt;
+
+&lt;h3&gt;Rendering&lt;/h3&gt;
+
+&lt;p&gt;By default, Backbone does not render anything.&lt;/p&gt;
+
+&lt;p&gt;Nothing. Zip, zero, zilch. Na&amp;ndash;da.&lt;/p&gt;
+
+&lt;p&gt;Really.&lt;/p&gt;
+
+&lt;p&gt;Backbone does create a container element. This very minimalist opinion in
+Backbone is deliberate. The choice of how to render views into the DOM is
+entirely up to you.&lt;/p&gt;
+
+&lt;p&gt;We are going to render using &lt;a href=&quot;http://mustache.github.com/&quot;&gt;mustache&lt;/a&gt; templates.
+Not surprisingly, mustache, another minimal yet strongly opinionated piece of
+software, is a great fit with Backbone.&lt;/p&gt;
+
+&lt;h3&gt;Rendering mustache&lt;/h3&gt;
+
+&lt;p&gt;Let's start by replacing the Rails &lt;code&gt;index.html&lt;/code&gt; view with a
+client-side mustache template.&lt;/p&gt;
+
+&lt;p&gt;Normally, the template string would be processed in the browser by the
+rendering engine, however &lt;a href=&quot;http://twitter.github.com/hogan.js/&quot;&gt;hogan.js&lt;/a&gt; gives
+us a mustache rendering engine that can precompile templates for faster
+processing in the browser.  We can precompile our mustache templates in the
+Rails asset pipeline using
+&lt;a href=&quot;https://github.com/leshill/hogan_assets&quot;&gt;hogan_assets&lt;/a&gt;&lt;sup class='footnote' id='fnr4'&gt;&lt;a href='#fn4'&gt;4&lt;/a&gt;&lt;/sup&gt;. The templates
+files are compiled into JavaScript code that will render in the browser.&lt;/p&gt;
+
+&lt;p&gt;To load our template into the page, we use the asset pipeline's &lt;code&gt;require_tree&lt;/code&gt;
+directive in &lt;code&gt;application.js&lt;/code&gt;
+(&lt;a href=&quot;https://github.com/leshill/backbone_and_rails_example/commit/f926c433e610a7c2bb19d0571986798aeaaee329&quot;&gt;commit&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Using the asset pipeline means that you can do without JavaScript
+loaders like &lt;strong&gt;AMD&lt;/strong&gt;. If you are having problems with the asset pipeline or
+want a good starting point, the Rails Guides
+&lt;a href=&quot;http://guides.rubyonrails.org/asset_pipeline.html&quot;&gt;entry&lt;/a&gt; is particularly good.&lt;/p&gt;
+
+&lt;p&gt;With the template available on the page, we want to render the template as part
+of a &lt;code&gt;Backbone.View&lt;/code&gt;. We create a simple &lt;code&gt;View&lt;/code&gt; class that does little more
+than just expose the &lt;code&gt;render&lt;/code&gt; method for now. The &lt;code&gt;render&lt;/code&gt; method executes our
+precompiled template and inserts the resulting string as the content of our
+&lt;code&gt;@$el&lt;/code&gt;. Mustache's render method takes two arguments, the context and a list
+of partials. Initially we pass along our movie data as the context
+(&lt;a href=&quot;https://github.com/leshill/backbone_and_rails_example/commit/12d929d2df815b36854afcc57e37807dfd0afe3d&quot;&gt;commit&lt;/a&gt;).&lt;/p&gt;
+
+&lt;h3&gt;Rendering a Collection&lt;/h3&gt;
+
+&lt;p&gt;Our movie data is coming from a JSON array inserted into our page by Rails.
+Let's transform the data from an array of JSON to a &lt;code&gt;Backbone.Collection&lt;/code&gt;.
+Backbone directly understands JSON arrays and converts them to instances of
+&lt;code&gt;Backbone.Model&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To render our new collection, we introduce a specialized view class: &lt;code&gt;CollectionView&lt;/code&gt;
+that will know how to render the individual model instances
+(&lt;a href=&quot;https://github.com/leshill/backbone_and_rails_example/commit/6be7879392f8c84157373726f3d0bee1c21d842c&quot;&gt;commit&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;We create our single &lt;code&gt;CollectionView&lt;/code&gt; with the collection to render, the
+element to render into, the selector for the child view container and a
+callback to generate child view instances. Our callback generates a &lt;code&gt;Movie&lt;/code&gt;
+view (a placeholder at the moment.)&lt;/p&gt;
+
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;view = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; App.Views.Index
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  collection: collection
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;  el: &lt;span class=&quot;predefined&quot;&gt;$&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;  selector: &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;#movie_list&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;  view: (model) -&amp;gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; App.Views.Movie(model: model)&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; For anything other than a simple string or reference, prefer
+configuration via code (callback) instead of configuration via property. For
+the &lt;code&gt;view&lt;/code&gt; option, the less desirable alternative would be to pass a class name
+as a property. When in doubt, use a callback instead of a property&lt;sup class='footnote' id='fnr5'&gt;&lt;a href='#fn5'&gt;5&lt;/a&gt;&lt;/sup&gt;. If you
+are writing a library, you &lt;em&gt;might&lt;/em&gt; consider supporting both.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;CollectionView&lt;/code&gt; also registers itself for the &lt;code&gt;reset&lt;/code&gt; event. The &lt;code&gt;reset&lt;/code&gt;
+event is sent when a collection is updated in bulk. &lt;code&gt;CollectionView&lt;/code&gt; will then
+re-render itself and all its child views. The concept of one view managing its
+child views (and their child views) is crucial to writing scalable view code.
+Our code is ignoring existing views and just creating new views. We will come
+back to this when we talk about other events.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Events are the key concept in Backbone. You should know what events
+are fired and when by &lt;code&gt;Backbone.Collection&lt;/code&gt; and &lt;code&gt;Backbone.Model&lt;/code&gt;. Yes,
+you need to know that.&lt;/p&gt;
+
+&lt;h3&gt;Rendering an individual Model using a Presenter&lt;/h3&gt;
+
+&lt;p&gt;At this point we are rendering raw attributes. Looking at &lt;code&gt;View.renderContext&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;renderContext: () -&amp;gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;model?
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;model.toJSON()
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;    {}&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;We are copying the model's attributes which are usually just simple types. For
+example, our opening weekend total is shown as a number instead of currency.&lt;/p&gt;
+
+&lt;p&gt;In Rails, we would use a helper like &lt;code&gt;number_to_currency&lt;/code&gt;. Instead of using a
+helper&lt;sup class='footnote' id='fnr6'&gt;&lt;a href='#fn6'&gt;6&lt;/a&gt;&lt;/sup&gt;, mustache expects us to give it a formatted currency string as the
+opening week total. What we need is a Presenter.&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;The presenter acts upon the model and the view. It retrieves data from
+repositories (the model), and formats it for display in the view.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;&amp;mdash; &lt;a href=&quot;http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter&quot;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Using a presenter allows to expose the model's attributes in a render-ready way
+without adding formatting logic to the model or the view
+(&lt;a href=&quot;https://github.com/leshill/backbone_and_rails_example/commit/f490911062040caf32878e207669307e74042591&quot;&gt;commit&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;We add a &lt;code&gt;Presenter&lt;/code&gt; class&lt;sup class='footnote' id='fnr7'&gt;&lt;a href='#fn7'&gt;7&lt;/a&gt;&lt;/sup&gt; that wraps a model's attributes. For example,
+our presenter formats our opening weekend total:&lt;/p&gt;
+
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;reserved&quot;&gt;class&lt;/span&gt; App.Presenters.Movie &lt;span class=&quot;reserved&quot;&gt;extends&lt;/span&gt; App.Presenter
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  opening_weekend: -&amp;gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt; + format &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;#,##0.00&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;get(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;opening_weekend&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;)&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;And we modify &lt;code&gt;View&lt;/code&gt; to understand presenters by specifying a &lt;code&gt;presenter&lt;/code&gt;
+callback option:&lt;/p&gt;
+
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;renderContext: () -&amp;gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;presenter?
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;presenter.apply &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;, [&lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;model]
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;model?
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;    &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;model.toJSON()
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n6&quot; name=&quot;n6&quot;&gt;6&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n7&quot; name=&quot;n7&quot;&gt;7&lt;/a&gt;&lt;/span&gt;    {}&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;h3&gt;Responding to Events&lt;/h3&gt;
+
+&lt;p&gt;We want the collection view to show movies as we add them. And we want the
+collection view to remove movies as we delete them. When we edit a movie's
+details, we also want to update the list view. Events make this easy.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Events also mean our code is loosely coupled. We recently tried an
+experiment with a larger, packaged Backbone framework. Since all our code uses
+standard events, we were able to wire up a completely new collection view
+implementation by changing one line and our UI (add, delete, edit, and more)
+just worked.&lt;/p&gt;
+
+&lt;p&gt;Adding a new model to a collection fires the &lt;code&gt;add&lt;/code&gt; event. When we see the &lt;code&gt;add&lt;/code&gt;
+event, our collection view generates a new child view for the newly added
+model. Collections will maintain their sort order, so we take advantage of that
+to render the new child view in the correct place
+(&lt;a href=&quot;https://github.com/leshill/backbone_and_rails_example/commit/be518c8aa65dc10b7c3a1c7213af5ef5cf5bd26d&quot;&gt;commit&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;The event flow goes like this:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the collection sends an &lt;code&gt;add&lt;/code&gt; event to its listeners&lt;/li&gt;
+&lt;li&gt;the &lt;code&gt;CollectionView&lt;/code&gt; adds a new child view for the new model&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;Removing a model from a collection fires the 'destroy' event. When we see the
+&lt;code&gt;destroy&lt;/code&gt; event, our collection view removes the child view for the removed
+model
+(&lt;a href=&quot;https://github.com/leshill/backbone_and_rails_example/commit/0c33e4ddea8a8a3e1682889e8af290babcb6d5c7&quot;&gt;commit&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;The event flow goes like this:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the model sends a &lt;code&gt;destroy&lt;/code&gt; event to its listeners&lt;/li&gt;
+&lt;li&gt;the collection containing the model passes the event along to its listeners&lt;/li&gt;
+&lt;li&gt;the &lt;code&gt;CollectionView&lt;/code&gt; destroys its child view&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;When a view is destroyed, the view should cleanup.  Aside from just being good
+practice, leaving dangling objects around, particularly callbacks, can lead to
+unexpected and difficult to diagnose behaviors.&lt;/p&gt;
+
+&lt;p&gt;Until recently, Backbone had a minimal &lt;code&gt;remove&lt;/code&gt; that only removed the DOM
+element (by now you must be seeing the trend in Backbone.)  On August 15th,
+2012, &lt;code&gt;dispose&lt;/code&gt; was added to Backbone master.  The &lt;code&gt;dispose&lt;/code&gt; method cleans up
+all the events registered via Backbone: the events hash and the model and
+collection bindings. Calling &lt;code&gt;remove&lt;/code&gt; will call &lt;code&gt;dispose&lt;/code&gt; for you.&lt;/p&gt;
+
+&lt;p&gt;Using &lt;code&gt;remove&lt;/code&gt;/&lt;code&gt;dispose&lt;/code&gt; covers the core Backbone cleanup. There is no hook
+for non-core Backbone cleanup; for example you might use &lt;code&gt;Backbone.Events&lt;/code&gt; to
+trigger events from a widget, &lt;code&gt;dispose&lt;/code&gt; will not know about them.&lt;/p&gt;
+
+&lt;p&gt;Instead of calling &lt;code&gt;remove&lt;/code&gt;, we are going to use &lt;code&gt;destroy&lt;/code&gt; which we implement
+in our &lt;code&gt;View&lt;/code&gt; class:&lt;/p&gt;
+
+&lt;div class=&quot;CodeRay&quot;&gt;
+  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;destroy: -&amp;gt;
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;hide()
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;unbind()
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;remove()
+&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;  &lt;span class=&quot;error&quot;&gt;@&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;The view is hidden, we &lt;code&gt;unbind&lt;/code&gt;&lt;sup class='footnote' id='fnr8'&gt;&lt;a href='#fn8'&gt;8&lt;/a&gt;&lt;/sup&gt;, and then we ask Backbone to cleanup. &lt;code&gt;unbind&lt;/code&gt;
+is the hook to perform our non-core Backbone cleanup. For example,
+&lt;code&gt;CollectionView&lt;/code&gt; could use &lt;code&gt;unbind&lt;/code&gt; to destroy all of its children when the
+parent view is destroyed (and so on if the child views had children).&lt;/p&gt;
+
+&lt;h2&gt;Wrap up&lt;/h2&gt;
+
+&lt;p&gt;Recap!&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;render templates; use mustache&lt;/li&gt;
+&lt;li&gt;manage your views in a hierarchy; ideally instantiating only a top level view&lt;/li&gt;
+&lt;li&gt;use presenters&lt;/li&gt;
+&lt;li&gt;leverage events; for example to automatically render and destroy your views&lt;/li&gt;
+&lt;li&gt;cleanup after your views&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;The next installment will cover routers and controllers and how you should be
+using them and why Backbone &lt;em&gt;is not&lt;/em&gt; MVC, even though it &lt;em&gt;is&lt;/em&gt; MVC.&lt;/p&gt;
+
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;Render your views with mustache.&lt;/p&gt;
+
+&lt;p&gt;Use presenters instead of using models directly from views.&lt;/p&gt;
+
+&lt;p&gt;Use events.&lt;/p&gt;
+
+&lt;p&gt;Cleanup when you destroy a view.&lt;/p&gt;
+
+&lt;p&gt;Be kind to others; be especially kind to children, the elderly, and animals.&lt;/p&gt;
+
+&lt;p&gt;&lt;p class='footnote' id='fn1'&gt;&lt;a href='#fn1'&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;
+Started using Backbone in 2010 when it seemed that a minor revison happened
+every month.
+&lt;/p&gt;
+&lt;p class='footnote' id='fn2'&gt;&lt;a href='#fn2'&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;
+Not exactly true, it was used at the inaugural Seattle Backbone meetup on July
+10th, 2012.
+&lt;/p&gt;
+&lt;p class='footnote' id='fn3'&gt;&lt;a href='#fn3'&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;
+Seriously, you should use &lt;a href=&quot;http://coffeescript.org/&quot;&gt;CoffeeScript&lt;/a&gt;.
+&lt;/p&gt;
+&lt;p class='footnote' id='fn4'&gt;&lt;a href='#fn4'&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;
+We are also using &lt;code&gt;haml&lt;/code&gt; &amp;mdash; &lt;code&gt;hogan_assets&lt;/code&gt; supports &lt;em&gt;hamstache&lt;/em&gt; templates
+if the &lt;code&gt;haml&lt;/code&gt; gem is available.
+&lt;/p&gt;
+&lt;p class='footnote' id='fn5'&gt;&lt;a href='#fn5'&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt;
+Although well-established in the JavaScript community, it is not common in
+Backbone.  This may have been because using properties was how you configured
+your Backbone.js objects. This has changed in the past year with more examples
+using configuration via code.
+&lt;/p&gt;
+&lt;p class='footnote' id='fn6'&gt;&lt;a href='#fn6'&gt;&lt;sup&gt;6&lt;/sup&gt;&lt;/a&gt;
+&lt;a href=&quot;http://handlebarsjs.com/&quot;&gt;handlebars.js&lt;/a&gt; is a mustache superset that allows
+adding helpers into your mustache templates. Use
+&lt;a href=&quot;https://github.com/leshill/handlebars_assets&quot;&gt;handlebars_assets&lt;/a&gt; to compile
+your handlebars templates in the asset pipeline.
+&lt;/p&gt;
+&lt;p class='footnote' id='fn7'&gt;&lt;a href='#fn7'&gt;&lt;sup&gt;7&lt;/sup&gt;&lt;/a&gt;
+The
+&lt;a href=&quot;https://github.com/leshill/backbone_and_rails_example/blob/master/app/assets/javascripts/app/presenter.js.coffee&quot;&gt;implementation&lt;/a&gt;
+is simple.
+&lt;/p&gt;
+&lt;p class='footnote' id='fn8'&gt;&lt;a href='#fn8'&gt;&lt;sup&gt;8&lt;/sup&gt;&lt;/a&gt;
+Our example app is using an older version of Backbone so we do the work of
+&lt;code&gt;dispose&lt;/code&gt; in our &lt;code&gt;unbind&lt;/code&gt; implementation. Usually &lt;code&gt;unbind&lt;/code&gt; is matched with
+another method for setup.
+&lt;/p&gt;&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>The Doctor Is In</title>
@@ -959,21 +1304,6 @@ Restarting app...done.&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Unfortunately for the Diaspora team, they have done this in public and with a great expectations and corresponding hype (Diaspora has been called a &lt;em&gt;Facebook Killer&lt;/em&gt;).&lt;/p&gt;
 &lt;p&gt;Fortunately for the Diaspora team, they have done this in public with a &lt;a href=&quot;http://github.com/diaspora/diaspora&quot;&gt;github repository&lt;/a&gt; that others can contribute to&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; and make better.&lt;/p&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; Sort of. I, and others, would have preferred an MIT license.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Cucumber Tips</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/09/19/cucumber-tips.html" />
-    
-    <id>tag:blog.leshill.org,2010-09-19:1284953752</id>
-    
-    <published>2010-09-19T20:35:52-07:00</published>
-    <updated>2010-09-19T20:35:52-07:00</updated>
-    <content type="html">&lt;p&gt;As a happy &lt;a href=&quot;http://cukes.info&quot;&gt;Cucumber&lt;/a&gt; user, I am really glad to see that a few of my favorite Rubyists have recently blogged some tips for using &lt;strong&gt;Cucumber&lt;/strong&gt;:&lt;/p&gt;
-&lt;p&gt;Jonas Nicklas &lt;a href=&quot;http://elabs.se/blog/15-you-re-cuking-it-wrong&quot;&gt;You&amp;#8217;re Cuking It Wrong&lt;/a&gt;&lt;br /&gt;
-Mislav Marohnić &lt;a href=&quot;http://mislav.uniqpath.com/2010/09/cuking-it-right/&quot;&gt;You&amp;#8217;re cuking it right&lt;/a&gt;&lt;br /&gt;
-Bodaniel Jeanes &lt;a href=&quot;http://bjeanes.com/2010/09/19/selector-free-cucumber-scenarios&quot;&gt;Selector-Free Cucumber Scenarios&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Thanks guys!&lt;/p&gt;</content>
   </entry>
   
 </feed>
