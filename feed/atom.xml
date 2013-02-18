@@ -4,12 +4,54 @@
   <title>Les Hill</title>
   <link href="http://feeds2.feedburner.com/leshill" type="application/atom+xml" rel="self" />
   <link href="http://blog.leshill.org/" type="text/html" rel="alternate" />
-  <updated>2012-09-04T00:02:14-07:00</updated>
+  <updated>2013-02-18T15:03:02-08:00</updated>
   <author>
     <name>Les Hill</name>
     <email>blog@leshill.org</email>
   </author>
   <id>http://blog.leshill.org/</id>
+  
+  <entry>
+    <title>Tip: Run Jasmine From RSpec</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2013/02/18/tip-run-jasmine-from-rspec.html" />
+    
+    <id>tag:blog.leshill.org,2013-02-18:1361225683</id>
+    
+    <published>2013-02-18T14:14:43-08:00</published>
+    <updated>2013-02-18T14:14:43-08:00</updated>
+    <content type="html">&lt;p&gt;Want to run your Jasmine suite from your RSpec suite? Easy. Take a look at this &lt;a href=&quot;https://gist.github.com/2059&quot;&gt;gist&lt;/a&gt;:&lt;/p&gt;
+
+&lt;script src='https://gist.github.com/4981365.js'&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Add &lt;code&gt;jasmine_spec.rb&lt;/code&gt; to your &lt;code&gt;specs/features&lt;/code&gt; and enjoy.&lt;/p&gt;
+
+&lt;p&gt;We are using &lt;a href=&quot;https://github.com/bradphelan/jasminerice&quot;&gt;jasminerice&lt;/a&gt; to run our &lt;a href=&quot;http://coffeescript.org&quot;&gt;CoffeeScript&lt;/a&gt; suite. You might need to tweak this if you are running Jasmine some other way in your app.&lt;/p&gt;
+
+&lt;p&gt;Hat tip to &lt;a href=&quot;https://github.com/sandro&quot;&gt;Sandro&lt;/a&gt; who wrote this for our app.&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Tip: Run Jasmine From RSpec</title>
+    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2013/02/18/tip-run-jasmine-from-rspec.md" />
+    
+    <id>tag:blog.leshill.org,2013-02-18:1361225683</id>
+    
+    <published>2013-02-18T14:14:43-08:00</published>
+    <updated>2013-02-18T14:14:43-08:00</updated>
+    <content type="html">&lt;p&gt;Want to run your Jasmine suite from your RSpec suite? Easy. Take a look at this &lt;a href=&quot;https://gist.github.com/2059&quot;&gt;gist&lt;/a&gt;:&lt;/p&gt;
+
+&lt;script src='https://gist.github.com/4981365.js'&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Add &lt;code&gt;jasmine_spec.rb&lt;/code&gt; to your &lt;code&gt;specs/features&lt;/code&gt; and enjoy.&lt;/p&gt;
+
+&lt;p&gt;We are using &lt;a href=&quot;https://github.com/bradphelan/jasminerice&quot;&gt;jasminerice&lt;/a&gt; to run our &lt;a href=&quot;http://coffeescript.org&quot;&gt;CoffeeScript&lt;/a&gt; suite. You might need to tweak this if you are running Jasmine some other way in your app.&lt;/p&gt;
+
+&lt;p&gt;Hat tip to &lt;a href=&quot;https://github.com/sandro&quot;&gt;Sandro&lt;/a&gt; who wrote this for our app.&lt;/p&gt;
+</content>
+  </entry>
   
   <entry>
     <title>Backbone.js and Rails (Part 1 of 2)</title>
@@ -1202,108 +1244,6 @@ when you are assembling your team.&lt;/p&gt;
 look for in your development team.&lt;/p&gt;
 &lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; In my experience, the efforts of someone new to TDD/BDD are usually&lt;br /&gt;
 ineffective at delivering clean and valuable code.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Heroku Environment Variables</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/11/02/heroku-environment-variables.html" />
-    
-    <id>tag:blog.leshill.org,2010-11-01:1288670966</id>
-    
-    <published>2010-11-01T21:09:26-07:00</published>
-    <updated>2010-11-01T21:09:26-07:00</updated>
-    <content type="html">&lt;h1&gt;Also Known As: Config Vars&lt;/h1&gt;
-&lt;p&gt;Deploying an app to &lt;a href=&quot;http://heroku.com&quot;&gt;Heroku&lt;/a&gt; is awesome. Really. If you have not yet done so, it is worth spending the few minutes to setup a simple Rails app and deploy to Heroku.&lt;/p&gt;
-&lt;p&gt;Awesome! Unless you have a lot of local configuration (perhaps your app talks to many external systems and has lots of settings). Then it becomes a bit less awesome, but we can fix that!&lt;/p&gt;
-&lt;p&gt;Heroku handles local configuration with something Heroku calls &lt;em&gt;config variables&lt;/em&gt;. They are effectively environment variables, but I will follow Heroku&amp;#8217;s lead and call them &lt;em&gt;config variables&lt;/em&gt;.&lt;/p&gt;
-&lt;h2&gt;Local configurations before Heroku&lt;/h2&gt;
-&lt;p&gt;Before &lt;a href=&quot;http://heroku.com&quot;&gt;Heroku&lt;/a&gt;, the issue of how to keep local configurations, like database settings (including passwords) and API tokens, was resolved by having a file that was not checked into source control, but that was avaiable in all environments.&lt;/p&gt;
-&lt;p&gt;An example we are all familiar with is Capistrano. One (or more) YAML (usually) files are setup locally on each host: your local development box, the staging server, the production server.  On the deployment hosts (i.e. staging, production) these files are located in the Capistrano shared directory and symlinked during the deploy so that the application can read them to load any configurations.&lt;/p&gt;
-&lt;h2&gt;Local configurations with Heroku&lt;/h2&gt;
-&lt;p&gt;Heroku applications cannot use local storage in the same way. There is no directory available to store your applications configuration files locally; and you do not want them in source control&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
-&lt;p&gt;Heroku instead provides each application with user defined config variables that are available in the your application&amp;#8217;s &lt;code&gt;ENV&lt;/code&gt; hash. If, for example, you are configuring &lt;code&gt;omniauth&lt;/code&gt; with Twitter support, you might have this code in &lt;strong&gt;config/initializers/omniauth.rb&lt;/strong&gt;:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;constant&quot;&gt;Rails&lt;/span&gt;.application.config.middleware.use &lt;span class=&quot;constant&quot;&gt;OmniAuth&lt;/span&gt;::&lt;span class=&quot;constant&quot;&gt;Builder&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;  provider &lt;span class=&quot;symbol&quot;&gt;:twitter&lt;/span&gt;, &lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;TWITTER_KEY&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;], &lt;span class=&quot;predefined-constant&quot;&gt;ENV&lt;/span&gt;[&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;TWITTER_SECRET&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;]
-&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Your app will read the configuration from the &lt;code&gt;ENV&lt;/code&gt; hash. You use the &lt;code&gt;heroku&lt;/code&gt; command to set the config variables:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;heroku config:add TWITTER_KEY=key TWITTER_SECRET=secret --app myapp&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This quickly becomes painful if you have to do this many times on many Heroku applications. After googling around for a bit, I found one article by &lt;a href=&quot;http://tammersaleh.com/posts/managing-heroku-environment-variables-for-local-development&quot;&gt;Tammer Saleh&lt;/a&gt; that provided a bit of inspiration.&lt;/p&gt;
-&lt;h1&gt;Managing Heroku config variables using a local YAML file&lt;/h1&gt;
-&lt;p&gt;We can make things better by using a local file on your development machine to manage all the settings in one place.&lt;/p&gt;
-&lt;p&gt;Lets save our configuration to &lt;code&gt;config/heroku.yml&lt;/code&gt; which looks like this:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;apps:
-  staging: myapp-staging
-  production: myapp
-development: &amp;amp;defaults
-  admins: 'joe sue'
-  domain_url: http://localhost:3000
-  twitter_key: key
-  twitter_secret: secret
-test:
-  &amp;lt;&amp;lt;: *defaults
-staging:
-  bundle_without: development:test
-  admins: 'joe sue'
-  domain_url: http://myapp-staging.heroku.com
-  twitter_key: key
-  twitter_secret: secret
-production:
-  bundle_without: development:test
-  admins: 'joe sue'
-  domain_url: http://myapp.heroku.com
-  twitter_key: key
-  twitter_secret: secret&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The file should seem familiar; it is organized very much like the Rails &lt;code&gt;database.yml&lt;/code&gt; file.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;apps&lt;/code&gt; key defines a mapping from an environment name like &lt;code&gt;staging&lt;/code&gt; to a Heroku application like &lt;code&gt;myapp-staging&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Each environment key has its own settings. Note that &lt;code&gt;development&lt;/code&gt; and &lt;code&gt;test&lt;/code&gt; are not named under the &lt;code&gt;apps&lt;/code&gt; key as they local and are not deployed to Heroku.&lt;/p&gt;
-&lt;p&gt;This file &lt;strong&gt;is not checked in&lt;/strong&gt; and should be added to your &lt;code&gt;.gitignore&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;To load our YAML settings file at runtime, we have to modify &lt;code&gt;config/application.rb&lt;/code&gt; and add a new file: &lt;code&gt;config/heroku_env.rb&lt;/code&gt; (all files are on &lt;a href=&quot;http://github.com/leshill/heroku-thor&quot;&gt;github&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;We make the following modification to the top of  &lt;code&gt;config/application.rb&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;CodeRay&quot;&gt;
-  &lt;div class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n1&quot; name=&quot;n1&quot;&gt;1&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;constant&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;../boot&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;predefined-constant&quot;&gt;__FILE__&lt;/span&gt;)
-&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n2&quot; name=&quot;n2&quot;&gt;2&lt;/a&gt;&lt;/span&gt;
-&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n3&quot; name=&quot;n3&quot;&gt;3&lt;/a&gt;&lt;/span&gt;require &lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;rails&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;&amp;quot;&lt;/span&gt;&lt;/span&gt;
-&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n4&quot; name=&quot;n4&quot;&gt;4&lt;/a&gt;&lt;/span&gt;
-&lt;span class=&quot;line-numbers&quot;&gt;&lt;a href=&quot;#n5&quot; name=&quot;n5&quot;&gt;5&lt;/a&gt;&lt;/span&gt;load(&lt;span class=&quot;constant&quot;&gt;File&lt;/span&gt;.expand_path(&lt;span class=&quot;string&quot;&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;content&quot;&gt;../heroku_env.rb&lt;/span&gt;&lt;span class=&quot;delimiter&quot;&gt;'&lt;/span&gt;&lt;/span&gt;, &lt;span class=&quot;predefined-constant&quot;&gt;__FILE__&lt;/span&gt;))&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Our app is now reading our YAML file and populating the application&amp;#8217;s &lt;code&gt;ENV&lt;/code&gt; hash based our settings file when we run locally.&lt;/p&gt;
-&lt;p&gt;To set the config variables on Heroku, we copy &lt;code&gt;heroku.thor&lt;/code&gt; (yes, &lt;a href=&quot;http://github.com/leshill/heroku-thor&quot;&gt;github&lt;/a&gt;) to our &lt;code&gt;lib/tasks&lt;/code&gt; directory.&lt;/p&gt;
-&lt;p&gt;It defines two tasks for each of your Heroku apps: &lt;code&gt;config&lt;/code&gt; to set the config variables from the settings files, and &lt;code&gt;rack_env&lt;/code&gt; to set the &lt;code&gt;RACK_ENV&lt;/code&gt; config variable.&lt;/p&gt;
-&lt;p&gt;We use &lt;code&gt;thor deploy:staging:config&lt;/code&gt; to setup our config variables on our Heroku staging application.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;% thor deploy:staging:config
-heroku config:add ADMINS='joe sue' DOMAIN_URL='http://myappp-staging.heroku.com' TWITTER_KEY='key' TWITTER_SECRET='secret' --app myapp-staging
-Adding config vars:
-  ADMINS         =&amp;gt; joe sue
-  DOMAIN_URL     =&amp;gt; http://myapp-staging.heroku.com
-  TWITTER_KEY    =&amp;gt; key
-  TWITTER_SECRET =&amp;gt; secret
-Restarting app...done.&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And your app is now configured.&lt;/p&gt;
-&lt;h2&gt;Better?&lt;/h2&gt;
-&lt;p&gt;I have found this approach to managing my Heroku apps useful. One way it can be improved is by extending the &lt;code&gt;thor&lt;/code&gt; file to include common Heroku commands such as deploys (and you could use &lt;code&gt;invoke&lt;/code&gt; to chain together the deploy and configuration settings).&lt;/p&gt;
-&lt;p&gt;Still, I am not pleased. Mostly this is because I have not packaged this up nicely. The need for locally modified files makes this a candidate for a Rails generator, something I may do if I get the time.&lt;/p&gt;
-&lt;p&gt;For now the raw source is up on &lt;a href=&quot;http://github.com/leshill/heroku-thor&quot;&gt;github&lt;/a&gt;.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; Really.&lt;/p&gt;</content>
-  </entry>
-  
-  <entry>
-    <title>Everyone's first Rails app</title>
-    <link rel="alternate" type="text/html" href="http://blog.leshill.org/blog/2010/09/23/diaspora.html" />
-    
-    <id>tag:blog.leshill.org,2010-09-23:1285253154</id>
-    
-    <published>2010-09-23T07:45:54-07:00</published>
-    <updated>2010-09-23T07:45:54-07:00</updated>
-    <content type="html">&lt;p&gt;There are some rumblings in the Ruby community now about the recently released &lt;a href=&quot;http://www.joindiaspora.com/&quot;&gt;Diaspora&lt;/a&gt; and the quality of its codebase.&lt;/p&gt;
-&lt;p&gt;I took a look at it on the day it was released. What I saw was everyone&amp;#8217;s first Rails app. The code looked like it had been written directly after reading a tutorial or a book.&lt;/p&gt;
-&lt;p&gt;This is not a bad thing. We all started with Rails and wrote an app like that.  It is the first step on the journey to mastery.&lt;/p&gt;
-&lt;p&gt;Unfortunately for the Diaspora team, they have done this in public and with a great expectations and corresponding hype (Diaspora has been called a &lt;em&gt;Facebook Killer&lt;/em&gt;).&lt;/p&gt;
-&lt;p&gt;Fortunately for the Diaspora team, they have done this in public with a &lt;a href=&quot;http://github.com/diaspora/diaspora&quot;&gt;github repository&lt;/a&gt; that others can contribute to&lt;sup class=&quot;footnote&quot; id=&quot;fnr1&quot;&gt;&lt;a href=&quot;#fn1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; and make better.&lt;/p&gt;
-&lt;p class=&quot;footnote&quot; id=&quot;fn1&quot;&gt;&lt;a href=&quot;#fnr1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; Sort of. I, and others, would have preferred an MIT license.&lt;/p&gt;</content>
   </entry>
   
 </feed>

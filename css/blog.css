@@ -158,6 +158,12 @@ header .links .extra {
   padding: 0px 0.75em 0px 1.25em;
 }
 
+#post code {
+  background-color: #eee;
+  padding: .25em;
+  overflow: auto;
+}
+
 #post pre {
   font-size: 16px;
   border: 1px solid #ddd;
