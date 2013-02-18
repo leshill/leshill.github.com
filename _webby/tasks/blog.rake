@@ -21,7 +21,9 @@ namespace :blog do
       dir = Webby.site.blog_dir if dir.empty?
       dir = File.join(dir, Time.now.strftime('%Y/%m/%d'))
 
-      page = File.join(dir, File.basename(page))
+      template_options = Webby::Resources::MetaFile.meta_data(template)
+
+      page = File.join(dir, File.basename(page) + ".#{template_options['source_ext']}")
       page = Webby::Builder.create(page, :from => template,
                  :locals => {:title => title, :directory => dir})
       ::Webby.exec_editor(page)
