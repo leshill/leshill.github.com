@@ -1,5 +1,3 @@
-source :gemcutter
-
 gem 'coderay'
 gem 'haml'
 gem 'rdiscount'
