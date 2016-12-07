@@ -8,7 +8,7 @@ filter:
   - textile
   - coderay
 ---
-Ready for some heresy? Let's validate a ["Backbone.js":http://documentcloud.github.com/backbone/] model using the ["jQuery Validation plugin":http://docs.jquery.com/Plugins/validation] and a @View@.
+Ready for some heresy? Let's validate a ["Backbone.js":http://backbonejs.org/] model using the ["jQuery Validation plugin":http://docs.jquery.com/Plugins/validation] and a @View@.
 
 If you are interested in the heresy, skip to the bottom.
 
